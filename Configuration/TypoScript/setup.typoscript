@@ -1,0 +1,49 @@
+
+plugin.tx_events {
+    view {
+        templateRootPaths {
+            0 = EXT:events/Resources/Private/Templates/
+            1 = {$plugin.tx_events.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:events/Resources/Private/Partials/
+            1 = {$plugin.tx_events.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:events/Resources/Private/Layouts/
+            1 = {$plugin.tx_events.view.layoutRootPath}
+        }
+        widget {
+            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
+                templateRootPath = {$plugin.tx_events.view.templateRootPath}
+            }
+        }
+    }
+    persistence {
+        storagePid = {$plugin.tx_events.persistence.storagePid}
+        recursive = 1
+    }
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+    settings {
+
+        defaulDetailEventsPid =
+        defaultDetailDatesPid =
+
+        paginate {
+            # can be overriden by plugin
+            itemsPerPage = 10
+            insertAbove = 0
+            insertBelow = 1
+            maximumNumberOfLinks = 10
+        }
+    }
+}

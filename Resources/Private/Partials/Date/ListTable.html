@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:widget.paginate objects="{dates}" as="paginatedDates" configuration="{itemsPerPage: 25, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 5}">
+    <f:for each="{paginatedDates}" as="date">
+        <div class="row mb-3">
+            <div class="col-2">
+                <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
+                <b><f:format.date format="%a">{date.start}</f:format.date></b><br>
+                <b><f:format.date format="d.m.">{date.start}</f:format.date></b><br>
+                {date.event.region.title}<br>
+            </div>
+            <div class="col-6">
+                <h4>{date.event.title}</h4>
+                <h5>{date.event.teaser}</h5>
+                <f:format.crop maxCharacters="150">{date.event.details}</f:format.crop>
+                <f:if condition="{date.event.highlight}">
+                    <f:then>
+                        <b>Hightlight</b>
+                    </f:then>
+                </f:if>
+            </div>
+            <div class="col-3">
+                <f:if condition="{date.event.images}">
+                    <f:then>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                            <f:image src="{date.event.images.originalResource.originalFile.uid}" alt="" width="480c" height="240c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:then>
+                    <f:else>
+                        <img src="https://dummyimage.com/480x320/ddd/ccc" alt="Dummy" width="320" height="320" class="img-fluid img-thumbnail"/>
+                    </f:else>
+                </f:if>
+            </div>
+        </div>
+    </f:for>
+</f:widget.paginate>
+</html>

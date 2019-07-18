@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-01T16:05:42Z" product-name="dd_events">
+		<header/>
+		<body>
+			<trans-unit id="global_id.description">
+				<source>globalId</source>
+			</trans-unit>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="teaser.description">
+				<source>teaser</source>
+			</trans-unit>
+			<trans-unit id="details.description">
+				<source>details</source>
+			</trans-unit>
+			<trans-unit id="price_info.description">
+				<source>priceInfo</source>
+			</trans-unit>
+			<trans-unit id="street.description">
+				<source>street</source>
+			</trans-unit>
+			<trans-unit id="district.description">
+				<source>district</source>
+			</trans-unit>
+			<trans-unit id="city.description">
+				<source>city</source>
+			</trans-unit>
+			<trans-unit id="zip.description">
+				<source>zip</source>
+			</trans-unit>
+			<trans-unit id="web.description">
+				<source>web</source>
+			</trans-unit>
+			<trans-unit id="booking.description">
+				<source>booking</source>
+			</trans-unit>
+			<trans-unit id="ticket.description">
+				<source>ticket</source>
+			</trans-unit>
+			<trans-unit id="facebook.description">
+				<source>facebook</source>
+			</trans-unit>
+			<trans-unit id="youtube.description">
+				<source>youtube</source>
+			</trans-unit>
+			<trans-unit id="latitude.description">
+				<source>latitude</source>
+			</trans-unit>
+			<trans-unit id="longitude.description">
+				<source>longitude</source>
+			</trans-unit>
+			<trans-unit id="images.description">
+				<source>images</source>
+			</trans-unit>
+			<trans-unit id="slug.description">
+				<source>slug</source>
+			</trans-unit>
+			<trans-unit id="organizer.description">
+				<source>organizer</source>
+			</trans-unit>
+			<trans-unit id="date.description">
+				<source>date</source>
+			</trans-unit>
+			<trans-unit id="region.description">
+				<source>region</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
