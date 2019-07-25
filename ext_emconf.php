@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Events',
-    'description' => 'Extension to manage Destination Data managed events',
+    'description' => 'Extension to manage events',
     'category' => 'plugin',
     'author' => 'Dirk Koritnik',
     'author_email' => 'koritnik@werkraum-media.de',

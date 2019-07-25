@@ -3,6 +3,12 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="dd_events">
 		<header/>
 		<body>
+			<trans-unit id="tx_events.name">
+				<source>Events</source>
+			</trans-unit>
+			<trans-unit id="tx_events.description">
+				<source>Event Modul</source>
+			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event">
 				<source>Event</source>
 			</trans-unit>

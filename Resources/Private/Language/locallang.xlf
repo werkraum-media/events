@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="dd_events">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="events">
 		<header/>
 		<body>
 			<trans-unit id="tx_events_domain_model_event">

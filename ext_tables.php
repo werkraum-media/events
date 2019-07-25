@@ -10,7 +10,7 @@ call_user_func(
             'Wrm.Events',
             'Pi1',
             'Events',
-            'EXT:dd_events/Resources/Public/Icons/user_plugin_events.svg'
+            'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
         );
         */
 
