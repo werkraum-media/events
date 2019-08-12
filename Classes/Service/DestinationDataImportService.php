@@ -74,7 +74,7 @@ class DestinationDataImportService {
     /*
      * @var
      */
-    protected $enviroment;
+    protected $environment;
     /**
      * @var bool
      */
