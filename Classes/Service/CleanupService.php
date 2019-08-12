@@ -180,7 +180,7 @@ class CleanupService {
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'] = [
             \TYPO3\CMS\Core\Log\LogLevel::INFO => [
                 'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
-                    'logFile' => 'typo3temp/logs/events_importcleanup'
+                    'logFile' => 'typo3temp/logs/events_cleanup'
                     ]
             ]
         ];

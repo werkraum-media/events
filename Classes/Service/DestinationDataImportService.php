@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Service;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -70,6 +71,10 @@ class DestinationDataImportService {
      * @var array
      */
     protected $settings = [];
+    /*
+     * @var
+     */
+    protected $enviroment;
     /**
      * @var bool
      */
@@ -136,6 +141,7 @@ class DestinationDataImportService {
      * @param PersistenceManager $persistenceManager
      * @param ResourceFactory $resourceFactory
      * @param ObjectManager $objectManager
+     * @param Environment $environment
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -148,7 +154,8 @@ class DestinationDataImportService {
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
         ResourceFactory $resourceFactory,
-        ObjectManager $objectManager
+        ObjectManager $objectManager,
+        Environment $environment
     ) {
         $this->eventRepository          = $eventRepository;
         $this->regionRepository         = $regionRepository;
@@ -160,7 +167,8 @@ class DestinationDataImportService {
         $this->configurationManager     = $configurationManager;
         $this->persistenceManager       = $persistenceManager;
         $this->resourceFactory          = $resourceFactory;
-        $this->objectManager           = $objectManager;
+        $this->objectManager            = $objectManager;
+        $this->environment              = $environment;
 
         // Get Typoscript Settings
         $this->settings = $this->configurationManager->getConfiguration(
@@ -175,31 +183,6 @@ class DestinationDataImportService {
         $this->restType         = $this->settings['destinationData']['restType'];
         $this->restLimit        = $this->settings['destinationData']['restLimit'];
         $this->restTemplate     = $this->settings['destinationData']['dataTemplate'];
-
-        // Set storage pid
-        $frameworkConfiguration = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
-
-        $persistenceConfiguration = [
-            'persistence' => [
-                'storagePid' => $this->storagePid,
-            ],
-        ];
-        $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
-
-        // Init Logger
-        // Nötig, damit logger arbeitet?
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'] = [
-            \TYPO3\CMS\Core\Log\LogLevel::INFO => [
-                'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
-                    'logFile' => 'typo3temp/logs/events_import.log'
-                ]
-            ]
-        ];
-
-        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
-        $this->logger->info('Starting Destination Data Import Service');
     }
 
     /**
@@ -216,6 +199,34 @@ class DestinationDataImportService {
         $this->regionUid = $regionUid;
         $this->categoryParentUid = $categoryParentUid;
         $this->filesFolder = $filesFolder;
+
+        // Get configuration
+        $frameworkConfiguration = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
+
+        // Set storage pid
+        $persistenceConfiguration = [
+            'persistence' => [
+                'storagePid' => $this->storagePid,
+            ],
+        ];
+
+        // Set Configuration
+        $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
+
+        // Init Logger
+        // Nötig, damit logger arbeitet?
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'] = [
+            \TYPO3\CMS\Core\Log\LogLevel::INFO => [
+                'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
+                    'logFile' => 'typo3temp/logs/events_import.log'
+                ]
+            ]
+        ];
+
+        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
+        $this->logger->info('Starting Destination Data Import Service');
 
         $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
 
@@ -241,268 +252,36 @@ class DestinationDataImportService {
         $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
 
         foreach ($data['items'] as $event) {
+
             $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
 
-            // Event already exists ?
-            $this->tmpCurrentEvent = $this->eventRepository->findOneByGlobalId($event['global_id']);
+            // Event already exists? If not create one!
+            $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
 
-            if (!$this->tmpCurrentEvent)
-            {
-                $this->logger->info(substr($event['title'], 0, 20) . ' does not exist');
-                $this->tmpCurrentEvent = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Event');
-
-                // Create event and persist
-                $this->tmpCurrentEvent->setGlobalId($event['global_id']);
-                $this->tmpCurrentEvent->setCategories(new ObjectStorage());
-                $this->eventRepository->add($this->tmpCurrentEvent);
-                $this->persistenceManager->persistAll();
-
-                $this->logger->info('Not found "' . substr($event['title'], 0, 20)  . '..." with global id ' . $event['global_id'] . ' in database. Created new one.');
-            } else {
-                // Global ID is found and events gets updated
-                $this->tmpCurrentEvent = $this->eventRepository->findOneByGlobalId($event['global_id']);
-                //$this->currentEventIsNew = FALSE;
-                $this->logger->info('Found "' . substr($event['title'], 0, 20) . '..." with global id ' . $event['global_id'] . ' in database');
-            }
-
-            /////////////////////
             // Set selected Region
             $this->tmpCurrentEvent->setRegion($selectedRegion);
 
-            ////////////
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
 
-            //////////////////////////////////////////////
             // Set Highlight (Is only set in rest if true)
             if($event['highlight'])
                 $this->tmpCurrentEvent->setHighlight($event['highlight']);
 
-            ////////////
             // Set Texts
-            foreach ($event['texts'] as $text)
-            {
-                if ($text['rel'] == "details" && $text['type'] == "text/plain") {
-                    $this->tmpCurrentEvent->setDetails($text['value']);
-                }
-                if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
-                    $this->tmpCurrentEvent->setTeaser($text['value']);
-                }
-            }
+            $this->setTexts($event['texts']);
 
-            //////////////
-            // Set Address
-            $this->tmpCurrentEvent->setStreet($event['street']);
-            $this->tmpCurrentEvent->setCity($event['city']);
-            $this->tmpCurrentEvent->setZip($event['zip']);
-            $this->tmpCurrentEvent->setCountry($event['country']);
+            // Set address and geo data
+            $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
 
-            //////////
-            // Set Geo
-            $this->tmpCurrentEvent->setLatitude($event['geo']['main']['latitude']);
-            $this->tmpCurrentEvent->setLongitude($event['geo']['main']['longitude']);
-
-            ////////////////
             // Set Organizer
+            $this->setOrganizer($event['addresses']);
 
-            $tmpOrganizer = FALSE;
-            foreach ($event['addresses'] as $address)
-            {
-                if ($address['rel'] == "organizer") {
-                    $tmpOrganizer = $this->organizerRepository->findOneByName($address['name']);
-                    if (!$tmpOrganizer)
-                    {
-                        $tmpOrganizer = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Organizer');
-
-                        $tmpOrganizer->setName($address['name']);
-                        $tmpOrganizer->setCity($address['city']);
-                        $tmpOrganizer->setZip($address['zip']);
-                        $tmpOrganizer->setStreet($address['street']);
-                        $tmpOrganizer->setPhone($address['phone']);
-                        $tmpOrganizer->setWeb($address['web']);
-                        $tmpOrganizer->setEmail($address['email']);
-                        $tmpOrganizer->setDistrict($address['district']);
-
-                        $this->organizerRepository->add($tmpOrganizer);
-                        $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
-
-                    } else {
-                        $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
-                    }
-                    $tmpOrganizer = FALSE;
-                }
-            }
-
-            ////////////
             // Set Dates
+            $this->setDates($event['timeIntervals']);
 
-            // TODO: does not seem to work -->
-            //$currentEventDates = $this->tmpCurrentEvent->getDates();
-            //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
-            // <--
-
-            // TODO: Workaround delete dates
-            $currentEventDates = $this->tmpCurrentEvent->getDates();
-            $this->logger->info('Found ' . count($currentEventDates) . ' to delete');
-
-            foreach ($currentEventDates as $currentDate) {
-                //$this->logger->info('Delete ' . $currentDate->getStart()->format('Y-m-d'));
-                $this->dateRepository->remove($currentDate);
-            }
-
-            $now = new \DateTime();
-            $now = $now->getTimestamp();
-
-            foreach ($event['timeIntervals'] as $date) {
-
-                // Check if dates are given as interval or not
-                if (empty($date['interval'])) {
-
-                    if (strtotime($date['start']) > $now) {
-
-                        $this->logger->info('Setup single date');
-                        //$this->logger->info('Start ' . $date['start']);
-                        //$this->logger->info('End ' . $date['end']);
-
-                        $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
-
-                        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                        $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
-
-                        $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
-                        $this->logger->info('End transformed ' . $end->format('Y-m-d H:i'));
-
-                        $dateObj->setStart($start);
-                        $dateObj->setEnd($end);
-
-                        $this->tmpCurrentEvent->addDate($dateObj);
-
-                    }
-
-                } else {
-
-
-                    if ($date['freq'] == 'Daily' && empty($date['weekdays'])) {
-
-                        $this->logger->info('Setup daily interval dates');
-                        $this->logger->info('Start ' . $date['start']);
-                        $this->logger->info('End ' . $date['repeatUntil']);
-
-                        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                        $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
-
-                        for($i = strtotime($start->format('l'), $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 day', $i)) {
-
-                            if ($i > $now) {
-
-                                $eventStart = new \DateTime();
-                                $eventStart->setTimestamp($i);
-                                $eventStart->setTime($start->format('H'), $start->format('i'));
-
-                                $eventEnd = new \DateTime();
-                                $eventEnd->setTimestamp($i);
-                                $eventEnd->setTime($until->format('H'), $until->format('i'));
-
-                                //$this->logger->info($eventStart->format('Y-m-d H:i'));
-                                //$this->logger->info($eventEnd->format('Y-m-d H:i'));
-
-                                $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
-                                $dateObj->setStart($eventStart);
-                                $dateObj->setEnd($eventEnd);
-                                $this->tmpCurrentEvent->addDate($dateObj);
-
-                            }
-
-                        }
-
-                    }
-
-                    else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
-
-                        foreach ($date['weekdays'] as $day) {
-
-                            $this->logger->info('Setup weekly interval dates for ' . $day);
-                            $this->logger->info('Start ' . $date['start']);
-                            $this->logger->info('End ' . $date['repeatUntil']);
-
-                            $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                            $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
-
-                            for($i = strtotime($day, $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 week', $i)) {
-
-                                if ($i > $now) {
-
-                                    $eventStart = new \DateTime();
-                                    $eventStart->setTimestamp($i);
-                                    $eventStart->setTime($start->format('H'), $start->format('i'));
-
-                                    $eventEnd = new \DateTime();
-                                    $eventEnd->setTimestamp($i);
-                                    $eventEnd->setTime($until->format('H'), $until->format('i'));
-
-                                    //$this->logger->info($eventStart->format('Y-m-d H:i'));
-                                    //$this->logger->info($eventEnd->format('Y-m-d H:i'));
-
-                                    $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
-                                    $dateObj->setStart($eventStart);
-                                    $dateObj->setEnd($eventEnd);
-                                    $this->tmpCurrentEvent->addDate($dateObj);
-
-                                }
-
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
-
-            /////////////
             // Set Assets
-
-            $this->resourceFactory = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
-            $this->fileRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\FileRepository');
-            $this->metaDataRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\Index\\MetaDataRepository');
-
-            foreach ($event['media_objects'] as $media_object)
-            {
-                if($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
-
-                    //
-
-                    $this->storage = $this->resourceFactory->getDefaultStorage();
-
-                    // Check if file already exists
-                    if (file_exists(PATH_site . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
-                        $this->logger->info('[NOTICE] File already exists');
-                    } else {
-                        $this->logger->info("[NOTICE] File don't exist");
-                        // Load the file
-                        if ($file = $this->loadFile($media_object['url'])) {
-                            // Move file to defined folder
-                            $this->logger->info('[INFO] Adding file ' . $file);
-                            $this->storage->addFile(PATH_site . "uploads/tx_Events/" . $file, $this->storage->getFolder($this->filesFolder), basename($media_object['url']));
-                        } else {
-                            $error = true;
-                        }
-                    }
-
-                    if ($error !== true) {
-                        if ($this->tmpCurrentEvent->getImages() !== null) {
-                            $this->logger->info('Relation found');
-                            // TODO: How to delete file references?
-                        } else {
-                            $this->logger->info('No relation found');
-                            $file = $this->storage->getFile($this->filesFolder . basename($media_object['url']));
-                            $this->metaDataRepository->update($file->getUid(), array('title' => $media_object['value'], 'description' => $media_object['description'], 'alternative' => 'DD Import'));
-                            $this->createFileRelations($file->getUid(),  'tx_Events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
-                        }
-                    }
-
-                }
-            }
+            $this->setAssets($event['media_objects']);
 
             // Update and persist
             $this->logger->info('Persist database');
@@ -515,13 +294,246 @@ class DestinationDataImportService {
     }
 
     /**
+     * @param array $timeIntervals
+     */
+    protected function setDates(Array $timeIntervals) {
+
+        // TODO: does not seem to work -->
+        //$currentEventDates = $this->tmpCurrentEvent->getDates();
+        //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
+        // <--
+
+        // TODO: Workaround delete dates
+        $currentEventDates = $this->tmpCurrentEvent->getDates();
+        $this->logger->info('Found ' . count($currentEventDates) . ' to delete');
+
+        foreach ($currentEventDates as $currentDate) {
+            //$this->logger->info('Delete ' . $currentDate->getStart()->format('Y-m-d'));
+            $this->dateRepository->remove($currentDate);
+        }
+
+        $now = new \DateTime();
+        $now = $now->getTimestamp();
+
+        foreach ($timeIntervals as $date) {
+
+            // Check if dates are given as interval or not
+            if (empty($date['interval'])) {
+
+                if (strtotime($date['start']) > $now) {
+                    $this->logger->info('Setup single date');
+                    $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                    $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
+                    $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
+                    $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
+                    $this->logger->info('End transformed ' . $end->format('Y-m-d H:i'));
+                    $dateObj->setStart($start);
+                    $dateObj->setEnd($end);
+                    $this->tmpCurrentEvent->addDate($dateObj);
+                }
+
+            } else {
+
+
+                if ($date['freq'] == 'Daily' && empty($date['weekdays'])) {
+
+                    $this->logger->info('Setup daily interval dates');
+                    $this->logger->info('Start ' . $date['start']);
+                    $this->logger->info('End ' . $date['repeatUntil']);
+                    $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
+                    $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+                    for($i = strtotime($start->format('l'), $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 day', $i)) {
+                        if ($i > $now) {
+                            $eventStart = new \DateTime();
+                            $eventStart->setTimestamp($i);
+                            $eventStart->setTime($start->format('H'), $start->format('i'));
+                            $eventEnd = new \DateTime();
+                            $eventEnd->setTimestamp($i);
+                            $eventEnd->setTime($until->format('H'), $until->format('i'));
+                            $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                            $dateObj->setStart($eventStart);
+                            $dateObj->setEnd($eventEnd);
+                            $this->tmpCurrentEvent->addDate($dateObj);
+                        }
+                    }
+
+                }
+
+                else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
+
+                    foreach ($date['weekdays'] as $day) {
+
+                        $this->logger->info('Setup weekly interval dates for ' . $day);
+                        $this->logger->info('Start ' . $date['start']);
+                        $this->logger->info('End ' . $date['repeatUntil']);
+                        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
+                        $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+
+                        for($i = strtotime($day, $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 week', $i)) {
+                            if ($i > $now) {
+                                $eventStart = new \DateTime();
+                                $eventStart->setTimestamp($i);
+                                $eventStart->setTime($start->format('H'), $start->format('i'));
+                                $eventEnd = new \DateTime();
+                                $eventEnd->setTimestamp($i);
+                                $eventEnd->setTime($until->format('H'), $until->format('i'));
+                                $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                                $dateObj->setStart($eventStart);
+                                $dateObj->setEnd($eventEnd);
+                                $this->tmpCurrentEvent->addDate($dateObj);
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+    /**
+     * @param array $addresses
+     */
+    protected function setOrganizer(Array $addresses) {
+        foreach ($addresses as $address)
+        {
+            if ($address['rel'] == "organizer") {
+                $tmpOrganizer = $this->organizerRepository->findOneByName($address['name']);
+                if (!$tmpOrganizer)
+                {
+                    $tmpOrganizer = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Organizer');
+
+                    $tmpOrganizer->setName($address['name']);
+                    $tmpOrganizer->setCity($address['city']);
+                    $tmpOrganizer->setZip($address['zip']);
+                    $tmpOrganizer->setStreet($address['street']);
+                    $tmpOrganizer->setPhone($address['phone']);
+                    $tmpOrganizer->setWeb($address['web']);
+                    $tmpOrganizer->setEmail($address['email']);
+                    $tmpOrganizer->setDistrict($address['district']);
+
+                    $this->organizerRepository->add($tmpOrganizer);
+                    $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
+
+                } else {
+                    $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $street
+     * @param string $city
+     * @param string $zip
+     * @param string $country
+     * @param string $lat
+     * @param string $lng
+     */
+    protected function setAddress(String $street, String $city, String $zip, String $country, String $lat, String $lng) {
+        $this->tmpCurrentEvent->setStreet($street);
+        $this->tmpCurrentEvent->setCity($city);
+        $this->tmpCurrentEvent->setZip($zip);
+        $this->tmpCurrentEvent->setCountry($country);
+        $this->tmpCurrentEvent->setLatitude($lat);
+        $this->tmpCurrentEvent->setLongitude($lng);
+    }
+
+    /**
+     * Set Texts
+     * @param Array $texts
+     */
+    protected function setTexts(Array $texts) {
+        foreach ($texts as $text)
+        {
+            if ($text['rel'] == "details" && $text['type'] == "text/plain") {
+                $this->tmpCurrentEvent->setDetails($text['value']);
+            }
+            if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
+                $this->tmpCurrentEvent->setTeaser($text['value']);
+            }
+        }
+    }
+
+    /**
      * Load File
-     *
+     * @param String $globalId
+     * @param String $title
+     */
+    protected function getOrCreateEvent(String $globalId, String $title) {
+
+        $event = $this->eventRepository->findOneByGlobalId($globalId);
+
+        if (!$event)
+        {
+            $this->logger->info(substr($title, 0, 20) . ' does not exist');
+            $event = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Event');
+
+            // Create event and persist
+            $event->setGlobalId($globalId);
+            $event->setCategories(new ObjectStorage());
+            $this->eventRepository->add($event);
+            $this->persistenceManager->persistAll();
+
+            $this->logger->info('Not found "' . substr($title, 0, 20)  . '..." with global id ' . $globalId . ' in database. Created new one.');
+        } else {
+            // Global ID is found and events gets updated
+            $event = $this->eventRepository->findOneByGlobalId($globalId);
+            $this->logger->info('Found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database');
+        }
+
+        return $event;
+    }
+
+    /**
+     * @param array $assets
+     */
+    protected function setAssets(Array $assets) {
+        foreach ($assets as $media_object)
+        {
+            if($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
+
+                $this->storage = $this->resourceFactory->getDefaultStorage();
+
+                // Check if file already exists
+                if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
+                    $this->logger->info('[NOTICE] File already exists');
+                } else {
+                    $this->logger->info("[NOTICE] File don't exist");
+                    // Load the file
+                    if ($file = $this->loadFile($media_object['url'])) {
+                        // Move file to defined folder
+                        $this->logger->info('[INFO] Adding file ' . $file);
+                        $this->storage->addFile(PATH_site . "uploads/tx_Events/" . $file, $this->storage->getFolder($this->filesFolder), basename($media_object['url']));
+                    } else {
+                        $error = true;
+                    }
+                }
+
+                if ($error !== true) {
+                    if ($this->tmpCurrentEvent->getImages() !== null) {
+                        $this->logger->info('Relation found');
+                        // TODO: How to delete file references?
+                    } else {
+                        $this->logger->info('No relation found');
+                        $file = $this->storage->getFile($this->filesFolder . basename($media_object['url']));
+                        $this->metaDataRepository->update($file->getUid(), array('title' => $media_object['value'], 'description' => $media_object['description'], 'alternative' => 'DD Import'));
+                        $this->createFileRelations($file->getUid(),  'tx_Events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Load File
      * @param string $file
      * @return bool
      */
     protected function loadFile($file) {
-        $directory = PATH_site . "uploads/tx_Events/";
+        $directory = $this->environment->getPublicPath() . "uploads/tx_Events/";
         $filename = basename($file);
         $this->logger->info('[INFO] Getting file ' . $file . ' as ' . $filename);
         $asset = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($file);
@@ -530,7 +542,6 @@ class DestinationDataImportService {
             $fp = fopen($directory . $filename, 'w');
             fputs($fp, $asset);
             fclose($fp);
-
             return $filename;
         }
         $this->logger->info('[ERROR] cannot load file ' . $file);
@@ -539,7 +550,6 @@ class DestinationDataImportService {
 
     /**
      * Build relations for FAL
-     *
      * @param int    $uid_local
      * @param string $tablenames
      * @param int    $uid_foreign
@@ -582,7 +592,6 @@ class DestinationDataImportService {
 
     /**
      * Performs slug update
-     *
      * @return bool
      */
     protected function doSlugUpdate()
