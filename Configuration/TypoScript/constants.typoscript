@@ -12,4 +12,18 @@ plugin.tx_events {
         # cat=plugin.tx_events//a; type=string; label=Default storage PID
         storagePid =
     }
+    settings {
+        destinationData {
+            # cat=plugin.tx_events//a; type=string; label=Rest Url
+            restUrl = http://meta.et4.de/rest.ashx/search/
+            # cat=plugin.tx_events//a; type=string; label=License
+            license = ***REMOVED***
+            # cat=plugin.tx_events//a; type=string; label=Data Type
+            dataType = Event
+            # cat=plugin.tx_events//a; type=string; label=Data Limit
+            dataLimit = 200
+            # cat=plugin.tx_events//a; type=string; label=Data Template
+            dataTemplate = ET2014A.json
+        }
+    }
 }

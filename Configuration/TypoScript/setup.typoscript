@@ -1,4 +1,3 @@
-
 plugin.tx_events {
     view {
         templateRootPaths {
@@ -45,5 +44,15 @@ plugin.tx_events {
             insertBelow = 1
             maximumNumberOfLinks = 10
         }
+
+        destinationData {
+            restUrl = {$plugin.tx_events.settings.destinationData.restUrl}
+            license = {$plugin.tx_events.settings.destinationData.license}
+            dataType = {$plugin.tx_events.settings.destinationData.datType}
+            dataLimit = {$plugin.tx_events.settings.destinationData.dataLimit}
+            dataTemplate = {$plugin.tx_events.settings.destinationData.dataTemplate}
+        }
     }
 }
+
+module.tx_events < plugin.tx_events
