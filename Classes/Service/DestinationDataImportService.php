@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Log\LogManager;
 
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -21,6 +22,7 @@ use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
+
 
 class DestinationDataImportService {
 
@@ -221,7 +223,7 @@ class DestinationDataImportService {
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
 
-        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $this->logger->info('Starting Destination Data Import Service');
 
         $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
@@ -288,10 +290,9 @@ class DestinationDataImportService {
         $sysParentCategory = $this->sysCategoriesRepository->findByUid($this->categoryParentUid);
         foreach ($categories as $categoryTitle) {
             $tmpSysCategory = $this->sysCategoriesRepository->findOneByTitle($categoryTitle);
-            if (!$tmpSysCategory)
-            {
+            if (!$tmpSysCategory) {
                 $this->logger->info('Creating new category: ' . $categoryTitle);
-                $tmpSysCategory = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Model\\Category');
+                $tmpSysCategory = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\Category::class);
                 $tmpSysCategory->setTitle($categoryTitle);
                 $tmpSysCategory->setParent($sysParentCategory);
                 $tmpSysCategory->setPid($this->sysCategoriesPid);
@@ -305,6 +306,7 @@ class DestinationDataImportService {
 
     /**
      * @param array $timeIntervals
+     * @TODO: split into functions
      */
     protected function setDates(Array $timeIntervals) {
 
@@ -332,7 +334,7 @@ class DestinationDataImportService {
 
                 if (strtotime($date['start']) > $now) {
                     $this->logger->info('Setup single date');
-                    $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                    $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
                     $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
@@ -360,7 +362,7 @@ class DestinationDataImportService {
                             $eventEnd = new \DateTime();
                             $eventEnd->setTimestamp($i);
                             $eventEnd->setTime($until->format('H'), $until->format('i'));
-                            $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                            $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
                             $dateObj->setStart($eventStart);
                             $dateObj->setEnd($eventEnd);
                             $this->tmpCurrentEvent->addDate($dateObj);
@@ -372,7 +374,6 @@ class DestinationDataImportService {
                 else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
 
                     foreach ($date['weekdays'] as $day) {
-
                         $this->logger->info('Setup weekly interval dates for ' . $day);
                         $this->logger->info('Start ' . $date['start']);
                         $this->logger->info('End ' . $date['repeatUntil']);
@@ -387,7 +388,7 @@ class DestinationDataImportService {
                                 $eventEnd = new \DateTime();
                                 $eventEnd->setTimestamp($i);
                                 $eventEnd->setTime($until->format('H'), $until->format('i'));
-                                $dateObj = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Date');
+                                $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
                                 $dateObj->setStart($eventStart);
                                 $dateObj->setEnd($eventEnd);
                                 $this->tmpCurrentEvent->addDate($dateObj);
@@ -410,25 +411,25 @@ class DestinationDataImportService {
         {
             if ($address['rel'] == "organizer") {
                 $tmpOrganizer = $this->organizerRepository->findOneByName($address['name']);
-                if (!$tmpOrganizer)
-                {
-                    $tmpOrganizer = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Organizer');
-
-                    $tmpOrganizer->setName($address['name']);
-                    $tmpOrganizer->setCity($address['city']);
-                    $tmpOrganizer->setZip($address['zip']);
-                    $tmpOrganizer->setStreet($address['street']);
-                    $tmpOrganizer->setPhone($address['phone']);
-                    $tmpOrganizer->setWeb($address['web']);
-                    $tmpOrganizer->setEmail($address['email']);
-                    $tmpOrganizer->setDistrict($address['district']);
-
-                    $this->organizerRepository->add($tmpOrganizer);
+                if ($tmpOrganizer) {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
-
-                } else {
-                    $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
+                    continue;
                 }
+
+                $tmpOrganizer = $this->objectManager->get(\Wrm\Events\Domain\Model\Organizer::class);
+
+                $tmpOrganizer->setName($address['name']);
+                $tmpOrganizer->setCity($address['city']);
+                $tmpOrganizer->setZip($address['zip']);
+                $tmpOrganizer->setStreet($address['street']);
+                $tmpOrganizer->setPhone($address['phone']);
+                $tmpOrganizer->setWeb($address['web']);
+                $tmpOrganizer->setEmail($address['email']);
+                $tmpOrganizer->setDistrict($address['district']);
+
+                $this->organizerRepository->add($tmpOrganizer);
+                $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
+
             }
         }
     }
@@ -475,24 +476,22 @@ class DestinationDataImportService {
 
         $event = $this->eventRepository->findOneByGlobalId($globalId);
 
-        if (!$event)
-        {
-            $this->logger->info(substr($title, 0, 20) . ' does not exist');
-            $event = $this->objectManager->get('Wrm\\Events\\Domain\\Model\\Event');
-
-            // Create event and persist
-            $event->setGlobalId($globalId);
-            $event->setCategories(new ObjectStorage());
-            $this->eventRepository->add($event);
-            $this->persistenceManager->persistAll();
-
-            $this->logger->info('Not found "' . substr($title, 0, 20)  . '..." with global id ' . $globalId . ' in database. Created new one.');
-        } else {
+        if ($event) {
             // Global ID is found and events gets updated
             $event = $this->eventRepository->findOneByGlobalId($globalId);
             $this->logger->info('Found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database');
+            return $event;
         }
 
+        // New event is created
+        $this->logger->info(substr($title, 0, 20) . ' does not exist');
+        $event = $this->objectManager->get(\Wrm\Events\Domain\Model\Event::class);
+        // Create event and persist
+        $event->setGlobalId($globalId);
+        $event->setCategories(new ObjectStorage());
+        $this->eventRepository->add($event);
+        $this->persistenceManager->persistAll();
+        $this->logger->info('Not found "' . substr($title, 0, 20)  . '..." with global id ' . $globalId . ' in database. Created new one.');
         return $event;
     }
 
@@ -500,6 +499,9 @@ class DestinationDataImportService {
      * @param array $assets
      */
     protected function setAssets(Array $assets) {
+
+        $error = false;
+
         foreach ($assets as $media_object)
         {
             if($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
@@ -534,19 +536,20 @@ class DestinationDataImportService {
                 }
 
             }
+            $error = false;
         }
     }
 
     /**
      * Load File
      * @param string $file
-     * @return bool
+     * @return string
      */
     protected function loadFile($file) {
         $directory = $this->environment->getPublicPath() . "/uploads/tx_events/";
         $filename = basename($file);
         $this->logger->info('Getting file ' . $file . ' as ' . $filename);
-        $asset = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($file);
+        $asset = GeneralUtility::getUrl($file);
         if ($asset) {
             file_put_contents($directory . $filename, $asset);
             return $filename;
@@ -583,18 +586,18 @@ class DestinationDataImportService {
             $fieldname => $newId
         );
 
-        $dataHandler = $this->objectManager->get('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
+        $dataHandler = $this->objectManager->get(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         $dataHandler->start($data, array());
         $dataHandler->process_datamap();
 
         if (count($dataHandler->errorLog) === 0) {
             return true;
-        } else {
-            foreach($dataHandler->errorLog as $error) {
-                $this->logger->info($error);
-            }
-            return false;
         }
+
+        foreach($dataHandler->errorLog as $error) {
+            $this->logger->info($error);
+        }
+        return false;
     }
 
     /**

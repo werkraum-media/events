@@ -8,19 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+
+use Wrm\Events\Service\DestinationDataImportService;
 
 class DestinationDataImportCommand extends Command {
-
-    protected $restExperience;
-    protected $storagePid;
-    protected $regionUid;
-    protected $categoryParentUid;
-    protected $filesFolder;
-
-    protected $cliOutput;
-    protected $cliInput;
-
-    protected $destinationDataImportService;
 
     public function configure()
     {
@@ -59,26 +51,16 @@ class DestinationDataImportCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->cliOutput = $output;
-        $this->cliInput = $input;
-
-        $this->storagePid = $input->getArgument('storage-pid');
-        $this->regionUid = $input->getArgument('region-uid');
-        $this->categoryParentUid = $input->getArgument('category-parent-uid');
-        $this->filesFolder = $input->getArgument('files-folder');
-        $this->restExperience = $input->getArgument('rest-experience');
-
         Bootstrap::initializeBackendAuthentication();
 
-        $this->objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-        $this->destinationDataImportService = $this->objectManager->get('Wrm\\Events\\Service\\DestinationDataImportService');
-
-        return $this->destinationDataImportService->import(
-            $this->restExperience,
-            $this->storagePid,
-            $this->regionUid,
-            $this->categoryParentUid,
-            $this->filesFolder
-        );
+        return GeneralUtility::makeInstance(ObjectManager::class)
+            ->get(DestinationDataImportService::class)
+            ->import(
+                $input->getArgument('rest-experience'),
+                $input->getArgument('storage-pid'),
+                $input->getArgument('region-uid'),
+                $input->getArgument('category-parent-uid'),
+                $input->getArgument('files-folder')
+            );
     }
 }
