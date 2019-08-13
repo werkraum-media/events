@@ -252,27 +252,44 @@ class DestinationDataImportService {
         foreach ($data['items'] as $event) {
 
             $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
+
             // Event already exists? If not create one!
             $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
+
             // Set selected Region
             $this->tmpCurrentEvent->setRegion($selectedRegion);
+
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
+
             // Set Highlight (Is only set in rest if true)
             if($event['highlight'])
                 $this->tmpCurrentEvent->setHighlight($event['highlight']);
+
             // Set Texts
-            $this->setTexts($event['texts']);
+            if($event['texts'])
+                $this->setTexts($event['texts']);
+
             // Set address and geo data
-            $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
+            if($event['street'] && $event['city'] && $event['zip'] && $event['country'])
+                $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
+
             // Set Categories
-            $this->setCategories($event['categories']);
+            if($event['categories'])
+                $this->setCategories($event['categories']);
+
             // Set Organizer
-            $this->setOrganizer($event['addresses']);
+            if($event['addresses'])
+                $this->setOrganizer($event['addresses']);
+
             // Set Dates
-            $this->setDates($event['timeIntervals']);
+            if($event['timeIntervals'])
+                $this->setDates($event['timeIntervals']);
+
             // Set Assets
-            $this->setAssets($event['media_objects']);
+            if($event['media_objects'])
+                $this->setAssets($event['media_objects']);
+
             // Update and persist
             $this->logger->info('Persist database');
             $this->eventRepository->update($this->tmpCurrentEvent);
