@@ -55,6 +55,10 @@ class DestinationDataImportService {
     /**
      * @var
      */
+    protected $categoriesPid;
+    /**
+     * @var
+     */
     protected $regionUid;
     /**
      * @var
@@ -184,6 +188,7 @@ class DestinationDataImportService {
         $this->restType         = $this->settings['destinationData']['restType'];
         $this->restLimit        = $this->settings['destinationData']['restLimit'];
         $this->restTemplate     = $this->settings['destinationData']['dataTemplate'];
+        $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
     }
 
     /**
@@ -289,6 +294,7 @@ class DestinationDataImportService {
                 $tmpSysCategory = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Model\\Category');
                 $tmpSysCategory->setTitle($categoryTitle);
                 $tmpSysCategory->setParent($sysParentCategory);
+                $tmpSysCategory->setPid($this->sysCategoriesPid);
                 $this->sysCategoriesRepository->add($tmpSysCategory);
                 $this->tmpCurrentEvent->addCategory($tmpSysCategory);
             } else {

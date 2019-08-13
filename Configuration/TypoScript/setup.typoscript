@@ -51,6 +51,7 @@ plugin.tx_events {
             dataType = {$plugin.tx_events.settings.destinationData.datType}
             dataLimit = {$plugin.tx_events.settings.destinationData.dataLimit}
             dataTemplate = {$plugin.tx_events.settings.destinationData.dataTemplate}
+            categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
         }
     }
 }

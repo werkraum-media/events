@@ -24,6 +24,8 @@ plugin.tx_events {
             dataLimit = 200
             # cat=plugin.tx_events//a; type=string; label=Data Template
             dataTemplate = ET2014A.json
+            # cat.plugin.tx_events//a; type=string: Label=Category Storage
+            categoriesPid = 54
         }
     }
 }
