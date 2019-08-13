@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
@@ -215,16 +216,6 @@ class DestinationDataImportService {
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
 
-        // Init Logger
-        // Nötig, damit logger arbeitet?
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['writerConfiguration'] = [
-            \TYPO3\CMS\Core\Log\LogLevel::INFO => [
-                'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
-                    'logFile' => 'typo3temp/logs/events_import.log'
-                ]
-            ]
-        ];
-
         $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
         $this->logger->info('Starting Destination Data Import Service');
 
@@ -233,8 +224,10 @@ class DestinationDataImportService {
         $this->logger->info('Try to get data from ' . $restUrl);
 
         if ($jsonResponse = json_decode(file_get_contents($restUrl),true)) {
+            $this->logger->info('Received data with ' . count($jsonResponse) . 'items');
             return $this->processData($jsonResponse);
         } else {
+            $this->logger->error('Could not receive data.');
             return 1;
         }
 
@@ -246,43 +239,33 @@ class DestinationDataImportService {
      */
     public function processData($data) {
 
-        $this->logger->info('Received data with ' . count($data) . 'items');
-
         // Get seleceted region
         $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
 
         foreach ($data['items'] as $event) {
 
             $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
-
             // Event already exists? If not create one!
             $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
-
             // Set selected Region
             $this->tmpCurrentEvent->setRegion($selectedRegion);
-
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
-
             // Set Highlight (Is only set in rest if true)
             if($event['highlight'])
                 $this->tmpCurrentEvent->setHighlight($event['highlight']);
-
             // Set Texts
             $this->setTexts($event['texts']);
-
             // Set address and geo data
             $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
-
+            // Set Categories
+            $this->setCategories($event['categories']);
             // Set Organizer
             $this->setOrganizer($event['addresses']);
-
             // Set Dates
             $this->setDates($event['timeIntervals']);
-
             // Set Assets
             $this->setAssets($event['media_objects']);
-
             // Update and persist
             $this->logger->info('Persist database');
             $this->eventRepository->update($this->tmpCurrentEvent);
@@ -291,6 +274,27 @@ class DestinationDataImportService {
         }
         $this->doSlugUpdate();
         return 0;
+    }
+
+    /**
+     * @param array $categories
+     */
+    protected function setCategories(Array $categories) {
+        $sysParentCategory = $this->sysCategoriesRepository->findByUid($this->categoryParentUid);
+        foreach ($categories as $categoryTitle) {
+            $tmpSysCategory = $this->sysCategoriesRepository->findOneByTitle($categoryTitle);
+            if (!$tmpSysCategory)
+            {
+                $this->logger->info('Creating new category: ' . $categoryTitle);
+                $tmpSysCategory = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Model\\Category');
+                $tmpSysCategory->setTitle($categoryTitle);
+                $tmpSysCategory->setParent($sysParentCategory);
+                $this->sysCategoriesRepository->add($tmpSysCategory);
+                $this->tmpCurrentEvent->addCategory($tmpSysCategory);
+            } else {
+                $this->tmpCurrentEvent->addCategory($tmpSysCategory);
+            }
+        }
     }
 
     /**
@@ -498,14 +502,14 @@ class DestinationDataImportService {
 
                 // Check if file already exists
                 if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
-                    $this->logger->info('[NOTICE] File already exists');
+                    $this->logger->info('File already exists');
                 } else {
-                    $this->logger->info("[NOTICE] File don't exist");
+                    $this->logger->info("File don't exist");
                     // Load the file
                     if ($file = $this->loadFile($media_object['url'])) {
                         // Move file to defined folder
-                        $this->logger->info('[INFO] Adding file ' . $file);
-                        $this->storage->addFile(PATH_site . "uploads/tx_Events/" . $file, $this->storage->getFolder($this->filesFolder), basename($media_object['url']));
+                        $this->logger->info('Adding file ' . $file);
+                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $this->storage->getFolder($this->filesFolder), basename($media_object['url']));
                     } else {
                         $error = true;
                     }
@@ -519,7 +523,7 @@ class DestinationDataImportService {
                         $this->logger->info('No relation found');
                         $file = $this->storage->getFile($this->filesFolder . basename($media_object['url']));
                         $this->metaDataRepository->update($file->getUid(), array('title' => $media_object['value'], 'description' => $media_object['description'], 'alternative' => 'DD Import'));
-                        $this->createFileRelations($file->getUid(),  'tx_Events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
+                        $this->createFileRelations($file->getUid(),  'tx_events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
                     }
                 }
 
@@ -533,18 +537,15 @@ class DestinationDataImportService {
      * @return bool
      */
     protected function loadFile($file) {
-        $directory = $this->environment->getPublicPath() . "uploads/tx_Events/";
+        $directory = $this->environment->getPublicPath() . "/uploads/tx_events/";
         $filename = basename($file);
-        $this->logger->info('[INFO] Getting file ' . $file . ' as ' . $filename);
+        $this->logger->info('Getting file ' . $file . ' as ' . $filename);
         $asset = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl($file);
-
         if ($asset) {
-            $fp = fopen($directory . $filename, 'w');
-            fputs($fp, $asset);
-            fclose($fp);
+            file_put_contents($directory . $filename, $asset);
             return $filename;
         }
-        $this->logger->info('[ERROR] cannot load file ' . $file);
+        $this->logger->error('Cannot load file ' . $file);
         return false;
     }
 
