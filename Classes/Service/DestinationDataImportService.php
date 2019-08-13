@@ -189,7 +189,7 @@ class DestinationDataImportService {
         $this->restLicenseKey   = $this->settings['destinationData']['license'];
         $this->restType         = $this->settings['destinationData']['restType'];
         $this->restLimit        = $this->settings['destinationData']['restLimit'];
-        $this->restTemplate     = $this->settings['destinationData']['dataTemplate'];
+        $this->restTemplate     = $this->settings['destinationData']['restTemplate'];
         $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
     }
 

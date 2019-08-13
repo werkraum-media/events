@@ -19,11 +19,11 @@ plugin.tx_events {
             # cat=plugin.tx_events//a; type=string; label=License
             license = ***REMOVED***
             # cat=plugin.tx_events//a; type=string; label=Data Type
-            dataType = Event
+            restType = Event
             # cat=plugin.tx_events//a; type=string; label=Data Limit
-            dataLimit = 200
+            restLimit = 200
             # cat=plugin.tx_events//a; type=string; label=Data Template
-            dataTemplate = ET2014A.json
+            restTemplate = ET2014A.json
             # cat=plugin.tx_events//a; type=string; Label=Category Storage
             categoriesPid = 54
         }

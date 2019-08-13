@@ -48,9 +48,9 @@ plugin.tx_events {
         destinationData {
             restUrl = {$plugin.tx_events.settings.destinationData.restUrl}
             license = {$plugin.tx_events.settings.destinationData.license}
-            dataType = {$plugin.tx_events.settings.destinationData.datType}
-            dataLimit = {$plugin.tx_events.settings.destinationData.dataLimit}
-            dataTemplate = {$plugin.tx_events.settings.destinationData.dataTemplate}
+            restType = {$plugin.tx_events.settings.destinationData.restType}
+            restLimit = {$plugin.tx_events.settings.destinationData.restLimit}
+            restTemplate = {$plugin.tx_events.settings.destinationData.restTemplate}
             categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
         }
     }
