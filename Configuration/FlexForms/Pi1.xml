@@ -41,6 +41,16 @@
                                         <numIndex index="1">Date->show</numIndex>
                                     </numIndex>
 
+                                    <numIndex index="6">
+                                        <numIndex index="0">Event Search</numIndex>
+                                        <numIndex index="1">Event->search</numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="6">
+                                        <numIndex index="0">Date Search</numIndex>
+                                        <numIndex index="1">Date->search</numIndex>
+                                    </numIndex>
+
                                 </items>
                             </config>
                         </TCEforms>
@@ -55,21 +65,14 @@
                                 <type>select</type>
                                 <items type="array">
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Default</numIndex>
-                                        <numIndex index="1">default</numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
                                         <numIndex index="0">Title</numIndex>
                                         <numIndex index="1">title</numIndex>
                                     </numIndex>
-                                    <numIndex index="2" type="array">
+                                    <numIndex index="1" type="array">
                                         <numIndex index="0">Region</numIndex>
                                         <numIndex index="1">region</numIndex>
                                     </numIndex>
                                 </items>
-                                <!--
-                                <itemsProcFunc>FriendsOfTYPO3\TtAddress\Hooks\Tca\AddFieldsToSelector->main</itemsProcFunc>
-                                -->
                             </config>
                         </TCEforms>
                     </settings.sortByEvent>
@@ -78,26 +81,24 @@
                         <TCEforms>
                             <exclude>1</exclude>
                             <label>Sort By</label>
-                            <displayCond>FIELD:switchableControllerActions:=:Date->list</displayCond>
+                            <displayCond>
+                                <OR>
+                                    <numIndex index="0">FIELD:switchableControllerActions:=:Date->list</numIndex>
+                                    <numIndex index="1">FIELD:switchableControllerActions:=:Date->search</numIndex>
+                                </OR>
+                            </displayCond>
                             <config>
                                 <type>select</type>
                                 <items type="array">
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Default</numIndex>
-                                        <numIndex index="1">default</numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
                                         <numIndex index="0">Start</numIndex>
                                         <numIndex index="1">start</numIndex>
                                     </numIndex>
-                                    <numIndex index="2" type="array">
+                                    <numIndex index="1" type="array">
                                         <numIndex index="0">End</numIndex>
                                         <numIndex index="1">end</numIndex>
                                     </numIndex>
                                 </items>
-                                <!--
-                                <itemsProcFunc>FriendsOfTYPO3\TtAddress\Hooks\Tca\AddFieldsToSelector->main</itemsProcFunc>
-                                -->
                             </config>
                         </TCEforms>
                     </settings.sortByDate>
@@ -110,6 +111,7 @@
                                 <OR>
                                     <numIndex index="0">FIELD:switchableControllerActions:=:Event->list</numIndex>
                                     <numIndex index="1">FIELD:switchableControllerActions:=:Date->list</numIndex>
+                                    <numIndex index="2">FIELD:switchableControllerActions:=:Date->search</numIndex>
                                 </OR>
                             </displayCond>
                             <config>
@@ -141,6 +143,7 @@
                                 <OR>
                                     <numIndex index="0">FIELD:switchableControllerActions:=:Event->list</numIndex>
                                     <numIndex index="1">FIELD:switchableControllerActions:=:Date->list</numIndex>
+                                    <numIndex index="2">FIELD:switchableControllerActions:=:Date->search</numIndex>
                                 </OR>
                             </displayCond>
                             <config>

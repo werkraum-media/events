@@ -131,4 +131,16 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $constraints;
     }
 
+
+    public function findSearchWord($search)
+    {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->like('title', '%' . $search . '%')
+        );
+        $query->setOrderings(['title' => QueryInterface::ORDER_ASCENDING]);
+        $query->setLimit(20);
+        return $query->execute();
+    }
+
 }

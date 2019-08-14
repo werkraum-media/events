@@ -85,6 +85,21 @@ class EventController extends ActionController
     }
 
     /**
+     * @param string $search
+     */
+    public function searchAction(): void
+    {
+        $search = '';
+        if ($this->request->hasArgument('search')) {
+            $search = $this->request->getArgument('search');
+        }
+
+        $this->view->assign('search', $search);
+        $this->view->assign('events', $this->eventRepository->findSearchWord($search));
+
+    }
+
+    /**
      * @return EventDemand
      */
 

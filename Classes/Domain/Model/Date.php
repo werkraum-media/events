@@ -2,18 +2,6 @@
 namespace Wrm\Events\Domain\Model;
 
 
-/***
- *
- * This file is part of the "DD Events" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2019 Dirk Koritnik <koritnik@werkraum-media.de>
- *
- ***/
-
-
 /**
  * Date
  */
@@ -28,7 +16,7 @@ class Date extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var \DateTime
      */
-    protected $end = '';
+    protected $end = null;
 
     /**
      * @var \Wrm\Events\Domain\Model\Event

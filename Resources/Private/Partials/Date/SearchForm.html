@@ -1,0 +1,55 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="row">
+    <div class="col-8 mb-5">
+        <!-- TODO bg color classes not loaded in scss -->
+
+            <f:form action="search" additionalAttributes="{role: 'form'}">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="searchword">Suchwort</label>
+                            <f:form.textfield type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="start">Datum von</label>
+                            <f:form.textfield type="text" class="form-control" id="start" name="start" value="{start}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="end">Datum bis</label>
+                            <f:form.textfield type="text" class="form-control" id="end" name="end" value="{end}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
+                            <label class="form-check-label" for="radio_0">Alle Städte</label>
+                        </div>
+                    </div>
+
+                    <f:for each="{regions}" as="region">
+                        <div class="col-3">
+                            <div class="form-check">
+                                <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
+                                <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
+                            </div>
+                        </div>
+                    </f:for>
+                </div>
+                <div class="form-group mt-3">
+                    <f:form.submit value="Suchen" class="btn btn-primary" />
+                </div>
+            </f:form>
+
+    </div>
+</div>

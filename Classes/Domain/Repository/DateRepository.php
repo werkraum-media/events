@@ -1,21 +1,7 @@
 <?php
 namespace Wrm\Events\Domain\Repository;
 
-/**
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
-
 use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Service\CategoryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -26,25 +12,17 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
-     * Find all products based on selected uids
-     *
+     * Find all dates based on selected uids
      * @param string $uids
-     *
      * @return array
      */
     public function findByUids($uids)
     {
         $uids = explode(',', $uids);
-
         $query = $this->createQuery();
-        //$query->getQuerySettings()->setRespectStoragePage(false);
-
         $query->matching(
             $query->in('uid', $uids)
         );
-
-        //return $this->orderByField($query->execute(), $uids);
-
         return $query->execute();
     }
 
@@ -56,11 +34,11 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findByDemand(DateDemand $demand)
     {
         $query = $this->createDemandQuery($demand);
+        return $query->execute();
 
         // For testing purposes
         // $query = $this->createDemandQueryViaBuilder($demand);
-
-        return $query->execute();
+        //return $query->execute()->fetchAll();
     }
 
     /**
@@ -71,9 +49,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     protected function createDemandQuery(DateDemand $demand): QueryInterface
     {
         $query = $this->createQuery();
-
         $constraints = [];
-
         $categories = $demand->getCategories();
 
         if ($categories) {
@@ -89,25 +65,37 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }
 
-        if ($demand->getRegion() !== null) {
+        if ($demand->getHighlight() !== FALSE) {
             $constraints['highlight'] = $query->equals('event.highlight', $demand->getHighlight());
+        }
+
+        if ($demand->getSearchword() !== '') {
+            $constraints['searchword'] = $query->logicalOr(
+                [
+                    $query->like('event.title', '%' . $demand->getSearchword() . '%'),
+                    $query->like('event.teaser', '%' . $demand->getSearchword() . '%')
+                ]
+            );
+        }
+
+        if ($demand->getStart() !== '' && $demand->getEnd() != '') {
+            $constraints['daterange'] = $query->logicalAnd(
+                [
+                    $query->greaterThanOrEqual('start', $demand->getStart()),
+                    $query->lessThanOrEqual('start', $demand->getEnd())
+                ]
+            );
         }
 
         if ($demand->getLimit() !== '') {
             $query->setLimit((int) $demand->getLimit());
         }
 
-
         if (!empty($constraints)) {
             $query->matching($query->logicalAnd($constraints));
         }
 
-
-        $sortBy = $demand->getSortBy();
-        if ($sortBy && $sortBy !== 'singleSelection' && $sortBy !== 'default') {
-            $order = strtolower($demand->getSortOrder()) === 'desc' ? QueryInterface::ORDER_DESCENDING : QueryInterface::ORDER_ASCENDING;
-            $query->setOrderings([$sortBy => $order]);
-        }
+        $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
 
         return $query;
     }
@@ -140,37 +128,30 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
-     * @param DateDemand
-     * @return $statement
-     * @throws InvalidQueryException
+     * findSearchWord with Query Builder
+     * @param $search
      */
-
-    protected function createDemandQueryViaBuilder(DateDemand $demand) {
-
-        //$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_Events_domain_model_date');
+    public function findSearchWord($search)
+    {
 
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_Events_domain_model_date');
+            ->getConnectionForTable('tx_events_domain_model_date');
 
         $queryBuilder = $connection->createQueryBuilder();
 
         $statement = $queryBuilder
-            ->select('tx_Events_domain_model_date.start', 'tx_Events_domain_model_date.end', 'tx_Events_domain_model_date.event')
-            ->from('tx_Events_domain_model_date')
+            ->select('*')
+            ->from('tx_events_domain_model_date')
             ->join(
-                'tx_Events_domain_model_date',
-                'tx_Events_domain_model_event',
+                'tx_events_domain_model_date',
+                'tx_events_domain_model_event',
                 'event',
-                $queryBuilder->expr()->eq('tx_Events_domain_model_date.event', $queryBuilder->quoteIdentifier('event.uid'))
+                $queryBuilder->expr()->eq('tx_events_domain_model_date.event', $queryBuilder->quoteIdentifier('event.uid'))
             )->where(
-                $queryBuilder->expr()->eq('event.title', $queryBuilder->createNamedParameter('Bachführung'))
-            );
+                $queryBuilder->expr()->like('event.title', $queryBuilder->createNamedParameter('%' . $search . '%'))
+            )->orderBy('tx_events_domain_model_date.start');
 
-        if ($demand->getLimit() !== '') {
-            $statement->setMaxResults((int) $demand->getLimit());
-        }
-
-        return $statement;
+        return $statement->execute()->fetchAll();
     }
 
 }

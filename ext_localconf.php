@@ -9,12 +9,12 @@ call_user_func(
             'Wrm.Events',
             'Pi1',
             [
-                'Event' => 'teaser, list, show',
-                'Date' => 'teaser, list, show'
+                'Event' => 'teaser, list, show, search',
+                'Date' => 'teaser, list, show, search'
             ],
             [
-                'Event' => 'teaser, list, show',
-                'Date' => 'teaser, list, show'
+                'Event' => 'teaser, list, show, search',
+                'Date' => 'teaser, list, show, search'
             ]
         );
 

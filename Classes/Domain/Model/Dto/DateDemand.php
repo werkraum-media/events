@@ -32,17 +32,32 @@ class DateDemand {
     /**
      * @var string
      */
-    protected $region = null;
+    protected $region = '';
 
     /**
-     * @var string
+     * @var bool
      */
-    protected $highlight = null;
+    protected $highlight = 0;
 
     /**
      * @var string
      */
     protected $limit = '';
+
+    /**
+     * @var string
+     */
+    protected $start = '';
+
+    /**
+     * @var string
+     */
+    protected $end = '';
+
+    /**
+     * @var string
+     */
+    protected $searchword = '';
 
     /**
      * @return string
@@ -141,15 +156,15 @@ class DateDemand {
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getHighlight(): string
+    public function getHighlight(): bool
     {
         return $this->highlight;
     }
 
     /**
-     * @param string $hightlight
+     * @param bool $highlight
      */
     public function setHighlight(string $highlight): void
     {
@@ -172,6 +187,52 @@ class DateDemand {
         $this->limit = $limit;
     }
 
+    /**
+     * @return string
+     */
+    public function getSearchword(): string
+    {
+        return $this->searchword;
+    }
 
+    /**
+     * @param string $searchword
+     */
+    public function setSearchword(string $searchword): void
+    {
+        $this->searchword = $searchword;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param string $start
+     */
+    public function setStart(string $start): void
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnd(): string
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param string $end
+     */
+    public function setEnd(string $end): void
+    {
+        $this->end = $end;
+    }
 
 }
