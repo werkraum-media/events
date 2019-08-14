@@ -90,11 +90,11 @@ class DateController extends ActionController
         }
 
         if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '') {
-            $start = date( "Y-m-d", strtotime( $this->request->getArgument('start')));
+            $start = date( "d.m.y", strtotime( $this->request->getArgument('start')));
         }
 
         if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '') {
-            $end = date( "Y-m-d", strtotime( $this->request->getArgument('end')));
+            $end = date( "d.m.y", strtotime( $this->request->getArgument('end')));
         }
 
         $demand = $this->createDemandFromSearch();

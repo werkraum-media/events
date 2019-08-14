@@ -18,13 +18,23 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="start">Datum von</label>
-                            <f:form.textfield type="text" class="form-control" id="start" name="start" value="{start}" />
+                            <div class="input-group date" id="date_start" data-target-input="nearest">
+                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
+                                <div class="input-group-append" data-target="#date_start" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="end">Datum bis</label>
-                            <f:form.textfield type="text" class="form-control" id="end" name="end" value="{end}" />
+                            <div class="input-group date" id="date_end" data-target-input="nearest">
+                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
+                                <div class="input-group-append" data-target="#date_end" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
