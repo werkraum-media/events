@@ -5,8 +5,8 @@
 <hr class="mt-2 mb-4">
 
 <f:widget.paginate objects="{dates}" as="paginatedDates" configuration="{itemsPerPage: 25, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 5, addQueryStringMethod: 'POST,GET'}">
-    <f:for each="{paginatedDates}" as="date">
-        <div class="row mt-3 mb-3 pb-3 border-bottom ">
+    <f:for each="{paginatedDates}" as="date" iteration="index">
+        <div class="row mt-3 mb-3 pb-3">
             <div class="col-2">
                 <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
                 <b><f:format.date format="%a">{date.start}</f:format.date></b><br>
@@ -36,6 +36,13 @@
                 </f:if>
             </div>
         </div>
+        <f:if condition="{index.isLast}">
+            <f:then>
+            </f:then>
+            <f:else>
+                <div class="mb-3 border-bottom"></div>
+            </f:else>
+        </f:if>
     </f:for>
 </f:widget.paginate>
 

@@ -214,8 +214,10 @@
                                 <OR>
                                     <numIndex index="0">FIELD:switchableControllerActions:=:Event->list</numIndex>
                                     <numIndex index="1">FIELD:switchableControllerActions:=:Event->teaser</numIndex>
-                                    <numIndex index="2">FIELD:switchableControllerActions:=:Date->list</numIndex>
-                                    <numIndex index="3">FIELD:switchableControllerActions:=:Date->teaser</numIndex>
+                                    <numIndex index="2">FIELD:switchableControllerActions:=:Event->search</numIndex>
+                                    <numIndex index="3">FIELD:switchableControllerActions:=:Date->list</numIndex>
+                                    <numIndex index="4">FIELD:switchableControllerActions:=:Date->teaser</numIndex>
+                                    <numIndex index="5">FIELD:switchableControllerActions:=:Date->search</numIndex>
                                 </OR>
                             </displayCond>
                             <config>
