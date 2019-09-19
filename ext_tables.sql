@@ -28,6 +28,7 @@ CREATE TABLE tx_events_domain_model_event (
 	organizer int(11) unsigned DEFAULT '0',
 	region int(11) unsigned DEFAULT '0',
 
+	KEY dataHandler (l10n_parent, t3ver_oid, deleted, t3ver_wsid, t3ver_state)
 );
 
 #
@@ -44,6 +45,7 @@ CREATE TABLE tx_events_domain_model_organizer (
 	web varchar(255) DEFAULT '' NOT NULL,
 	email varchar(255) DEFAULT '' NOT NULL,
 
+	KEY dataHandler (l10n_parent, sys_language_uid, deleted)
 );
 
 #
@@ -56,6 +58,8 @@ CREATE TABLE tx_events_domain_model_date (
 	start datetime DEFAULT NULL,
 	end datetime DEFAULT NULL,
 
+	KEY event (event),
+	KEY dataHandler (event, t3ver_wsid, pid)
 );
 
 #

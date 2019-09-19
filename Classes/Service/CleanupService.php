@@ -2,39 +2,48 @@
 
 namespace Wrm\Events\Service;
 
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use Wrm\Events\Service\Cleanup\Database;
+use Wrm\Events\Service\Cleanup\Files;
 
-class CleanupService {
+class CleanupService
+{
+    /**
+     * @var Database
+     */
+    private $database;
 
     /**
-     * Cleanup Service constructor.
-     * @param ConfigurationManager $configurationManager
-     * @param ObjectManager $objectManager
+     * @var Files
      */
-    public function __construct(
-        ConfigurationManager $configurationManager,
-        ObjectManager $objectManager
-    ) {
+    private $files;
 
-        // Get Typoscript Settings
-        $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'Events',
-            'Pi1'
-        );
-
-
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-        $this->logger->info('Event Cleanup Service');
+    public function __construct(Database $database, Files $files)
+    {
+        $this->database = $database;
+        $this->files = $files;
     }
 
-    public function doCleanup() {
-        
-        // To be done
-        // Hmpf
+    public function deleteAllData()
+    {
+        $this->database->truncateTables(... [Database::DATE_TABLE, Database::ORGANIZER_TABLE]);
+        $this->removeViaDataHandler($this->database->getDeletionStructureForEvents());
+        $this->files->deleteAll();
+    }
+
+    public function deletePastData()
+    {
+        $this->database->deleteDates(... $this->database->getPastDates());
+        $this->removeViaDataHandler($this->database->getDeletionStructureForEventsWithoutDates());
+        $this->files->deleteDangling();
+    }
+
+    private function removeViaDataHandler(array $structure)
+    {
+        /* @var DataHandler $dataHandler */
+        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler->start([], $structure);
+        $dataHandler->process_cmdmap();
     }
 }
