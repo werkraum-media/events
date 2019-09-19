@@ -6,6 +6,8 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CleanupService
@@ -23,6 +25,8 @@ class CleanupService
             'tx_events_domain_model_event',
         ]));
         $dataHandler->process_cmdmap();
+
+        $this->deleteAllFiles();
     }
 
     public function deletePastData()
@@ -33,6 +37,8 @@ class CleanupService
         /* @var DataHandler $dataHandler */
         $dataHandler->start([], $this->getDeletionStructureForEventsWithoutDates());
         $dataHandler->process_cmdmap();
+
+        $this->deleteDanglingFiles();
     }
 
     private function truncateTables(string ...$tableNames): void
@@ -68,11 +74,11 @@ class CleanupService
 
     private function getRecordsToDelete(string $tableName): array
     {
+        /* @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
             ->createQueryBuilder();
 
-        /* @var QueryBuilder $queryBuilder */
         $records = $queryBuilder->select('uid')
             ->from($tableName)
             ->execute()
@@ -141,5 +147,79 @@ class CleanupService
             $dataStructure['tx_events_domain_model_event'][$record['uid']] = ['delete' => 1];
         }
         return $dataStructure;
+    }
+
+    private function deleteAllFiles()
+    {
+        $this->deleteFiles($this->getRelatedFileInformation());
+    }
+
+    private function deleteDanglingFiles()
+    {
+        $this->deleteFiles($this->getRelatedFileInformation(function (QueryBuilder $queryBuilder) {
+            $queryBuilder->leftJoin(
+                'file',
+                'sys_file_reference',
+                'reference',
+                $queryBuilder->expr()->eq('file.uid', 'reference.local_uid')
+            );
+            $queryBuilder->addWhere($queryBuilder->expr()->isNull('reference.uid'));
+        }));
+    }
+
+    private function deleteFiles(array $files)
+    {
+        $uidsToRemove = [];
+        foreach ($filesToDelete as $fileToDelete) {
+            $this->deleteFileFromFilesystem($fileToDelete['storage'], $fileToDelete['identifier']);
+            $uidsToRemove[] = $fileToDelete['uid'];
+        }
+
+        $this->deleteFileRecords(... $uidsToRemove);
+    }
+
+    private function getRelatedFileInformation(callable $whereGenerator = null): array
+    {
+        /* @var QueryBuilder $queryBuilder */
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('sys_file');
+
+        $queryBuilder->select('file.identifier', 'file.storage', 'file.uid')
+            ->from('sys_file', 'file')
+            ->where($queryBuilder->expr()->like(
+                'file.identifier',
+                $queryBuilder->createNamedParameter('/staedte/%/events/%')
+            ));
+
+        if ($whereGenerator !== null) {
+            $whereGenerator($queryBuilder);
+        }
+
+        return $queryBuilder->execute()->fetchAll();
+    }
+
+    private function deleteFileFromFilesystem(int $storageUid, string $filePath)
+    {
+        /* @var ResourceStorage $storage */
+        $storage = GeneralUtility::makeInstance(StorageRepository::class)
+            ->findByUid($storageUid);
+
+        if ($storage->hasFile($filePath) === false) {
+            return;
+        }
+
+        $storage->deleteFile($storage->getFile($filePath));
+    }
+
+    private function deleteFileRecords(int ...$uids)
+    {
+        /* @var QueryBuilder $queryBuilder */
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('sys_file');
+
+        $queryBuilder->delete('sys_file')
+            ->where('uid in (:uids)')
+            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->execute();
     }
 }
