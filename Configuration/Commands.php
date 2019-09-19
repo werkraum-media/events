@@ -6,4 +6,7 @@ return [
     'events:removeAll' => [
         'class' => \Wrm\Events\Command\RemoveAllCommand::class
     ],
+    'events:removePast' => [
+        'class' => \Wrm\Events\Command\RemovePastCommand::class
+    ],
 ];

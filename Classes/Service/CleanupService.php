@@ -25,6 +25,16 @@ class CleanupService
         $dataHandler->process_cmdmap();
     }
 
+    public function deletePastData()
+    {
+        $this->deleteDates(... $this->getPastDates());
+
+        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        /* @var DataHandler $dataHandler */
+        $dataHandler->start([], $this->getDeletionStructureForEventsWithoutDates());
+        $dataHandler->process_cmdmap();
+    }
+
     private function truncateTables(string ...$tableNames): void
     {
         foreach ($tableNames as $tableName) {
@@ -71,5 +81,65 @@ class CleanupService
         return array_map(function (array $record) {
             return $record['uid'];
         }, $records);
+    }
+
+    private function getPastDates(): array
+    {
+        $midnightToday = new \DateTimeImmutable('midnight today');
+
+        /* @var QueryBuilder $queryBuilder */
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_events_domain_model_date')
+            ->createQueryBuilder();
+
+        $queryBuilder->getRestrictions()->removeAll();
+
+        $records = $queryBuilder->select('uid')
+            ->from('tx_events_domain_model_date')
+            ->where($queryBuilder->expr()->lte(
+                'end',
+                $queryBuilder->createNamedParameter($midnightToday->format('Y-m-d H:i:s'))
+            ))
+            ->execute()
+            ->fetchAll();
+
+        return array_map(function (array $record) {
+            return $record['uid'];
+        }, $records);
+    }
+
+    private function deleteDates(int ...$uids)
+    {
+        /* @var QueryBuilder $queryBuilder */
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_events_domain_model_date');
+
+        $queryBuilder->delete('tx_events_domain_model_date')
+            ->where('uid in (:uids)')
+            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->execute();
+    }
+
+    private function getDeletionStructureForEventsWithoutDates(): array
+    {
+        $dataStructure = ['tx_events_domain_model_event' => []];
+        /* @var QueryBuilder $queryBuilder */
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_events_domain_model_event')
+            ->createQueryBuilder();
+
+        $queryBuilder->getRestrictions()->removeAll();
+
+        $records = $queryBuilder->select('event.uid')
+            ->from('tx_events_domain_model_event', 'event')
+            ->leftJoin('event', 'tx_events_domain_model_date', 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))
+            ->where($queryBuilder->expr()->isNull('date.uid'))
+            ->execute()
+            ->fetchAll();
+
+        foreach ($records as $record) {
+            $dataStructure['tx_events_domain_model_event'][$record['uid']] = ['delete' => 1];
+        }
+        return $dataStructure;
     }
 }
