@@ -274,6 +274,10 @@ class DestinationDataImportService {
             if($event['street'] && $event['city'] && $event['zip'] && $event['country'])
                 $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
 
+            // Set LatLng
+            if($event['geo']['main']['latitude'] && $event['geo']['main']['longitude'])
+                $this->setLatLng($event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
+
             // Set Categories
             if($event['categories'])
                 $this->setCategories($event['categories']);
@@ -456,14 +460,19 @@ class DestinationDataImportService {
      * @param string $city
      * @param string $zip
      * @param string $country
-     * @param string $lat
-     * @param string $lng
      */
-    protected function setAddress(String $street, String $city, String $zip, String $country, String $lat, String $lng) {
+    protected function setAddress(String $street, String $city, String $zip, String $country) {
         $this->tmpCurrentEvent->setStreet($street);
         $this->tmpCurrentEvent->setCity($city);
         $this->tmpCurrentEvent->setZip($zip);
         $this->tmpCurrentEvent->setCountry($country);
+    }
+
+    /**
+     * @param string $lat
+     * @param string $lng
+     */
+    protected function setLatLng(String $lat, String $lng) {
         $this->tmpCurrentEvent->setLatitude($lat);
         $this->tmpCurrentEvent->setLongitude($lng);
     }
