@@ -272,7 +272,7 @@ class DestinationDataImportService {
 
             // Set address and geo data
             if($event['street'] && $event['city'] && $event['zip'] && $event['country'])
-                $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country'], $event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
+                $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country']);
 
             // Set LatLng
             if($event['geo']['main']['latitude'] && $event['geo']['main']['longitude'])
