@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-12">
         <div class="p-3 mb-2 bg-light text-dark">
-            <f:form action="search" additionalAttributes="{role: 'form'}" method="get" addQueryString="1">
+            <f:form action="search" controller="Event" additionalAttributes="{role: 'form'}" method="get">
                 <div class="input-group mb-3">
                     <f:form.textfield name="search" value="{search}" class="form-control" />
                     <f:form.submit value="Search" class="btn btn-outline-secondary" />
