@@ -19,9 +19,17 @@
                         <b>Hightlight</b>
                     </f:then>
                 </f:if>
-                <h4>{date.event.title}</h4>
+                <h4>
+                    <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                        {date.event.title}
+                    </f:link.action>
+                </h4>
                 <p><strong>{date.event.teaser}</strong></p>
                 <f:format.crop maxCharacters="150">{date.event.details}</f:format.crop>
+                <pre style="margin-top:15px; font-size:80%;">
+DEBUGGING:
+GLOBAL EVENT ID: {date.event.globalId}
+                </pre>
             </div>
             <div class="col-4">
                 <f:if condition="{date.event.images}">
@@ -31,7 +39,9 @@
                         </f:link.action>
                     </f:then>
                     <f:else>
-                        <img src="https://dummyimage.com/400x280/ddd/ccc" alt="Dummy" width="400" height="280" class="img-fluid img-thumbnail"/>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                            <img src="https://dummyimage.com/400x280/ddd/ccc" alt="Dummy" width="400" height="280" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
                     </f:else>
                 </f:if>
             </div>
