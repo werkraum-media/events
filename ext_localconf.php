@@ -38,13 +38,13 @@ call_user_func(
             }'
         );
 
-		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-		
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
         $iconRegistry->registerIcon(
             'events-plugin',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
         );
-		
+
     }
 );
