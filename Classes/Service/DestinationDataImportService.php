@@ -222,16 +222,14 @@ class DestinationDataImportService {
 
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
-
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+
         $this->logger->info('Starting Destination Data Import Service');
-
         $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
-
         $this->logger->info('Try to get data from ' . $restUrl);
 
         if ($jsonResponse = json_decode(file_get_contents($restUrl),true)) {
-            $this->logger->info('Received data with ' . count($jsonResponse) . 'items');
+            $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
             return $this->processData($jsonResponse);
         } else {
             $this->logger->error('Could not receive data.');
@@ -246,7 +244,9 @@ class DestinationDataImportService {
      */
     public function processData($data) {
 
-        // Get seleceted region
+        $this->logger->info('Processing json ' . count($data['items']));
+
+        // Get selected region
         $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
 
         foreach ($data['items'] as $event) {
@@ -301,10 +301,12 @@ class DestinationDataImportService {
 
         }
         $this->doSlugUpdate();
+        $this->logger->info('Finished import');
         return 0;
     }
 
     /**
+     *
      * @param array $categories
      */
     protected function setCategories(Array $categories) {
@@ -331,7 +333,7 @@ class DestinationDataImportService {
      */
     protected function setDates(Array $timeIntervals) {
 
-        // TODO: does not seem to work -->
+        // @TODO: does not seem to work -->
         //$currentEventDates = $this->tmpCurrentEvent->getDates();
         //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
         // <--
@@ -341,7 +343,6 @@ class DestinationDataImportService {
         $this->logger->info('Found ' . count($currentEventDates) . ' to delete');
 
         foreach ($currentEventDates as $currentDate) {
-            //$this->logger->info('Delete ' . $currentDate->getStart()->format('Y-m-d'));
             $this->dateRepository->remove($currentDate);
         }
 
@@ -367,9 +368,7 @@ class DestinationDataImportService {
 
             } else {
 
-
                 if ($date['freq'] == 'Daily' && empty($date['weekdays'])) {
-
                     $this->logger->info('Setup daily interval dates');
                     $this->logger->info('Start ' . $date['start']);
                     $this->logger->info('End ' . $date['repeatUntil']);
@@ -389,11 +388,9 @@ class DestinationDataImportService {
                             $this->tmpCurrentEvent->addDate($dateObj);
                         }
                     }
-
                 }
 
                 else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
-
                     foreach ($date['weekdays'] as $day) {
                         $this->logger->info('Setup weekly interval dates for ' . $day);
                         $this->logger->info('Start ' . $date['start']);
@@ -416,11 +413,9 @@ class DestinationDataImportService {
                             }
                         }
                     }
-
                 }
-
             }
-
+            $this->logger->info('Finished setup dates');
         }
     }
 
@@ -436,9 +431,7 @@ class DestinationDataImportService {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
                     continue;
                 }
-
                 $tmpOrganizer = $this->objectManager->get(\Wrm\Events\Domain\Model\Organizer::class);
-
                 $tmpOrganizer->setName($address['name']);
                 $tmpOrganizer->setCity($address['city']);
                 $tmpOrganizer->setZip($address['zip']);
@@ -447,10 +440,8 @@ class DestinationDataImportService {
                 $tmpOrganizer->setWeb($address['web']);
                 $tmpOrganizer->setEmail($address['email']);
                 $tmpOrganizer->setDistrict($address['district']);
-
                 $this->organizerRepository->add($tmpOrganizer);
                 $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
-
             }
         }
     }
@@ -526,6 +517,8 @@ class DestinationDataImportService {
      */
     protected function setAssets(Array $assets) {
 
+        $this->logger->info("Set assets");
+
         $error = false;
 
         foreach ($assets as $media_object)
@@ -533,6 +526,11 @@ class DestinationDataImportService {
             if($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
 
                 $this->storage = $this->resourceFactory->getDefaultStorage();
+
+                if ($this->storage == null) {
+                    $this->logger->error('No default storage defined. Cancel import.');
+                    die();
+                }
 
                 // Check if file already exists
                 if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
@@ -632,7 +630,6 @@ class DestinationDataImportService {
      */
     protected function doSlugUpdate()
     {
-
         $this->logger->info('Update slugs');
 
         $slugHelper = GeneralUtility::makeInstance(
