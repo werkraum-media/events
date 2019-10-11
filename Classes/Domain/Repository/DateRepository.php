@@ -86,7 +86,8 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ]
             );
         } else {
-            $constraints['untilnow'] = $query->greaterThanOrEqual('start', date("Y-m-d H:i:s"));
+            $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
+            $constraints['untilnow'] = $query->greaterThanOrEqual('start', $now);
         }
 
         if ($demand->getLimit() !== '') {
