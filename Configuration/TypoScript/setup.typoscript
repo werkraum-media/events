@@ -36,6 +36,7 @@ plugin.tx_events {
 
         defaulDetailEventsPid =
         defaultDetailDatesPid =
+        defaultImagePath = {$plugin.tx_events.settings.defaultImagePath}
 
         paginate {
             # can be overriden by plugin

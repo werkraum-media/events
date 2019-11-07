@@ -13,7 +13,9 @@
                             </f:link.action>
                         </f:then>
                         <f:else>
-                            <img src="https://dummyimage.com/480x320/ddd/ccc" alt="Dummy" width="480" height="320" class="img-fluid img-thumbnail"/>
+                            <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
+                                <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                            </f:link.action>
                         </f:else>
                     </f:if>
                 </div>

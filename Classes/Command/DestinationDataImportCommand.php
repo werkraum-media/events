@@ -29,7 +29,7 @@ class DestinationDataImportCommand extends Command {
             'region-uid',
             InputArgument::OPTIONAL,
             'What is the region uid?',
-            '1'
+            '6'
         );
         $this->addArgument('rest-experience',
             InputArgument::OPTIONAL,
