@@ -26,6 +26,8 @@ plugin.tx_events {
             restTemplate = ET2014A.json
             # cat=plugin.tx_events//a; type=string; Label=Category Storage
             categoriesPid = 54
+            # cat=plugin.tx_events//a; type=string; Label=Category Parent ID
+            categoryParentUid = 6
         }
     }
 }

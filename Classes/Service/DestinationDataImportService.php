@@ -185,27 +185,26 @@ class DestinationDataImportService {
         );
 
         // Set properties
-        $this->restUrl          = $this->settings['destinationData']['restUrl'];
-        $this->restLicenseKey   = $this->settings['destinationData']['license'];
-        $this->restType         = $this->settings['destinationData']['restType'];
-        $this->restLimit        = $this->settings['destinationData']['restLimit'];
-        $this->restTemplate     = $this->settings['destinationData']['restTemplate'];
-        $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
+        $this->restUrl           = $this->settings['destinationData']['restUrl'];
+        $this->restLicenseKey    = $this->settings['destinationData']['license'];
+        $this->restType          = $this->settings['destinationData']['restType'];
+        $this->restLimit         = $this->settings['destinationData']['restLimit'];
+        $this->restTemplate      = $this->settings['destinationData']['restTemplate'];
+        $this->sysCategoriesPid  = $this->settings['destinationData']['categoriesPid'];
+        $this->categoryParentUid = $this->settings['destinationData']['categoryParentUid'];
     }
 
     /**
      * @param $restExperience
      * @param $storagePid
      * @param $regionUid
-     * @param $categoryParentUid
      * @param $filesFolder
      */
-    public function import($restExperience, $storagePid, $regionUid, $categoryParentUid, $filesFolder) {
+    public function import($restExperience, $storagePid, $regionUid, $filesFolder) {
 
         $this->restExperience = $restExperience;
         $this->storagePid = $storagePid;
         $this->regionUid = $regionUid;
-        $this->categoryParentUid = $categoryParentUid;
         $this->filesFolder = $filesFolder;
 
         // Get configuration

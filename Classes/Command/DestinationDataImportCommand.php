@@ -23,19 +23,13 @@ class DestinationDataImportCommand extends Command {
             'storage-pid',
             InputArgument::OPTIONAL,
             'What is the storage pid?',
-            '6'
+            '284'
         );
         $this->addArgument(
             'region-uid',
             InputArgument::OPTIONAL,
             'What is the region uid?',
             '1'
-        );
-        $this->addArgument(
-            'category-parent-uid',
-            InputArgument::OPTIONAL,
-            'What is the default category parent uid?',
-            '52'
         );
         $this->addArgument('rest-experience',
             InputArgument::OPTIONAL,
@@ -59,7 +53,6 @@ class DestinationDataImportCommand extends Command {
                 $input->getArgument('rest-experience'),
                 $input->getArgument('storage-pid'),
                 $input->getArgument('region-uid'),
-                $input->getArgument('category-parent-uid'),
                 $input->getArgument('files-folder')
             );
     }

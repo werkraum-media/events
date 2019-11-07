@@ -52,6 +52,7 @@ plugin.tx_events {
             restLimit = {$plugin.tx_events.settings.destinationData.restLimit}
             restTemplate = {$plugin.tx_events.settings.destinationData.restTemplate}
             categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
+            categoryParentUid = {$plugin.tx_events.settings.destinationData.categoryParentUid}
         }
     }
 }
