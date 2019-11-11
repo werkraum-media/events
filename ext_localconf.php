@@ -23,12 +23,18 @@ call_user_func(
             'DateSearch',
             [
                 'Date' => 'search'
+            ],
+            [
+                'Date' => 'search'
             ]
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Wrm.Events',
             'DateList',
+            [
+                'Date' => 'list'
+            ],
             [
                 'Date' => 'list'
             ]
