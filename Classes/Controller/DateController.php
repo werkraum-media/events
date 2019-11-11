@@ -1,6 +1,7 @@
 <?php
 namespace Wrm\Events\Controller;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
@@ -63,8 +64,17 @@ class DateController extends ActionController
      */
     public function listAction()
     {
-        $demand = $this->createDemandFromSettings();
-        $dates = $this->dateRepository->findByDemand($demand);
+        if (($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '') ||
+            ($this->request->hasArgument('region') && $this->request->getArgument('region') != '') ||
+            ($this->request->hasArgument('start') && $this->request->getArgument('start') != '') ||
+            ($this->request->hasArgument('end') && $this->request->getArgument('end') != ''))
+        {
+            $demand = $this->createDemandFromSearch();
+            $dates = $this->dateRepository->findByDemand($demand);
+        } else {
+            $demand = $this->createDemandFromSettings();
+            $dates = $this->dateRepository->findByDemand($demand);
+        }
         $this->view->assign('dates', $dates);
     }
 
@@ -73,42 +83,19 @@ class DateController extends ActionController
      */
     public function searchAction()
     {
-
-        $searchword = null;
-        $regions = null;
-        $selRegion = null;
-        $dates = null;
-        $start = null;
-        $end = null;
-
-        if ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '') {
-            $searchword = $this->request->getArgument('searchword');
-        }
-
-        if ($this->request->hasArgument('region') && $this->request->getArgument('region') != '') {
-            $selRegion = $this->request->getArgument('region');
-        }
-
-        if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '') {
-            $start = date( "d.m.y", strtotime( $this->request->getArgument('start')));
-        }
-
-        if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '') {
-            $end = date( "d.m.y", strtotime( $this->request->getArgument('end')));
-        }
-
-        $demand = $this->createDemandFromSearch();
-        $dates = $this->dateRepository->findByDemand($demand);
+        $arguments = GeneralUtility::_GET('tx_events_datelist');
+        $searchword = $arguments['searchword'];
+        $selRegion = $arguments['region'];
+        $start = $arguments['start'];
+        $end = $arguments['end'];
 
         $regions = $this->regionRepository->findAll();
+        $this->view->assign('regions', $regions);
 
         $this->view->assign('searchword', $searchword);
-        $this->view->assign('regions', $regions);
         $this->view->assign('selRegion', $selRegion);
-        $this->view->assign('dates', $dates);
         $this->view->assign('start', $start);
         $this->view->assign('end', $end);
-
     }
 
     /**
@@ -172,13 +159,11 @@ class DateController extends ActionController
         if ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
             $demand->setSearchword((string)$this->request->getArgument('searchword'));
 
-        if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '') {
-            $demand->setStart(date( "Y-m-d", strtotime( $this->request->getArgument('start'))));
-        }
+        if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
+            $demand->setStart(strtotime($this->request->getArgument('start')));
 
-        if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '') {
-            $demand->setEnd(date( "Y-m-d", strtotime( $this->request->getArgument('end'))));
-        }
+        if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '')
+            $demand->setEnd(strtotime($this->request->getArgument('end')));
 
         $demand->setSortBy((string)$this->settings['sortByDate']);
         $demand->setSortOrder((string)$this->settings['sortOrder']);

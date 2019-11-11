@@ -18,6 +18,31 @@ call_user_func(
             ]
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Wrm.Events',
+            'DateSearch',
+            [
+                'Date' => 'search'
+            ]
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Wrm.Events',
+            'DateList',
+            [
+                'Date' => 'list'
+            ]
+        );
+
+        /*
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+        $iconRegistry->registerIcon(
+            'events-plugin',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
+        );
+
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
             'mod {
@@ -37,14 +62,6 @@ call_user_func(
                 }
             }'
         );
-
-        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-
-        $iconRegistry->registerIcon(
-            'events-plugin',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
-        );
-
+        */
     }
 );

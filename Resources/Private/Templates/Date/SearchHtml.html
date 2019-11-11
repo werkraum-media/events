@@ -1,15 +1,16 @@
-{namespace wrm=Wrm\Events\ViewHelpers}
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<div class="row">
-    <div class="col-8 mb-5">
-        <!-- TODO bg color classes not loaded in scss -->
-            <f:form action="search" controller="Date" method="post" id="events_search" name="events_search">
+<f:layout name="Default" />
+<f:section name="content">
+    <div class="row">
+        <div class="col-12 mb-5">
+            <!-- TODO bg color classes not loaded in scss -->
+            <form action="{settings.resultPID}" controller="Date" extensionName="events" method="get" addQueryString="1" id="events_search" name="events_search">
 
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
                             <label for="searchword">Suchwort</label>
-                            <f:form.textfield type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
+                            <input type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
                         </div>
                     </div>
                 </div>
@@ -19,7 +20,7 @@
                         <div class="form-group">
                             <label for="start">Datum von</label>
                             <div class="input-group date" id="date_start" data-target-input="nearest">
-                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
+                                <input type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
                                 <div class="input-group-append" data-target="#date_start" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -30,7 +31,7 @@
                         <div class="form-group">
                             <label for="end">Datum bis</label>
                             <div class="input-group date" id="date_end" data-target-input="nearest">
-                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
+                                <input type="text" class="form-control datetimepicker-input" id="end" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
                                 <div class="input-group-append" data-target="#date_end" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -42,7 +43,7 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
+                            <input type="radio" class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
                             <label class="form-check-label" for="radio_0">Alle Städte</label>
                         </div>
                     </div>
@@ -50,16 +51,18 @@
                     <f:for each="{regions}" as="region">
                         <div class="col-3">
                             <div class="form-check">
-                                <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
+                                <input type="radio" class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
                                 <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
                             </div>
                         </div>
                     </f:for>
                 </div>
                 <div class="form-group mt-3">
-                    <f:form.submit value="Suchen" class="btn btn-primary" />
+                    <input type="submit" value="Suchen" class="btn btn-primary" />
                 </div>
-            </f:form>
-
+            </form>
+        </div>
     </div>
-</div>
+</f:section>
+
+</html>
