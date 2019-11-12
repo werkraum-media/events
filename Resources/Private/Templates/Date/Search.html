@@ -3,9 +3,7 @@
 <f:section name="content">
     <div class="row">
         <div class="col-12 mb-5">
-            <!-- TODO bg color classes not loaded in scss -->
             <f:form action="list" controller="Date" pluginName="DateList" method="get" addQueryString="1" id="events_search" name="events_search">
-
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
@@ -14,9 +12,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col">
+                    <div class="col col-md-6">
                         <div class="form-group">
                             <label for="start">Datum von</label>
                             <div class="input-group date" id="date_start" data-target-input="nearest">
@@ -27,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col col-md-6">
                         <div class="form-group">
                             <label for="end">Datum bis</label>
                             <div class="input-group date" id="date_end" data-target-input="nearest">
@@ -39,24 +36,25 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-check">
-                            <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
-                            <label class="form-check-label" for="radio_0">Alle Städte</label>
-                        </div>
-                    </div>
-
-                    <f:for each="{regions}" as="region">
-                        <div class="col-3">
+                <f:if condition="{settings.showRegions}">
+                    <div class="row">
+                        <div class="col-4 col-md-3 col-lg-3">
                             <div class="form-check">
-                                <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
-                                <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
+                                <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
+                                <label class="form-check-label" for="radio_0">Alle Städte</label>
                             </div>
                         </div>
-                    </f:for>
-                </div>
+
+                        <f:for each="{regions}" as="region">
+                            <div class="col-3">
+                                <div class="form-check">
+                                    <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
+                                    <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
+                                </div>
+                            </div>
+                        </f:for>
+                    </div>
+                </f:if>
                 <div class="form-group mt-3">
                     <f:form.submit value="Suchen" class="btn btn-primary" />
                 </div>
@@ -64,5 +62,4 @@
         </div>
     </div>
 </f:section>
-
 </html>
