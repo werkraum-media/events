@@ -25,7 +25,7 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'Wrm.Events',
         'DateSearch',
-        'Events Date Search',
+        'Events: Date Search',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
     );
 
@@ -33,7 +33,7 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'events_datesearch',
-        'FILE:EXT:events/Configuration/FlexForms/Search.xml'
+        'FILE:EXT:events/Configuration/FlexForms/DateSearch.xml'
     );
 
     /* Date List Plugin */
@@ -41,7 +41,7 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'Wrm.Events',
         'DateList',
-        'Events Date List',
+        'Events: Date List',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
     );
 
@@ -50,6 +50,22 @@ call_user_func(function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'events_datelist',
         'FILE:EXT:events/Configuration/FlexForms/DateList.xml'
+    );
+
+    /* Date Show Plugin */
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'Wrm.Events',
+        'DateShow',
+        'Events: Date Show',
+        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+    );
+
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_dateshow'] = 'pi_flexform';
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        'events_dateshow',
+        'FILE:EXT:events/Configuration/FlexForms/DateShow.xml'
     );
 
 

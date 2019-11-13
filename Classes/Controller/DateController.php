@@ -88,6 +88,7 @@ class DateController extends ActionController
         $selRegion = $arguments['region'];
         $start = $arguments['start'];
         $end = $arguments['end'];
+        $considerDate = $arguments['considerDate'];
 
         $regions = $this->regionRepository->findAll();
         $this->view->assign('regions', $regions);
@@ -96,6 +97,7 @@ class DateController extends ActionController
         $this->view->assign('selRegion', $selRegion);
         $this->view->assign('start', $start);
         $this->view->assign('end', $end);
+        $this->view->assign('considerDate', $considerDate);
     }
 
     /**
@@ -164,6 +166,9 @@ class DateController extends ActionController
 
         if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '')
             $demand->setEnd(strtotime($this->request->getArgument('end')));
+
+        if ($this->request->hasArgument('considerDate') && $this->request->getArgument('considerDate') != '')
+            $demand->setConsiderDate(strtotime($this->request->getArgument('considerDate')));
 
         $demand->setSortBy((string)$this->settings['sortByDate']);
         $demand->setSortOrder((string)$this->settings['sortOrder']);

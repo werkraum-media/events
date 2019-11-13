@@ -60,6 +60,11 @@ class DateDemand {
     protected $searchword = '';
 
     /**
+     * @var bool
+     */
+    protected $considerDate = 0;
+
+    /**
      * @return string
      */
     public function getSortBy(): string
@@ -233,6 +238,22 @@ class DateDemand {
     public function setEnd(string $end): void
     {
         $this->end = $end;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getConsiderDate(): bool
+    {
+        return $this->considerDate;
+    }
+
+    /**
+     * @param bool $considerDate
+     */
+    public function setConsiderDate(string $considerDate): void
+    {
+        $this->considerDate = $considerDate;
     }
 
 }

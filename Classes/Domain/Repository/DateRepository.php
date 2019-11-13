@@ -82,7 +82,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['daterange'] = $query->logicalAnd(
                 [
                     $query->greaterThanOrEqual('start', $demand->getStart()),
-                    $query->lessThanOrEqual('start', $demand->getEnd())
+                    $query->lessThanOrEqual('end', $demand->getEnd())
                 ]
             );
         } else {
