@@ -162,10 +162,10 @@ class DateController extends ActionController
             $demand->setSearchword((string)$this->request->getArgument('searchword'));
 
         if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
-            $demand->setStart(strtotime($this->request->getArgument('start')));
+            $demand->setStart(strtotime($this->request->getArgument('start') + ' 00:00:00'));
 
         if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '')
-            $demand->setEnd(strtotime($this->request->getArgument('end')));
+            $demand->setEnd(strtotime($this->request->getArgument('end') + ' 23:59:59'));
 
         if ($this->request->hasArgument('considerDate') && $this->request->getArgument('considerDate') != '')
             $demand->setConsiderDate(strtotime($this->request->getArgument('considerDate')));

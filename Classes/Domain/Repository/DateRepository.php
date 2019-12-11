@@ -38,7 +38,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         // For testing purposes
         // $query = $this->createDemandQueryViaBuilder($demand);
-        //return $query->execute()->fetchAll();
+        // return $query->execute()->fetchAll();
     }
 
     /**
