@@ -45,6 +45,10 @@ class DestinationDataImportService {
     /**
      * @var
      */
+    protected $restMode;
+    /**
+     * @var
+     */
     protected $restTemplate;
     /**
      * @var
@@ -189,6 +193,7 @@ class DestinationDataImportService {
         $this->restLicenseKey    = $this->settings['destinationData']['license'];
         $this->restType          = $this->settings['destinationData']['restType'];
         $this->restLimit         = $this->settings['destinationData']['restLimit'];
+        $this->restMode          = $this->settings['destinationData']['restMode'];
         $this->restTemplate      = $this->settings['destinationData']['restTemplate'];
         $this->sysCategoriesPid  = $this->settings['destinationData']['categoriesPid'];
         $this->categoryParentUid = $this->settings['destinationData']['categoryParentUid'];
@@ -224,7 +229,7 @@ class DestinationDataImportService {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
 
         $this->logger->info('Starting Destination Data Import Service');
-        $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
+        $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&mode=' . $this->restMode . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
         $this->logger->info('Try to get data from ' . $restUrl);
 
         if ($jsonResponse = json_decode(file_get_contents($restUrl),true)) {

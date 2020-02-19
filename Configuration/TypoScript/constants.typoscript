@@ -24,6 +24,8 @@ plugin.tx_events {
             restType = Event
             # cat=plugin.tx_events//a; type=string; label=Data Limit
             restLimit = 200
+            # cat=plugin.tx_events//a; type=string; label=Mode
+            restMode = next_months,12
             # cat=plugin.tx_events//a; type=string; label=Data Template
             restTemplate = ET2014A.json
             # cat=plugin.tx_events//a; type=string; Label=Category Storage
