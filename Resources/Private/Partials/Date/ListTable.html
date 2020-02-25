@@ -11,11 +11,15 @@
                 {date.event.region.title}<br>
             </div>
             <div class="col-6">
+                <!--
+                <f:comment>
                 <f:if condition="{date.event.highlight}">
                     <f:then>
-                        <b>Hightlight</b>
+                        <b>Highlight</b>
                     </f:then>
                 </f:if>
+                -->
+                </f:comment>
                 <h4>
                     <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
                         {date.event.title}
