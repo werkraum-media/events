@@ -372,13 +372,14 @@ class DestinationDataImportService {
 
             } else {
 
-                if ($date['freq'] == 'Daily' && empty($date['weekdays'])) {
+                if ($date['freq'] == 'Daily' && empty($date['weekdays']) && !empty($date['repeatUntil'])) {
 
                     $this->logger->info('Setup daily interval dates');
                     $this->logger->info('Start ' . $date['start']);
                     $this->logger->info('End ' . $date['repeatUntil']);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+
                     for($i = strtotime($start->format('l'), $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 day', $i)) {
                         if ($i >= $today) {
                             $eventStart = new \DateTime();
@@ -396,13 +397,14 @@ class DestinationDataImportService {
 
                 }
 
-                else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
+                else if ($date['freq'] == 'Weekly' && !empty($date['weekdays']) && !empty($date['repeatUntil'])) {
                     foreach ($date['weekdays'] as $day) {
                         $this->logger->info('Setup weekly interval dates for ' . $day);
                         $this->logger->info('Start ' . $date['start']);
                         $this->logger->info('End ' . $date['repeatUntil']);
                         $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                         $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+
                         for($i = strtotime($day, $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 week', $i)) {
                             if ($i >= $today) {
                                 $eventStart = new \DateTime();

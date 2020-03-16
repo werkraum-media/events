@@ -23,7 +23,7 @@ plugin.tx_events {
             # cat=plugin.tx_events//a; type=string; label=Data Type
             restType = Event
             # cat=plugin.tx_events//a; type=string; label=Data Limit
-            restLimit = 200
+            restLimit = 500
             # cat=plugin.tx_events//a; type=string; label=Mode
             restMode = next_months,12
             # cat=plugin.tx_events//a; type=string; label=Data Template
