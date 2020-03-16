@@ -100,6 +100,13 @@ class Event extends AbstractEntity
 
     /**
      * web
+     *
+     * @var string
+     */
+    protected $phone = '';
+
+    /**
+     * web
      * 
      * @var string
      */
@@ -355,6 +362,22 @@ class Event extends AbstractEntity
     public function setZip($zip)
     {
         $this->zip = $zip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
     }
 
     /**

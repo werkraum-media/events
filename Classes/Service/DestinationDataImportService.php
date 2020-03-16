@@ -275,8 +275,8 @@ class DestinationDataImportService {
                 $this->setTexts($event['texts']);
 
             // Set address and geo data
-            if($event['street'] && $event['city'] && $event['zip'] && $event['country'])
-                $this->setAddress($event['street'], $event['city'], $event['zip'], $event['country']);
+            if($event['street'] || $event['city'] || $event['zip'] || $event['country'])
+                $this->setAddress($event);
 
             // Set LatLng
             if($event['geo']['main']['latitude'] && $event['geo']['main']['longitude'])
@@ -454,16 +454,21 @@ class DestinationDataImportService {
     }
 
     /**
-     * @param string $street
-     * @param string $city
-     * @param string $zip
-     * @param string $country
+     * @param array $event
      */
-    protected function setAddress(String $street, String $city, String $zip, String $country) {
-        $this->tmpCurrentEvent->setStreet($street);
-        $this->tmpCurrentEvent->setCity($city);
-        $this->tmpCurrentEvent->setZip($zip);
-        $this->tmpCurrentEvent->setCountry($country);
+    protected function setAddress(Array $event) {
+        if (!empty($event['street']))
+            $this->tmpCurrentEvent->setStreet($event['street']);
+        if (!empty($event['city']))
+            $this->tmpCurrentEvent->setCity($event['city']);
+        if (!empty($event['zip']))
+            $this->tmpCurrentEvent->setZip($event['zip']);
+        if (!empty($event['country']))
+            $this->tmpCurrentEvent->setCountry($event['country']);
+        if (!empty($event['phone']))
+            $this->tmpCurrentEvent->setPhone($event['phone']);
+        if (!empty($event['web']))
+            $this->tmpCurrentEvent->setWeb($event['web']);
     }
 
     /**

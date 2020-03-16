@@ -23,15 +23,47 @@
                 <f:format.html>{date.event.details}</f:format.html>
                 <p>{event.price_info}</p>
 
-                <div class="row">
-                    <div class="col-4">
-                        <p>Veranstaltungsort:<br>
-                            {date.event.street}<br>
-                            {date.event.zip} {date.event.city}<br>
-                        </p>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-3 mb-3">
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <p><b>Preis:</b><br>
+                    <f:if condition="{date.event.priceInfo}">
+                        <f:then>
+                            {date.event.priceInfo}
+                        </f:then>
+                        <f:else>
+                            Keine Information
+                        </f:else>
+                    </f:if>
+                </p>
+
+                <f:if condition="{date.event.web}">
+                    <p><b>Weitere Informationen:</b><br>
+                        <a href="{date.event.web}" target="_blank">Website</a>
+                    </p>
+                </f:if>
+            </div>
+            <div class="col-4">
+                <p><b>Veranstaltungsort:</b><br>
+                    {date.event.street}<br>
+                    {date.event.zip} {date.event.city}<br>
+                    {date.event.phone}<br>
+                </p>
+            </div>
+            <div class="col-4">
+                <p><b>Veranstalter:</b><br>
+                    {date.event.organizer.name}<br>
+                    {date.event.organizer.street}<br>
+                    {date.event.organizer.zip} {date.event.organizer.city}<br>
+                    {date.event.organizer.phone}<br>
+                    <a href="{date.event.organizer.web}" target="_blank">Website</a>
+                </p>
             </div>
         </div>
     </f:section>

@@ -16,6 +16,7 @@ CREATE TABLE tx_events_domain_model_event (
     zip varchar(255) DEFAULT '' NOT NULL,
     country varchar(255) DEFAULT '' NOT NULL,
     web varchar(255) DEFAULT '' NOT NULL,
+    phone varchar(255) DEFAULT '' NOT NULL,
     booking varchar(255) DEFAULT '' NOT NULL,
     ticket varchar(255) DEFAULT '' NOT NULL,
     facebook varchar(255) DEFAULT '' NOT NULL,
