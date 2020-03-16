@@ -35,7 +35,7 @@
                 <p><b>Preis:</b><br>
                     <f:if condition="{date.event.priceInfo}">
                         <f:then>
-                            {date.event.priceInfo}
+                            <f:format.nl2br>{date.event.priceInfo}</f:format.nl2br>
                         </f:then>
                         <f:else>
                             Keine Information

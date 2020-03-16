@@ -493,6 +493,9 @@ class DestinationDataImportService {
             if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
                 $this->tmpCurrentEvent->setTeaser($text['value']);
             }
+            if ($text['rel'] == "PRICE_INFO" && $text['type'] == "text/plain") {
+                $this->tmpCurrentEvent->setPriceInfo($text['value']);
+            }
         }
     }
 
