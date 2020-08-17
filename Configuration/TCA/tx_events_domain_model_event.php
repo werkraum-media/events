@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -211,6 +211,15 @@ return [
                 'rows' => 15,
                 'eval' => 'trim'
             ]
+        ],
+        'name' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_event.name',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
         ],
         'street' => [
             'exclude' => true,

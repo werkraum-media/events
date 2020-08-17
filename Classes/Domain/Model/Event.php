@@ -64,6 +64,13 @@ class Event extends AbstractEntity
     protected $priceInfo = '';
 
     /**
+     * name
+     * 
+     * @var string
+     */
+    protected $name = '';
+
+    /**
      * street
      * 
      * @var string
@@ -287,6 +294,23 @@ class Event extends AbstractEntity
     public function setPriceInfo($priceInfo)
     {
         $this->priceInfo = $priceInfo;
+    }
+
+    /**
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

@@ -10,6 +10,7 @@ CREATE TABLE tx_events_domain_model_event (
 	teaser text,
 	details text,
 	price_info text,
+	name varchar(255) DEFAULT '' NOT NULL,
 	street varchar(255) DEFAULT '' NOT NULL,
 	district varchar(255) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,
