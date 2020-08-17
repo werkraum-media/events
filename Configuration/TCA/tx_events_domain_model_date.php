@@ -120,7 +120,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date.start',
             'config' => [
-                'dbType' => 'datetime',
+                //'dbType' => 'datetime',
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
                 'size' => 12,
@@ -132,7 +132,7 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date.end',
             'config' => [
-                'dbType' => 'datetime',
+                //'dbType' => 'datetime',
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
                 'size' => 12,
@@ -140,14 +140,6 @@ return [
                 'default' => null,
             ],
         ],
-
-        /*
-        'event' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        */
 
         'event' => array(
             'exclude' => 1,

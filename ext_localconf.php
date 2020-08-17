@@ -5,6 +5,7 @@ call_user_func(
     function()
     {
 
+        /*
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Wrm.Events',
             'Pi1',
@@ -16,6 +17,49 @@ call_user_func(
                 'Event' => 'teaser, list, show, search',
                 'Date' => 'teaser, list, show, search'
             ]
+        );
+        */
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Wrm.Events',
+            'DateSearch',
+            [
+                'Date' => 'search'
+            ],
+            [
+                'Date' => 'search'
+            ]
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Wrm.Events',
+            'DateList',
+            [
+                'Date' => 'list'
+            ],
+            [
+                'Date' => 'list'
+            ]
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Wrm.Events',
+            'DateShow',
+            [
+                'Date' => 'show'
+            ],
+            [
+                'Date' => 'show'
+            ]
+        );
+
+        /*
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+        $iconRegistry->registerIcon(
+            'events-plugin',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
         );
 
         // wizards
@@ -37,14 +81,6 @@ call_user_func(
                 }
             }'
         );
-
-		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-		
-        $iconRegistry->registerIcon(
-            'events-plugin',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
-        );
-		
+        */
     }
 );

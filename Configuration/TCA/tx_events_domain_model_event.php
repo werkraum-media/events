@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, booking, ticket, facebook, youtube, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -150,17 +150,6 @@ return [
                 'default' => '',
             ],
         ],
-        /*
-        'slug' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_event.slug',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        */
         'highlight' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_event.highlight',
@@ -260,6 +249,15 @@ return [
         'country' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_event.country',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'phone' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_event.phone',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

@@ -49,10 +49,10 @@ class Date extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @param string $end
+     * @param \DateTime $end
      * @return void
      */
-    public function setEnd($end)
+    public function setEnd(\DateTime $end)
     {
         $this->end = $end;
     }

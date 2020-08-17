@@ -36,6 +36,7 @@ plugin.tx_events {
 
         defaulDetailEventsPid =
         defaultDetailDatesPid =
+        defaultImagePath = {$plugin.tx_events.settings.defaultImagePath}
 
         paginate {
             # can be overriden by plugin
@@ -50,8 +51,10 @@ plugin.tx_events {
             license = {$plugin.tx_events.settings.destinationData.license}
             restType = {$plugin.tx_events.settings.destinationData.restType}
             restLimit = {$plugin.tx_events.settings.destinationData.restLimit}
+            restMode = {$plugin.tx_events.settings.destinationData.restMode}
             restTemplate = {$plugin.tx_events.settings.destinationData.restTemplate}
             categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
+            categoryParentUid = {$plugin.tx_events.settings.destinationData.categoryParentUid}
         }
     }
 }

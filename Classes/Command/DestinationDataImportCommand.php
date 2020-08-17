@@ -23,29 +23,23 @@ class DestinationDataImportCommand extends Command {
             'storage-pid',
             InputArgument::OPTIONAL,
             'What is the storage pid?',
-            '281'
+            '284'
         );
         $this->addArgument(
             'region-uid',
             InputArgument::OPTIONAL,
             'What is the region uid?',
-            '3'
-        );
-        $this->addArgument(
-            'category-parent-uid',
-            InputArgument::OPTIONAL,
-            'What is the default category parent uid?',
             '6'
         );
         $this->addArgument('rest-experience',
             InputArgument::OPTIONAL,
             'What is the rest experience?',
-            'arnstadt'
+            'stadtmarketing-erfurt'
         );
         $this->addArgument('files-folder',
             InputArgument::OPTIONAL,
             'Where to save the image files?',
-            'redaktion/arnstadt/events/'
+            'staedte/erfurt/events/'
         );
     }
 
@@ -59,7 +53,6 @@ class DestinationDataImportCommand extends Command {
                 $input->getArgument('rest-experience'),
                 $input->getArgument('storage-pid'),
                 $input->getArgument('region-uid'),
-                $input->getArgument('category-parent-uid'),
                 $input->getArgument('files-folder')
             );
     }

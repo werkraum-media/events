@@ -38,7 +38,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         // For testing purposes
         // $query = $this->createDemandQueryViaBuilder($demand);
-        //return $query->execute()->fetchAll();
+        // return $query->execute()->fetchAll();
     }
 
     /**
@@ -82,9 +82,12 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['daterange'] = $query->logicalAnd(
                 [
                     $query->greaterThanOrEqual('start', $demand->getStart()),
-                    $query->lessThanOrEqual('start', $demand->getEnd())
+                    $query->lessThanOrEqual('end', $demand->getEnd())
                 ]
             );
+        } else {
+            $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
+            $constraints['untilnow'] = $query->greaterThanOrEqual('start', $now);
         }
 
         if ($demand->getLimit() !== '') {

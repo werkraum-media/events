@@ -45,6 +45,10 @@ class DestinationDataImportService {
     /**
      * @var
      */
+    protected $restMode;
+    /**
+     * @var
+     */
     protected $restTemplate;
     /**
      * @var
@@ -185,27 +189,27 @@ class DestinationDataImportService {
         );
 
         // Set properties
-        $this->restUrl          = $this->settings['destinationData']['restUrl'];
-        $this->restLicenseKey   = $this->settings['destinationData']['license'];
-        $this->restType         = $this->settings['destinationData']['restType'];
-        $this->restLimit        = $this->settings['destinationData']['restLimit'];
-        $this->restTemplate     = $this->settings['destinationData']['restTemplate'];
-        $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
+        $this->restUrl           = $this->settings['destinationData']['restUrl'];
+        $this->restLicenseKey    = $this->settings['destinationData']['license'];
+        $this->restType          = $this->settings['destinationData']['restType'];
+        $this->restLimit         = $this->settings['destinationData']['restLimit'];
+        $this->restMode          = $this->settings['destinationData']['restMode'];
+        $this->restTemplate      = $this->settings['destinationData']['restTemplate'];
+        $this->sysCategoriesPid  = $this->settings['destinationData']['categoriesPid'];
+        $this->categoryParentUid = $this->settings['destinationData']['categoryParentUid'];
     }
 
     /**
      * @param $restExperience
      * @param $storagePid
      * @param $regionUid
-     * @param $categoryParentUid
      * @param $filesFolder
      */
-    public function import($restExperience, $storagePid, $regionUid, $categoryParentUid, $filesFolder) {
+    public function import($restExperience, $storagePid, $regionUid, $filesFolder) {
 
         $this->restExperience = $restExperience;
         $this->storagePid = $storagePid;
         $this->regionUid = $regionUid;
-        $this->categoryParentUid = $categoryParentUid;
         $this->filesFolder = $filesFolder;
 
         // Get configuration
@@ -222,16 +226,14 @@ class DestinationDataImportService {
 
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
-
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+
         $this->logger->info('Starting Destination Data Import Service');
-
-        $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
-
+        $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&mode=' . $this->restMode . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
         $this->logger->info('Try to get data from ' . $restUrl);
 
         if ($jsonResponse = json_decode(file_get_contents($restUrl),true)) {
-            $this->logger->info('Received data with ' . count($jsonResponse) . 'items');
+            $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
             return $this->processData($jsonResponse);
         } else {
             $this->logger->error('Could not receive data.');
@@ -246,7 +248,9 @@ class DestinationDataImportService {
      */
     public function processData($data) {
 
-        // Get seleceted region
+        $this->logger->info('Processing json ' . count($data['items']));
+
+        // Get selected region
         $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
 
         foreach ($data['items'] as $event) {
@@ -271,8 +275,9 @@ class DestinationDataImportService {
                 $this->setTexts($event['texts']);
 
             // Set address and geo data
-            if($event['name'] && $event['street'] && $event['city'] && $event['zip'] && $event['country'])
-                $this->setAddress($event['name'], $event['street'], $event['city'], $event['zip'], $event['country']);
+
+            if($event['name'] || $event['street'] || $event['city'] || $event['zip'] || $event['country'])
+                $this->setAddress($event);
 
             // Set LatLng
             if($event['geo']['main']['latitude'] && $event['geo']['main']['longitude'])
@@ -301,10 +306,12 @@ class DestinationDataImportService {
 
         }
         $this->doSlugUpdate();
+        $this->logger->info('Finished import');
         return 0;
     }
 
     /**
+     *
      * @param array $categories
      */
     protected function setCategories(Array $categories) {
@@ -331,7 +338,7 @@ class DestinationDataImportService {
      */
     protected function setDates(Array $timeIntervals) {
 
-        // TODO: does not seem to work -->
+        // @TODO: does not seem to work -->
         //$currentEventDates = $this->tmpCurrentEvent->getDates();
         //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
         // <--
@@ -341,19 +348,18 @@ class DestinationDataImportService {
         $this->logger->info('Found ' . count($currentEventDates) . ' to delete');
 
         foreach ($currentEventDates as $currentDate) {
-            //$this->logger->info('Delete ' . $currentDate->getStart()->format('Y-m-d'));
             $this->dateRepository->remove($currentDate);
         }
 
-        $now = new \DateTime();
-        $now = $now->getTimestamp();
+        $today = new \DateTime('today');
+        $today = $today->getTimestamp();
 
         foreach ($timeIntervals as $date) {
 
             // Check if dates are given as interval or not
             if (empty($date['interval'])) {
 
-                if (strtotime($date['start']) > $now) {
+                if (strtotime($date['start']) > $today) {
                     $this->logger->info('Setup single date');
                     $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
@@ -367,16 +373,16 @@ class DestinationDataImportService {
 
             } else {
 
-
-                if ($date['freq'] == 'Daily' && empty($date['weekdays'])) {
+                if ($date['freq'] == 'Daily' && empty($date['weekdays']) && !empty($date['repeatUntil'])) {
 
                     $this->logger->info('Setup daily interval dates');
                     $this->logger->info('Start ' . $date['start']);
                     $this->logger->info('End ' . $date['repeatUntil']);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+
                     for($i = strtotime($start->format('l'), $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 day', $i)) {
-                        if ($i > $now) {
+                        if ($i >= $today) {
                             $eventStart = new \DateTime();
                             $eventStart->setTimestamp($i);
                             $eventStart->setTime($start->format('H'), $start->format('i'));
@@ -392,8 +398,7 @@ class DestinationDataImportService {
 
                 }
 
-                else if ($date['freq'] == 'Weekly' && !empty($date['weekdays'])) {
-
+                else if ($date['freq'] == 'Weekly' && !empty($date['weekdays']) && !empty($date['repeatUntil'])) {
                     foreach ($date['weekdays'] as $day) {
                         $this->logger->info('Setup weekly interval dates for ' . $day);
                         $this->logger->info('Start ' . $date['start']);
@@ -402,7 +407,7 @@ class DestinationDataImportService {
                         $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
 
                         for($i = strtotime($day, $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 week', $i)) {
-                            if ($i > $now) {
+                            if ($i >= $today) {
                                 $eventStart = new \DateTime();
                                 $eventStart->setTimestamp($i);
                                 $eventStart->setTime($start->format('H'), $start->format('i'));
@@ -416,12 +421,10 @@ class DestinationDataImportService {
                             }
                         }
                     }
-
                 }
-
             }
-
         }
+        $this->logger->info('Finished setup dates');
     }
 
     /**
@@ -436,9 +439,7 @@ class DestinationDataImportService {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
                     continue;
                 }
-
                 $tmpOrganizer = $this->objectManager->get(\Wrm\Events\Domain\Model\Organizer::class);
-
                 $tmpOrganizer->setName($address['name']);
                 $tmpOrganizer->setCity($address['city']);
                 $tmpOrganizer->setZip($address['zip']);
@@ -447,27 +448,30 @@ class DestinationDataImportService {
                 $tmpOrganizer->setWeb($address['web']);
                 $tmpOrganizer->setEmail($address['email']);
                 $tmpOrganizer->setDistrict($address['district']);
-
                 $this->organizerRepository->add($tmpOrganizer);
                 $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
-
             }
         }
     }
 
     /**
-     * @param string $name
-     * @param string $street
-     * @param string $city
-     * @param string $zip
-     * @param string $country
+     * @param array $event
      */
-    protected function setAddress(String $name, String $street, String $city, String $zip, String $country) {
-        $this->tmpCurrentEvent->setName($name);
-        $this->tmpCurrentEvent->setStreet($street);
-        $this->tmpCurrentEvent->setCity($city);
-        $this->tmpCurrentEvent->setZip($zip);
-        $this->tmpCurrentEvent->setCountry($country);
+    protected function setAddress(Array $event) {
+        if (!empty($event['name']))
+            $this->tmpCurrentEvent->setName($event['name']);
+        if (!empty($event['street']))
+            $this->tmpCurrentEvent->setStreet($event['street']);
+        if (!empty($event['city']))
+            $this->tmpCurrentEvent->setCity($event['city']);
+        if (!empty($event['zip']))
+            $this->tmpCurrentEvent->setZip($event['zip']);
+        if (!empty($event['country']))
+            $this->tmpCurrentEvent->setCountry($event['country']);
+        if (!empty($event['phone']))
+            $this->tmpCurrentEvent->setPhone($event['phone']);
+        if (!empty($event['web']))
+            $this->tmpCurrentEvent->setWeb($event['web']);
     }
 
     /**
@@ -491,6 +495,9 @@ class DestinationDataImportService {
             }
             if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
                 $this->tmpCurrentEvent->setTeaser($text['value']);
+            }
+            if ($text['rel'] == "PRICE_INFO" && $text['type'] == "text/plain") {
+                $this->tmpCurrentEvent->setPriceInfo($text['value']);
             }
         }
     }
@@ -528,6 +535,8 @@ class DestinationDataImportService {
      */
     protected function setAssets(Array $assets) {
 
+        $this->logger->info("Set assets");
+
         $error = false;
 
         foreach ($assets as $media_object)
@@ -535,6 +544,11 @@ class DestinationDataImportService {
             if($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
 
                 $this->storage = $this->resourceFactory->getDefaultStorage();
+
+                if ($this->storage == null) {
+                    $this->logger->error('No default storage defined. Cancel import.');
+                    die();
+                }
 
                 // Check if file already exists
                 if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
@@ -634,7 +648,6 @@ class DestinationDataImportService {
      */
     protected function doSlugUpdate()
     {
-
         $this->logger->info('Update slugs');
 
         $slugHelper = GeneralUtility::makeInstance(
