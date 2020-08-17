@@ -33,6 +33,9 @@
 			<trans-unit id="tx_events_domain_model_event.price_info">
 				<source>Price Info</source>
 			</trans-unit>
+			<trans-unit id="tx_events_domain_model_event.name">
+				<source>Name</source>
+			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.street">
 				<source>Street</source>
 			</trans-unit>

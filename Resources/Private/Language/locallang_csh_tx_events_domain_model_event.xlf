@@ -24,6 +24,9 @@
 			<trans-unit id="price_info.description">
 				<source>priceInfo</source>
 			</trans-unit>
+			<trans-unit id="name.description">
+				<source>name</source>
+			</trans-unit>
 			<trans-unit id="street.description">
 				<source>street</source>
 			</trans-unit>
