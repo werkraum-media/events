@@ -547,10 +547,8 @@ class DestinationDataImportService {
 
                 $orgFileUrl = urldecode($media_object['url']);
                 $orgFileNameSanitized = $this->storage->sanitizeFileName(
-                    strtolower(
-                        basename(
-                            urldecode($media_object['url'])
-                        )
+                    basename(
+                        urldecode($media_object['url'])
                     )
                 );
 
