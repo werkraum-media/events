@@ -106,7 +106,7 @@ class Event extends AbstractEntity
     protected $country = '';
 
     /**
-     * web
+     * phone
      *
      * @var string
      */
@@ -118,13 +118,6 @@ class Event extends AbstractEntity
      * @var string
      */
     protected $web = '';
-
-    /**
-     * booking
-     * 
-     * @var string
-     */
-    protected $booking = '';
 
     /**
      * ticket
@@ -146,6 +139,13 @@ class Event extends AbstractEntity
      * @var string
      */
     protected $youtube = '';
+
+    /**
+     * instagram
+     * 
+     * @var string
+     */
+    protected $instagram = '';
 
     /**
      * latitude
@@ -422,23 +422,6 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @return string $booking
-     */
-    public function getBooking()
-    {
-        return $this->booking;
-    }
-
-    /**
-     * @param string $booking
-     * @return void
-     */
-    public function setBooking($booking)
-    {
-        $this->booking = $booking;
-    }
-
-    /**
      * @return string $ticket
      */
     public function getTicket()
@@ -489,6 +472,22 @@ class Event extends AbstractEntity
         $this->youtube = $youtube;
     }
 
+    /**
+     * @return  string $instagram
+     */ 
+    public function getInstagram()
+    {
+        return $this->instagram;
+    }
+
+    /**
+     * @param  string  $instagram
+     */ 
+    public function setInstagram(string $instagram)
+    {
+        $this->instagram = $instagram;
+    }
+    
     /**
      * @return string $latitude
      */

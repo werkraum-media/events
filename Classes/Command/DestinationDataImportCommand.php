@@ -23,13 +23,13 @@ class DestinationDataImportCommand extends Command {
             'storage-pid',
             InputArgument::OPTIONAL,
             'What is the storage pid?',
-            '284'
+            '6'
         );
         $this->addArgument(
             'region-uid',
             InputArgument::OPTIONAL,
             'What is the region uid?',
-            '6'
+            '1'
         );
         $this->addArgument('rest-experience',
             InputArgument::OPTIONAL,

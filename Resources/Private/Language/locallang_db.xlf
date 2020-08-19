@@ -57,9 +57,6 @@
 			<trans-unit id="tx_events_domain_model_event.phone">
 				<source>Phone</source>
 			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.booking">
-				<source>Booking</source>
-			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.ticket">
 				<source>Ticket</source>
 			</trans-unit>
@@ -68,6 +65,9 @@
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.youtube">
 				<source>Youtube</source>
+			</trans-unit>
+			<trans-unit id="tx_events_domain_model_event.instagram">
+				<source>Instagram</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.latitude">
 				<source>Latitude</source>

@@ -87,9 +87,9 @@ class DestinationDataImportService {
      */
     protected $environment;
     /**
-     * @var bool
+     * @var
      */
-    protected $tmpCurrentEvent = FALSE;
+    protected $tmpCurrentEvent;
     /**
      * @var
      */
@@ -275,8 +275,7 @@ class DestinationDataImportService {
                 $this->setTexts($event['texts']);
 
             // Set address and geo data
-
-            if($event['name'] || $event['street'] || $event['city'] || $event['zip'] || $event['country'])
+            if($event['name'] || $event['street'] || $event['city'] || $event['zip'] || $event['country'] || $event['web'])
                 $this->setAddress($event);
 
             // Set LatLng
@@ -290,6 +289,10 @@ class DestinationDataImportService {
             // Set Organizer
             if($event['addresses'])
                 $this->setOrganizer($event['addresses']);
+
+            // Set Social and Tickets
+            if($event['media_objects'])
+                $this->setSocial($event['media_objects']);
 
             // Set Dates
             if($event['timeIntervals'])
@@ -475,6 +478,23 @@ class DestinationDataImportService {
     }
 
     /**
+     * @param array $media
+     */
+    protected function setSocial(Array $media) {
+        foreach ($media as $link)
+        {
+            if ($link['rel'] == "socialmedia" && $link['value'] == "Facebook")
+                $this->tmpCurrentEvent->setFacebook($link['url']);
+            if ($link['rel'] == "socialmedia" && $link['value'] == "YouTube")
+                $this->tmpCurrentEvent->setYouTube($link['url']);
+            if ($link['rel'] == "socialmedia" && $link['value'] == "Instagram")
+                $this->tmpCurrentEvent->setInstagram($link['url']);
+            if ($link['rel'] == "booking")
+                $this->tmpCurrentEvent->setTicket($link['url']);
+        }
+    }
+
+    /**
      * @param string $lat
      * @param string $lng
      */
@@ -491,13 +511,13 @@ class DestinationDataImportService {
         foreach ($texts as $text)
         {
             if ($text['rel'] == "details" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setDetails($text['value']);
+                $this->tmpCurrentEvent->setDetails(str_replace('\n\n', '\n', $text['value']));
             }
             if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setTeaser($text['value']);
+                $this->tmpCurrentEvent->setTeaser(str_replace('\n\n', '\n', $text['value']));
             }
             if ($text['rel'] == "PRICE_INFO" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setPriceInfo($text['value']);
+                $this->tmpCurrentEvent->setPriceInfo(str_replace('\n\n', '\n', $text['value']));
             }
         }
     }
