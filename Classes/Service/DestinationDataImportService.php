@@ -565,21 +565,32 @@ class DestinationDataImportService {
 
                 $this->storage = $this->resourceFactory->getDefaultStorage();
 
+                $orgFileUrl = urldecode($media_object['url']);
+                $orgFileNameSanitized = $this->storage->sanitizeFileName(
+                    basename(
+                        urldecode($media_object['url'])
+                    )
+                );
+
+                $this->logger->info('File attached:' . $orgFileUrl);
+                $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
+                //die();
+
                 if ($this->storage == null) {
                     $this->logger->error('No default storage defined. Cancel import.');
                     die();
                 }
 
                 // Check if file already exists
-                if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . strtolower(basename($media_object['url'])))) {
+                if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . $orgFileNameSanitized)) {
                     $this->logger->info('File already exists');
                 } else {
-                    $this->logger->info("File don't exist");
+                    $this->logger->info("File don't exist " . $orgFileNameSanitized);
                     // Load the file
-                    if ($file = $this->loadFile($media_object['url'])) {
+                    if ($file = $this->loadFile($orgFileUrl)) {
                         // Move file to defined folder
                         $this->logger->info('Adding file ' . $file);
-                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $this->storage->getFolder($this->filesFolder), basename($media_object['url']));
+                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $this->storage->getFolder($this->filesFolder));
                     } else {
                         $error = true;
                     }
@@ -591,7 +602,7 @@ class DestinationDataImportService {
                         // TODO: How to delete file references?
                     } else {
                         $this->logger->info('No relation found');
-                        $file = $this->storage->getFile($this->filesFolder . basename($media_object['url']));
+                        $file = $this->storage->getFile($this->filesFolder . $orgFileNameSanitized);
                         $this->metaDataRepository->update($file->getUid(), array('title' => $media_object['value'], 'description' => $media_object['description'], 'alternative' => 'DD Import'));
                         $this->createFileRelations($file->getUid(),  'tx_events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
                     }
