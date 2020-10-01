@@ -293,9 +293,13 @@ class DestinationDataImportService {
             if($event['addresses'])
                 $this->setOrganizer($event['addresses']);
 
-            // Set Social and Tickets
+            // Set Social
             if($event['media_objects'])
                 $this->setSocial($event['media_objects']);
+
+            // Set Tickets
+            if($event['media_objects'])
+                $this->setTickets($event['media_objects']);
 
             // Set Dates
             if($event['timeIntervals'])
@@ -497,9 +501,44 @@ class DestinationDataImportService {
                 $this->tmpCurrentEvent->setYouTube($link['url']);
             if ($link['rel'] == "socialmedia" && $link['value'] == "Instagram")
                 $this->tmpCurrentEvent->setInstagram($link['url']);
-            if ($link['rel'] == "booking")
-                $this->tmpCurrentEvent->setTicket($link['url']);
         }
+    }
+
+    /**
+     * @param array $media
+     */
+    protected function seTickets(Array $media) {
+        foreach ($media as $link)
+        {
+            if ($link['rel'] == "ticket") {
+                $this->tmpCurrentEvent->setTicket($link['url']);
+                break;
+            } elseif ($link['rel'] == "booking" && !$this->multi_array_key_exists('ticket', $media)) {
+                $this->tmpCurrentEvent->setTicket($link['url']);
+                break;
+            } elseif ($link['rel'] == "PRICE_KARTENLINK" && !$this->multi_array_key_exists('ticket', $media) && !$this->multi_array_key_exists('booking', $media)) {
+                $this->tmpCurrentEvent->setTicket($link['url']);
+            }
+        }
+    }
+
+    /**
+     * @param string $needle
+     * @param array $haystack
+     */
+    protected function multi_array_key_exists( $needle, $haystack ) {
+
+        foreach ( $haystack as $key => $value ) {
+            if ( $needle == $key ) {
+                return true;
+            }
+            if ( is_array( $value ) ) {
+                if ( $this->multi_array_key_exists( $needle, $value ) == true ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
