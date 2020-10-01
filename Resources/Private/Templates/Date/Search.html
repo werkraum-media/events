@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="searchword">Suchwort</label>
+                            <label for="searchword"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.searchword" /></label>
                             <f:form.textfield type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col col-md-6">
                         <div class="form-group">
-                            <label for="start">Datum von</label>
+                            <label for="start"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_from" /></label>
                             <div class="input-group date" id="date_start" data-target-input="nearest">
                                 <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
                                 <div class="input-group-append" data-target="#date_start" data-toggle="datetimepicker">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col col-md-6">
                         <div class="form-group">
-                            <label for="end">Datum bis</label>
+                            <label for="end"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_to" /></label>
                             <div class="input-group date" id="date_end" data-target-input="nearest">
                                 <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
                                 <div class="input-group-append" data-target="#date_end" data-toggle="datetimepicker">
@@ -51,7 +51,7 @@
                         <div class="col-4 col-md-3 col-lg-3">
                             <div class="form-check">
                                 <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
-                                <label class="form-check-label" for="radio_0">Alle Städte</label>
+                                <label class="form-check-label" for="radio_0"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.regions" /></label>
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                     </div>
                 </f:if>
                 <div class="form-group mt-3">
-                    <f:form.submit value="Suchen" class="btn btn-primary" />
+                    <f:form.submit value="{f:translate(key: 'LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.search')}" class="btn btn-primary" />
                 </div>
             </f:form>
         </div>

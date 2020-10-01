@@ -7,13 +7,25 @@
 				<source>Search form</source>
 				<target>Suchformular</target>
 			</trans-unit>
+			<trans-unit id="tx_events.searchform.searchword">
+				<source>Search word</source>
+				<target>Suchwort</target>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_from">
+				<source>Date from</source>
+				<target>Datum von</target>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_to">
+				<source>Date to</source>
+				<target>Date bis</target>
+			</trans-unit>
 			<trans-unit id="tx_events.searchform.regions">
 				<source>All regions</source>
-				<target>Alle Regionen</target>
+				<target>Alle Städte</target>
 			</trans-unit>
 			<trans-unit id="tx_events.searchform.search">
 				<source>Search</source>
-				<target>Suche</target>
+				<target>Suchen</target>
 			</trans-unit>
 		</body>
 	</file>

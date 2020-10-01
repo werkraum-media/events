@@ -6,6 +6,15 @@
 			<trans-unit id="tx_events.searchform">
 				<source>Search form</source>
 			</trans-unit>
+			<trans-unit id="tx_events.searchform.searchword">
+				<source>Search word</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_from">
+				<source>Date from</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_to">
+				<source>Date to</source>
+			</trans-unit>
 			<trans-unit id="tx_events.searchform.regions">
 				<source>All regions</source>
 			</trans-unit>
