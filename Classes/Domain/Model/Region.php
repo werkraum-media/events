@@ -28,7 +28,7 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var int
      */
-    protected $languageUid;
+    protected $_languageUid;
 
     /**
      * Returns the title
@@ -78,13 +78,13 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @return void
      */
     public function setLanguageUid($languageUid) {
-        $this->languageUid = $languageUid;
+        $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
     public function getLanguageUid() {
-        return $this->languageUid;
+        return $this->_languageUid;
     }
 }

@@ -201,7 +201,7 @@ class Event extends AbstractEntity
     /**
      * @var int
      */
-    protected $languageUid;
+    protected $_languageUid;
 
     /**
      * __construct
@@ -713,13 +713,13 @@ class Event extends AbstractEntity
      * @return void
      */
     public function setLanguageUid($languageUid) {
-        $this->languageUid = $languageUid;
+        $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
     public function getLanguageUid() {
-        return $this->languageUid;
+        return $this->_languageUid;
     }
 }
