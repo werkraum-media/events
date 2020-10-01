@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer',
+        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -118,7 +118,7 @@ return [
 
         'name' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.name',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.name',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -127,7 +127,7 @@ return [
         ],
         'street' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.street',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.street',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -136,7 +136,7 @@ return [
         ],
         'district' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.district',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.district',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -145,7 +145,7 @@ return [
         ],
         'city' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.city',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.city',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -154,7 +154,7 @@ return [
         ],
         'zip' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.zip',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.zip',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -163,7 +163,7 @@ return [
         ],
         'phone' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.phone',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.phone',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -172,7 +172,7 @@ return [
         ],
         'web' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.web',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.web',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -181,7 +181,7 @@ return [
         ],
         'email' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_organizer.email',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_organizer.xlf:tx_events_domain_model_organizer.email',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

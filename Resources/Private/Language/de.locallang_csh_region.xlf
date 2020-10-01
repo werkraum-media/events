@@ -3,13 +3,13 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
 		<header/>
 		<body>
-			<trans-unit id="tx_events.name">
-				<source>Events</source>
-				<target>Veranstaltungen</target>
+			<trans-unit id="tx_events_domain_model_region">
+				<source>Region</source>
+				<target>Region</target>
 			</trans-unit>
-			<trans-unit id="tx_events.description">
-				<source>Event Modul</source>
-				<target>Veranstaltungs Modul</target>
+			<trans-unit id="tx_events_domain_model_region.title">
+				<source>Title</source>
+				<target>Titel</target>
 			</trans-unit>
 		</body>
 	</file>

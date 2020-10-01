@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+		<header/>
+		<body>
+			<trans-unit id="tx_events_domain_model_date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="tx_events_domain_model_date.start">
+				<source>Start</source>
+			</trans-unit>
+			<trans-unit id="tx_events_domain_model_date.end">
+				<source>End</source>
+			</trans-unit>
+			<trans-unit id="tx_events_domain_model_date.event">
+				<source>Associated event</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

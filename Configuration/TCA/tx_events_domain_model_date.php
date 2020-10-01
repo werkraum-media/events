@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date',
+        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date',
         'label' => 'start',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -118,7 +118,7 @@ return [
 
         'start' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date.start',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.start',
             'config' => [
                 //'dbType' => 'datetime',
                 'type' => 'input',
@@ -130,7 +130,7 @@ return [
         ],
         'end' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date.end',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.end',
             'config' => [
                 //'dbType' => 'datetime',
                 'type' => 'input',
@@ -143,7 +143,7 @@ return [
 
         'event' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_date.event',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.event',
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',

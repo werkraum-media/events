@@ -118,7 +118,7 @@ return [
 
         'title' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_region.title',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_region.xlf:tx_events_domain_model_region.title',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
