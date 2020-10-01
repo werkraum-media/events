@@ -260,6 +260,9 @@ class DestinationDataImportService {
             // Event already exists? If not create one!
             $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
 
+            // Set language UID
+            $this->tmpCurrentEvent->setLanguageUid(-1);
+
             // Set selected Region
             $this->tmpCurrentEvent->setRegion($selectedRegion);
 
@@ -369,6 +372,8 @@ class DestinationDataImportService {
                     $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
                     $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
                     $this->logger->info('End transformed ' . $end->format('Y-m-d H:i'));
+                                // Set language UID
+                    $dateObj->setLanguageUid(-1);
                     $dateObj->setStart($start);
                     $dateObj->setEnd($end);
                     $this->tmpCurrentEvent->addDate($dateObj);
@@ -393,6 +398,7 @@ class DestinationDataImportService {
                             $eventEnd->setTimestamp($i);
                             $eventEnd->setTime($until->format('H'), $until->format('i'));
                             $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
+                            $dateObj->setLanguageUid(-1);
                             $dateObj->setStart($eventStart);
                             $dateObj->setEnd($eventEnd);
                             $this->tmpCurrentEvent->addDate($dateObj);
@@ -418,6 +424,7 @@ class DestinationDataImportService {
                                 $eventEnd->setTimestamp($i);
                                 $eventEnd->setTime($until->format('H'), $until->format('i'));
                                 $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
+                                $dateObj->setLanguageUid(-1);
                                 $dateObj->setStart($eventStart);
                                 $dateObj->setEnd($eventEnd);
                                 $this->tmpCurrentEvent->addDate($dateObj);
@@ -443,6 +450,7 @@ class DestinationDataImportService {
                     continue;
                 }
                 $tmpOrganizer = $this->objectManager->get(\Wrm\Events\Domain\Model\Organizer::class);
+                $tmpOrganizer->setLanguageUid(-1);
                 $tmpOrganizer->setName($address['name']);
                 $tmpOrganizer->setCity($address['city']);
                 $tmpOrganizer->setZip($address['zip']);

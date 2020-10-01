@@ -75,6 +75,11 @@ class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $email = '';
 
     /**
+     * @var int
+     */
+    protected $languageUid;
+
+    /**
      * Returns the name
      * 
      * @return string $name
@@ -262,5 +267,20 @@ class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected function initStorageObjects()
     {
+    }
+
+    /**
+     * @param int $languageUid
+     * @return void
+     */
+    public function setLanguageUid($languageUid) {
+        $this->languageUid = $languageUid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLanguageUid() {
+        return $this->languageUid;
     }
 }

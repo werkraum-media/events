@@ -24,6 +24,11 @@ class Date extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $event = null;
 
     /**
+     * @var int
+     */
+    protected $languageUid;
+
+    /**
      * @return \DateTime $start
      */
     public function getStart()
@@ -72,6 +77,21 @@ class Date extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->event = $event;
         return $this;
+    }
+
+    /**
+     * @param int $languageUid
+     * @return void
+     */
+    public function setLanguageUid($languageUid) {
+        $this->languageUid = $languageUid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLanguageUid() {
+        return $this->languageUid;
     }
 
 }

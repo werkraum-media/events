@@ -5,21 +5,6 @@ call_user_func(
     function()
     {
 
-        /*
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Wrm.Events',
-            'Pi1',
-            [
-                'Event' => 'teaser, list, show, search',
-                'Date' => 'teaser, list, show, search'
-            ],
-            [
-                'Event' => 'teaser, list, show, search',
-                'Date' => 'teaser, list, show, search'
-            ]
-        );
-        */
-
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Wrm.Events',
             'DateSearch',

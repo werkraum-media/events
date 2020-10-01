@@ -199,6 +199,11 @@ class Event extends AbstractEntity
     protected $categories;
 
     /**
+     * @var int
+     */
+    protected $languageUid;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -701,5 +706,20 @@ class Event extends AbstractEntity
     public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @param int $languageUid
+     * @return void
+     */
+    public function setLanguageUid($languageUid) {
+        $this->languageUid = $languageUid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLanguageUid() {
+        return $this->languageUid;
     }
 }
