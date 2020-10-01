@@ -4,28 +4,28 @@
 		<header/>
 		<body>
 			<trans-unit id="name.description">
-				<source>name</source>
+				<source>Name</source>
 			</trans-unit>
 			<trans-unit id="street.description">
-				<source>street</source>
+				<source>Street</source>
 			</trans-unit>
 			<trans-unit id="district.description">
-				<source>district</source>
+				<source>District</source>
 			</trans-unit>
 			<trans-unit id="city.description">
-				<source>city</source>
+				<source>City</source>
 			</trans-unit>
 			<trans-unit id="zip.description">
-				<source>zip</source>
+				<source>Zip</source>
 			</trans-unit>
 			<trans-unit id="phone.description">
-				<source>phone</source>
+				<source>Phone</source>
 			</trans-unit>
 			<trans-unit id="web.description">
-				<source>web</source>
+				<source>Web</source>
 			</trans-unit>
 			<trans-unit id="email.description">
-				<source>email</source>
+				<source>E-Mail</source>
 			</trans-unit>
 		</body>
 	</file>

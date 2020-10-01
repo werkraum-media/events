@@ -4,10 +4,10 @@
 		<header/>
 		<body>
 			<trans-unit id="start.description">
-				<source>start</source>
+				<source>Start</source>
 			</trans-unit>
 			<trans-unit id="end.description">
-				<source>end</source>
+				<source>End</source>
 			</trans-unit>
 		</body>
 	</file>

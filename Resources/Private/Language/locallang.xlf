@@ -10,7 +10,7 @@
 				<source>Title</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.global_id">
-				<source>Global Id</source>
+				<source>Global UID</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.slug">
 				<source>Slug</source>
@@ -61,7 +61,7 @@
 				<source>Facebook</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.youtube">
-				<source>Youtube</source>
+				<source>YouTube</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_event.latitude">
 				<source>Latitude</source>
@@ -109,7 +109,7 @@
 				<source>Web</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_organizer.email">
-				<source>Email</source>
+				<source>E-Mail</source>
 			</trans-unit>
 			<trans-unit id="tx_events_domain_model_date">
 				<source>Date</source>

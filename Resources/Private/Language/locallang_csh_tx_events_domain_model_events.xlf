@@ -4,67 +4,64 @@
 		<header/>
 		<body>
 			<trans-unit id="global_id.description">
-				<source>globalId</source>
+				<source>Global UID</source>
 			</trans-unit>
 			<trans-unit id="title.description">
-				<source>title</source>
+				<source>Title</source>
 			</trans-unit>
 			<trans-unit id="teaser.description">
-				<source>teaser</source>
+				<source>Teaser</source>
 			</trans-unit>
 			<trans-unit id="details.description">
-				<source>details</source>
+				<source>Details</source>
 			</trans-unit>
 			<trans-unit id="price_info.description">
-				<source>priceInfo</source>
+				<source>Price info</source>
 			</trans-unit>
 			<trans-unit id="street.description">
-				<source>street</source>
+				<source>Street</source>
 			</trans-unit>
 			<trans-unit id="district.description">
-				<source>district</source>
+				<source>District</source>
 			</trans-unit>
 			<trans-unit id="city.description">
-				<source>city</source>
+				<source>City</source>
 			</trans-unit>
 			<trans-unit id="zip.description">
-				<source>zip</source>
+				<source>Zip</source>
 			</trans-unit>
 			<trans-unit id="web.description">
-				<source>web</source>
-			</trans-unit>
-			<trans-unit id="booking.description">
-				<source>booking</source>
+				<source>Web</source>
 			</trans-unit>
 			<trans-unit id="ticket.description">
-				<source>ticket</source>
+				<source>Ticket</source>
 			</trans-unit>
 			<trans-unit id="facebook.description">
-				<source>facebook</source>
+				<source>Facebook</source>
 			</trans-unit>
 			<trans-unit id="youtube.description">
-				<source>youtube</source>
+				<source>YouTube</source>
 			</trans-unit>
 			<trans-unit id="latitude.description">
-				<source>latitude</source>
+				<source>Latitude</source>
 			</trans-unit>
 			<trans-unit id="longitude.description">
-				<source>longitude</source>
+				<source>Longitude</source>
 			</trans-unit>
 			<trans-unit id="images.description">
-				<source>images</source>
+				<source>Images</source>
 			</trans-unit>
 			<trans-unit id="slug.description">
-				<source>slug</source>
+				<source>Slug</source>
 			</trans-unit>
 			<trans-unit id="organizer.description">
-				<source>organizer</source>
+				<source>Organizer</source>
 			</trans-unit>
 			<trans-unit id="date.description">
-				<source>date</source>
+				<source>Date</source>
 			</trans-unit>
 			<trans-unit id="region.description">
-				<source>region</source>
+				<source>Region</source>
 			</trans-unit>
 		</body>
 	</file>
