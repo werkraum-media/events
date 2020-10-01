@@ -507,7 +507,7 @@ class DestinationDataImportService {
     /**
      * @param array $media
      */
-    protected function seTickets(Array $media) {
+    protected function setTickets(Array $media) {
         foreach ($media as $link)
         {
             if ($link['rel'] == "ticket") {
