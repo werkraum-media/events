@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events_domain_model_region',
+        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_region.xlf:tx_events_domain_model_region',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
