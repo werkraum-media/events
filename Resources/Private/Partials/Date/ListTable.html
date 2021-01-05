@@ -1,0 +1,57 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+
+<f:widget.paginate objects="{dates}" as="paginatedDates" configuration="{itemsPerPage: 25, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 5, addQueryStringMethod: 'POST,GET'}">
+    <f:for each="{paginatedDates}" as="date" iteration="index">
+        <div class="row mt-3 mb-3 pb-3">
+            <div class="col-2">
+                <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
+                <b><f:format.date format="%a">{date.start}</f:format.date></b><br>
+                <b><f:format.date format="d.m.">{date.start}</f:format.date></b><br>
+                {date.event.region.title}<br>
+            </div>
+            <div class="col-6">
+
+                <f:comment>
+                <!--
+                <f:if condition="{date.event.highlight}">
+                    <f:then>
+                        <b>Highlight</b>
+                    </f:then>
+                </f:if>
+                -->
+                </f:comment>
+                <h4>
+                    <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                        {date.event.title}
+                    </f:link.action>
+                </h4>
+                <p><strong>{date.event.teaser}</strong></p>
+                <f:format.crop maxCharacters="150">{date.event.details}</f:format.crop>
+            </div>
+            <div class="col-4">
+                <f:if condition="{date.event.images}">
+                    <f:then>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                            <f:image src="{date.event.images.originalResource.originalFile.uid}" alt="" width="400c" height="280c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:then>
+                    <f:else>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                            <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:else>
+                </f:if>
+            </div>
+        </div>
+        <f:if condition="{index.isLast}">
+            <f:then>
+            </f:then>
+            <f:else>
+                <div class="mb-3 border-bottom"></div>
+            </f:else>
+        </f:if>
+    </f:for>
+</f:widget.paginate>
+
+</html>

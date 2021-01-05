@@ -1,0 +1,16 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Default" />
+    <f:section name="content">
+        <f:switch expression="{settings.template}">
+            <f:case value="table">
+                <f:render partial="Date/ListTable" arguments="{dates:dates}" />
+            </f:case>
+            <f:case value="grid">
+                <f:render partial="Date/ListDefault" arguments="{dates:dates}" />
+            </f:case>
+            <f:defaultCase>
+                <f:render partial="Date/ListDefault" arguments="{dates:dates}" />
+            </f:defaultCase>
+        </f:switch>
+    </f:section>
+</html>

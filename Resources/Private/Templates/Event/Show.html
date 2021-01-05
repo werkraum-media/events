@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Default" />
+    <f:section name="content">
+        <div class="row">
+            <div class="col-6">
+                <f:if condition="{event.images}">
+                    <f:then>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
+                            <f:image src="{event.images.originalResource.originalFile.uid}" alt="" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:then>
+                    <f:else>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
+                            <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:else>
+                </f:if>
+            </div>
+            <div class="col-6">
+                <h2>{event.title}</h2>
+                <h3>{event.teaser}</h3>
+                <f:format.html>{event.details}</f:format.html>
+                <p>{event.price_info}</p>
+
+                <div class="row">
+                    <div class="col-4">
+                        <p>Veranstaltungsort:<br>
+                            {event.street}<br>
+                            {event.zip} {event.city}<br>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </f:section>
+</html>

@@ -1,0 +1,57 @@
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>Options</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.backPID>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>Back page</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                            </config>
+                        </TCEforms>
+                    </settings.backPID>
+                </el>
+            </ROOT>
+        </sDEF>
+        <sTemplate>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>Template</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.template>
+                        <exclude>1</exclude>
+                        <label>Layout option</label>
+                        <config>
+                            <type>select</type>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0">Default</numIndex>
+                                    <numIndex index="1">default</numIndex>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <numIndex index="0">Costum</numIndex>
+                                    <numIndex index="1">costum</numIndex>
+                                </numIndex>
+                            </items>
+                            <default>default</default>
+                        </config>
+                    </settings.template>
+                </el>
+            </ROOT>
+        </sTemplate>
+    </sheets>
+</T3DataStructure>

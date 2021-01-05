@@ -1,0 +1,37 @@
+
+plugin.tx_events {
+    view {
+        # cat=plugin.tx_events/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:events/Resources/Private/Templates/
+        # cat=plugin.tx_events/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:events/Resources/Private/Partials/
+        # cat=plugin.tx_events/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:events/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_events//a; type=string; label=Default storage PID
+        storagePid =
+    }
+    settings {
+        # cat=plugin.tx_events//a; type=string; label=Default Image
+        defaultImagePath = typo3conf/ext/events/Resources/Public/Images/default.jpg
+        destinationData {
+            # cat=plugin.tx_events//a; type=string; label=Rest Url
+            restUrl = http://meta.et4.de/rest.ashx/search/
+            # cat=plugin.tx_events//a; type=string; label=License
+            license = ***REMOVED***
+            # cat=plugin.tx_events//a; type=string; label=Data Type
+            restType = Event
+            # cat=plugin.tx_events//a; type=string; label=Data Limit
+            restLimit = 500
+            # cat=plugin.tx_events//a; type=string; label=Mode
+            restMode = next_months,12
+            # cat=plugin.tx_events//a; type=string; label=Data Template
+            restTemplate = ET2014A.json
+            # cat=plugin.tx_events//a; type=string; Label=Category Storage
+            categoriesPid = 54
+            # cat=plugin.tx_events//a; type=string; Label=Category Parent ID
+            categoryParentUid = 6
+        }
+    }
+}

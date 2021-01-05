@@ -1,0 +1,29 @@
+<f:render partial="Event/SearchForm" arguments="{search: search}"/>
+
+<div class="row">
+    <f:for each="{events}" as="event">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="menu-tile">
+                <f:if condition="{event.images}">
+                    <f:then>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
+                            <f:image src="{event.images.originalResource.originalFile.uid}" alt="" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:then>
+                    <f:else>
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
+                            <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:else>
+                </f:if>
+            </div>
+            <div class="caption">
+                <div class="caption-text mt-3">
+                    {event.region.title}
+                    <h4>{event.title}</h4>
+                    <p>{event.teaser}</p>
+                </div>
+            </div>
+        </div>
+    </f:for>
+</div>

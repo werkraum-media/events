@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<div class="row">
+    <div class="col-12">
+        <div class="p-3 mb-2 bg-light text-dark">
+            <f:form action="search" controller="Event" additionalAttributes="{role: 'form'}" method="get">
+                <div class="input-group mb-3">
+                    <f:form.textfield name="search" value="{search}" class="form-control" />
+                    <f:form.submit value="Search" class="btn btn-outline-secondary" />
+                </div>
+            </f:form>
+        </div>
+    </div>
+</div>

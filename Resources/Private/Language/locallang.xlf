@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+		<header/>
+		<body>
+			<trans-unit id="tx_events.searchform">
+				<source>Search form</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.searchword">
+				<source>Search word</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_from">
+				<source>Date from</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.date_to">
+				<source>Date to</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.regions">
+				<source>All regions</source>
+			</trans-unit>
+			<trans-unit id="tx_events.searchform.search">
+				<source>Search</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
