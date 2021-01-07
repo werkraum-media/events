@@ -1,6 +1,8 @@
 <?php
 namespace Wrm\Events\Domain\Model;
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use \Wrm\Events\Domain\Repository\DateRepository;
 use \TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -539,7 +541,7 @@ class Event extends AbstractEntity
      * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
      * @return void
      */
-    public function setImages(\TYPO3\CMS\Extbase\Domain\Model\FileReference $images)
+    public function setImages(FileReference $images)
     {
         $this->images = $images;
     }
@@ -620,7 +622,7 @@ class Event extends AbstractEntity
      * @param \Wrm\Events\Domain\Model\Organizer $organizer
      * @return void
      */
-    public function setOrganizer(\Wrm\Events\Domain\Model\Organizer $organizer)
+    public function setOrganizer(Organizer $organizer)
     {
         $this->organizer = $organizer;
     }
@@ -637,7 +639,7 @@ class Event extends AbstractEntity
      * @param \Wrm\Events\Domain\Model\Region $region
      * @return void
      */
-    public function setRegion(\Wrm\Events\Domain\Model\Region $region)
+    public function setRegion(Region $region)
     {
         $this->region = $region;
     }
@@ -687,7 +689,7 @@ class Event extends AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Domain\Model\Category<\TYPO3\CMS\Extbase\Domain\Model\Category> $category
      */
-    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category)
+    public function addCategory(Category $category)
     {
         $this->categories->attach($category);
     }

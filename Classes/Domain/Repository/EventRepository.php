@@ -1,6 +1,7 @@
 <?php
 namespace Wrm\Events\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -20,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
-class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class EventRepository extends Repository
 {
 
     /**

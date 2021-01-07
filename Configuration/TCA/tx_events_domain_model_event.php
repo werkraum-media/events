@@ -19,9 +19,6 @@ return [
         'searchFields' => 'title,global_id,slug,teaser,details,price_info,street,district,city,zip,country,web,booking,ticket,facebook,youtube,latitude,longitude',
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, categories, dates, organizer, region',
-    ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
@@ -45,7 +42,6 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',

@@ -1,12 +1,16 @@
 <?php
+
+use Wrm\Events\Command\DestinationDataImportCommand;
+use Wrm\Events\Command\RemoveAllCommand;
+use Wrm\Events\Command\RemovePastCommand;
 return [
     'events:destinationdataimport‚' => [
-        'class' => \Wrm\Events\Command\DestinationDataImportCommand::class
+        'class' => DestinationDataImportCommand::class
     ],
     'events:removeAll' => [
-        'class' => \Wrm\Events\Command\RemoveAllCommand::class
+        'class' => RemoveAllCommand::class
     ],
     'events:removePast' => [
-        'class' => \Wrm\Events\Command\RemovePastCommand::class
+        'class' => RemovePastCommand::class
     ],
 ];

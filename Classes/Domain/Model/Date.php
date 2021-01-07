@@ -1,11 +1,11 @@
 <?php
 namespace Wrm\Events\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Date
  */
-class Date extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Date extends AbstractEntity
 {
 
     /**

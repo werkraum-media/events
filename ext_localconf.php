@@ -1,41 +1,29 @@
 <?php
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 call_user_func(
     function()
     {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Wrm.Events',
+            'Events',
             'DateSearch',
-            [
-                'Date' => 'search'
-            ],
-            [
-                'Date' => 'search'
-            ]
+            [\Wrm\Events\Controller\DateController::class => 'search'],
+            [\Wrm\Events\Controller\DateController::class => 'search']
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Wrm.Events',
+            'Events',
             'DateList',
-            [
-                'Date' => 'list'
-            ],
-            [
-                'Date' => 'list'
-            ]
+            [\Wrm\Events\Controller\DateController::class => 'list'],
+            [\Wrm\Events\Controller\DateController::class => 'list']
         );
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Wrm.Events',
+            'Events',
             'DateShow',
-            [
-                'Date' => 'show'
-            ],
-            [
-                'Date' => 'show'
-            ]
+            [\Wrm\Events\Controller\DateController::class => 'show'],
+            [\Wrm\Events\Controller\DateController::class => 'show']
         );
 
         /*

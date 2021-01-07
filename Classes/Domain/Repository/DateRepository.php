@@ -2,6 +2,7 @@
 namespace Wrm\Events\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Service\CategoryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -9,7 +10,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
-class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class DateRepository extends Repository
 {
 
     /**

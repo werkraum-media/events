@@ -1,6 +1,7 @@
 <?php
 namespace Wrm\Events\Controller;
 
+use Wrm\Events\Domain\Model\Date;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Repository\CategoryRepository;
@@ -127,7 +128,7 @@ class DateController extends ActionController
      * @param \Wrm\Events\Domain\Model\Date $date
      * @return void
      */
-    public function showAction(\Wrm\Events\Domain\Model\Date $date)
+    public function showAction(Date $date)
     {
         $this->view->assign('date', $date);
     }

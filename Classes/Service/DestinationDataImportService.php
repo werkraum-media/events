@@ -2,6 +2,11 @@
 
 namespace Wrm\Events\Service;
 
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+use Wrm\Events\Domain\Model\Date;
+use Wrm\Events\Domain\Model\Organizer;
+use Wrm\Events\Domain\Model\Event;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
@@ -330,7 +335,7 @@ class DestinationDataImportService {
             $tmpSysCategory = $this->sysCategoriesRepository->findOneByTitle($categoryTitle);
             if (!$tmpSysCategory) {
                 $this->logger->info('Creating new category: ' . $categoryTitle);
-                $tmpSysCategory = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\Category::class);
+                $tmpSysCategory = $this->objectManager->get(Category::class);
                 $tmpSysCategory->setTitle($categoryTitle);
                 $tmpSysCategory->setParent($sysParentCategory);
                 $tmpSysCategory->setPid($this->sysCategoriesPid);
@@ -371,7 +376,7 @@ class DestinationDataImportService {
 
                 if (strtotime($date['start']) > $today) {
                     $this->logger->info('Setup single date');
-                    $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
+                    $dateObj = $this->objectManager->get(Date::class);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
                     $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
@@ -401,7 +406,7 @@ class DestinationDataImportService {
                             $eventEnd = new \DateTime();
                             $eventEnd->setTimestamp($i);
                             $eventEnd->setTime($until->format('H'), $until->format('i'));
-                            $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
+                            $dateObj = $this->objectManager->get(Date::class);
                             $dateObj->setLanguageUid(-1);
                             $dateObj->setStart($eventStart);
                             $dateObj->setEnd($eventEnd);
@@ -427,7 +432,7 @@ class DestinationDataImportService {
                                 $eventEnd = new \DateTime();
                                 $eventEnd->setTimestamp($i);
                                 $eventEnd->setTime($until->format('H'), $until->format('i'));
-                                $dateObj = $this->objectManager->get(\Wrm\Events\Domain\Model\Date::class);
+                                $dateObj = $this->objectManager->get(Date::class);
                                 $dateObj->setLanguageUid(-1);
                                 $dateObj->setStart($eventStart);
                                 $dateObj->setEnd($eventEnd);
@@ -453,7 +458,7 @@ class DestinationDataImportService {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
                     continue;
                 }
-                $tmpOrganizer = $this->objectManager->get(\Wrm\Events\Domain\Model\Organizer::class);
+                $tmpOrganizer = $this->objectManager->get(Organizer::class);
                 $tmpOrganizer->setLanguageUid(-1);
                 $tmpOrganizer->setName($address['name']);
                 $tmpOrganizer->setCity($address['city']);
@@ -587,7 +592,7 @@ class DestinationDataImportService {
 
         // New event is created
         $this->logger->info(substr($title, 0, 20) . ' does not exist');
-        $event = $this->objectManager->get(\Wrm\Events\Domain\Model\Event::class);
+        $event = $this->objectManager->get(Event::class);
         // Create event and persist
         $event->setGlobalId($globalId);
         $event->setCategories(new ObjectStorage());
@@ -706,7 +711,7 @@ class DestinationDataImportService {
             $fieldname => $newId
         );
 
-        $dataHandler = $this->objectManager->get(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
+        $dataHandler = $this->objectManager->get(DataHandler::class);
         $dataHandler->start($data, array());
         $dataHandler->process_datamap();
 

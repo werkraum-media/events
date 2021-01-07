@@ -1,7 +1,7 @@
 <?php
 namespace Wrm\Events\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /***
  *
  * This file is part of the "DD Events" Extension for TYPO3 CMS.
@@ -15,7 +15,7 @@ namespace Wrm\Events\Domain\Model;
 /**
  * Region
  */
-class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Region extends AbstractEntity
 {
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 call_user_func(function () {
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Wrm.Events',
+        'Events',
         'Pi1',
         'Events Plugin',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
@@ -23,7 +23,7 @@ call_user_func(function () {
     /* Search Plugin */
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Wrm.Events',
+        'Events',
         'DateSearch',
         'Events: Date Search',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
@@ -39,7 +39,7 @@ call_user_func(function () {
     /* Date List Plugin */
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Wrm.Events',
+        'Events',
         'DateList',
         'Events: Date List',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
@@ -55,7 +55,7 @@ call_user_func(function () {
     /* Date Show Plugin */
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Wrm.Events',
+        'Events',
         'DateShow',
         'Events: Date Show',
         'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
