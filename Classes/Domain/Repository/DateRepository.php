@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
@@ -67,7 +68,7 @@ class DateRepository extends Repository
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }
 
-        if ($demand->getHighlight() !== FALSE) {
+        if ($demand->getHighlight() !== false) {
             $constraints['highlight'] = $query->equals('event.highlight', $demand->getHighlight());
         }
 
@@ -183,5 +184,4 @@ class DateRepository extends Repository
 
         return $statement->execute()->fetchAll();
     }
-
 }

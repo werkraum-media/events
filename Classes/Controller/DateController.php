@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Controller;
 
 use Wrm\Events\Domain\Model\Date;

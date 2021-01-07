@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Tests\Unit\Domain\Model;
 
 /**

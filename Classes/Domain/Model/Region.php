@@ -1,7 +1,9 @@
 <?php
+
 namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /***
  *
  * This file is part of the "DD Events" Extension for TYPO3 CMS.
@@ -20,11 +22,11 @@ class Region extends AbstractEntity
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     protected $title = '';
-    
+
     /**
      * @var int
      */
@@ -32,7 +34,7 @@ class Region extends AbstractEntity
 
     /**
      * Returns the title
-     * 
+     *
      * @return string $title
      */
     public function getTitle()
@@ -42,7 +44,7 @@ class Region extends AbstractEntity
 
     /**
      * Sets the title
-     * 
+     *
      * @param string $title
      * @return void
      */
@@ -66,7 +68,7 @@ class Region extends AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     * 
+     *
      * @return void
      */
     protected function initStorageObjects()
@@ -77,14 +79,16 @@ class Region extends AbstractEntity
      * @param int $languageUid
      * @return void
      */
-    public function setLanguageUid($languageUid) {
+    public function setLanguageUid($languageUid)
+    {
         $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
-    public function getLanguageUid() {
+    public function getLanguageUid()
+    {
         return $this->_languageUid;
     }
 }

@@ -1,7 +1,9 @@
 <?php
+
 namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Date
  */
@@ -83,15 +85,16 @@ class Date extends AbstractEntity
      * @param int $languageUid
      * @return void
      */
-    public function setLanguageUid($languageUid) {
+    public function setLanguageUid($languageUid)
+    {
         $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
-    public function getLanguageUid() {
+    public function getLanguageUid()
+    {
         return $this->_languageUid;
     }
-
 }

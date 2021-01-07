@@ -1,14 +1,15 @@
 <?php
+
 namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
-use \Wrm\Events\Domain\Repository\DateRepository;
-use \TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use Wrm\Events\Domain\Repository\DateRepository;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use \TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Event
@@ -18,91 +19,91 @@ class Event extends AbstractEntity
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     protected $title = '';
 
     /**
      * globalId
-     * 
+     *
      * @var string
      */
     protected $globalId = '';
 
     /**
      * slug
-     * 
+     *
      * @var string
      */
     protected $slug = '';
 
     /**
      * highlight
-     * 
+     *
      * @var bool
      */
     protected $highlight = false;
 
     /**
      * teaser
-     * 
+     *
      * @var string
      */
     protected $teaser = '';
 
     /**
      * details
-     * 
+     *
      * @var string
      */
     protected $details = '';
 
     /**
      * priceInfo
-     * 
+     *
      * @var string
      */
     protected $priceInfo = '';
 
     /**
      * name
-     * 
+     *
      * @var string
      */
     protected $name = '';
 
     /**
      * street
-     * 
+     *
      * @var string
      */
     protected $street = '';
 
     /**
      * district
-     * 
+     *
      * @var string
      */
     protected $district = '';
 
     /**
      * city
-     * 
+     *
      * @var string
      */
     protected $city = '';
 
     /**
      * zip
-     * 
+     *
      * @var string
      */
     protected $zip = '';
 
     /**
      * country
-     * 
+     *
      * @var string
      */
     protected $country = '';
@@ -116,56 +117,56 @@ class Event extends AbstractEntity
 
     /**
      * web
-     * 
+     *
      * @var string
      */
     protected $web = '';
 
     /**
      * ticket
-     * 
+     *
      * @var string
      */
     protected $ticket = '';
 
     /**
      * facebook
-     * 
+     *
      * @var string
      */
     protected $facebook = '';
 
     /**
      * youtube
-     * 
+     *
      * @var string
      */
     protected $youtube = '';
 
     /**
      * instagram
-     * 
+     *
      * @var string
      */
     protected $instagram = '';
 
     /**
      * latitude
-     * 
+     *
      * @var string
      */
     protected $latitude = '';
 
     /**
      * longitude
-     * 
+     *
      * @var string
      */
     protected $longitude = '';
 
     /**
      * images
-     * 
+     *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      * @cascade remove
      */
@@ -173,7 +174,7 @@ class Event extends AbstractEntity
 
     /**
      * dates
-     * 
+     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Wrm\Events\Domain\Model\Date>
      * @cascade remove
      */
@@ -181,21 +182,21 @@ class Event extends AbstractEntity
 
     /**
      * organizer
-     * 
+     *
      * @var \Wrm\Events\Domain\Model\Organizer
      */
     protected $organizer = null;
 
     /**
      * region
-     * 
+     *
      * @var \Wrm\Events\Domain\Model\Region
      */
     protected $region = null;
 
     /**
      * categories
-     * 
+     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */
     protected $categories;
@@ -225,7 +226,7 @@ class Event extends AbstractEntity
 
     /**
      * Returns the globalId
-     * 
+     *
      * @return string $globalId
      */
     public function getGlobalId()
@@ -481,7 +482,7 @@ class Event extends AbstractEntity
 
     /**
      * @return  string $instagram
-     */ 
+     */
     public function getInstagram()
     {
         return $this->instagram;
@@ -489,12 +490,12 @@ class Event extends AbstractEntity
 
     /**
      * @param  string  $instagram
-     */ 
+     */
     public function setInstagram(string $instagram)
     {
         $this->instagram = $instagram;
     }
-    
+
     /**
      * @return string $latitude
      */
@@ -606,7 +607,8 @@ class Event extends AbstractEntity
      * @param ObjectStorage $dates
      * @return void
      */
-    public function removeAllDates(ObjectStorage $dates) {
+    public function removeAllDates(ObjectStorage $dates)
+    {
         $this->dates->removeAll($dates);
     }
 
@@ -714,14 +716,16 @@ class Event extends AbstractEntity
      * @param int $languageUid
      * @return void
      */
-    public function setLanguageUid($languageUid) {
+    public function setLanguageUid($languageUid)
+    {
         $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
-    public function getLanguageUid() {
+    public function getLanguageUid()
+    {
         return $this->_languageUid;
     }
 }

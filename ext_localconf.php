@@ -1,9 +1,9 @@
 <?php
+
 defined('TYPO3') || die('Access denied.');
 
 call_user_func(
-    function()
-    {
+    function () {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Events',

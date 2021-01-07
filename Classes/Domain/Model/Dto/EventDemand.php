@@ -2,7 +2,8 @@
 
 namespace Wrm\Events\Domain\Model\Dto;
 
-class EventDemand {
+class EventDemand
+{
 
     /**
      * @var string
@@ -171,7 +172,4 @@ class EventDemand {
     {
         $this->limit = $limit;
     }
-
-
-
 }

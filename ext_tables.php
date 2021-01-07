@@ -1,9 +1,9 @@
 <?php
+
 defined('TYPO3') || die('Access denied.');
 
 call_user_func(
-    function()
-    {
+    function () {
 
         /*
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -27,6 +27,5 @@ call_user_func(
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_events_domain_model_region', 'EXT:events/Resources/Private/Language/locallang_csh_tx_events_domain_model_region.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_events_domain_model_region');
-
     }
 );

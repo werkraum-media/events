@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Controller;
 
 use Wrm\Events\Domain\Model\Dto\EventDemand;
@@ -50,7 +51,7 @@ class EventController extends ActionController
 
     /**
      * Action list
-     * 
+     *
      * @return void
      */
     public function listAction()
@@ -59,12 +60,11 @@ class EventController extends ActionController
         $demand = $this->createDemandFromSettings();
         $events = $this->eventRepository->findByDemand($demand);
         $this->view->assign('events', $events);
-
     }
 
     /**
      * Action show
-     * 
+     *
      * @param Event $event
      * @return void
      */
@@ -75,7 +75,7 @@ class EventController extends ActionController
 
     /**
      * action teaser
-     * 
+     *
      * @return void
      */
     public function teaserAction()
@@ -96,7 +96,6 @@ class EventController extends ActionController
 
         $this->view->assign('search', $search);
         $this->view->assign('events', $this->eventRepository->findSearchWord($search));
-
     }
 
     /**

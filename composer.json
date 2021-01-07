@@ -27,5 +27,8 @@
         "typo3/cms": {
             "extension-key": "events"
         }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
     }
 }

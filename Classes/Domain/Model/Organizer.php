@@ -1,7 +1,9 @@
 <?php
+
 namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /***
  *
  * This file is part of the "DD Events" Extension for TYPO3 CMS.
@@ -20,56 +22,56 @@ class Organizer extends AbstractEntity
 
     /**
      * name
-     * 
+     *
      * @var string
      */
     protected $name = '';
 
     /**
      * street
-     * 
+     *
      * @var string
      */
     protected $street = '';
 
     /**
      * district
-     * 
+     *
      * @var string
      */
     protected $district = '';
 
     /**
      * city
-     * 
+     *
      * @var string
      */
     protected $city = '';
 
     /**
      * zip
-     * 
+     *
      * @var string
      */
     protected $zip = '';
 
     /**
      * phone
-     * 
+     *
      * @var string
      */
     protected $phone = '';
 
     /**
      * web
-     * 
+     *
      * @var string
      */
     protected $web = '';
 
     /**
      * email
-     * 
+     *
      * @var string
      */
     protected $email = '';
@@ -81,7 +83,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the name
-     * 
+     *
      * @return string $name
      */
     public function getName()
@@ -91,7 +93,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the name
-     * 
+     *
      * @param string $name
      * @return void
      */
@@ -102,7 +104,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the street
-     * 
+     *
      * @return string $street
      */
     public function getStreet()
@@ -112,7 +114,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the street
-     * 
+     *
      * @param string $street
      * @return void
      */
@@ -123,7 +125,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the district
-     * 
+     *
      * @return string $district
      */
     public function getDistrict()
@@ -133,7 +135,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the district
-     * 
+     *
      * @param string $district
      * @return void
      */
@@ -144,7 +146,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the city
-     * 
+     *
      * @return string $city
      */
     public function getCity()
@@ -154,7 +156,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the city
-     * 
+     *
      * @param string $city
      * @return void
      */
@@ -165,7 +167,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the zip
-     * 
+     *
      * @return string $zip
      */
     public function getZip()
@@ -175,7 +177,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the zip
-     * 
+     *
      * @param string $zip
      * @return void
      */
@@ -186,7 +188,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the phone
-     * 
+     *
      * @return string $phone
      */
     public function getPhone()
@@ -196,7 +198,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the phone
-     * 
+     *
      * @param string $phone
      * @return void
      */
@@ -207,7 +209,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the web
-     * 
+     *
      * @return string $web
      */
     public function getWeb()
@@ -217,7 +219,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the web
-     * 
+     *
      * @param string $web
      * @return void
      */
@@ -228,7 +230,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Returns the email
-     * 
+     *
      * @return string $email
      */
     public function getEmail()
@@ -238,7 +240,7 @@ class Organizer extends AbstractEntity
 
     /**
      * Sets the email
-     * 
+     *
      * @param string $email
      * @return void
      */
@@ -262,7 +264,7 @@ class Organizer extends AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     * 
+     *
      * @return void
      */
     protected function initStorageObjects()
@@ -273,14 +275,16 @@ class Organizer extends AbstractEntity
      * @param int $languageUid
      * @return void
      */
-    public function setLanguageUid($languageUid) {
+    public function setLanguageUid($languageUid)
+    {
         $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
-    public function getLanguageUid() {
+    public function getLanguageUid()
+    {
         return $this->_languageUid;
     }
 }

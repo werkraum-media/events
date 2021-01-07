@@ -1,7 +1,9 @@
 <?php
+
 namespace Wrm\Events\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -143,5 +145,4 @@ class EventRepository extends Repository
         $query->setLimit(20);
         return $query->execute();
     }
-
 }
