@@ -168,7 +168,7 @@ class Event extends AbstractEntity
      * images
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @cascade remove
+     * @Extbase\ORM\Cascade remove
      */
     protected $images = null;
 
@@ -176,7 +176,7 @@ class Event extends AbstractEntity
      * dates
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Wrm\Events\Domain\Model\Date>
-     * @cascade remove
+     * @Extbase\ORM\Cascade remove
      */
     protected $dates = null;
 
