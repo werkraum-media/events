@@ -2,9 +2,7 @@
 
 namespace Wrm\Events\Domain\Model;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-
-/***
+/*
  *
  * This file is part of the "DD Events" Extension for TYPO3 CMS.
  *
@@ -13,7 +11,10 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  *  (c) 2019 Dirk Koritnik <koritnik@werkraum-media.de>
  *
- ***/
+ */
+
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Region
  */

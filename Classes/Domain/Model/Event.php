@@ -2,14 +2,14 @@
 
 namespace Wrm\Events\Domain\Model;
 
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Domain\Model\Category;
-use Wrm\Events\Domain\Repository\DateRepository;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Wrm\Events\Domain\Repository\DateRepository;
 
 /**
  * Event
@@ -531,7 +531,7 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
+     * @return FileReference $images
      */
     public function getImages()
     {
@@ -539,7 +539,7 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $images
+     * @param FileReference $images
      * @return void
      */
     public function setImages(FileReference $images)

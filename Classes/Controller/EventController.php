@@ -2,12 +2,12 @@
 
 namespace Wrm\Events\Controller;
 
-use Wrm\Events\Domain\Model\Dto\EventDemand;
-use Wrm\Events\Domain\Model\Event;
-use Wrm\Events\Domain\Repository\EventRepository;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Wrm\Events\Domain\Model\Dto\EventDemand;
+use Wrm\Events\Domain\Model\Event;
+use Wrm\Events\Domain\Repository\EventRepository;
 
 /**
  * EventController
