@@ -27,8 +27,5 @@
         "typo3/cms": {
             "extension-key": "events"
         }
-    },
-    "require-dev": {
-        "ssch/typo3-rector": "^0.8.0"
     }
 }
