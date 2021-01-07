@@ -2,9 +2,7 @@
 
 namespace Wrm\Events\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -17,11 +15,12 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Wrm\Events\Domain\Model\Dto\EventDemand;
-use Wrm\Events\Service\CategoryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use Wrm\Events\Domain\Model\Dto\EventDemand;
+use Wrm\Events\Service\CategoryService;
 
 class EventRepository extends Repository
 {
