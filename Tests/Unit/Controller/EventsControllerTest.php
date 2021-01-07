@@ -14,18 +14,13 @@ class EventsControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCas
      */
     protected $subject = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(\Wrm\Events\Controller\EventsController::class)
             ->setMethods(['redirect', 'forward', 'addFlashMessage'])
             ->disableOriginalConstructor()
             ->getMock();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**
@@ -38,10 +33,10 @@ class EventsControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCas
             ->disableOriginalConstructor()
             ->getMock();
 
-        $eventsRepository = $this->getMockBuilder(\::class)
-            ->setMethods(['findAll'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        // $eventsRepository = $this->getMockBuilder(\::class)
+        //     ->setMethods(['findAll'])
+        //     ->disableOriginalConstructor()
+        //     ->getMock();
         $eventsRepository->expects(self::once())->method('findAll')->will(self::returnValue($allEventss));
         $this->inject($this->subject, 'eventsRepository', $eventsRepository);
 

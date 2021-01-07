@@ -14,15 +14,10 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = new \Wrm\Events\Domain\Model\Events();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**
@@ -507,7 +502,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function setDateForObjectStorageContainingSetsDate()
     {
-        $date = new ();
+        // $date = new ();
         $objectStorageHoldingExactlyOneDate = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOneDate->attach($date);
         $this->subject->setDate($objectStorageHoldingExactlyOneDate);
@@ -524,7 +519,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function addDateToObjectStorageHoldingDate()
     {
-        $date = new ();
+        // $date = new ();
         $dateObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['attach'])
             ->disableOriginalConstructor()
@@ -541,7 +536,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function removeDateFromObjectStorageHoldingDate()
     {
-        $date = new ();
+        // $date = new ();
         $dateObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['detach'])
             ->disableOriginalConstructor()
@@ -570,7 +565,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function setRegionForObjectStorageContainingSetsRegion()
     {
-        $region = new ();
+        // $region = new ();
         $objectStorageHoldingExactlyOneRegion = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOneRegion->attach($region);
         $this->subject->setRegion($objectStorageHoldingExactlyOneRegion);
@@ -587,7 +582,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function addRegionToObjectStorageHoldingRegion()
     {
-        $region = new ();
+        // $region = new ();
         $regionObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['attach'])
             ->disableOriginalConstructor()
@@ -604,7 +599,7 @@ class EventsTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function removeRegionFromObjectStorageHoldingRegion()
     {
-        $region = new ();
+        // $region = new ();
         $regionObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['detach'])
             ->disableOriginalConstructor()

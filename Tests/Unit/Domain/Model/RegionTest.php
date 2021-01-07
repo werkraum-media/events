@@ -14,15 +14,10 @@ class RegionTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = new \Wrm\Events\Domain\Model\Region();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**
