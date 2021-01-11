@@ -93,6 +93,9 @@
             <trans-unit id="tx_events_domain_model_event.region">
                 <source>Region</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.partner">
+                <source>Partner</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+        <header/>
+        <body>
+            <trans-unit id="tx_events_domain_model_partner">
+                <source>Partner</source>
+                <target>Partner</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_partner.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_partner.link">
+                <source>Link</source>
+                <target>Link</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_partner.images">
+                <source>Images</source>
+                <target>Bilder</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

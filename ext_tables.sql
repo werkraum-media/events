@@ -29,6 +29,7 @@ CREATE TABLE tx_events_domain_model_event (
 	pages text,
 	dates int(11) unsigned DEFAULT '0' NOT NULL,
 	organizer int(11) unsigned DEFAULT '0',
+	partner text,
 	region int(11) unsigned DEFAULT '0',
     KEY dataHandler (l10n_parent, t3ver_oid, deleted, t3ver_wsid, t3ver_state)
 );
@@ -46,6 +47,18 @@ CREATE TABLE tx_events_domain_model_organizer (
     phone varchar(255) DEFAULT '' NOT NULL,
     web varchar(255) DEFAULT '' NOT NULL,
     email varchar(255) DEFAULT '' NOT NULL,
+
+    KEY dataHandler (l10n_parent, sys_language_uid, deleted)
+);
+
+#
+# Table structure for table 'tx_events_domain_model_partner'
+#
+CREATE TABLE tx_events_domain_model_partner (
+
+    title varchar(255) DEFAULT '' NOT NULL,
+    link varchar(255) DEFAULT '' NOT NULL,
+    images int(11) unsigned NOT NULL default '0',
 
     KEY dataHandler (l10n_parent, sys_language_uid, deleted)
 );

@@ -127,6 +127,10 @@
                 <source>Organizer</source>
                 <target>Organisator</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.partner">
+                <source>Partner</source>
+                <target>Partner</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
