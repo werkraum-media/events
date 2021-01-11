@@ -219,7 +219,7 @@ class Event extends AbstractEntity
     /**
      * @var DataProcessingForModels
      */
-    private $dataProcessing = null;
+    protected $dataProcessing = null;
 
     /**
      * __construct
