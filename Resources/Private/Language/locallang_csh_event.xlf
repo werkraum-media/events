@@ -1,95 +1,98 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
-		<header/>
-		<body>
-			<trans-unit id="tx_events.name">
-				<source>Events</source>
-			</trans-unit>
-			<trans-unit id="tx_events.description">
-				<source>Event Modul</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event">
-				<source>Event</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.global_id">
-				<source>Global UID</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.slug">
-				<source>Slug</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.highlight">
-				<source>Highlight</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.teaser">
-				<source>Teaser</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.details">
-				<source>Details</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.price_info">
-				<source>Price Info</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.name">
-				<source>Name</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.street">
-				<source>Street</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.district">
-				<source>District</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.city">
-				<source>City</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.zip">
-				<source>Zip</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.country">
-				<source>Country</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.web">
-				<source>Web</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.phone">
-				<source>Phone</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.ticket">
-				<source>Ticket</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.facebook">
-				<source>Facebook</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.youtube">
-				<source>Youtube</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.instagram">
-				<source>Instagram</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.latitude">
-				<source>Latitude</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.longitude">
-				<source>Longitude</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.images">
-				<source>Images</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.categories">
-				<source>Categories</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.dates">
-				<source>Dates</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.organizer">
-				<source>Organizer</source>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_event.region">
-				<source>Region</source>
-			</trans-unit>
-		</body>
-	</file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+        <header/>
+        <body>
+            <trans-unit id="tx_events.name">
+                <source>Events</source>
+            </trans-unit>
+            <trans-unit id="tx_events.description">
+                <source>Event Modul</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event">
+                <source>Event</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.global_id">
+                <source>Global UID</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.slug">
+                <source>Slug</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.highlight">
+                <source>Highlight</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.teaser">
+                <source>Teaser</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.details">
+                <source>Details</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.price_info">
+                <source>Price Info</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.street">
+                <source>Street</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.district">
+                <source>District</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.city">
+                <source>City</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.zip">
+                <source>Zip</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.country">
+                <source>Country</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.web">
+                <source>Web</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.phone">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.ticket">
+                <source>Ticket</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.facebook">
+                <source>Facebook</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.youtube">
+                <source>Youtube</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.instagram">
+                <source>Instagram</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.latitude">
+                <source>Latitude</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.longitude">
+                <source>Longitude</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.images">
+                <source>Images</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.pages">
+                <source>Pages</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.categories">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.dates">
+                <source>Dates</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.organizer">
+                <source>Organizer</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.region">
+                <source>Region</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

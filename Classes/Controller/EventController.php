@@ -3,11 +3,13 @@
 namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Core\Database\QueryGenerator;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Repository\EventRepository;
+use Wrm\Events\Service\DataProcessingForModels;
 
 /**
  * EventController
@@ -27,6 +29,11 @@ class EventController extends ActionController
     protected $queryGenerator;
 
     /**
+     * @var DataProcessingForModels
+     */
+    protected $dataProcessing;
+
+    /**
      * @var array
      */
     protected $pluginSettings;
@@ -40,10 +47,19 @@ class EventController extends ActionController
     }
 
     /**
+     * @param DataProcessingForModels $dataProcessing
+     */
+    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing)
+    {
+        $this->dataProcessing = $dataProcessing;
+    }
+
+    /**
      * Action initializer
      */
     protected function initializeAction()
     {
+        $this->dataProcessing->setConfigurationManager($this->configurationManager);
         $this->pluginSettings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
@@ -64,6 +80,8 @@ class EventController extends ActionController
 
     /**
      * Action show
+     *
+     * @Extbase\IgnoreValidation("event")
      *
      * @param Event $event
      * @return void

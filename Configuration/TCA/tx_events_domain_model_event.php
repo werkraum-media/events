@@ -20,7 +20,7 @@ return [
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, pages, categories, dates, organizer, region, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -185,7 +185,7 @@ return [
                 'rows' => 15,
                 'eval' => 'trim',
             ],
-            
+
         ],
         'price_info' => [
             'exclude' => true,
@@ -379,6 +379,16 @@ return [
             ),
         ],
 
+        'pages' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.pages',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'pages',
+            ],
+        ],
+
         'categories' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.categories',
@@ -443,6 +453,5 @@ return [
                 'maxitems' => 1,
             ],
         ],
-    
     ],
 ];

@@ -2,7 +2,6 @@
 
 namespace Wrm\Events\Domain\Model;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
@@ -10,6 +9,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Wrm\Events\Domain\Repository\DateRepository;
+use Wrm\Events\Service\DataProcessingForModels;
 
 /**
  * Event
@@ -195,6 +195,11 @@ class Event extends AbstractEntity
     protected $region = null;
 
     /**
+     * @var string
+     */
+    protected $pages = '';
+
+    /**
      * categories
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
@@ -207,6 +212,11 @@ class Event extends AbstractEntity
     protected $_languageUid;
 
     /**
+     * @var DataProcessingForModels
+     */
+    private $dataProcessing = null;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -214,6 +224,14 @@ class Event extends AbstractEntity
 
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
+    }
+
+    /**
+     * @param DataProcessingForModels $dataProcessing
+     */
+    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing)
+    {
+        $this->dataProcessing = $dataProcessing;
     }
 
     /**
@@ -686,6 +704,18 @@ class Event extends AbstractEntity
     public function setCountry($country)
     {
         $this->country = $country;
+    }
+
+    public function getPages(): array
+    {
+        static $pages = null;
+        if (is_array($pages)) {
+            return $pages;
+        }
+
+        $pages = $this->dataProcessing->process($this);
+
+        return $pages;
     }
 
     /**
