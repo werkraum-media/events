@@ -21,6 +21,11 @@ class Date extends AbstractEntity
     protected $end = null;
 
     /**
+     * @var bool
+     */
+    protected $canceled = false;
+
+    /**
      * @var \Wrm\Events\Domain\Model\Event
      */
     protected $event = null;
@@ -62,6 +67,11 @@ class Date extends AbstractEntity
     public function setEnd(\DateTime $end)
     {
         $this->end = $end;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->canceled;
     }
 
     /**

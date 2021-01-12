@@ -70,6 +70,7 @@ CREATE TABLE tx_events_domain_model_date (
     event int(11) unsigned DEFAULT '0' NOT NULL,
     start int(11) DEFAULT NULL,
     end int(11) DEFAULT NULL,
+    canceled int(11) NOT NULL DEFAULT 0,
     KEY event (event),
     KEY dataHandler (event, t3ver_wsid, pid)
 );
