@@ -16,6 +16,7 @@ namespace Wrm\Events\Domain\Repository;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -25,33 +26,16 @@ use Wrm\Events\Service\CategoryService;
 
 class EventRepository extends Repository
 {
-
-    /**
-     * Find all products based on selected uids
-     *
-     * @param string $uids
-     *
-     * @return array
-     */
-    public function findByUids($uids)
+    public function findByUids(string $uids): QueryResultInterface
     {
-        $uids = explode(',', $uids);
-
         $query = $this->createQuery();
-        //$query->getQuerySettings()->setRespectStoragePage(false);
-
-        $query->matching(
-            $query->in('uid', $uids)
-        );
-
-        //return $this->orderByField($query->execute(), $uids);
+        $query->matching($query->in('uid', GeneralUtility::intExplode(',', $uids)));
 
         return $query->execute();
     }
 
     /**
-     * @param EventDemand $demand
-     * @return QueryResultInterface
+     * @return QueryResultInterface|array
      * @throws InvalidQueryException
      */
     public function findByDemand(EventDemand $demand)
@@ -66,82 +50,42 @@ class EventRepository extends Repository
     }
 
     /**
-     * @param EventDemand $demand
-     * @return QueryInterface
      * @throws InvalidQueryException
      */
     protected function createDemandQuery(EventDemand $demand): QueryInterface
     {
         $query = $this->createQuery();
+        $query = $this->setOrderings($query, $demand);
 
-        // sorting
-        $sortBy = $demand->getSortBy();
-        $sortingsToIgnore = ['singleSelection', 'default'];
-        if ($sortBy && in_array($sortBy, $sortingsToIgnore) === false) {
-            $order = strtolower($demand->getSortOrder()) === 'desc' ? QueryInterface::ORDER_DESCENDING : QueryInterface::ORDER_ASCENDING;
-            $query->setOrderings([$sortBy => $order]);
-        }
-
-        $constraints = [];
-
-        $categories = $demand->getCategories();
-
-        if ($categories) {
-            $categoryConstraints = $this->createCategoryConstraint($query, $categories, $demand->getIncludeSubCategories());
-            if ($demand->getCategoryCombination() === 'or') {
-                $constraints['categories'] = $query->logicalOr($categoryConstraints);
-            } else {
-                $constraints['categories'] = $query->logicalAnd($categoryConstraints);
-            }
-        }
-
-        if ($demand->getRecordUids() !== []) {
-            $constraints['recordUids'] = $query->in('uid', $demand->getRecordUids());
-        }
-
-        if ($demand->getRegion() !== '') {
-            $constraints['region'] = $query->equals('region', $demand->getRegion());
-        }
-
-        if ($demand->getHighlight()) {
-            $constraints['highlight'] = $query->equals('highlight', $demand->getHighlight());
+        $constraints = $this->getConstraints($query, $demand);
+        if (!empty($constraints)) {
+            $query->matching($query->logicalAnd($constraints));
         }
 
         if ($demand->getLimit() !== '') {
             $query->setLimit((int) $demand->getLimit());
         }
 
-        if (!empty($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
-        }
         return $query;
     }
 
-    /**
-     * @param QueryInterface $query
-     * @param string $categories
-     * @param bool $includeSubCategories
-     * @return array
-     * @throws InvalidQueryException
-     */
-    protected function createCategoryConstraint(QueryInterface $query, $categories, bool $includeSubCategories = false): array
+    private function setOrderings(QueryInterface $query, EventDemand $demand): QueryInterface
     {
-        $constraints = [];
+        $sortBy = $demand->getSortBy();
+        $sortingsToIgnore = ['singleSelection', 'default'];
 
-        if ($includeSubCategories) {
-            $categoryService = GeneralUtility::makeInstance(CategoryService::class);
-            $allCategories = $categoryService->getChildrenCategories($categories);
-            if (!\is_array($allCategories)) {
-                $allCategories = GeneralUtility::intExplode(',', $allCategories, true);
-            }
-        } else {
-            $allCategories = GeneralUtility::intExplode(',', $categories, true);
+        if (!$sortBy || in_array($sortBy, $sortingsToIgnore)) {
+            return $query;
         }
 
-        foreach ($allCategories as $category) {
-            $constraints[] = $query->contains('categories', $category);
+        $order = QueryInterface::ORDER_ASCENDING;
+        if (strtolower($demand->getSortOrder()) === 'desc') {
+            $order = QueryInterface::ORDER_DESCENDING;
         }
-        return $constraints;
+
+        $query->setOrderings([$sortBy => $order]);
+
+        return $query;
     }
 
     private function sortByDemand(QueryInterface $query, EventDemand $demand): array
@@ -159,12 +103,60 @@ class EventRepository extends Repository
         return $result;
     }
 
+    private function getConstraints(QueryInterface $query, EventDemand $demand): array
+    {
+        $constraints = [];
+
+        if ($demand->getCategories()) {
+            $constraints['categories'] = $this->createCategoryConstraint($query, $demand);
+        }
+
+        if ($demand->getRecordUids() !== []) {
+            $constraints['recordUids'] = $query->in('uid', $demand->getRecordUids());
+        }
+
+        if ($demand->getRegion() !== '') {
+            $constraints['region'] = $query->equals('region', $demand->getRegion());
+        }
+
+        if ($demand->getHighlight()) {
+            $constraints['highlight'] = $query->equals('highlight', $demand->getHighlight());
+        }
+
+        return $constraints;
+    }
+
+    /**
+     * @throws InvalidQueryException
+     */
+    protected function createCategoryConstraint(QueryInterface $query, EventDemand $demand): ConstraintInterface
+    {
+        $constraints = [];
+
+        $allCategories = GeneralUtility::intExplode(',', $demand->getCategories(), true);
+
+        if ($demand->includeSubCategories()) {
+            $categoryService = GeneralUtility::makeInstance(CategoryService::class);
+            $allCategories = $categoryService->getChildrenCategories($demand->getCategories());
+            if (!\is_array($allCategories)) {
+                $allCategories = GeneralUtility::intExplode(',', $allCategories, true);
+            }
+        }
+
+        foreach ($allCategories as $category) {
+            $constraints[] = $query->contains('demand->getCategories()', $category);
+        }
+
+        if ($demand->getCategoryCombination() === 'or') {
+            return $query->logicalOr($constraints);
+        }
+        return $query->logicalAnd($constraints);
+    }
+
     public function findSearchWord($search)
     {
         $query = $this->createQuery();
-        $query->matching(
-            $query->like('title', '%' . $search . '%')
-        );
+        $query->matching($query->like('title', '%' . $search . '%'));
         $query->setOrderings(['title' => QueryInterface::ORDER_ASCENDING]);
         $query->setLimit(20);
         return $query->execute();
