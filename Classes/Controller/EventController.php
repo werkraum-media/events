@@ -3,6 +3,7 @@
 namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Core\Database\QueryGenerator;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -122,6 +123,7 @@ class EventController extends ActionController
 
     protected function createDemandFromSettings(): EventDemand
     {
+        /** @var EventDemand $demand */
         $demand = $this->objectManager->get(EventDemand::class);
 
         $demand->setRegion((string)$this->settings['region']);
@@ -137,6 +139,8 @@ class EventController extends ActionController
         $demand->setSortOrder((string)$this->settings['sortOrder']);
 
         $demand->setHighlight((bool)$this->settings['highlight']);
+
+        $demand->setRecordUids(GeneralUtility::intExplode(',', $this->settings['selectedRecords'], true));
 
         if (!empty($this->settings['limit'])) {
             $demand->setLimit($this->settings['limit']);

@@ -26,6 +26,12 @@ call_user_func(
             [\Wrm\Events\Controller\DateController::class => 'show']
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Events',
+            'Selected',
+            [\Wrm\Events\Controller\EventController::class => 'list']
+        );
+
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
         $iconRegistry->registerIcon(
             'events-plugin',

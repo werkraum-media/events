@@ -46,6 +46,11 @@ class EventDemand
     protected $limit = '';
 
     /**
+     * @var array
+     */
+    protected $recordUids = [];
+
+    /**
      * @return string
      */
     public function getSortBy(): string
@@ -171,5 +176,21 @@ class EventDemand
     public function setLimit(string $limit): void
     {
         $this->limit = $limit;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRecordUids(): array
+    {
+        return $this->recordUids;
+    }
+
+    /**
+     * @param array $recordUids
+     */
+    public function setRecordUids(array $recordUids): void
+    {
+        $this->recordUids = $recordUids;
     }
 }

@@ -20,6 +20,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
+use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Service\CategoryService;
 
 class EventRepository extends Repository
@@ -56,6 +57,11 @@ class EventRepository extends Repository
     public function findByDemand(EventDemand $demand)
     {
         $query = $this->createDemandQuery($demand);
+
+        if ($demand->getRecordUids() !== [] && $demand->getSortBy() === 'default') {
+            return $this->sortByDemand($query, $demand);
+        }
+
         return $query->execute();
     }
 
@@ -70,7 +76,8 @@ class EventRepository extends Repository
 
         // sorting
         $sortBy = $demand->getSortBy();
-        if ($sortBy && $sortBy !== 'singleSelection' && $sortBy !== 'default') {
+        $sortingsToIgnore = ['singleSelection', 'default'];
+        if ($sortBy && in_array($sortBy, $sortingsToIgnore) === false) {
             $order = strtolower($demand->getSortOrder()) === 'desc' ? QueryInterface::ORDER_DESCENDING : QueryInterface::ORDER_ASCENDING;
             $query->setOrderings([$sortBy => $order]);
         }
@@ -86,6 +93,10 @@ class EventRepository extends Repository
             } else {
                 $constraints['categories'] = $query->logicalAnd($categoryConstraints);
             }
+        }
+
+        if ($demand->getRecordUids() !== []) {
+            $constraints['recordUids'] = $query->in('uid', $demand->getRecordUids());
         }
 
         if ($demand->getRegion() !== '') {
@@ -133,6 +144,20 @@ class EventRepository extends Repository
         return $constraints;
     }
 
+    private function sortByDemand(QueryInterface $query, EventDemand $demand): array
+    {
+        $result = $query->execute()->toArray();
+        $expectedSorting = $demand->getRecordUids();
+
+        usort($result, function (Event $eventA, Event $eventB) use ($expectedSorting) {
+            $positionOfA = array_search($eventA->getUid(), $expectedSorting);
+            $positionOfB = array_search($eventB->getUid(), $expectedSorting);
+
+            return $positionOfA <=> $positionOfB;
+        });
+
+        return $result;
+    }
 
     public function findSearchWord($search)
     {

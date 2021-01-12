@@ -69,4 +69,20 @@ call_user_func(function () {
     );
 
 
+    /* Event Selected Plugin */
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'Events',
+        'Selected',
+        'Events: Show selected',
+        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+    );
+
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_selected'] = 'pi_flexform';
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        'events_selected',
+        'FILE:EXT:events/Configuration/FlexForms/Selected.xml'
+    );
+
 });
