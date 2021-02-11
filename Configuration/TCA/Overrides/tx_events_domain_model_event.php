@@ -3,7 +3,7 @@
 defined('TYPO3') or die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-    'dd_events',
+    'events',
     'tx_events_domain_model_event',
     'categories',
     [

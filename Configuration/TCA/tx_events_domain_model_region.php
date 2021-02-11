@@ -17,7 +17,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'title',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_region.gif'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_region.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
@@ -121,6 +121,6 @@ return [
                 'eval' => 'trim'
             ],
         ],
-    
+
     ],
 ];

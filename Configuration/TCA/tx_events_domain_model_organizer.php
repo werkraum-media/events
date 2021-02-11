@@ -17,7 +17,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name,street,district,city,zip,phone,web,email',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_organizer.gif'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_organizer.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, street, district, city, zip, phone, web, email, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
@@ -184,6 +184,6 @@ return [
                 'eval' => 'trim'
             ],
         ],
-    
+
     ],
 ];

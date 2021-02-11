@@ -8,7 +8,7 @@ call_user_func(function () {
         'Events',
         'Pi1',
         'Events Plugin',
-        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+        'EXT:events/Resources/Public/Icons/Extension.svg'
     );
 
     $pluginSignature = 'events_pi1';
@@ -26,7 +26,7 @@ call_user_func(function () {
         'Events',
         'DateSearch',
         'Events: Date Search',
-        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+        'EXT:events/Resources/Public/Icons/Extension.svg'
     );
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_datesearch'] = 'pi_flexform';
@@ -42,7 +42,7 @@ call_user_func(function () {
         'Events',
         'DateList',
         'Events: Date List',
-        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+        'EXT:events/Resources/Public/Icons/Extension.svg'
     );
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_datelist'] = 'pi_flexform';
@@ -58,7 +58,7 @@ call_user_func(function () {
         'Events',
         'DateShow',
         'Events: Date Show',
-        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+        'EXT:events/Resources/Public/Icons/Extension.svg'
     );
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_dateshow'] = 'pi_flexform';
@@ -75,7 +75,7 @@ call_user_func(function () {
         'Events',
         'Selected',
         'Events: Show selected',
-        'EXT:events/Resources/Public/Icons/user_plugin_events.svg'
+        'EXT:events/Resources/Public/Icons/Extension.svg'
     );
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['events_selected'] = 'pi_flexform';

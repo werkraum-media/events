@@ -19,7 +19,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'title,global_id,slug,teaser,details,price_info,street,district,city,zip,country,web,booking,ticket,facebook,youtube,latitude,longitude',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.gif'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, pages, categories, dates, organizer, region, partner, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],

@@ -36,7 +36,7 @@ call_user_func(
         $iconRegistry->registerIcon(
             'events-plugin',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:events/Resources/Public/Icons/user_plugin_events.svg']
+            ['source' => 'EXT:events/Resources/Public/Icons/Extension.svg']
         );
 
         /*
