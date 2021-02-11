@@ -21,8 +21,6 @@
                 <h2>{date.event.title}</h2>
                 <h3>{date.event.teaser}</h3>
                 <f:format.html>{date.event.details}</f:format.html>
-                <p>{event.price_info}</p>
-
             </div>
         </div>
         <div class="row">
@@ -51,6 +49,7 @@
             </div>
             <div class="col-4">
                 <p><b>Veranstaltungsort:</b><br>
+                    {date.event.name}<br>
                     {date.event.street}<br>
                     {date.event.zip} {date.event.city}<br>
                     {date.event.phone}<br>
