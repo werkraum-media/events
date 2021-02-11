@@ -4,22 +4,6 @@ defined('TYPO3') or die();
 
 call_user_func(function () {
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'Events',
-        'Pi1',
-        'Events Plugin',
-        'EXT:events/Resources/Public/Icons/Extension.svg'
-    );
-
-    $pluginSignature = 'events_pi1';
-
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-        $pluginSignature,
-        'FILE:EXT:events/Configuration/FlexForms/Pi1.xml'
-    );
-
     /* Search Plugin */
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
