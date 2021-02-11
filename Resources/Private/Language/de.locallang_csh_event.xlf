@@ -11,6 +11,30 @@
                 <source>Event Modul</source>
                 <target>Veranstaltungs Modul</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.text">
+                <source>Text</source>
+                <target>Texte</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.dates">
+                <source>Dates</source>
+                <target>Termine</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.location">
+                <source>Location</source>
+                <target>Veranstaltungsort</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.relations">
+                <source>Relations</source>
+                <target>Relationen</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.media">
+                <source>Media</source>
+                <target>Medien</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.social">
+                <source>Social Media</source>
+                <target>Social Media</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event">
                 <source>Event</source>
                 <target>Veranstaltung</target>

@@ -12,6 +12,24 @@
             <trans-unit id="tx_events_domain_model_event">
                 <source>Event</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.text">
+                <source>Text</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.dates">
+                <source>Dates</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.location">
+                <source>Location</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.relations">
+                <source>Relations</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.media">
+                <source>Media</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.tabs.social">
+                <source>Social Media</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.title">
                 <source>Title</source>
             </trans-unit>

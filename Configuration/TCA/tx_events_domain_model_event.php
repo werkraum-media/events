@@ -1,8 +1,15 @@
 <?php
 
+defined('TYPO3_MODE') or die();
+
+$l10nPathGeneral = 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf';
+$l10nPathLang = 'LLL:EXT:lang/locallang_core.xlf';
+$l10nPathFE = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
+$l10nPath = 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf';
+
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event',
+        'title' => $l10nPath . ':tx_events_domain_model_event',
         'label' => 'title',
         'thumbnail' => 'images',
         'tstamp' => 'tstamp',
@@ -18,23 +25,67 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'title,global_id,slug,teaser,details,price_info,street,district,city,zip,country,web,booking,ticket,facebook,youtube,latitude,longitude',
+        'searchFields' => 'title,global_id,teaser',
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, global_id, slug, highlight, teaser, details, price_info, name, street, district, city, zip, country, phone, web, ticket, facebook, youtube, instagram, latitude, longitude, images, pages, categories, dates, organizer, region, partner, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => [
+            'showitem' => '--palette--;' . $l10nPathFE . ':palette.general;general,
+                    sys_language_uid,
+                    l10n_parent,
+                    l10n_diffsource,
+                    hidden,
+                    highlight,
+                    title,
+                    teaser,
+                    slug,
+                    ticket,
+                    global_id,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.text,
+                    details,
+                    price_info,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.dates,
+                    dates,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.location,
+                    name,
+                    street,
+                    district,
+                    city,
+                    zip,
+                    country,
+                    phone,
+                    web,
+                    latitude,
+                    longitude,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.relations,
+                    organizer,
+                    region,
+                    partner,
+                    categories,
+                    pages,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.media,
+                    images,
+                --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.social,
+                    facebook,
+                    youtube,
+                    instagram,
+                --div--;' . $l10nPathFE . ':tabs.access,
+                    starttime,
+                    endtime'
+        ],
     ],
+
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
+            'label' => $l10nPathGeneral . ':LGL.language',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => [
                     [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
+                        $l10nPathGeneral . ':LGL.allLanguages',
                         -1,
                         'flags-multiple'
                     ]
@@ -44,7 +95,7 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+            'label' => $l10nPathGeneral . ':LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -62,7 +113,7 @@ return [
             ],
         ],
         't3ver_label' => [
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
+            'label' => $l10nPathGeneral . ':LGL.versionLabel',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -71,7 +122,7 @@ return [
         ],
         'hidden' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',
+            'label' => $l10nPathGeneral . ':LGL.visible',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
@@ -86,7 +137,7 @@ return [
         ],
         'starttime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'label' => $l10nPathGeneral . ':LGL.starttime',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
@@ -99,7 +150,7 @@ return [
         ],
         'endtime' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'label' => $l10nPathGeneral . ':LGL.endtime',
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
@@ -116,7 +167,7 @@ return [
 
         'title' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.title',
+            'label' => $l10nPath . ':tx_events_domain_model_event.title',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -125,7 +176,7 @@ return [
         ],
         'global_id' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.global_id',
+            'label' => $l10nPath . ':tx_events_domain_model_event.global_id',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -134,7 +185,7 @@ return [
         ],
         'slug' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.slug',
+            'label' => $l10nPath . ':tx_events_domain_model_event.slug',
             'config' => [
                 'type' => 'slug',
                 'size' => 50,
@@ -150,12 +201,12 @@ return [
         ],
         'highlight' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.highlight',
+            'label' => $l10nPath . ':tx_events_domain_model_event.highlight',
             'config' => [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                        '0' => $l10nPathLang . ':labels.enabled'
                     ]
                 ],
                 'default' => 0,
@@ -163,17 +214,17 @@ return [
         ],
         'teaser' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.teaser',
+            'label' => $l10nPath . ':tx_events_domain_model_event.teaser',
             'config' => [
                 'type' => 'text',
-                'cols' => 40,
-                'rows' => 15,
+                'cols' => 30,
+                'rows' => 5,
                 'eval' => 'trim'
             ]
         ],
         'details' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.details',
+            'label' => $l10nPath . ':tx_events_domain_model_event.details',
             'config' => [
                 'type' => 'text',
                 'enableRichtext' => true,
@@ -191,7 +242,7 @@ return [
         ],
         'price_info' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.price_info',
+            'label' => $l10nPath . ':tx_events_domain_model_event.price_info',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -201,7 +252,7 @@ return [
         ],
         'name' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.name',
+            'label' => $l10nPath . ':tx_events_domain_model_event.name',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -210,7 +261,7 @@ return [
         ],
         'street' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.street',
+            'label' => $l10nPath . ':tx_events_domain_model_event.street',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -219,7 +270,7 @@ return [
         ],
         'district' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.district',
+            'label' => $l10nPath . ':tx_events_domain_model_event.district',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -228,7 +279,7 @@ return [
         ],
         'city' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.city',
+            'label' => $l10nPath . ':tx_events_domain_model_event.city',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -237,7 +288,7 @@ return [
         ],
         'zip' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.zip',
+            'label' => $l10nPath . ':tx_events_domain_model_event.zip',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -246,7 +297,7 @@ return [
         ],
         'country' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.country',
+            'label' => $l10nPath . ':tx_events_domain_model_event.country',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -255,7 +306,7 @@ return [
         ],
         'phone' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.phone',
+            'label' => $l10nPath . ':tx_events_domain_model_event.phone',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -264,7 +315,7 @@ return [
         ],
         'web' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.web',
+            'label' => $l10nPath . ':tx_events_domain_model_event.web',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -273,16 +324,19 @@ return [
         ],
         'ticket' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.ticket',
+            'label' => $l10nPath . ':tx_events_domain_model_event.ticket',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
+                'renderType' => 'inputLink',
+                'eval' => 'trim',
+                'max' => 1024,
+                'size' => 50,
+                'softref' => 'typolink',
             ],
         ],
         'facebook' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.facebook',
+            'label' => $l10nPath . ':tx_events_domain_model_event.facebook',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -291,7 +345,7 @@ return [
         ],
         'youtube' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.youtube',
+            'label' => $l10nPath . ':tx_events_domain_model_event.youtube',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -300,7 +354,7 @@ return [
         ],
         'instagram' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.instagram',
+            'label' => $l10nPath . ':tx_events_domain_model_event.instagram',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -309,7 +363,7 @@ return [
         ],
         'latitude' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.latitude',
+            'label' => $l10nPath . ':tx_events_domain_model_event.latitude',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -318,7 +372,7 @@ return [
         ],
         'longitude' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.longitude',
+            'label' => $l10nPath . ':tx_events_domain_model_event.longitude',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -327,12 +381,12 @@ return [
         ],
         'images' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.images',
+            'label' => $l10nPath . ':tx_events_domain_model_event.images',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'images',
                 [
                     'appearance' => [
-                        'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+                        'createNewRelationLinkTitle' => $l10nPathFE . ':images.addFileReference',
                         'showPossibleLocalizationRecords' => true,
                         'showRemovedLocalizationRecords' => true,
                         'showAllLocalizationLink' => true,
@@ -346,32 +400,32 @@ return [
                     'foreign_types' => [
                         '0' => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
                             'showitem' => '
-                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
                             --palette--;;filePalette'
                         ]
                     ],
@@ -383,7 +437,7 @@ return [
 
         'pages' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.pages',
+            'label' => $l10nPath . ':tx_events_domain_model_event.pages',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -393,7 +447,7 @@ return [
 
         'categories' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.categories',
+            'label' => $l10nPath . ':tx_events_domain_model_event.categories',
             'config' => [
                 'type' => 'input',
                 'size' => 4,
@@ -403,7 +457,7 @@ return [
 
         'dates' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.dates',
+            'label' => $l10nPath . ':tx_events_domain_model_event.dates',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_events_domain_model_date',
@@ -435,7 +489,7 @@ return [
 
         'organizer' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.organizer',
+            'label' => $l10nPath . ':tx_events_domain_model_event.organizer',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -446,7 +500,7 @@ return [
         ],
         'region' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.region',
+            'label' => $l10nPath . ':tx_events_domain_model_event.region',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -458,7 +512,7 @@ return [
 
         'partner' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_event.xlf:tx_events_domain_model_event.partner',
+            'label' => $l10nPath . ':tx_events_domain_model_event.partner',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
