@@ -38,27 +38,6 @@ call_user_func(
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:events/Resources/Public/Icons/Extension.svg']
         );
-
-        /*
-        // wizards
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-            'mod {
-                wizards.newContentElement.wizardItems.plugins {
-                    elements {
-                        events {
-                            iconIdentifier = events-plugin
-                            title = LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events.name
-                            description = LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:tx_events.description
-                            tt_content_defValues {
-                                CType = list
-                                list_type = events_pi1
-                            }
-                        }
-                    }
-                    show = *
-                }
-            }'
-        );
-        */
     }
+
 );
