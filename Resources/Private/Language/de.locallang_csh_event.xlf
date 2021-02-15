@@ -43,6 +43,10 @@
                 <source>Title</source>
                 <target>Titel</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.subtitle">
+                <source>Subtitle</source>
+                <target>Untertitel</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.global_id">
                 <source>Global UID</source>
                 <target>Globale UID</target>

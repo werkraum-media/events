@@ -4,6 +4,7 @@
 CREATE TABLE tx_events_domain_model_event (
 
 	title varchar(255) DEFAULT '' NOT NULL,
+	subtitle text,
 	global_id varchar(255) DEFAULT '' NOT NULL,
 	slug varchar(255) DEFAULT '' NOT NULL,
 	highlight smallint(5) unsigned DEFAULT '0' NOT NULL,

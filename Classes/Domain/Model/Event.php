@@ -25,6 +25,13 @@ class Event extends AbstractEntity
     protected $title = '';
 
     /**
+     * subtitle
+     *
+     * @var string
+     */
+    protected $subtitle = '';
+
+    /**
      * globalId
      *
      * @var string
@@ -281,6 +288,23 @@ class Event extends AbstractEntity
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string $subtitle
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param string $subtitle
+     * @return void
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
     }
 
     /**

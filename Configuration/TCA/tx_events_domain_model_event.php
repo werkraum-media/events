@@ -25,7 +25,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'title,global_id,teaser',
+        'searchFields' => 'title,subtitle,global_id,teaser',
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.svg'
     ],
     'types' => [
@@ -37,6 +37,7 @@ return [
                     hidden,
                     highlight,
                     title,
+                    subtitle,
                     teaser,
                     slug,
                     ticket,
@@ -168,6 +169,15 @@ return [
         'title' => [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.title',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ]
+        ],
+        'subtitle' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.subtitle',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
