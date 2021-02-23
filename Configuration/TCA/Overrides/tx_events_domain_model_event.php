@@ -10,7 +10,6 @@ defined('TYPO3') or die();
         'label' => 'Categories',
         'fieldConfiguration' => [
             'minitems' => 0,
-            'maxitems' => 3,
             'multiple' => true,
         ]
     ]
