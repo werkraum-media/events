@@ -1,0 +1,23 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Wrm\Events\:
+    resource: '../Classes/*'
+
+  Wrm\Events\Command\DestinationDataImportCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:destinationdataimport'
+
+  Wrm\Events\Command\RemoveAllCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:removeAll'
+
+  Wrm\Events\Command\RemovePastCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:removePast'
