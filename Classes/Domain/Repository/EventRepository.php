@@ -135,7 +135,7 @@ class EventRepository extends Repository
 
         $allCategories = GeneralUtility::intExplode(',', $demand->getCategories(), true);
 
-        if ($demand->includeSubCategories()) {
+        if ($demand->getIncludeSubCategories()) {
             $categoryService = GeneralUtility::makeInstance(CategoryService::class);
             $allCategories = $categoryService->getChildrenCategories($demand->getCategories());
             if (!\is_array($allCategories)) {
@@ -144,7 +144,7 @@ class EventRepository extends Repository
         }
 
         foreach ($allCategories as $category) {
-            $constraints[] = $query->contains('demand->getCategories()', $category);
+            $constraints[] = $query->contains('categories', $category);
         }
 
         if ($demand->getCategoryCombination() === 'or') {
