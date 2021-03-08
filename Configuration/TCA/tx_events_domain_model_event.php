@@ -170,8 +170,9 @@ return [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.title',
             'config' => [
-                'type' => 'input',
-                'size' => 30,
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 2,
                 'eval' => 'trim'
             ]
         ],
@@ -179,8 +180,9 @@ return [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.subtitle',
             'config' => [
-                'type' => 'input',
-                'size' => 30,
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 2,
                 'eval' => 'trim'
             ]
         ],
@@ -264,9 +266,8 @@ return [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.name',
             'config' => [
-                'type' => 'text',
-                'cols' => 40,
-                'rows' => 2,
+                'type' => 'input',
+                'size' => 30,
                 'eval' => 'trim'
             ],
         ],
