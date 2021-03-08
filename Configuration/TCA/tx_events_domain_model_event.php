@@ -264,8 +264,9 @@ return [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.name',
             'config' => [
-                'type' => 'input',
-                'size' => 30,
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 2,
                 'eval' => 'trim'
             ],
         ],
