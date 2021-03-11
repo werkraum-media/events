@@ -13,10 +13,16 @@
                 <source>End</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_date.canceled">
-                <source>Canceled?</source>
+                <source>Canceled or postponed?</source>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_date.canceled.yes">
+            <trans-unit id="tx_events_domain_model_date.canceled.options.no">
+                <source>No</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.canceled">
                 <source>Canceled</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed">
+                <source>Postponed</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>

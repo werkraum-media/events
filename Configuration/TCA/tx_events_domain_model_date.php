@@ -143,11 +143,22 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled',
             'config' => [
-                'type' => 'check',
-                'renderType' => 'checkboxToggle',
-                'default' => 0,
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => 'no',
                 'items' => [
-                    ['LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.yes'],
+                    '0' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.no',
+                        '1' => 'no',
+                    ],
+                    '1' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.canceled',
+                        '1' => 'canceled',
+                    ],
+                    '2' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.postponed',
+                        '1' => 'postponed',
+                    ],
                 ],
             ],
         ],

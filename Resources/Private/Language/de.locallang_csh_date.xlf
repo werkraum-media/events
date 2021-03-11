@@ -16,12 +16,20 @@
                 <target>Ende</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_date.canceled">
-                <source>Canceled?</source>
-                <target>Abgesagt?</target>
+                <source>Canceled or postponed?</source>
+                <target>Abgesagt oder verschoben?</target>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_date.canceled.yes">
+            <trans-unit id="tx_events_domain_model_date.canceled.options.no">
+                <source>No</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.canceled">
                 <source>Canceled</source>
                 <target>Abgesagt</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed">
+                <source>Postponed</source>
+                <target>Verschoben</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>
