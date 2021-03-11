@@ -21,9 +21,9 @@ class Date extends AbstractEntity
     protected $end = null;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $canceled = false;
+    protected $canceled = "no";
 
     /**
      * @var \Wrm\Events\Domain\Model\Event
@@ -69,10 +69,7 @@ class Date extends AbstractEntity
         $this->end = $end;
     }
 
-    public function isCanceled(): bool
-    {
-        return $this->canceled;
-    }
+
 
     /**
      * @return Event
@@ -106,5 +103,22 @@ class Date extends AbstractEntity
     public function getLanguageUid()
     {
         return $this->_languageUid;
+    }
+
+    /**
+     * @return  string
+     */
+    public function getCanceled(): string
+    {
+        return $this->canceled;
+    }
+
+    /**
+     * @param  string  $canceled
+     * @return void
+     */
+    public function setCanceled(string $canceled)
+    {
+        $this->canceled = $canceled;
     }
 }
