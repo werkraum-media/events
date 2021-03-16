@@ -92,5 +92,6 @@ CREATE TABLE tx_events_domain_model_date (
 
     event int(11) unsigned DEFAULT '0' NOT NULL,
     postponed_date int(11) unsigned DEFAULT '0' NOT NULL,
+    canceled_link varchar(1024) DEFAULT '' NOT NULL,
 
 );

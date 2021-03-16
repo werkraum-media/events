@@ -36,6 +36,11 @@ class Date extends AbstractEntity
     protected $event = null;
 
     /**
+     * @var string
+     */
+    protected $canceledLink = '';
+
+    /**
      * @var int
      */
     protected $_languageUid;
@@ -134,5 +139,14 @@ class Date extends AbstractEntity
         }
 
         return null;
+    }
+
+    public function getCanceledLink(): string
+    {
+        if ($this->getCanceled() === 'canceled') {
+            return $this->canceledLink;
+        }
+
+        return '';
     }
 }
