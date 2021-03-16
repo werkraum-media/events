@@ -167,6 +167,8 @@ class DateController extends ActionController
         $demand->setSortBy((string)$this->settings['sortByDate']);
         $demand->setSortOrder((string)$this->settings['sortOrder']);
         $demand->setHighlight((int)$this->settings['highlight']);
+        $demand->setStart((string)$this->settings['start'] ?? '');
+        $demand->setEnd((string)$this->settings['end'] ?? '');
 
         if (!empty($this->settings['limit'])) {
             $demand->setLimit($this->settings['limit']);

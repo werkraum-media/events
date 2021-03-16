@@ -80,14 +80,14 @@ class DateRepository extends Repository
             $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
         }
 
-        if ($demand->getStart() !== '' && $demand->getEnd() != '') {
-            $constraints['daterange'] = $query->logicalAnd(
-                [
-                    $query->greaterThanOrEqual('start', $demand->getStart()),
-                    $query->lessThanOrEqual('end', $demand->getEnd())
-                ]
-            );
-        } else {
+        if ($demand->getStart() !== '') {
+            $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStart());
+        }
+        if ($demand->getEnd() != '') {
+            $constraints['ends'] = $query->lessThanOrEqual('end', $demand->getEnd());
+        }
+
+        if ($demand->getStart() === '' && $demand->getEnd() === '') {
             $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
             $constraints['untilnow'] = $query->greaterThanOrEqual('start', $now);
         }
