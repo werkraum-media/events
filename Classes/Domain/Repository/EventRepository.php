@@ -95,7 +95,14 @@ class EventRepository extends Repository
 
         usort($result, function (Event $eventA, Event $eventB) use ($expectedSorting) {
             $positionOfA = array_search($eventA->getUid(), $expectedSorting);
+            if ($positionOfA === false) {
+                $positionOfA = array_search($eventA->getLocalizedUid(), $expectedSorting);
+            }
+
             $positionOfB = array_search($eventB->getUid(), $expectedSorting);
+            if ($positionOfB === false) {
+                $positionOfB = array_search($eventB->getLocalizedUid(), $expectedSorting);
+            }
 
             return $positionOfA <=> $positionOfB;
         });

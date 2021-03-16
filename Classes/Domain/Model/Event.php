@@ -795,4 +795,12 @@ class Event extends AbstractEntity
     {
         return $this->_languageUid;
     }
+
+    /**
+     * @return int
+     */
+    public function getLocalizedUid()
+    {
+        return $this->_localizedUid;
+    }
 }
