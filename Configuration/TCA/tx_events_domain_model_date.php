@@ -23,7 +23,7 @@ return [
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_date.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, canceled, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, canceled, postponed_date, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -158,6 +158,24 @@ return [
                     '2' => [
                         '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.postponed',
                         '1' => 'postponed',
+                    ],
+                ],
+            ],
+        ],
+        'postponed_date' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date',
+            'displayCond' => 'FIELD:canceled:=:postponed',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_events_domain_model_date',
+                'foreign_table_where' => ' AND {#tx_events_domain_model_date}.{#event} = ###REC_FIELD_event###',
+                'default' => '0',
+                'items' => [
+                    '0' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date.0',
+                        '1' => '0',
                     ],
                 ],
             ],

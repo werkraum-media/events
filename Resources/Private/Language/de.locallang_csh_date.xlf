@@ -31,6 +31,14 @@
                 <source>Postponed</source>
                 <target>Verschoben</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date">
+                <source>Postponed date</source>
+                <target>Verschoben auf folgendes Datum</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date.0">
+                <source>Not defined</source>
+                <target>Noch nicht definiert</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>
                 <target>Verknüpfte Veranstaltungen</target>

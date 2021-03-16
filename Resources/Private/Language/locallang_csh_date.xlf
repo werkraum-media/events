@@ -24,6 +24,12 @@
             <trans-unit id="tx_events_domain_model_date.canceled.options.postponed">
                 <source>Postponed</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date">
+                <source>Postponed date</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date.0">
+                <source>Not defined</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>
             </trans-unit>

@@ -26,6 +26,11 @@ class Date extends AbstractEntity
     protected $canceled = "no";
 
     /**
+     * @var Date
+     */
+    protected $postponedDate;
+
+    /**
      * @var \Wrm\Events\Domain\Model\Event
      */
     protected $event = null;
@@ -120,5 +125,14 @@ class Date extends AbstractEntity
     public function setCanceled(string $canceled)
     {
         $this->canceled = $canceled;
+    }
+
+    public function getPostponedDate(): ?Date
+    {
+        if ($this->getCanceled() === 'postponed') {
+            return $this->postponedDate;
+        }
+
+        return null;
     }
 }
