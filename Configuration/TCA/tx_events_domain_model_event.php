@@ -485,7 +485,7 @@ return [
                         'dragdrop' => false,
                         'sort' => false,
                         'hide' => false,
-                        'delete' => false,
+                        'delete' => true,
                         'localize' => false,
                     ),
                     'levelLinksPosition' => 'top',
