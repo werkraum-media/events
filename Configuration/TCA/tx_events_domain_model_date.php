@@ -170,7 +170,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_events_domain_model_date',
-                'foreign_table_where' => ' AND {#tx_events_domain_model_date}.{#event} = ###REC_FIELD_event###',
+                'foreign_table_where' => ' AND {#tx_events_domain_model_date}.{#event} = ###REC_FIELD_event### AND {#tx_events_domain_model_date}.{#uid} != ###THIS_UID###',
                 'default' => '0',
                 'items' => [
                     '0' => [
