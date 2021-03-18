@@ -174,7 +174,7 @@ class Event extends AbstractEntity
     /**
      * images
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @var ObjectStorage<FileReference>
      * @Extbase\ORM\Cascade remove
      */
     protected $images = null;
@@ -578,15 +578,15 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @return FileReference $images
+     * @return ObjectStorage<FileReference> $images
      */
-    public function getImages()
+    public function getImages(): ObjectStorage
     {
         return $this->images;
     }
 
     /**
-     * @param FileReference $images
+     * @param ObjectStorage<FileReference> $images
      * @return void
      */
     public function setImages(FileReference $images)
