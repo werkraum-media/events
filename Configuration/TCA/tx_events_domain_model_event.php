@@ -441,7 +441,7 @@ return [
                             --palette--;;filePalette'
                         ]
                     ],
-                    'maxitems' => 3
+                    'maxitems' => 8
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
