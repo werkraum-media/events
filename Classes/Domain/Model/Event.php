@@ -4,7 +4,6 @@ namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -209,7 +208,7 @@ class Event extends AbstractEntity
     /**
      * categories
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Category>
      */
     protected $categories;
 
@@ -763,12 +762,15 @@ class Event extends AbstractEntity
         $this->categories->attach($category);
     }
 
-    /**
-     * @return $categories
-     */
-    public function getCategories()
+    public function getCategories(): array
     {
-        return $this->categories;
+        $categories = $this->categories->toArray();
+
+        usort($categories, function (Category $catA, Category $catB) {
+            return $catA->getSorting() <=> $catB->getSorting();
+        });
+
+        return $categories;
     }
 
     /**
