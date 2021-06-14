@@ -32,6 +32,10 @@ call_user_func(
             [\Wrm\Events\Controller\EventController::class => 'list']
         );
 
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['events_category'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['events_category'] = [];
+        }
+
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
         $iconRegistry->registerIcon(
             'events-plugin',

@@ -21,7 +21,7 @@ class CategoryService
     public function __construct()
     {
         $this->timeTracker = GeneralUtility::makeInstance(TimeTracker::class);
-        $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('cache_Events_category');
+        $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('events_category');
     }
 
     /**
