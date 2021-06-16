@@ -3,14 +3,13 @@
 namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
 use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Service\DataProcessingForModels;
 
-class EventController extends ActionController
+class EventController extends AbstractController
 {
     /**
      * @var EventRepository

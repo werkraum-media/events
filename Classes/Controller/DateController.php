@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Repository\CategoryRepository;
@@ -17,7 +16,7 @@ use Wrm\Events\Service\DataProcessingForModels;
 /**
  * DateController
  */
-class DateController extends ActionController
+class DateController extends AbstractController
 {
 
     /**
