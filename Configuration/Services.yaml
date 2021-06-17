@@ -21,3 +21,9 @@ services:
     tags:
       - name: 'console.command'
         command: 'events:removePast'
+
+  Wrm\Events\Extbase\AddSpecialProperties:
+    tags:
+      - name: event.listener
+        identifier: 'WrmEventsAddSpecialPropertiesToDate'
+        event: TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent

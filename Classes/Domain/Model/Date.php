@@ -26,9 +26,14 @@ class Date extends AbstractEntity
     protected $canceled = "no";
 
     /**
-     * @var Date
+     * @var null|Date
      */
     protected $postponedDate;
+
+    /**
+     * @var null|Date
+     */
+    protected $originalDate;
 
     /**
      * @var \Wrm\Events\Domain\Model\Event
@@ -139,6 +144,11 @@ class Date extends AbstractEntity
         }
 
         return null;
+    }
+
+    public function getOriginalDate(): ?Date
+    {
+        return $this->originalDate;
     }
 
     public function getCanceledLink(): string
