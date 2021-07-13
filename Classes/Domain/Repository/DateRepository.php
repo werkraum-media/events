@@ -1,6 +1,7 @@
 <?php
 namespace Wrm\Events\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Service\CategoryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -70,12 +71,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
 
         if ($demand->getSearchword() !== '') {
-            $constraints['searchword'] = $query->logicalOr(
-                [
-                    $query->like('event.title', '%' . $demand->getSearchword() . '%'),
-                    $query->like('event.teaser', '%' . $demand->getSearchword() . '%')
-                ]
-            );
+            $constraints['searchword'] = $this->getSearchwordConstraint($query, $demand);
         }
 
         if ($demand->getStart() !== '' && $demand->getEnd() != '') {
@@ -101,6 +97,31 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
 
         return $query;
+    }
+
+    private function getSearchwordConstraint(
+        QueryInterface $query,
+        DateDemand $demand
+    ): ConstraintInterface {
+        $fieldsToSearch = [
+            'event.title',
+            'event.teaser',
+        ];
+
+        $wordsToSearch = $demand->getSynonymsForSearchword();
+        $wordsToSearch[] = $demand->getSearchword();
+        $constraints = [];
+
+        $queryBuilder = $this->objectManager->get(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_events_domain_model_date');
+
+        foreach ($wordsToSearch as $word) {
+            foreach ($fieldsToSearch as $field) {
+                $constraints[] = $query->like($field, '%' . $queryBuilder->escapeLikeWildcards($word) . '%');
+            }
+        }
+
+        return $query->logicalOr($constraints);
     }
 
     /**

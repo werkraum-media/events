@@ -161,6 +161,8 @@ class DateController extends ActionController
         if ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
             $demand->setSearchword((string)$this->request->getArgument('searchword'));
 
+        $demand->setSynonyms($this->settings['synonyms'] ?? []);
+
         if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
             $demand->setStart(strtotime($this->request->getArgument('start') . ' 00:00'));
 
