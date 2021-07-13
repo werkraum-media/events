@@ -32,6 +32,7 @@ CREATE TABLE tx_events_domain_model_event (
 	organizer int(11) unsigned DEFAULT '0',
 	partner text,
 	region int(11) unsigned DEFAULT '0',
+	references_events text,
     KEY dataHandler (l10n_parent, t3ver_oid, deleted, t3ver_wsid, t3ver_state)
 );
 

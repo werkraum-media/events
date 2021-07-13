@@ -63,6 +63,7 @@ return [
                     region,
                     partner,
                     categories,
+                    references_events,
                     pages,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.media,
                     images,
@@ -521,6 +522,21 @@ return [
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
+            ],
+        ],
+
+        'references_events' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.references_events',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_events_domain_model_event',
+                'suggestOptions' => [
+                    'tx_events_domain_model_event' => [
+                        'searchCondition' => 'tx_events_domain_model_event.sys_language_uid IN (0, -1)',
+                    ],
+                ],
             ],
         ],
 

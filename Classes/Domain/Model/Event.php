@@ -218,6 +218,11 @@ class Event extends AbstractEntity
     protected $partner;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Event>
+     */
+    protected $referencesEvents;
+
+    /**
      * @var int
      */
     protected $_languageUid;
@@ -251,6 +256,7 @@ class Event extends AbstractEntity
     protected function initStorageObjects()
     {
         $this->dates = new ObjectStorage();
+        $this->referencesEvents = new ObjectStorage();
     }
 
     /**
@@ -672,6 +678,14 @@ class Event extends AbstractEntity
     public function getPartner(): ObjectStorage
     {
         return $this->partner;
+    }
+
+    /**
+     * @return ObjectStorage<Event>
+     */
+    public function getReferencesEvents(): ObjectStorage
+    {
+        return $this->referencesEvents;
     }
 
     /**

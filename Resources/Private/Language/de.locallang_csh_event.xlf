@@ -159,6 +159,10 @@
                 <source>Partner</source>
                 <target>Partner</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.references_events">
+                <source>Related Events</source>
+                <target>Ähnliche Veranstaltungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
