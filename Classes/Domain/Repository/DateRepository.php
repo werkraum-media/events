@@ -74,6 +74,10 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['searchword'] = $this->getSearchwordConstraint($query, $demand);
         }
 
+        if ($demand->getUserCategories() !== []) {
+            $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
+        }
+
         if ($demand->getStart() !== '' && $demand->getEnd() != '') {
             $constraints['daterange'] = $query->logicalAnd(
                 [

@@ -22,6 +22,11 @@ class DateDemand {
     protected $categories = '';
 
     /**
+     * @var array
+     */
+    protected $userCategories = [];
+
+    /**
      * @var bool
      */
     protected $includeSubCategories = false;
@@ -75,6 +80,44 @@ class DateDemand {
      */
     protected $considerDate = 0;
 
+    public static function createFromRequestValues(
+        array $submittedValues,
+        array $settings
+    ): self {
+        $instance = new self();
+        $instance->setSearchword($submittedValues['searchword'] ?? '');
+        $instance->setSynonyms($settings['synonyms'] ?? []);
+
+        $instance->setRegion($submittedValues['region'] ?? '');
+
+        if ($submittedValues['highlight'] ?? false) {
+            $instance->setHighlight($settings['highlight'] ?? false);
+        }
+
+        if (isset($submittedValues['start']) && $submittedValues['start'] !== '') {
+            $instance->setStart(strtotime($submittedValues['start'] . ' 00:00'));
+        }
+        if (isset($submittedValues['end']) && $submittedValues['end'] !== '') {
+            $instance->setEnd(strtotime($submittedValues['end'] . ' 23:59'));
+        }
+        if (isset($submittedValues['considerDate']) && $submittedValues['considerDate'] !== '') {
+            $instance->setConsiderDate(strtotime($submittedValues['considerDate']));
+        }
+
+        if (is_array($submittedValues['userCategories'])) {
+            $instance->userCategories = array_map('intval', $submittedValues['userCategories']);
+        }
+
+        $instance->setSortBy($settings['sortByDate'] ?? '');
+        $instance->setSortOrder($settings['sortOrder'] ?? '');
+
+        if (!empty($settings['limit'])) {
+            $instance->setLimit($settings['limit']);
+        }
+
+        return $instance;
+    }
+
     /**
      * @return string
      */
@@ -113,6 +156,11 @@ class DateDemand {
     public function getCategories(): string
     {
         return $this->categories;
+    }
+
+    public function getUserCategories(): array
+    {
+        return $this->userCategories;
     }
 
     /**
@@ -182,7 +230,7 @@ class DateDemand {
     /**
      * @param bool $highlight
      */
-    public function setHighlight(string $highlight): void
+    public function setHighlight(bool $highlight): void
     {
         $this->highlight = $highlight;
     }
@@ -299,5 +347,4 @@ class DateDemand {
     {
         $this->considerDate = $considerDate;
     }
-
 }
