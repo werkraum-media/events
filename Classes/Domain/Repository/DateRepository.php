@@ -106,6 +106,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $fieldsToSearch = [
             'event.title',
             'event.teaser',
+            'event.categories.title',
         ];
 
         $wordsToSearch = $demand->getSynonymsForSearchword();
