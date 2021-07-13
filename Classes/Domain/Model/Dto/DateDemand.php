@@ -2,6 +2,8 @@
 
 namespace Wrm\Events\Domain\Model\Dto;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class DateDemand {
 
     /**
@@ -58,6 +60,15 @@ class DateDemand {
      * @var string
      */
     protected $searchword = '';
+
+    /**
+     * @var array
+     *
+     * Synonym1 => ['word1', 'word2', …],
+     * Synonym2 => ['word3', 'word4', …],
+     * …
+     */
+    protected $synonyms = [];
 
     /**
      * @var bool
@@ -206,6 +217,39 @@ class DateDemand {
     public function setSearchword(string $searchword): void
     {
         $this->searchword = $searchword;
+    }
+
+    /**
+     * @param array $synonyms
+     * [
+     *  [
+     *   'word' => 'Word1',
+     *   'synonyms' => 'synonym1, synonym2',
+     *  ],
+     *  [
+     *   'word' => 'Word2',
+     *   'synonyms' => 'synonym3, synonym4',
+     *  ],
+     *  …
+     * ]
+     */
+    public function setSynonyms(array $synonyms): void
+    {
+        $this->synonyms = [];
+        foreach ($synonyms as $config) {
+            $synonymsForWord = GeneralUtility::trimExplode(',', $config['synonyms'], true);
+            foreach ($synonymsForWord as $synonym) {
+                $synonym = mb_strtolower($synonym);
+                $this->synonyms[$synonym][] = $config['word'];
+                $this->synonyms[$synonym] = array_unique($this->synonyms[$synonym]);
+            }
+        }
+    }
+
+    public function getSynonymsForSearchword(): array
+    {
+        $searchWord = mb_strtolower($this->getSearchword());
+        return $this->synonyms[$searchWord] ?? [];
     }
 
     /**
