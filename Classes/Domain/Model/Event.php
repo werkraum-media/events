@@ -250,6 +250,11 @@ class Event extends AbstractEntity
         $this->dataProcessing = $dataProcessing;
     }
 
+    public function initializeObject()
+    {
+        $this->initStorageObjects();
+    }
+
     /**
      * @return void
      */
