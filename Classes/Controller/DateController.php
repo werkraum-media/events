@@ -3,6 +3,7 @@ namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
+use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
 use TYPO3\CMS\Core\Database\QueryGenerator;
@@ -26,6 +27,11 @@ class DateController extends ActionController
     protected $regionRepository;
 
     /**
+     * @var CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
      * @var QueryGenerator
      */
     protected $queryGenerator;
@@ -38,13 +44,16 @@ class DateController extends ActionController
     /*
      * @param RegionRepository $regionRepository
      * @param DateRepository $dateRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         RegionRepository $regionRepository,
-        DateRepository $dateRepository
+        DateRepository $dateRepository,
+        CategoryRepository $categoryRepository
     ) {
         $this->regionRepository = $regionRepository;
         $this->dateRepository = $dateRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -64,18 +73,18 @@ class DateController extends ActionController
      */
     public function listAction()
     {
-        if (($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '') ||
-            ($this->request->hasArgument('region') && $this->request->getArgument('region') != '') ||
-            ($this->request->hasArgument('start') && $this->request->getArgument('start') != '') ||
-            ($this->request->hasArgument('end') && $this->request->getArgument('end') != ''))
-        {
+        if (
+            ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
+            || ($this->request->hasArgument('region') && $this->request->getArgument('region') != '')
+            || ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
+            || ($this->request->hasArgument('end') && $this->request->getArgument('end') != '')
+            || ($this->request->hasArgument('events_search') && $this->request->getArgument('events_search') != [])
+        ) {
             $demand = $this->createDemandFromSearch();
-            $dates = $this->dateRepository->findByDemand($demand);
         } else {
             $demand = $this->createDemandFromSettings();
-            $dates = $this->dateRepository->findByDemand($demand);
         }
-        $this->view->assign('dates', $dates);
+        $this->view->assign('dates', $this->dateRepository->findByDemand($demand));
     }
 
     /**
@@ -83,21 +92,22 @@ class DateController extends ActionController
      */
     public function searchAction()
     {
-        $arguments = GeneralUtility::_GET('tx_events_datelist');
-        $searchword = $arguments['searchword'];
-        $selRegion = $arguments['region'];
-        $start = $arguments['start'];
-        $end = $arguments['end'];
-        $considerDate = $arguments['considerDate'];
+        $arguments = GeneralUtility::_GET('tx_events_datelist') ?? [];
+        if (isset($arguments['events_search'])) {
+            $arguments += $arguments['events_search'];
+            unset($arguments['events_search']);
+        }
 
-        $regions = $this->regionRepository->findAll();
-        $this->view->assign('regions', $regions);
-
-        $this->view->assign('searchword', $searchword);
-        $this->view->assign('selRegion', $selRegion);
-        $this->view->assign('start', $start);
-        $this->view->assign('end', $end);
-        $this->view->assign('considerDate', $considerDate);
+        $this->view->assignMultiple([
+            'searchword' => $arguments['searchword'] ?? '',
+            'selRegion' => $arguments['region'] ?? '',
+            'start' => $arguments['start'] ?? '',
+            'end' => $arguments['end'] ?? '',
+            'considerDate' => $arguments['considerDate'] ?? '',
+            'demand' => DateDemand::createFromRequestValues($arguments, $this->settings),
+            'regions' => $this->regionRepository->findAll(),
+            'categories' => $this->categoryRepository->findAllCurrentlyAssigned(),
+        ]);
     }
 
     /**
@@ -113,7 +123,7 @@ class DateController extends ActionController
 
     /**
      * action show
-     * 
+     *
      * @param \Wrm\Events\Domain\Model\Date $date
      * @return void
      */
@@ -150,35 +160,15 @@ class DateController extends ActionController
      */
     protected function createDemandFromSearch(): DateDemand
     {
-        $demand = $this->objectManager->get(DateDemand::class);
-
-        if ($this->request->hasArgument('region') && $this->request->getArgument('region') != '')
-            $demand->setRegion((string)$this->request->getArgument('region'));
-
-        if ($this->request->hasArgument('highlight') && $this->request->hasArgument('highlight') != '')
-            $demand->setHighlight((int)$this->settings['highlight']);
-
-        if ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
-            $demand->setSearchword((string)$this->request->getArgument('searchword'));
-
-        $demand->setSynonyms($this->settings['synonyms'] ?? []);
-
-        if ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
-            $demand->setStart(strtotime($this->request->getArgument('start') . ' 00:00'));
-
-        if ($this->request->hasArgument('end') && $this->request->getArgument('end') != '')
-            $demand->setEnd(strtotime($this->request->getArgument('end') . ' 23:59'));
-
-        if ($this->request->hasArgument('considerDate') && $this->request->getArgument('considerDate') != '')
-            $demand->setConsiderDate(strtotime($this->request->getArgument('considerDate')));
-
-        $demand->setSortBy((string)$this->settings['sortByDate']);
-        $demand->setSortOrder((string)$this->settings['sortOrder']);
-
-        if (!empty($this->settings['limit'])) {
-            $demand->setLimit($this->settings['limit']);
+        $arguments = $this->request->getArguments() ?? [];
+        if (isset($arguments['events_search'])) {
+            $arguments += $arguments['events_search'];
+            unset($arguments['events_search']);
         }
 
-        return $demand;
+        return DateDemand::createFromRequestValues(
+            $arguments,
+            $this->settings
+        );
     }
 }
