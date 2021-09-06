@@ -22,8 +22,10 @@ class RemoveAllCommand extends Command
     {
         Bootstrap::initializeBackendAuthentication();
 
-        return GeneralUtility::makeInstance(ObjectManager::class)
+        GeneralUtility::makeInstance(ObjectManager::class)
             ->get(CleanupService::class)
             ->deleteAllData();
+
+        return 0;
     }
 }
