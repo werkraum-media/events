@@ -38,17 +38,32 @@ class AddSpecialProperties
      */
     private $dataMapper;
 
+    /**
+     * Internal info to speed things up if we know there are none.
+     * @var bool
+     */
+    private $doPostponedDatesExist = true;
+
     public function __construct(
         ConnectionPool $connectionPool,
         DataMapper $dataMapper
     ) {
         $this->connectionPool = $connectionPool;
         $this->dataMapper = $dataMapper;
+
+        $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_date');
+        $qb->count('uid');
+        $qb->from('tx_events_domain_model_date');
+        $qb->where($qb->expr()->gt('postponed_date', $qb->createNamedParameter(0)));
+        $this->doPostponedDatesExist = $qb->execute()->fetchColumn() > 0;
     }
 
     public function __invoke(AfterObjectThawedEvent $event): void
     {
-        if ($event->getObject() instanceof Date) {
+        if (
+            $this->doPostponedDatesExist
+            && $event->getObject() instanceof Date
+        ) {
             /** @var Date $date */
             $date = $event->getObject();
             $date->_setProperty('originalDate', $this->getOriginalDate($date->_getProperty('_localizedUid')));
