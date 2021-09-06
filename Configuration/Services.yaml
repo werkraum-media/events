@@ -11,6 +11,11 @@ services:
     tags:
       - name: 'console.command'
         command: 'events:destinationdataimport'
+  events.levacy_comannd_identifier:
+    class: 'Wrm\Events\Command\DestinationDataImportCommand'
+    tags:
+      - name: 'console.command'
+        command: 'events:destinationdataimport‚'
 
   Wrm\Events\Command\RemoveAllCommand:
     tags:
