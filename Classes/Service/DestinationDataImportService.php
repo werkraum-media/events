@@ -671,7 +671,7 @@ class DestinationDataImportService
                 }
 
                 if ($error !== true) {
-                    if ($this->tmpCurrentEvent->getImages() !== null) {
+                    if ($this->tmpCurrentEvent->getImages()->count() > 0) {
                         $this->logger->info('Relation found');
                         // TODO: How to delete file references?
                     } else {

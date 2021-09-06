@@ -176,15 +176,15 @@ class Event extends AbstractEntity
      * @var ObjectStorage<FileReference>
      * @Extbase\ORM\Cascade remove
      */
-    protected $images = null;
+    protected $images;
 
     /**
      * dates
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Wrm\Events\Domain\Model\Date>
+     * @var ObjectStorage<Date>
      * @Extbase\ORM\Cascade remove
      */
-    protected $dates = null;
+    protected $dates;
 
     /**
      * organizer
@@ -196,7 +196,7 @@ class Event extends AbstractEntity
     /**
      * region
      *
-     * @var \Wrm\Events\Domain\Model\Region
+     * @var Region
      */
     protected $region = null;
 
@@ -208,17 +208,17 @@ class Event extends AbstractEntity
     /**
      * categories
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Category>
+     * @var ObjectStorage<Category>
      */
     protected $categories;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Partner>
+     * @var ObjectStorage<Partner>
      */
     protected $partner;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Event>
+     * @var ObjectStorage<Event>
      */
     protected $referencesEvents;
 
@@ -232,13 +232,8 @@ class Event extends AbstractEntity
      */
     protected $dataProcessing = null;
 
-    /**
-     * __construct
-     */
     public function __construct()
     {
-
-        //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
 
@@ -260,7 +255,10 @@ class Event extends AbstractEntity
      */
     protected function initStorageObjects()
     {
+        $this->images = new ObjectStorage();
         $this->dates = new ObjectStorage();
+        $this->categories = new ObjectStorage();
+        $this->partner = new ObjectStorage();
         $this->referencesEvents = new ObjectStorage();
     }
 
