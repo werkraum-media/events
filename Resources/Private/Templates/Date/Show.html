@@ -3,9 +3,9 @@
     <f:section name="content">
         <div class="row">
             <div class="col-6">
-                <f:if condition="{date.event.images}">
+                <f:if condition="{date.event.images.0}">
                     <f:then>
-                        <f:image src="{date.event.images.originalResource.originalFile.uid}" alt="" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        <f:image image="{date.event.images.0}" alt="" width="480c" height="320c" class="img-fluid img-thumbnail"/>
                     </f:then>
                     <f:else>
                         <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
