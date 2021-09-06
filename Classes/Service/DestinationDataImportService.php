@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -656,7 +657,14 @@ class DestinationDataImportService
                     if ($file = $this->loadFile($orgFileUrl)) {
                         // Move file to defined folder
                         $this->logger->info('Adding file ' . $file);
-                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $this->storage->getFolder($this->filesFolder));
+
+                        try {
+                            $targetFolder = $this->storage->getFolder($this->filesFolder);
+                        } catch (FolderDoesNotExistException $e) {
+                            $targetFolder = $this->storage->createFolder($this->filesFolder);
+                        }
+
+                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $targetFolder);
                     } else {
                         $error = true;
                     }
