@@ -26,10 +26,27 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Resource\StorageRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Files
 {
+    /**
+     * @var ConnectionPool
+     */
+    private $connectionPool;
+
+    /**
+     * @var StorageRepository
+     */
+    private $storageRepository;
+
+    public function __construct(
+        ConnectionPool $connectionPool,
+        StorageRepository $storageRepository
+    ) {
+        $this->connectionPool = $connectionPool;
+        $this->storageRepository = $storageRepository;
+    }
+
     public function deleteAll()
     {
         $this->delete($this->getFilesFromDb());
@@ -54,23 +71,9 @@ class Files
         }));
     }
 
-    private function delete(array $filesToDelete)
-    {
-        $uidsToRemove = [];
-
-        foreach ($filesToDelete as $fileToDelete) {
-            $this->deleteFromFal($fileToDelete['storage'], $fileToDelete['identifier']);
-            $uidsToRemove[] = $fileToDelete['uid'];
-        }
-
-        $this->deleteFromDb(...$uidsToRemove);
-    }
-
     private function getFilesFromDb(callable $whereGenerator = null): array
     {
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('sys_file');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
 
         $queryBuilder->getRestrictions()->removeAll();
 
@@ -88,11 +91,21 @@ class Files
         return $queryBuilder->execute()->fetchAll();
     }
 
-    private function deleteFromFal(int $storageUid, string $filePath)
+    private function delete(array $filesToDelete): void
     {
-        /* @var ResourceStorage $storage */
-        $storage = GeneralUtility::makeInstance(StorageRepository::class)
-            ->findByUid($storageUid);
+        $uidsToRemove = [];
+
+        foreach ($filesToDelete as $fileToDelete) {
+            $this->deleteFromFal($fileToDelete['storage'], $fileToDelete['identifier']);
+            $uidsToRemove[] = $fileToDelete['uid'];
+        }
+
+        $this->deleteFromDb(...$uidsToRemove);
+    }
+
+    private function deleteFromFal(int $storageUid, string $filePath): void
+    {
+        $storage = $this->storageRepository->findByUid($storageUid);
 
         if ($storage->hasFile($filePath) === false) {
             return;
@@ -101,14 +114,23 @@ class Files
         $storage->deleteFile($storage->getFile($filePath));
     }
 
-    private function deleteFromDb(int ...$uids)
+    private function deleteFromDb(int ...$uids): void
     {
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('sys_file');
-
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
         $queryBuilder->delete('sys_file')
             ->where('uid in (:uids)')
+            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->execute();
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
+        $queryBuilder->delete('sys_file_reference')
+            ->where('uid_local in (:uids)')
+            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->execute();
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
+        $queryBuilder->delete('sys_file_metadata')
+            ->where('file in (:uids)')
             ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
             ->execute();
     }

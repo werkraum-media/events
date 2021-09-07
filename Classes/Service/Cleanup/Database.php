@@ -21,65 +21,68 @@ namespace Wrm\Events\Service\Cleanup;
  * 02110-1301, USA.
  */
 
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Database
 {
-    public const DATE_TABLE = 'tx_events_domain_model_date';
-    public const EVENT_TABLE = 'tx_events_domain_model_event';
-    public const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
+    /**
+     * @var ConnectionPool
+     */
+    private $connectionPool;
 
-    public function truncateTables(string ...$tableNames): void
+    /**
+     * @var DataHandler
+     */
+    private $dataHandler;
+
+    private const DATE_TABLE = 'tx_events_domain_model_date';
+    private const EVENT_TABLE = 'tx_events_domain_model_event';
+    private const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
+    private const REGION_TABLE = 'tx_events_domain_model_region';
+
+    public function __construct(
+        ConnectionPool $connectionPool,
+        DataHandler $dataHandler
+    ) {
+        $this->connectionPool = $connectionPool;
+        $this->dataHandler = $dataHandler;
+    }
+
+    public function truncateTables(): void
     {
+        $tableNames = [
+            Database::DATE_TABLE,
+            Database::ORGANIZER_TABLE,
+            Database::EVENT_TABLE,
+            Database::REGION_TABLE,
+        ];
+
         foreach ($tableNames as $tableName) {
-            GeneralUtility::makeInstance(ConnectionPool::class)
+            $this->connectionPool
                 ->getConnectionForTable($tableName)
                 ->truncate($tableName);
         }
-    }
-
-    public function getDeletionStructureForEvents(): array
-    {
-        $dataStructure = [static::EVENT_TABLE => []];
-
-        foreach ($this->getAllRecords(static::EVENT_TABLE) as $recordToDelete) {
-            $dataStructure[static::EVENT_TABLE][$recordToDelete] = ['delete' => 1];
-        }
-
-        return $dataStructure;
-    }
-
-    private function getAllRecords(string $tableName): array
-    {
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable($tableName)
-            ->createQueryBuilder();
-
-        $records = $queryBuilder->select('uid')
-            ->from($tableName)
-            ->execute()
-            ->fetchAll();
-
-        return array_map(function (array $record) {
-            return $record['uid'];
-        }, $records);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category_record_mm');
+        $queryBuilder->delete('sys_category_record_mm')
+            ->where($queryBuilder->expr()->like(
+                'tablenames',
+                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+            ))
+            ->execute();
     }
 
     public function getPastDates(): array
     {
-        $midnightToday = new \DateTimeImmutable('midnight today');
-
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = $this->connectionPool
             ->getConnectionForTable(static::DATE_TABLE)
             ->createQueryBuilder();
 
         $queryBuilder->getRestrictions()->removeAll();
 
+        $midnightToday = new \DateTimeImmutable('midnight today');
         $records = $queryBuilder->select('uid')
             ->from(static::DATE_TABLE)
             ->where($queryBuilder->expr()->lte(
@@ -96,8 +99,7 @@ class Database
 
     public function deleteDates(int ...$uids): void
     {
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = $this->connectionPool
             ->getQueryBuilderForTable(static::DATE_TABLE);
 
         $queryBuilder->delete(static::DATE_TABLE)
@@ -106,26 +108,42 @@ class Database
             ->execute();
     }
 
-    public function getDeletionStructureForEventsWithoutDates(): array
+    public function deleteEventsWithoutDates(): void
     {
-        $dataStructure = [static::EVENT_TABLE => []];
-        /* @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = $this->connectionPool
             ->getConnectionForTable(static::EVENT_TABLE)
             ->createQueryBuilder();
 
         $queryBuilder->getRestrictions()->removeAll();
 
-        $records = $queryBuilder->select('event.uid')
+        $recordUids = $queryBuilder->select('event.uid')
             ->from(static::EVENT_TABLE, 'event')
             ->leftJoin('event', static::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))
             ->where($queryBuilder->expr()->isNull('date.uid'))
             ->execute()
-            ->fetchAll();
+            ->fetchAll(\PDO::FETCH_COLUMN);
 
-        foreach ($records as $record) {
-            $dataStructure[static::EVENT_TABLE][$record['uid']] = ['delete' => 1];
+        $dataStructure = [static::EVENT_TABLE => []];
+        foreach ($recordUids as $recordUid) {
+            $dataStructure[static::EVENT_TABLE][$recordUid] = ['delete' => 1];
         }
-        return $dataStructure;
+
+        $dataHandler = clone $this->dataHandler;
+        $dataHandler->start([], $dataStructure);
+        $dataHandler->process_cmdmap();
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category_record_mm');
+        $queryBuilder->delete('sys_category_record_mm')
+            ->where($queryBuilder->expr()->andX(
+                $queryBuilder->expr()->like(
+                    'tablenames',
+                    $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+                ),
+                $queryBuilder->expr()->in(
+                    'uid_foreign',
+                    $queryBuilder->createNamedParameter($recordUids, Connection::PARAM_INT_ARRAY)
+                )
+            ))
+            ->execute();
     }
 }

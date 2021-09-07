@@ -6,12 +6,23 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Wrm\Events\Service\CleanupService;
 
 class RemoveAllCommand extends Command
 {
+    /**
+     * @var CleanupService
+     */
+    private $cleanupService;
+
+    public function __construct(
+        CleanupService $cleanupService
+    ) {
+        $this->cleanupService = $cleanupService;
+
+        parent::__construct();
+    }
+
     public function configure(): void
     {
         $this->setDescription('Remove all event data');
@@ -21,10 +32,7 @@ class RemoveAllCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         Bootstrap::initializeBackendAuthentication();
-
-        GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(CleanupService::class)
-            ->deleteAllData();
+        $this->cleanupService->deleteAllData();
 
         return 0;
     }
