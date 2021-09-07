@@ -10,10 +10,10 @@ $EM_CONF['events'] = [
     'uploadfolder' => 1,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '1.2.0',
+    'version' => '2.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99',
+            'typo3' => '10.4.00-10.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],
