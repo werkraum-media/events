@@ -29,7 +29,7 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
-class CategoryRepository
+class CategoryRepository extends Repository
 {
     /**
      * @var ConnectionPool
