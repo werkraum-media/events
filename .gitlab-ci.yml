@@ -25,6 +25,12 @@ test:php:7.3:
   script:
     - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
 
+test:php:7.2:
+  image: php:7.2-alpine
+  stage: test
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
 test:xml:
   image: php:7.3-alpine
   stage: test
@@ -44,9 +50,24 @@ test:cgl:
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix
 
 test:phpstan:
+  image: php:7.4-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+
+test:phpstan:
   image: php:7.3-alpine
   stage: test
   before_script:
   script:
     - composer install --prefer-dist --no-progress
+
+test:phpstan:
+  image: php:7.2-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
