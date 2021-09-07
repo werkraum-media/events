@@ -1,6 +1,7 @@
 {
     "name": "wrm/events",
     "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
     "description": "Extension to manage Destination Data managed events",
     "authors": [
         {
@@ -25,12 +26,13 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "events"
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "events",
+            "web-dir": ".Build/web"
         }
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "phpunit/phpunit": "^9.0",
-        "typo3/testing-framework": "^6.6"
+        "symplify/easy-coding-standard": "^9.4"
     }
 }

@@ -3,9 +3,9 @@
 namespace Wrm\Events\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\FileRepository;
@@ -29,7 +29,6 @@ use Wrm\Events\Domain\Repository\RegionRepository;
 
 class DestinationDataImportService
 {
-
     /**
      * @var
      */
@@ -172,18 +171,18 @@ class DestinationDataImportService
         ObjectManager $objectManager,
         Environment $environment
     ) {
-        $this->eventRepository          = $eventRepository;
-        $this->regionRepository         = $regionRepository;
-        $this->organizerRepository      = $organizerRepository;
-        $this->dateRepository           = $dateRepository;
-        $this->sysCategoriesRepository  = $sysCategoriesRepository;
-        $this->fileRepository           = $fileRepository;
-        $this->metaDataRepository       = $metaDataRepository;
-        $this->configurationManager     = $configurationManager;
-        $this->persistenceManager       = $persistenceManager;
-        $this->resourceFactory          = $resourceFactory;
-        $this->objectManager            = $objectManager;
-        $this->environment              = $environment;
+        $this->eventRepository = $eventRepository;
+        $this->regionRepository = $regionRepository;
+        $this->organizerRepository = $organizerRepository;
+        $this->dateRepository = $dateRepository;
+        $this->sysCategoriesRepository = $sysCategoriesRepository;
+        $this->fileRepository = $fileRepository;
+        $this->metaDataRepository = $metaDataRepository;
+        $this->configurationManager = $configurationManager;
+        $this->persistenceManager = $persistenceManager;
+        $this->resourceFactory = $resourceFactory;
+        $this->objectManager = $objectManager;
+        $this->environment = $environment;
 
         // Get Typoscript Settings
         $this->settings = $this->configurationManager->getConfiguration(
@@ -193,13 +192,13 @@ class DestinationDataImportService
         );
 
         // Set properties
-        $this->restUrl           = $this->settings['destinationData']['restUrl'];
-        $this->restLicenseKey    = $this->settings['destinationData']['license'];
-        $this->restType          = $this->settings['destinationData']['restType'];
-        $this->restLimit         = $this->settings['destinationData']['restLimit'];
-        $this->restMode          = $this->settings['destinationData']['restMode'];
-        $this->restTemplate      = $this->settings['destinationData']['restTemplate'];
-        $this->sysCategoriesPid  = $this->settings['destinationData']['categoriesPid'];
+        $this->restUrl = $this->settings['destinationData']['restUrl'];
+        $this->restLicenseKey = $this->settings['destinationData']['license'];
+        $this->restType = $this->settings['destinationData']['restType'];
+        $this->restLimit = $this->settings['destinationData']['restLimit'];
+        $this->restMode = $this->settings['destinationData']['restMode'];
+        $this->restTemplate = $this->settings['destinationData']['restTemplate'];
+        $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
         $this->categoryParentUid = $this->settings['destinationData']['categoryParentUid'];
     }
 
@@ -211,7 +210,6 @@ class DestinationDataImportService
      */
     public function import($restExperience, $storagePid, $regionUid, $filesFolder)
     {
-
         $this->restExperience = $restExperience;
         $this->storagePid = $storagePid;
         $this->regionUid = $regionUid;
@@ -252,7 +250,6 @@ class DestinationDataImportService
      */
     public function processData($data)
     {
-
         $this->logger->info('Processing json ' . count($data['items']));
 
         // Get selected region
@@ -546,7 +543,6 @@ class DestinationDataImportService
      */
     protected function multi_array_key_exists($needle, $haystack)
     {
-
         foreach ($haystack as $key => $value) {
             if ($needle == $key) {
                 return true;
@@ -596,7 +592,6 @@ class DestinationDataImportService
      */
     protected function getOrCreateEvent(string $globalId, string $title)
     {
-
         $event = $this->eventRepository->findOneByGlobalId($globalId);
 
         if ($event) {
@@ -614,7 +609,7 @@ class DestinationDataImportService
         $event->setCategories(new ObjectStorage());
         $this->eventRepository->add($event);
         $this->persistenceManager->persistAll();
-        $this->logger->info('Not found "' . substr($title, 0, 20)  . '..." with global id ' . $globalId . ' in database. Created new one.');
+        $this->logger->info('Not found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database. Created new one.');
         return $event;
     }
 
@@ -623,7 +618,6 @@ class DestinationDataImportService
      */
     protected function setAssets(array $assets)
     {
-
         $this->logger->info("Set assets");
 
         $error = false;
@@ -673,7 +667,7 @@ class DestinationDataImportService
                 if ($error !== true) {
                     if ($this->tmpCurrentEvent->getImages()->count() > 0) {
                         $this->logger->info('Relation found');
-                        // TODO: How to delete file references?
+                    // TODO: How to delete file references?
                     } else {
                         $this->logger->info('No relation found');
                         $file = $this->storage->getFile($this->filesFolder . $orgFileNameSanitized);
@@ -716,7 +710,6 @@ class DestinationDataImportService
      */
     protected function createFileRelations($uid_local, $tablenames, $uid_foreign, $fieldname, $storagePid)
     {
-
         $newId = 'NEW1234';
 
         $data = array();

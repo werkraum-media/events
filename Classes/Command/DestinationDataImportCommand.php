@@ -13,7 +13,6 @@ use Wrm\Events\Service\DestinationDataImportService;
 
 class DestinationDataImportCommand extends Command
 {
-
     public function configure()
     {
         $this->setDescription('Import Destination Data Events');

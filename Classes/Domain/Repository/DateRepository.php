@@ -13,7 +13,6 @@ use Wrm\Events\Service\CategoryService;
 
 class DateRepository extends Repository
 {
-
     /**
      * Find all dates based on selected uids
      * @param string $uids
@@ -164,7 +163,6 @@ class DateRepository extends Repository
      */
     public function findSearchWord($search)
     {
-
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('tx_events_domain_model_date');
 

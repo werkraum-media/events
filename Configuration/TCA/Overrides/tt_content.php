@@ -68,5 +68,4 @@ call_user_func(function () {
         'events_selected',
         'FILE:EXT:events/Configuration/FlexForms/Selected.xml'
     );
-
 });

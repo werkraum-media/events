@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="Events">
         <header/>
         <body>
             <trans-unit id="tx_events.name">

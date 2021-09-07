@@ -9,7 +9,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Date extends AbstractEntity
 {
-
     /**
      * @var \DateTime
      */

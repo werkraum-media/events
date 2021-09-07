@@ -1,0 +1,44 @@
+stages:
+  - test
+
+before_script:
+  - apk add zip
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php --filename composer --install-dir /bin
+  - php -r "unlink('composer-setup.php');"
+
+test:composer:
+  image: php:7.4-alpine
+  stage: test
+  script:
+    - composer validate --no-check-publish --strict
+
+test:php:7.4:
+  image: php:7.4-alpine
+  stage: test
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
+test:php:7.3:
+  image: php:7.3-alpine
+  stage: test
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
+test:xml:
+  image: php:7.3-alpine
+  stage: test
+  before_script:
+  script:
+    - apk add libxml2-utils wget
+    - composer install --prefer-dist --no-progress
+    - wget https://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd --output-document=.Build/xliff-core-1.2-strict.xsd
+    - xmllint --schema .Build/xliff-core-1.2-strict.xsd --noout $(find Resources -name '*.xlf')
+
+test:cgl:
+  image: php:7.3-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix

@@ -18,7 +18,6 @@ use Wrm\Events\Service\DataProcessingForModels;
  */
 class DateController extends AbstractController
 {
-
     /**
      * @var dateRepository
      */

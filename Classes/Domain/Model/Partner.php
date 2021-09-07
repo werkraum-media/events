@@ -21,8 +21,8 @@ namespace Wrm\Events\Domain\Model;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Partner extends AbstractEntity

@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DateDemand
 {
-
     /**
      * @var string
      */
