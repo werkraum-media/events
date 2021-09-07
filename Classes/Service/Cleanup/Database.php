@@ -41,7 +41,6 @@ class Database
     private const DATE_TABLE = 'tx_events_domain_model_date';
     private const EVENT_TABLE = 'tx_events_domain_model_event';
     private const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
-    private const REGION_TABLE = 'tx_events_domain_model_region';
 
     public function __construct(
         ConnectionPool $connectionPool,
@@ -57,7 +56,6 @@ class Database
             Database::DATE_TABLE,
             Database::ORGANIZER_TABLE,
             Database::EVENT_TABLE,
-            Database::REGION_TABLE,
         ];
 
         foreach ($tableNames as $tableName) {
