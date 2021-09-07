@@ -65,7 +65,18 @@ class DateRepository extends Repository
             $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStart());
         }
         if ($demand->getEnd() != null) {
-            $constraints['ends'] = $query->lessThanOrEqual('end', $demand->getEnd());
+            // Dates might have end of 0 if only start exists.
+            // This is respected to take start as end date.
+            $constraints['ends'] = $query->logicalOr([
+                $query->logicalAnd([
+                    $query->lessThanOrEqual('end', $demand->getEnd()),
+                    $query->greaterThan('end', 0)
+                ]),
+                $query->logicalAnd([
+                    $query->equals('end', 0),
+                    $query->lessThanOrEqual('start', $demand->getEnd())
+                ]),
+            ]);
         }
 
         if ($demand->getStart() === null && $demand->getEnd() === null) {
