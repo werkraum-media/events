@@ -312,7 +312,10 @@ class DestinationDataImportService
 
             // Set Dates
             if ($event['timeIntervals']) {
-                $this->setDates($event['timeIntervals']);
+                $this->setDates(
+                    $event['timeIntervals'],
+                    (bool) $this->getAttributeValue($event, 'DETAILS_ABGESAGT')
+                );
             }
 
             // Set Assets
@@ -357,8 +360,10 @@ class DestinationDataImportService
      * @param array $timeIntervals
      * @TODO: split into functions
      */
-    protected function setDates(array $timeIntervals)
-    {
+    protected function setDates(
+        array $timeIntervals,
+        bool $canceled
+    ) {
 
         // @TODO: does not seem to work -->
         //$currentEventDates = $this->tmpCurrentEvent->getDates();
@@ -381,16 +386,15 @@ class DestinationDataImportService
             if (empty($date['interval'])) {
                 if (strtotime($date['start']) > $today) {
                     $this->logger->info('Setup single date');
-                    $dateObj = $this->objectManager->get(Date::class);
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
                     $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
                     $this->logger->info('End transformed ' . $end->format('Y-m-d H:i'));
-                                // Set language UID
-                    $dateObj->setLanguageUid(-1);
-                    $dateObj->setStart($start);
-                    $dateObj->setEnd($end);
-                    $this->tmpCurrentEvent->addDate($dateObj);
+                    $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
+                        $start,
+                        $end,
+                        $canceled
+                    ));
                 }
             } else {
                 if ($date['freq'] == 'Daily' && empty($date['weekdays']) && !empty($date['repeatUntil'])) {
@@ -408,11 +412,11 @@ class DestinationDataImportService
                             $eventEnd = new \DateTime();
                             $eventEnd->setTimestamp($i);
                             $eventEnd->setTime($until->format('H'), $until->format('i'));
-                            $dateObj = $this->objectManager->get(Date::class);
-                            $dateObj->setLanguageUid(-1);
-                            $dateObj->setStart($eventStart);
-                            $dateObj->setEnd($eventEnd);
-                            $this->tmpCurrentEvent->addDate($dateObj);
+                            $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
+                                $eventStart,
+                                $eventEnd,
+                                $canceled
+                            ));
                         }
                     }
                 } elseif ($date['freq'] == 'Weekly' && !empty($date['weekdays']) && !empty($date['repeatUntil'])) {
@@ -431,11 +435,11 @@ class DestinationDataImportService
                                 $eventEnd = new \DateTime();
                                 $eventEnd->setTimestamp($i);
                                 $eventEnd->setTime($until->format('H'), $until->format('i'));
-                                $dateObj = $this->objectManager->get(Date::class);
-                                $dateObj->setLanguageUid(-1);
-                                $dateObj->setStart($eventStart);
-                                $dateObj->setEnd($eventEnd);
-                                $this->tmpCurrentEvent->addDate($dateObj);
+                                $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
+                                    $eventStart,
+                                    $eventEnd,
+                                    $canceled
+                                ));
                             }
                         }
                     }
@@ -785,5 +789,37 @@ class DestinationDataImportService
         }
 
         return true;
+    }
+
+    /**
+     * Fetch the value for requested attribute.
+     *
+     * Returns first if multiple attributes with same key exist.
+     * Casts "true" and "false" to true and false.
+     * Return null in case no attribute value could exists.
+     */
+    private function getAttributeValue(
+        array $event,
+        string $attributeKey
+    ) {
+        $attributes = array_filter($event['attributes'] ?? [], function (array $attribute) use ($attributeKey) {
+            $currentKey = $attribute['key'] ?? '';
+            return $currentKey === $attributeKey;
+        });
+
+        if ($attributes === []) {
+            return null;
+        }
+
+        $value = $attributes[0]['value'] ?? null;
+
+        if ($value === 'true') {
+            return true;
+        }
+        if ($value === 'false') {
+            return false;
+        }
+
+        return $value;
     }
 }

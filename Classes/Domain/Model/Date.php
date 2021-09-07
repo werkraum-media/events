@@ -158,4 +158,22 @@ class Date extends AbstractEntity
 
         return '';
     }
+
+    public static function createFromDestinationData(
+        \DateTime $start,
+        \DateTime $end,
+        bool $canceled
+    ): self {
+        $date = new Date();
+        $date->setLanguageUid(-1);
+
+        $date->setStart($start);
+        $date->setEnd($end);
+
+        if ($canceled) {
+            $date->setCanceled('canceled');
+        }
+
+        return $date;
+    }
 }
