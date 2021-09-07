@@ -5,70 +5,67 @@
         <div class="col-12 mb-5">
             <f:form action="list" controller="Date" pluginName="DateList" method="get" id="events_search" name="events_search" object="{demand}">
                 <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="searchword"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.searchword" /></label>
-                            <f:form.textfield type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="searchword"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.searchword" /></label>
+                                    <f:form.textfield type="text" class="form-control" id="searchword" name="searchword" value="{searchword}" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <f:comment><!--
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group form-check">
-                            <f:form.checkbox class="form-check-input" id="considerDate" name="considerDate" value="1" checked="{considerDate} == 1" />
-                            <label class="form-check-label" for="considerDate">Datum berücksichtigen?</label>
-                        </div>
-                    </div>
-                </div>
-                --></f:comment>
-                <div class="row">
-                    <div class="col col-md-6">
-                        <div class="form-group">
-                            <label for="start"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_from" /></label>
-                            <div class="input-group date" id="date_start" data-target-input="nearest">
-                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
-                                <div class="input-group-append" data-target="#date_start" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <div class="form-group">
+                                    <label for="start"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_from" /></label>
+                                    <div class="input-group date" id="date_start" data-target-input="nearest">
+                                        <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="start" value="{start}" additionalAttributes="{data-target: '#date_start'}" />
+                                        <div class="input-group-append" data-target="#date_start" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-md-6">
+                                <div class="form-group">
+                                    <label for="end"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_to" /></label>
+                                    <div class="input-group date" id="date_end" data-target-input="nearest">
+                                        <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
+                                        <div class="input-group-append" data-target="#date_end" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-6">
-                        <div class="form-group">
-                            <label for="end"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.date_to" /></label>
-                            <div class="input-group date" id="date_end" data-target-input="nearest">
-                                <f:form.textfield type="text" class="form-control datetimepicker-input" id="start" name="end" value="{end}" additionalAttributes="{data-target: '#date_end'}" />
-                                <div class="input-group-append" data-target="#date_end" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    <div class="col-md-12 col-lg-6 d-none d-lg-block">
+                        <f:if condition="{settings.showRegions}">
+                            <div class="row mt-3">
+                                <div class="col-4 col-md-4 col-lg-4">
+                                    <div class="form-check">
+                                        <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
+                                        <label class="form-check-label" for="radio_0"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.regions" /></label>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <f:if condition="{settings.showRegions}">
-                    <div class="row">
-                        <div class="col-4 col-md-3 col-lg-3">
-                            <div class="form-check">
-                                <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}==0" id="radio_0"/>
-                                <label class="form-check-label" for="radio_0"><f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.regions" /></label>
-                            </div>
-                        </div>
 
-                        <f:for each="{regions}" as="region">
-                            <div class="col-3">
-                                <div class="form-check">
-                                    <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
-                                    <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
-                                </div>
+                                <f:for each="{regions}" as="region">
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <f:form.radio class="form-check-input" name="region" value="{region.uid}" checked="{selRegion}=={region.uid}" id="radio_{region.uid}"/>
+                                            <label class="form-check-label" for="radio_{region.uid}">{region.title}</label>
+                                        </div>
+                                    </div>
+                                </f:for>
                             </div>
-                        </f:for>
+                        </f:if>
                     </div>
-                </f:if>
+                </div>
+
                 <f:if condition="{categories}">
-                    <div class="row">
+                    <div class="row mt-lg-4 mb-lg-4">
                         <f:for each="{categories}" as="category">
-                            <div class="col-3">
+                            <div class="col-3 d-none d-lg-block">
                                 <div class="form-check">
                                     <f:form.checkbox class="form-check-input" property="userCategories" value="{category.uid}" id="check_{category.uid}"/>
                                     <label class="form-check-label" for="check_{category.uid}">{category.title} {category.amountOfEvents}</label>
@@ -77,6 +74,7 @@
                         </f:for>
                     </div>
                 </f:if>
+
                 <div class="form-group mt-3">
                     <f:form.submit value="{f:translate(key: 'LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.searchform.search')}" class="btn btn-primary" />
                 </div>
