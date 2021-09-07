@@ -4,7 +4,8 @@ namespace Wrm\Events\Domain\Model\Dto;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class DateDemand {
+class DateDemand
+{
 
     /**
      * @var string

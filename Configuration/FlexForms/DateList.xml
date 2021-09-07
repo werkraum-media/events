@@ -13,6 +13,7 @@
                             <label>Sort By</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">Start</numIndex>
@@ -33,6 +34,7 @@
                             <label>Sort Order</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">
@@ -128,6 +130,7 @@
                         <label>Layout option</label>
                         <config>
                             <type>select</type>
+                            <renderType>selectSingle</renderType>
                             <items type="array">
                                 <numIndex index="0" type="array">
                                     <numIndex index="0">Default</numIndex>
@@ -164,11 +167,12 @@
                             <label>Region</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <foreign_table>tx_events_domain_model_region</foreign_table>
                                 <foreign_table_where>AND tx_events_domain_model_region.deleted = 0 AND tx_events_domain_model_region.hidden = 0</foreign_table_where>
-                                <size>3</size>
+                                <size>1</size>
                                 <minitems>0</minitems>
-                                <maxitems>2</maxitems>
+                                <maxitems>1</maxitems>
                             </config>
                         </TCEforms>
                     </settings.region>
@@ -179,6 +183,7 @@
                             <label>Combination</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">And</numIndex>
@@ -202,6 +207,7 @@
                             </label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectTree</renderType>
                                 <autoSizeMax>20</autoSizeMax>
                                 <foreign_table>sys_category</foreign_table>
                                 <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.title ASC</foreign_table_where>

@@ -1,8 +1,11 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date',
         'label' => 'start',
+        'label_alt' => 'end, canceled',
+        'label_alt_force' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -17,13 +20,10 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => '',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_date.gif'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end',
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_date.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, canceled, postponed_date, canceled_link, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -45,7 +45,6 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -138,6 +137,66 @@ return [
                 'size' => 12,
                 'eval' => 'datetime',
                 'default' => null,
+            ],
+        ],
+        'canceled' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => 'no',
+                'items' => [
+                    '0' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.no',
+                        '1' => 'no',
+                    ],
+                    '1' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.canceled',
+                        '1' => 'canceled',
+                    ],
+                    '2' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.postponed',
+                        '1' => 'postponed',
+                    ],
+                ],
+            ],
+        ],
+        'postponed_date' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date',
+            'displayCond' => 'FIELD:canceled:=:postponed',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_events_domain_model_date',
+                'foreign_table_where' => ' AND {#tx_events_domain_model_date}.{#event} = ###REC_FIELD_event### AND {#tx_events_domain_model_date}.{#uid} != ###THIS_UID###',
+                'default' => '0',
+                'items' => [
+                    '0' => [
+                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date.0',
+                        '1' => '0',
+                    ],
+                ],
+            ],
+        ],
+        'canceled_link' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled_link',
+            'displayCond' => 'FIELD:canceled:=:canceled',
+            'config' => [
+                'type' => 'input',
+                'softref' => 'typolink',
+                'renderType' => 'inputLink',
+                'max' => 1024,
+                'eval' => 'trim',
+                'fieldControl' => [
+                    'linkPopup' => [
+                        'options' => [
+                            'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_link_formlabel',
+                        ],
+                    ],
+                ],
             ],
         ],
 

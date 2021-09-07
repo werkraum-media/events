@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Tests\Unit\Controller;
 
 /**
@@ -13,18 +14,13 @@ class DateControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(\Wrm\Events\Controller\DateController::class)
             ->setMethods(['redirect', 'forward', 'addFlashMessage'])
             ->disableOriginalConstructor()
             ->getMock();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**
@@ -37,10 +33,10 @@ class DateControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $dateRepository = $this->getMockBuilder(\::class)
-            ->setMethods(['findAll'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        // $dateRepository = $this->getMockBuilder(\::class)
+        //     ->setMethods(['findAll'])
+        //     ->disableOriginalConstructor()
+        //     ->getMock();
         $dateRepository->expects(self::once())->method('findAll')->will(self::returnValue($allDates));
         $this->inject($this->subject, 'dateRepository', $dateRepository);
 

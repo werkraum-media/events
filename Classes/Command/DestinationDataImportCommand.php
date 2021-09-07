@@ -1,18 +1,18 @@
 <?php
+
 namespace Wrm\Events\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-
 use Wrm\Events\Service\DestinationDataImportService;
 
-class DestinationDataImportCommand extends Command {
+class DestinationDataImportCommand extends Command
+{
 
     public function configure()
     {
@@ -31,12 +31,14 @@ class DestinationDataImportCommand extends Command {
             'What is the region uid?',
             '1'
         );
-        $this->addArgument('rest-experience',
+        $this->addArgument(
+            'rest-experience',
             InputArgument::OPTIONAL,
             'What is the rest experience?',
             'stadtmarketing-erfurt'
         );
-        $this->addArgument('files-folder',
+        $this->addArgument(
+            'files-folder',
             InputArgument::OPTIONAL,
             'Where to save the image files?',
             'staedte/erfurt/events/'

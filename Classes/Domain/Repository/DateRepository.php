@@ -1,15 +1,17 @@
 <?php
+
 namespace Wrm\Events\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Service\CategoryService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use Wrm\Events\Domain\Model\Dto\DateDemand;
+use Wrm\Events\Service\CategoryService;
 
-class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class DateRepository extends Repository
 {
 
     /**
@@ -66,7 +68,7 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }
 
-        if ($demand->getHighlight() !== FALSE) {
+        if ($demand->getHighlight() !== false) {
             $constraints['highlight'] = $query->equals('event.highlight', $demand->getHighlight());
         }
 
@@ -78,14 +80,14 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
         }
 
-        if ($demand->getStart() !== '' && $demand->getEnd() != '') {
-            $constraints['daterange'] = $query->logicalAnd(
-                [
-                    $query->greaterThanOrEqual('start', $demand->getStart()),
-                    $query->lessThanOrEqual('end', $demand->getEnd())
-                ]
-            );
-        } else {
+        if ($demand->getStart() !== '') {
+            $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStart());
+        }
+        if ($demand->getEnd() != '') {
+            $constraints['ends'] = $query->lessThanOrEqual('end', $demand->getEnd());
+        }
+
+        if ($demand->getStart() === '' && $demand->getEnd() === '') {
             $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
             $constraints['untilnow'] = $query->greaterThanOrEqual('start', $now);
         }
@@ -182,5 +184,4 @@ class DateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         return $statement->execute()->fetchAll();
     }
-
 }

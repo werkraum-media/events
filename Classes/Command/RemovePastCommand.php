@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Command;
 
 use Symfony\Component\Console\Command\Command;

@@ -1,7 +1,8 @@
 <?php
+
 namespace Wrm\Events\Domain\Repository;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -14,9 +15,9 @@ namespace Wrm\Events\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
-class RegionRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class RegionRepository extends Repository
 {
 
 }

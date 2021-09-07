@@ -2,7 +2,8 @@
 
 namespace Wrm\Events\Domain\Model\Dto;
 
-class EventDemand {
+class EventDemand
+{
 
     /**
      * @var string
@@ -43,6 +44,11 @@ class EventDemand {
      * @var string
      */
     protected $limit = '';
+
+    /**
+     * @var array
+     */
+    protected $recordUids = [];
 
     /**
      * @return string
@@ -172,6 +178,19 @@ class EventDemand {
         $this->limit = $limit;
     }
 
+    /**
+     * @return array
+     */
+    public function getRecordUids(): array
+    {
+        return $this->recordUids;
+    }
 
-
+    /**
+     * @param array $recordUids
+     */
+    public function setRecordUids(array $recordUids): void
+    {
+        $this->recordUids = $recordUids;
+    }
 }

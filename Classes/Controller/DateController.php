@@ -1,19 +1,22 @@
 <?php
+
 namespace Wrm\Events\Controller;
 
+use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
-use TYPO3\CMS\Core\Database\QueryGenerator;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Wrm\Events\Service\DataProcessingForModels;
 
 /**
  * DateController
  */
-class DateController extends ActionController
+class DateController extends AbstractController
 {
 
     /**
@@ -37,6 +40,11 @@ class DateController extends ActionController
     protected $queryGenerator;
 
     /**
+     * @var DataProcessingForModels
+     */
+    protected $dataProcessing;
+
+    /**
      * @var array
      */
     protected $pluginSettings;
@@ -57,10 +65,19 @@ class DateController extends ActionController
     }
 
     /**
+     * @param DataProcessingForModels $dataProcessing
+     */
+    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing)
+    {
+        $this->dataProcessing = $dataProcessing;
+    }
+
+    /**
      * Action initializer
      */
     protected function initializeAction()
     {
+        $this->dataProcessing->setConfigurationManager($this->configurationManager);
         $this->pluginSettings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
@@ -124,10 +141,12 @@ class DateController extends ActionController
     /**
      * action show
      *
+     * @Extbase\IgnoreValidation("date")
+     *
      * @param \Wrm\Events\Domain\Model\Date $date
      * @return void
      */
-    public function showAction(\Wrm\Events\Domain\Model\Date $date)
+    public function showAction(Date $date)
     {
         $this->view->assign('date', $date);
     }
@@ -147,6 +166,8 @@ class DateController extends ActionController
         $demand->setSortBy((string)$this->settings['sortByDate']);
         $demand->setSortOrder((string)$this->settings['sortOrder']);
         $demand->setHighlight((int)$this->settings['highlight']);
+        $demand->setStart((string)$this->settings['start'] ?? '');
+        $demand->setEnd((string)$this->settings['end'] ?? '');
 
         if (!empty($this->settings['limit'])) {
             $demand->setLimit($this->settings['limit']);

@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
-		<header/>
-		<body>
-			<trans-unit id="tx_events_domain_model_date">
-				<source>Date</source>
-				<target>Termin</target>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_date.start">
-				<source>Start</source>
-				<target>Beginn</target>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_date.end">
-				<source>End</source>
-				<target>Ende</target>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_date.event">
-				<source>Associated event</source>
-				<target>Verknüpfte Veranstaltungen</target>
-			</trans-unit>
-		</body>
-	</file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
+        <header/>
+        <body>
+            <trans-unit id="tx_events_domain_model_date">
+                <source>Date</source>
+                <target>Termin</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.start">
+                <source>Start</source>
+                <target>Beginn</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.end">
+                <source>End</source>
+                <target>Ende</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled">
+                <source>Canceled or postponed?</source>
+                <target>Abgesagt oder verschoben?</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.no">
+                <source>No</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.canceled">
+                <source>Canceled</source>
+                <target>Abgesagt</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed">
+                <source>Postponed</source>
+                <target>Verschoben</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date">
+                <source>Postponed date</source>
+                <target>Verschoben auf folgendes Datum</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.canceled.options.postponed_date.0">
+                <source>Not defined</source>
+                <target>Noch nicht definiert</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.options.canceled_link">
+                <source>Link regarding cancellation</source>
+                <target>Link bezüglich Absage</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.event">
+                <source>Associated event</source>
+                <target>Verknüpfte Veranstaltungen</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Tests\Unit\Domain\Model;
 
 /**
@@ -13,15 +14,10 @@ class DateTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->subject = new \Wrm\Events\Domain\Model\Date();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**

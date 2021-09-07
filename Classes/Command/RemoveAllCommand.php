@@ -1,4 +1,5 @@
 <?php
+
 namespace Wrm\Events\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -21,8 +22,10 @@ class RemoveAllCommand extends Command
     {
         Bootstrap::initializeBackendAuthentication();
 
-        return GeneralUtility::makeInstance(ObjectManager::class)
+        GeneralUtility::makeInstance(ObjectManager::class)
             ->get(CleanupService::class)
             ->deleteAllData();
+
+        return 0;
     }
 }

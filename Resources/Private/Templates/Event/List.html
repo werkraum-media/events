@@ -6,10 +6,10 @@
             <f:for each="{events}" as="event">
                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                     <div class="menu-tile">
-                        <f:if condition="{event.images}">
+                        <f:if condition="{event.images.0}">
                             <f:then>
                                 <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
-                                    <f:image src="{event.images.originalResource.originalFile.uid}" alt="{date.event.title}" title="{date.event.title}" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                                    <f:image image="{event.images.0}" alt="{date.event.title}" title="{date.event.title}" width="480c" height="320c" class="img-fluid img-thumbnail"/>
                                 </f:link.action>
                             </f:then>
                             <f:else>

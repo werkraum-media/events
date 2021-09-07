@@ -10,10 +10,10 @@
                     -->
                 </f:comment>
                 <div class="menu-tile">
-                    <f:if condition="{date.event.images}">
+                    <f:if condition="{date.event.images.0}">
                         <f:then>
                             <f:link.action pageUid="{settings.showPID}" action="show" controller="Event" arguments="{event: event}">
-                                <f:image src="{date.event.images.originalResource.originalFile.uid}" alt="{date.event.title}" title="{date.event.title}"  width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                                <f:image image="{date.event.images.0}" alt="{date.event.title}" title="{date.event.title}"  width="480c" height="320c" class="img-fluid img-thumbnail"/>
                             </f:link.action>
                         </f:then>
                         <f:else>

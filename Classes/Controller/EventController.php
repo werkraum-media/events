@@ -1,130 +1,75 @@
 <?php
+
 namespace Wrm\Events\Controller;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
+use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Repository\EventRepository;
-use TYPO3\CMS\Core\Database\QueryGenerator;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Wrm\Events\Service\DataProcessingForModels;
 
-/**
- * EventController
- */
-
-class EventController extends ActionController
+class EventController extends AbstractController
 {
+    /**
+     * @var EventRepository
+     */
+    protected $eventRepository;
 
     /**
-     * @var eventRepository
+     * @var DataProcessingForModels
      */
-    protected $eventRepository = null;
+    protected $dataProcessing;
 
     /**
-     * @var QueryGenerator
+     * @var EventDemandFactory
      */
-    protected $queryGenerator;
+    protected $demandFactory;
 
-    /**
-     * @var array
-     */
-    protected $pluginSettings;
-
-    /**
-     * @param EventRepository $eventRepository
-     */
-    public function injectEventRepository(EventRepository $eventRepository)
-    {
+    public function __construct(
+        EventRepository $eventRepository,
+        DataProcessingForModels $dataProcessing,
+        EventDemandFactory $demandFactory
+    ) {
         $this->eventRepository = $eventRepository;
+        $this->dataProcessing = $dataProcessing;
+        $this->demandFactory = $demandFactory;
     }
 
-    /**
-     * Action initializer
-     */
     protected function initializeAction()
     {
-        $this->pluginSettings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
+        $this->dataProcessing->setConfigurationManager($this->configurationManager);
     }
 
-    /**
-     * Action list
-     * 
-     * @return void
-     */
-    public function listAction()
+    public function listAction(): void
     {
-
-        $demand = $this->createDemandFromSettings();
+        $demand = $this->demandFactory->fromSettings($this->settings);
         $events = $this->eventRepository->findByDemand($demand);
         $this->view->assign('events', $events);
-
     }
 
     /**
-     * Action show
-     * 
-     * @param Event $event
-     * @return void
+     * @Extbase\IgnoreValidation("event")
      */
-    public function showAction(Event $event)
+    public function showAction(Event $event): void
     {
         $this->view->assign('event', $event);
     }
 
     /**
-     * action teaser
-     * 
-     * @return void
+     * @deprecated Use listAction instead and configure settings properly.
+     *             Use Settings or something else to switch between list and teaser rendering.
      */
-    public function teaserAction()
+    public function teaserAction(): void
     {
-        $events = $this->eventRepository->findByUids($this->settings['eventUids']);
-        $this->view->assign('events', $events);
+        $this->view->assignMultiple([
+            'events' => $this->eventRepository->findByUids($this->settings['eventUids']),
+        ]);
     }
 
-    /**
-     * @param string $search
-     */
-    public function searchAction(): void
+    public function searchAction(string $search = ''): void
     {
-        $search = '';
-        if ($this->request->hasArgument('search')) {
-            $search = $this->request->getArgument('search');
-        }
-
         $this->view->assign('search', $search);
         $this->view->assign('events', $this->eventRepository->findSearchWord($search));
-
-    }
-
-    /**
-     * @return EventDemand
-     */
-
-    protected function createDemandFromSettings(): EventDemand
-    {
-        $demand = $this->objectManager->get(EventDemand::class);
-
-        $demand->setRegion((string)$this->settings['region']);
-
-        $demand->setCategories((string)$this->settings['categories']);
-        $categoryCombination = (int)$this->settings['categoryCombination'] === 1 ? 'or' : 'and';
-
-        $demand->setCategoryCombination($categoryCombination);
-
-        $demand->setIncludeSubCategories((bool)$this->settings['includeSubcategories']);
-
-        $demand->setSortBy((string)$this->settings['sortByEvent']);
-        $demand->setSortOrder((string)$this->settings['sortOrder']);
-
-        $demand->setHighlight((bool)$this->settings['highlight']);
-
-        if (!empty($this->settings['limit'])) {
-            $demand->setLimit($this->settings['limit']);
-        }
-
-        return $demand;
     }
 }

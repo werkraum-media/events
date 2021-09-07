@@ -1,8 +1,8 @@
 <?php
+
 namespace Wrm\Events\Domain\Model;
 
-
-/***
+/*
  *
  * This file is part of the "DD Events" Extension for TYPO3 CMS.
  *
@@ -11,20 +11,23 @@ namespace Wrm\Events\Domain\Model;
  *
  *  (c) 2019 Dirk Koritnik <koritnik@werkraum-media.de>
  *
- ***/
+ */
+
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Region
  */
-class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Region extends AbstractEntity
 {
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     protected $title = '';
-    
+
     /**
      * @var int
      */
@@ -32,7 +35,7 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the title
-     * 
+     *
      * @return string $title
      */
     public function getTitle()
@@ -42,7 +45,7 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the title
-     * 
+     *
      * @param string $title
      * @return void
      */
@@ -66,7 +69,7 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     * 
+     *
      * @return void
      */
     protected function initStorageObjects()
@@ -77,14 +80,16 @@ class Region extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $languageUid
      * @return void
      */
-    public function setLanguageUid($languageUid) {
+    public function setLanguageUid($languageUid)
+    {
         $this->_languageUid = $languageUid;
     }
 
     /**
      * @return int
      */
-    public function getLanguageUid() {
+    public function getLanguageUid()
+    {
         return $this->_languageUid;
     }
 }
