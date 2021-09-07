@@ -12,7 +12,7 @@ use Wrm\Events\Service\CleanupService;
 
 class RemovePastCommand extends Command
 {
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Remove past events');
         $this->setHelp('Past dates are removed, together with events that do not have any left dates.');
@@ -22,8 +22,9 @@ class RemovePastCommand extends Command
     {
         Bootstrap::initializeBackendAuthentication();
 
-        return GeneralUtility::makeInstance(ObjectManager::class)
+        GeneralUtility::makeInstance(ObjectManager::class)
             ->get(CleanupService::class)
             ->deletePastData();
+        return 0;
     }
 }

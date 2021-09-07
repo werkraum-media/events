@@ -10,191 +10,136 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Service\DataProcessingForModels;
 
-/**
- * Event
- */
 class Event extends AbstractEntity
 {
     /**
-     * title
-     *
      * @var string
      */
     protected $title = '';
 
     /**
-     * subtitle
-     *
      * @var string
      */
     protected $subtitle = '';
 
     /**
-     * globalId
-     *
      * @var string
      */
     protected $globalId = '';
 
     /**
-     * slug
-     *
      * @var string
      */
     protected $slug = '';
 
     /**
-     * highlight
-     *
      * @var bool
      */
     protected $highlight = false;
 
     /**
-     * teaser
-     *
      * @var string
      */
     protected $teaser = '';
 
     /**
-     * details
-     *
      * @var string
      */
     protected $details = '';
 
     /**
-     * priceInfo
-     *
      * @var string
      */
     protected $priceInfo = '';
 
     /**
-     * name
-     *
      * @var string
      */
     protected $name = '';
 
     /**
-     * street
-     *
      * @var string
      */
     protected $street = '';
 
     /**
-     * district
-     *
      * @var string
      */
     protected $district = '';
 
     /**
-     * city
-     *
      * @var string
      */
     protected $city = '';
 
     /**
-     * zip
-     *
      * @var string
      */
     protected $zip = '';
 
     /**
-     * country
-     *
      * @var string
      */
     protected $country = '';
 
     /**
-     * phone
-     *
      * @var string
      */
     protected $phone = '';
 
     /**
-     * web
-     *
      * @var string
      */
     protected $web = '';
 
     /**
-     * ticket
-     *
      * @var string
      */
     protected $ticket = '';
 
     /**
-     * facebook
-     *
      * @var string
      */
     protected $facebook = '';
 
     /**
-     * youtube
-     *
      * @var string
      */
     protected $youtube = '';
 
     /**
-     * instagram
-     *
      * @var string
      */
     protected $instagram = '';
 
     /**
-     * latitude
-     *
      * @var string
      */
     protected $latitude = '';
 
     /**
-     * longitude
-     *
      * @var string
      */
     protected $longitude = '';
 
     /**
-     * images
-     *
      * @var ObjectStorage<FileReference>
      * @Extbase\ORM\Cascade remove
      */
     protected $images;
 
     /**
-     * dates
-     *
      * @var ObjectStorage<Date>
      * @Extbase\ORM\Cascade remove
      */
     protected $dates;
 
     /**
-     * organizer
-     *
      * @var \Wrm\Events\Domain\Model\Organizer
      */
     protected $organizer = null;
 
     /**
-     * region
-     *
      * @var Region
      */
     protected $region = null;
@@ -205,8 +150,6 @@ class Event extends AbstractEntity
     protected $pages = '';
 
     /**
-     * categories
-     *
      * @var ObjectStorage<Category>
      */
     protected $categories;
@@ -239,20 +182,17 @@ class Event extends AbstractEntity
     /**
      * @param DataProcessingForModels $dataProcessing
      */
-    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing)
+    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing): void
     {
         $this->dataProcessing = $dataProcessing;
     }
 
-    public function initializeObject()
+    public function initializeObject(): void
     {
         $this->initStorageObjects();
     }
 
-    /**
-     * @return void
-     */
-    protected function initStorageObjects()
+    protected function initStorageObjects(): void
     {
         $this->images = new ObjectStorage();
         $this->dates = new ObjectStorage();
@@ -261,140 +201,82 @@ class Event extends AbstractEntity
         $this->referencesEvents = new ObjectStorage();
     }
 
-    /**
-     * Returns the globalId
-     *
-     * @return string $globalId
-     */
-    public function getGlobalId()
+    public function getGlobalId(): string
     {
         return $this->globalId;
     }
 
-    /**
-     * @param string $globalId
-     * @return void
-     */
-    public function setGlobalId($globalId)
+    public function setGlobalId(string $globalId): void
     {
         $this->globalId = $globalId;
     }
 
-    /**
-     * @return string $title
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string $subtitle
-     */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
 
-    /**
-     * @param string $subtitle
-     * @return void
-     */
-    public function setSubtitle($subtitle)
+    public function setSubtitle(string $subtitle): void
     {
         $this->subtitle = $subtitle;
     }
 
-    /**
-     * @return string $teaser
-     */
-    public function getTeaser()
+    public function getTeaser(): string
     {
         return $this->teaser;
     }
 
-    /**
-     * @param string $teaser
-     * @return void
-     */
-    public function setTeaser($teaser)
+    public function setTeaser(string $teaser): void
     {
         $this->teaser = $teaser;
     }
 
-    /**
-     * @return string $details
-     */
-    public function getDetails()
+    public function getDetails(): string
     {
         return $this->details;
     }
 
-    /**
-     * @param string $details
-     * @return void
-     */
-    public function setDetails($details)
+    public function setDetails(string $details): void
     {
         $this->details = $details;
     }
 
-    /**
-     * @return string $priceInfo
-     */
-    public function getPriceInfo()
+    public function getPriceInfo(): string
     {
         return $this->priceInfo;
     }
 
-    /**
-     * @param string $priceInfo
-     * @return void
-     */
-    public function setPriceInfo($priceInfo)
+    public function setPriceInfo(string $priceInfo): void
     {
         $this->priceInfo = $priceInfo;
     }
 
-    /**
-     * @return string $name
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string $street
-     */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * @param string $street
-     * @return void
-     */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
@@ -402,184 +284,112 @@ class Event extends AbstractEntity
     /**
      * @return string $district
      */
-    public function getDistrict()
+    public function getDistrict(): string
     {
         return $this->district;
     }
 
-    /**
-     * @param string $district
-     * @return void
-     */
-    public function setDistrict($district)
+    public function setDistrict(string $district): void
     {
         $this->district = $district;
     }
 
-    /**
-     * @return string $city
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @param string $city
-     * @return void
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    /**
-     * @return string $zip
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * @param string $zip
-     * @return void
-     */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * @return string $web
-     */
-    public function getWeb()
+    public function getWeb(): string
     {
         return $this->web;
     }
 
-    /**
-     * @param string $web
-     * @return void
-     */
-    public function setWeb($web)
+    public function setWeb(string $web): void
     {
         $this->web = $web;
     }
 
-    /**
-     * @return string $ticket
-     */
-    public function getTicket()
+    public function getTicket(): string
     {
         return $this->ticket;
     }
 
-    /**
-     * @param string $ticket
-     * @return void
-     */
-    public function setTicket($ticket)
+    public function setTicket(string $ticket): void
     {
         $this->ticket = $ticket;
     }
 
-    /**
-     * @return string $facebook
-     */
-    public function getFacebook()
+    public function getFacebook(): string
     {
         return $this->facebook;
     }
 
-    /**
-     * @param string $facebook
-     * @return void
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook): void
     {
         $this->facebook = $facebook;
     }
 
-    /**
-     * @return string $youtube
-     */
-    public function getYoutube()
+    public function getYoutube(): string
     {
         return $this->youtube;
     }
 
-    /**
-     * @param string $youtube
-     * @return void
-     */
-    public function setYoutube($youtube)
+    public function setYoutube(string $youtube): void
     {
         $this->youtube = $youtube;
     }
 
-    /**
-     * @return  string $instagram
-     */
-    public function getInstagram()
+    public function getInstagram(): string
     {
         return $this->instagram;
     }
 
-    /**
-     * @param  string  $instagram
-     */
-    public function setInstagram(string $instagram)
+    public function setInstagram(string $instagram): void
     {
         $this->instagram = $instagram;
     }
 
-    /**
-     * @return string $latitude
-     */
-    public function getLatitude()
+    public function getLatitude(): string
     {
         return $this->latitude;
     }
 
-    /**
-     * @param string $latitude
-     * @return void
-     */
-    public function setLatitude($latitude)
+    public function setLatitude(string $latitude): void
     {
         $this->latitude = $latitude;
     }
 
-    /**
-     * @return string $longitude
-     */
-    public function getLongitude()
+    public function getLongitude(): string
     {
         return $this->longitude;
     }
 
-    /**
-     * @param string $longitude
-     * @return void
-     */
-    public function setLongitude($longitude)
+    public function setLongitude(string $longitude): void
     {
         $this->longitude = $longitude;
     }
@@ -594,52 +404,34 @@ class Event extends AbstractEntity
 
     /**
      * @param ObjectStorage<FileReference> $images
-     * @return void
      */
-    public function setImages(FileReference $images)
+    public function setImages(ObjectStorage $images): void
     {
         $this->images = $images;
     }
 
-    /**
-     * @return string $slug
-     */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     * @return void
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @param Date $date
-     * @return Event
-     */
-    public function addDate(Date $date): self
+    public function addDate(Date $date): void
     {
         $this->dates->attach($date);
-        return $this;
     }
 
-    /**
-     * @param Date $date
-     * @return Event
-     */
-    public function removeDate(Date $date): self
+    public function removeDate(Date $date): void
     {
         $this->dates->detach($date);
-        return $this;
     }
 
     /**
-     * @return ObjectStorage
+     * @return ObjectStorage<Date>
      */
     public function getDates(): ObjectStorage
     {
@@ -647,31 +439,19 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @param ObjectStorage $dates
-     *
-     * @return Event
+     * @param ObjectStorage<Date> $dates
      */
-    public function setDates($dates): self
+    public function setDates(ObjectStorage $dates): void
     {
         $this->dates = $dates;
-        return $this;
     }
 
     /**
-     * @param ObjectStorage $dates
-     * @return void
+     * @param ObjectStorage<Date> $dates
      */
-    public function removeAllDates(ObjectStorage $dates)
+    public function removeAllDates(ObjectStorage $dates): void
     {
         $this->dates->removeAll($dates);
-    }
-
-    /**
-     * @return \Wrm\Events\Domain\Model\Organizer $organizer
-     */
-    public function getOrganizer()
-    {
-        return $this->organizer;
     }
 
     /**
@@ -690,70 +470,42 @@ class Event extends AbstractEntity
         return $this->referencesEvents;
     }
 
-    /**
-     * @param \Wrm\Events\Domain\Model\Organizer $organizer
-     * @return void
-     */
-    public function setOrganizer(Organizer $organizer)
+    public function setOrganizer(Organizer $organizer): void
     {
         $this->organizer = $organizer;
     }
 
-    /**
-     * @return \Wrm\Events\Domain\Model\Region $region
-     */
-    public function getRegion()
+    public function getOrganizer(): ?Organizer
+    {
+        return $this->organizer;
+    }
+
+    public function getRegion(): ?Region
     {
         return $this->region;
     }
 
-    /**
-     * @param \Wrm\Events\Domain\Model\Region $region
-     * @return void
-     */
-    public function setRegion(Region $region)
+    public function setRegion(Region $region): void
     {
         $this->region = $region;
     }
 
-    /**
-     * @return bool $highlight
-     */
-    public function getHighlight()
-    {
-        return $this->highlight;
-    }
-
-    /**
-     * @param bool $highlight
-     * @return void
-     */
-    public function setHighlight($highlight)
+    public function setHighlight(bool $highlight): void
     {
         $this->highlight = $highlight;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHighlight()
+    public function isHighlight(): bool
     {
         return $this->highlight;
     }
 
-    /**
-     * @return string $country
-     */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @param string $country
-     * @return void
-     */
-    public function setCountry($country)
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
@@ -770,10 +522,7 @@ class Event extends AbstractEntity
         return $pages;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\Category<\TYPO3\CMS\Extbase\Domain\Model\Category> $category
-     */
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->attach($category);
     }
@@ -790,34 +539,24 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @param TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @param ObjectStorage<Category> $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @param int $languageUid
-     * @return void
-     */
-    public function setLanguageUid($languageUid)
+    public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    /**
-     * @return int
-     */
-    public function getLanguageUid()
+    public function getLanguageUid(): int
     {
         return $this->_languageUid;
     }
 
-    /**
-     * @return int
-     */
-    public function getLocalizedUid()
+    public function getLocalizedUid(): int
     {
         return $this->_localizedUid;
     }

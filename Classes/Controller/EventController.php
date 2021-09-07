@@ -36,7 +36,7 @@ class EventController extends AbstractController
         $this->demandFactory = $demandFactory;
     }
 
-    protected function initializeAction()
+    protected function initializeAction(): void
     {
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
     }

@@ -15,14 +15,9 @@ namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-/**
- * Region
- */
 class Region extends AbstractEntity
 {
     /**
-     * title
-     *
      * @var string
      */
     protected $title = '';
@@ -32,62 +27,22 @@ class Region extends AbstractEntity
      */
     protected $_languageUid;
 
-    /**
-     * Returns the title
-     *
-     * @return string $title
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets the title
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * __construct
-     */
-    public function __construct()
-    {
-
-        //Do not remove the next line: It would break the functionality
-        $this->initStorageObjects();
-    }
-
-    /**
-     * Initializes all ObjectStorage properties
-     * Do not modify this method!
-     * It will be rewritten on each save in the extension builder
-     * You may modify the constructor of this class instead
-     *
-     * @return void
-     */
-    protected function initStorageObjects()
-    {
-    }
-
-    /**
-     * @param int $languageUid
-     * @return void
-     */
-    public function setLanguageUid($languageUid)
+    public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    /**
-     * @return int
-     */
-    public function getLanguageUid()
+    public function getLanguageUid(): int
     {
         return $this->_languageUid;
     }

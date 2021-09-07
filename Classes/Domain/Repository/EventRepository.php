@@ -17,8 +17,8 @@ namespace Wrm\Events\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
 use Wrm\Events\Domain\Model\Event;
@@ -26,7 +26,7 @@ use Wrm\Events\Service\CategoryService;
 
 class EventRepository extends Repository
 {
-    public function findByUids(string $uids): QueryResultInterface
+    public function findByUids(string $uids): QueryResult
     {
         $query = $this->createQuery();
         $query->matching($query->in('uid', GeneralUtility::intExplode(',', $uids)));
@@ -35,8 +35,7 @@ class EventRepository extends Repository
     }
 
     /**
-     * @return QueryResultInterface|array
-     * @throws InvalidQueryException
+     * @return QueryResult|array
      */
     public function findByDemand(EventDemand $demand)
     {
@@ -49,9 +48,6 @@ class EventRepository extends Repository
         return $query->execute();
     }
 
-    /**
-     * @throws InvalidQueryException
-     */
     protected function createDemandQuery(EventDemand $demand): QueryInterface
     {
         $query = $this->createQuery();
@@ -133,24 +129,18 @@ class EventRepository extends Repository
         return $constraints;
     }
 
-    /**
-     * @throws InvalidQueryException
-     */
     protected function createCategoryConstraint(QueryInterface $query, EventDemand $demand): ConstraintInterface
     {
         $constraints = [];
 
-        $allCategories = GeneralUtility::intExplode(',', $demand->getCategories(), true);
-
+        $categories = $demand->getCategories();
         if ($demand->getIncludeSubCategories()) {
             $categoryService = GeneralUtility::makeInstance(CategoryService::class);
-            $allCategories = $categoryService->getChildrenCategories($demand->getCategories());
-            if (!\is_array($allCategories)) {
-                $allCategories = GeneralUtility::intExplode(',', $allCategories, true);
-            }
+            $categories = $categoryService->getChildrenCategories($categories);
         }
 
-        foreach ($allCategories as $category) {
+        $categories = GeneralUtility::intExplode(',', $categories, true);
+        foreach ($categories as $category) {
             $constraints[] = $query->contains('categories', $category);
         }
 
@@ -160,7 +150,7 @@ class EventRepository extends Repository
         return $query->logicalAnd($constraints);
     }
 
-    public function findSearchWord($search)
+    public function findSearchWord(string $search): QueryResult
     {
         $query = $this->createQuery();
         $query->matching($query->like('title', '%' . $search . '%'));

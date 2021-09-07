@@ -42,3 +42,12 @@ test:cgl:
   script:
     - composer install --prefer-dist --no-progress
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix
+
+# Disabled due to high memory consumption in CI
+# test:phpstan:
+#   image: php:7.3-alpine
+#   stage: test
+#   before_script:
+#   script:
+#     - composer install --prefer-dist --no-progress
+#     - ./vendor/bin/phpstan

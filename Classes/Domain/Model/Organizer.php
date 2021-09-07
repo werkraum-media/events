@@ -15,63 +15,44 @@ namespace Wrm\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-/**
- * Organizer
- */
 class Organizer extends AbstractEntity
 {
     /**
-     * name
-     *
      * @var string
      */
     protected $name = '';
 
     /**
-     * street
-     *
      * @var string
      */
     protected $street = '';
 
     /**
-     * district
-     *
      * @var string
      */
     protected $district = '';
 
     /**
-     * city
-     *
      * @var string
      */
     protected $city = '';
 
     /**
-     * zip
-     *
      * @var string
      */
     protected $zip = '';
 
     /**
-     * phone
-     *
      * @var string
      */
     protected $phone = '';
 
     /**
-     * web
-     *
      * @var string
      */
     protected $web = '';
 
     /**
-     * email
-     *
      * @var string
      */
     protected $email = '';
@@ -81,209 +62,92 @@ class Organizer extends AbstractEntity
      */
     protected $_languageUid;
 
-    /**
-     * Returns the name
-     *
-     * @return string $name
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Sets the name
-     *
-     * @param string $name
-     * @return void
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * Returns the street
-     *
-     * @return string $street
-     */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * Sets the street
-     *
-     * @param string $street
-     * @return void
-     */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
 
-    /**
-     * Returns the district
-     *
-     * @return string $district
-     */
-    public function getDistrict()
+    public function getDistrict(): string
     {
         return $this->district;
     }
 
-    /**
-     * Sets the district
-     *
-     * @param string $district
-     * @return void
-     */
-    public function setDistrict($district)
+    public function setDistrict(string $district): void
     {
         $this->district = $district;
     }
 
-    /**
-     * Returns the city
-     *
-     * @return string $city
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * Sets the city
-     *
-     * @param string $city
-     * @return void
-     */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    /**
-     * Returns the zip
-     *
-     * @return string $zip
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * Sets the zip
-     *
-     * @param string $zip
-     * @return void
-     */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
-    /**
-     * Returns the phone
-     *
-     * @return string $phone
-     */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * Sets the phone
-     *
-     * @param string $phone
-     * @return void
-     */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * Returns the web
-     *
-     * @return string $web
-     */
-    public function getWeb()
+    public function getWeb(): string
     {
         return $this->web;
     }
 
-    /**
-     * Sets the web
-     *
-     * @param string $web
-     * @return void
-     */
-    public function setWeb($web)
+    public function setWeb(string $web): void
     {
         $this->web = $web;
     }
 
-    /**
-     * Returns the email
-     *
-     * @return string $email
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Sets the email
-     *
-     * @param string $email
-     * @return void
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * __construct
-     */
-    public function __construct()
-    {
-
-        //Do not remove the next line: It would break the functionality
-        $this->initStorageObjects();
-    }
-
-    /**
-     * Initializes all ObjectStorage properties
-     * Do not modify this method!
-     * It will be rewritten on each save in the extension builder
-     * You may modify the constructor of this class instead
-     *
-     * @return void
-     */
-    protected function initStorageObjects()
-    {
-    }
-
-    /**
-     * @param int $languageUid
-     * @return void
-     */
-    public function setLanguageUid($languageUid)
+    public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    /**
-     * @return int
-     */
-    public function getLanguageUid()
+    public function getLanguageUid(): int
     {
         return $this->_languageUid;
     }

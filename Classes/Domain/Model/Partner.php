@@ -52,6 +52,9 @@ class Partner extends AbstractEntity
         return $this->link;
     }
 
+    /**
+     * @return ObjectStorage<FileReference>
+     */
     public function getImages(): ObjectStorage
     {
         return $this->images;

@@ -94,7 +94,7 @@ class Database
         }, $records);
     }
 
-    public function deleteDates(int ...$uids)
+    public function deleteDates(int ...$uids): void
     {
         /* @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)

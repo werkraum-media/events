@@ -12,7 +12,7 @@ use Wrm\Events\Service\CleanupService;
 
 class RemoveAllCommand extends Command
 {
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Remove all event data');
         $this->setHelp('All events and associated data will be removed.');

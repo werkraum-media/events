@@ -25,21 +25,21 @@ class CleanupService
         $this->files = $files;
     }
 
-    public function deleteAllData()
+    public function deleteAllData(): void
     {
         $this->database->truncateTables(...[Database::DATE_TABLE, Database::ORGANIZER_TABLE]);
         $this->removeViaDataHandler($this->database->getDeletionStructureForEvents());
         $this->files->deleteAll();
     }
 
-    public function deletePastData()
+    public function deletePastData(): void
     {
         $this->database->deleteDates(...$this->database->getPastDates());
         $this->removeViaDataHandler($this->database->getDeletionStructureForEventsWithoutDates());
         $this->files->deleteDangling();
     }
 
-    private function removeViaDataHandler(array $structure)
+    private function removeViaDataHandler(array $structure): void
     {
         /* @var DataHandler $dataHandler */
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);

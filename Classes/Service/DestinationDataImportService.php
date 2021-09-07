@@ -463,14 +463,14 @@ class DestinationDataImportService
                 }
                 $tmpOrganizer = $this->objectManager->get(Organizer::class);
                 $tmpOrganizer->setLanguageUid(-1);
-                $tmpOrganizer->setName($address['name']);
-                $tmpOrganizer->setCity($address['city']);
-                $tmpOrganizer->setZip($address['zip']);
-                $tmpOrganizer->setStreet($address['street']);
-                $tmpOrganizer->setPhone($address['phone']);
-                $tmpOrganizer->setWeb($address['web']);
-                $tmpOrganizer->setEmail($address['email']);
-                $tmpOrganizer->setDistrict($address['district']);
+                $tmpOrganizer->setName($address['name'] ?? '');
+                $tmpOrganizer->setCity($address['city'] ?? '');
+                $tmpOrganizer->setZip($address['zip'] ?? '');
+                $tmpOrganizer->setStreet($address['street'] ?? '');
+                $tmpOrganizer->setPhone($address['phone'] ?? '');
+                $tmpOrganizer->setWeb($address['web'] ?? '');
+                $tmpOrganizer->setEmail($address['email'] ?? '');
+                $tmpOrganizer->setDistrict($address['district'] ?? '');
                 $this->organizerRepository->add($tmpOrganizer);
                 $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
             }
@@ -482,27 +482,13 @@ class DestinationDataImportService
      */
     protected function setAddress(array $event)
     {
-        if (!empty($event['name'])) {
-            $this->tmpCurrentEvent->setName($event['name']);
-        }
-        if (!empty($event['street'])) {
-            $this->tmpCurrentEvent->setStreet($event['street']);
-        }
-        if (!empty($event['city'])) {
-            $this->tmpCurrentEvent->setCity($event['city']);
-        }
-        if (!empty($event['zip'])) {
-            $this->tmpCurrentEvent->setZip($event['zip']);
-        }
-        if (!empty($event['country'])) {
-            $this->tmpCurrentEvent->setCountry($event['country']);
-        }
-        if (!empty($event['phone'])) {
-            $this->tmpCurrentEvent->setPhone($event['phone']);
-        }
-        if (!empty($event['web'])) {
-            $this->tmpCurrentEvent->setWeb($event['web']);
-        }
+        $this->tmpCurrentEvent->setName($event['name'] ?? '');
+        $this->tmpCurrentEvent->setStreet($event['street'] ?? '');
+        $this->tmpCurrentEvent->setCity($event['city'] ?? '');
+        $this->tmpCurrentEvent->setZip($event['zip'] ?? '');
+        $this->tmpCurrentEvent->setCountry($event['country'] ?? '');
+        $this->tmpCurrentEvent->setPhone($event['phone'] ?? '');
+        $this->tmpCurrentEvent->setWeb($event['web'] ?? '');
     }
 
     /**

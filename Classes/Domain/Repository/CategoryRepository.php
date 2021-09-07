@@ -41,17 +41,20 @@ class CategoryRepository extends Repository
      */
     protected $dataMapper;
 
-    public function injectConnectionPool(ConnectionPool $connectionPool)
+    public function injectConnectionPool(ConnectionPool $connectionPool): void
     {
         $this->connectionPool = $connectionPool;
     }
 
-    public function injectDataMapper(DataMapper $dataMapper)
+    public function injectDataMapper(DataMapper $dataMapper): void
     {
         $this->dataMapper = $dataMapper;
     }
 
-    public function findAllCurrentlyAssigned()
+    /**
+     * @return array<Category>
+     */
+    public function findAllCurrentlyAssigned(): array
     {
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_event');
         $qb->select('category.*');

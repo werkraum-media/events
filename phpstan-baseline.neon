@@ -1,0 +1,337 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/CategoryRepository.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/DateRepository.php
+
+		-
+			message: "#^Cannot call method fetch\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Extbase/AddSpecialProperties.php
+
+		-
+			message: "#^Cannot call method fetchColumn\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Extbase/AddSpecialProperties.php
+
+		-
+			message: "#^Cannot call method fetch\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Service/CategoryService.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Service/CategoryService.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 3
+			path: Classes/Service/Cleanup/Database.php
+
+		-
+			message: "#^Call to method deleteFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Call to method getFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Call to method hasFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:delete\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteAll\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteDangling\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteFromDb\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteFromFal\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Access to an undefined property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$sysCategoriesPid\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Resource\\\\FileInterface\\:\\:getUid\\(\\)\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Cannot call method fetch\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Cannot call method sanitizeFileName\\(\\) on TYPO3\\\\CMS\\\\Core\\\\Resource\\\\ResourceStorage\\|null\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:getAttributeValue\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:getOrCreateEvent\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) has parameter \\$filesFolder with no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) has parameter \\$regionUid with no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) has parameter \\$restExperience with no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) has parameter \\$storagePid with no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:loadFile\\(\\) should return string but returns false\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:multi_array_key_exists\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:processData\\(\\) has parameter \\$data with no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setAddress\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setAssets\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setCategories\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setDates\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setLatLng\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setOrganizer\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setSocial\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setTexts\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:setTickets\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\$data\\)\\: Unexpected token \"\\$data\", expected type at offset 18$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\$filesFolder\\)\\: Unexpected token \"\\$filesFolder\", expected type at offset 99$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\$regionUid\\)\\: Unexpected token \"\\$regionUid\", expected type at offset 74$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\$restExperience\\)\\: Unexpected token \"\\$restExperience\", expected type at offset 18$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\$storagePid\\)\\: Unexpected token \"\\$storagePid\", expected type at offset 48$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\\\n     \", expected type at offset 15$#"
+			count: 15
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#1 \\$hour of method DateTime\\:\\:setTime\\(\\) expects int, string given\\.$#"
+			count: 4
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#1 \\$parent of method TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\Category\\:\\:setParent\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\Category, Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\|null given\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#1 \\$timestamp of method DateTime\\:\\:setTimestamp\\(\\) expects int, int\\|false given\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#2 \\$minute of method DateTime\\:\\:setTime\\(\\) expects int, string given\\.$#"
+			count: 4
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#2 \\$now of function strtotime expects int, int\\|false given\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$categoriesPid has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$categoryParentUid has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$environment has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$filesFolder has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$logger has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$regionUid has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restExperience has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restLicenseKey has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restLimit has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restMode has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restTemplate has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restType has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$restUrl has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$storage has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$storagePid has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$tmpCurrentEvent has no typehint specified\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+

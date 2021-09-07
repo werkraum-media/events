@@ -66,15 +66,12 @@ class DateController extends AbstractController
     /**
      * @param DataProcessingForModels $dataProcessing
      */
-    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing)
+    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing): void
     {
         $this->dataProcessing = $dataProcessing;
     }
 
-    /**
-     * Action initializer
-     */
-    protected function initializeAction()
+    protected function initializeAction(): void
     {
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
         $this->pluginSettings = $this->configurationManager->getConfiguration(
@@ -82,12 +79,7 @@ class DateController extends AbstractController
         );
     }
 
-    /**
-     * action list
-     *
-     * @return void
-     */
-    public function listAction()
+    public function listAction(): void
     {
         if (
             ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
@@ -103,10 +95,7 @@ class DateController extends AbstractController
         $this->view->assign('dates', $this->dateRepository->findByDemand($demand));
     }
 
-    /**
-     * @return void
-     */
-    public function searchAction()
+    public function searchAction(): void
     {
         $arguments = GeneralUtility::_GET('tx_events_datelist') ?? [];
         if (isset($arguments['events_search'])) {
@@ -126,33 +115,20 @@ class DateController extends AbstractController
         ]);
     }
 
-    /**
-     * action teaser
-     *
-     * @return void
-     */
-    public function teaserAction()
+    public function teaserAction(): void
     {
         $dates = $this->dateRepository->findByUids($this->settings['eventUids']);
         $this->view->assign('dates', $dates);
     }
 
     /**
-     * action show
-     *
      * @Extbase\IgnoreValidation("date")
-     *
-     * @param \Wrm\Events\Domain\Model\Date $date
-     * @return void
      */
-    public function showAction(Date $date)
+    public function showAction(Date $date): void
     {
         $this->view->assign('date', $date);
     }
 
-    /**
-     * @return DateDemand
-     */
     protected function createDemandFromSettings(): DateDemand
     {
         $demand = $this->objectManager->get(DateDemand::class);
@@ -164,9 +140,13 @@ class DateController extends AbstractController
         $demand->setIncludeSubCategories((bool)$this->settings['includeSubcategories']);
         $demand->setSortBy((string)$this->settings['sortByDate']);
         $demand->setSortOrder((string)$this->settings['sortOrder']);
-        $demand->setHighlight((int)$this->settings['highlight']);
-        $demand->setStart((string)$this->settings['start'] ?? '');
-        $demand->setEnd((string)$this->settings['end'] ?? '');
+        $demand->setHighlight((bool)$this->settings['highlight']);
+        if (!empty($this->settings['start'])) {
+            $demand->setStart(strtotime($this->settings['start'] . ' 00:00') ?: null);
+        }
+        if (!empty($this->settings['end'])) {
+            $demand->setEnd(strtotime($this->settings['end'] . ' 00:00') ?: null);
+        }
 
         if (!empty($this->settings['limit'])) {
             $demand->setLimit($this->settings['limit']);
@@ -175,9 +155,6 @@ class DateController extends AbstractController
         return $demand;
     }
 
-    /**
-     * @return DateDemand
-     */
     protected function createDemandFromSearch(): DateDemand
     {
         $arguments = $this->request->getArguments() ?? [];
