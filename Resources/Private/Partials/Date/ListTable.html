@@ -21,6 +21,11 @@
                 </f:if>
                 -->
                 </f:comment>
+                <f:if condition="{date.canceled} == 'canceled'">
+                    <h4 class="bg-secondary text-white p-2">
+                        <f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.date.canceled" />
+                    </h4>
+                </f:if>
                 <h4>
                     <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
                         {date.event.title}
@@ -29,7 +34,7 @@
                 <p><strong>{date.event.teaser}</strong></p>
                 <f:format.crop maxCharacters="150">{date.event.details}</f:format.crop>
             </div>
-            <div class="col-4">
+            <div class="col-4 position-relative">
                 <f:if condition="{date.event.images.0}">
                     <f:then>
                         <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
@@ -42,6 +47,7 @@
                         </f:link.action>
                     </f:else>
                 </f:if>
+
             </div>
         </div>
         <f:if condition="{index.isLast}">

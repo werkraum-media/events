@@ -13,6 +13,11 @@
                 </f:if>
             </div>
             <div class="col-6">
+                <f:if condition="{date.canceled} == 'canceled'">
+                    <h4 class="bg-secondary text-white p-2">
+                        <f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.date.canceled" />
+                    </h4>
+                </f:if>
                 <h4>
                     <f:format.date format="%a">{date.start}</f:format.date>
                     <f:format.date format="d.m.">{date.start}</f:format.date>

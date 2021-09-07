@@ -21,6 +21,9 @@
             <trans-unit id="tx_events.searchform.search">
                 <source>Search</source>
             </trans-unit>
+            <trans-unit id="tx_events.date.canceled">
+                <source>Canceled</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
