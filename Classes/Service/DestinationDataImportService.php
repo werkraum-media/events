@@ -265,7 +265,9 @@ class DestinationDataImportService
             $this->tmpCurrentEvent->setLanguageUid(-1);
 
             // Set selected Region
-            $this->tmpCurrentEvent->setRegion($selectedRegion);
+            if ($selectedRegion !== null) {
+                $this->tmpCurrentEvent->setRegion($selectedRegion);
+            }
 
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
