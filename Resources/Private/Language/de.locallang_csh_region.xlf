@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-03T12:11:11Z" product-name="tx_events">
-		<header/>
-		<body>
-			<trans-unit id="tx_events_domain_model_region">
-				<source>Region</source>
-				<target>Region</target>
-			</trans-unit>
-			<trans-unit id="tx_events_domain_model_region.title">
-				<source>Title</source>
-				<target>Titel</target>
-			</trans-unit>
-		</body>
-	</file>
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2021-09-07T09:15:42Z" product-name="Events">
+        <header/>
+        <body>
+            <trans-unit id="tx_events_domain_model_region">
+                <source>Region</source>
+                <target>Region</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_region.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

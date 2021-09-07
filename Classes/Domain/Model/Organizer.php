@@ -20,7 +20,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Organizer extends AbstractEntity
 {
-
     /**
      * name
      *

@@ -27,14 +27,14 @@ class CleanupService
 
     public function deleteAllData()
     {
-        $this->database->truncateTables(... [Database::DATE_TABLE, Database::ORGANIZER_TABLE]);
+        $this->database->truncateTables(...[Database::DATE_TABLE, Database::ORGANIZER_TABLE]);
         $this->removeViaDataHandler($this->database->getDeletionStructureForEvents());
         $this->files->deleteAll();
     }
 
     public function deletePastData()
     {
-        $this->database->deleteDates(... $this->database->getPastDates());
+        $this->database->deleteDates(...$this->database->getPastDates());
         $this->removeViaDataHandler($this->database->getDeletionStructureForEventsWithoutDates());
         $this->files->deleteDangling();
     }

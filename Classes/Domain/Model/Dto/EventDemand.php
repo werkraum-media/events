@@ -4,7 +4,6 @@ namespace Wrm\Events\Domain\Model\Dto;
 
 class EventDemand
 {
-
     /**
      * @var string
      */

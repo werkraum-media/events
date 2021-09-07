@@ -63,7 +63,7 @@ class Files
             $uidsToRemove[] = $fileToDelete['uid'];
         }
 
-        $this->deleteFromDb(... $uidsToRemove);
+        $this->deleteFromDb(...$uidsToRemove);
     }
 
     private function getFilesFromDb(callable $whereGenerator = null): array

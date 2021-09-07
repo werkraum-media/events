@@ -28,9 +28,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Database
 {
-    const DATE_TABLE = 'tx_events_domain_model_date';
-    const EVENT_TABLE = 'tx_events_domain_model_event';
-    const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
+    public const DATE_TABLE = 'tx_events_domain_model_date';
+    public const EVENT_TABLE = 'tx_events_domain_model_event';
+    public const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
 
     public function truncateTables(string ...$tableNames): void
     {
