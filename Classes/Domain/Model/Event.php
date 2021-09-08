@@ -131,6 +131,7 @@ class Event extends AbstractEntity
     /**
      * @var ObjectStorage<Date>
      * @Extbase\ORM\Cascade remove
+     * @Extbase\ORM\Lazy
      */
     protected $dates;
 
