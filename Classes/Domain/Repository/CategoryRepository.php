@@ -78,6 +78,7 @@ class CategoryRepository extends Repository
             . ' AND mm.fieldname = ' . $qb->createNamedParameter('categories')
         );
 
+        $qb->where($qb->expr()->neq('category.uid', $qb->createNamedParameter(0)));
         $qb->orderBy('category.title', 'asc');
         $qb->groupBy('category.uid');
 
