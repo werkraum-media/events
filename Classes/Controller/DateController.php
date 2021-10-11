@@ -142,10 +142,10 @@ class DateController extends AbstractController
         $demand->setSortOrder((string)$this->settings['sortOrder']);
         $demand->setHighlight((bool)$this->settings['highlight']);
         if (!empty($this->settings['start'])) {
-            $demand->setStart(strtotime($this->settings['start'] . ' 00:00') ?: null);
+            $demand->setStart((int)$this->settings['start']);
         }
         if (!empty($this->settings['end'])) {
-            $demand->setEnd(strtotime($this->settings['end'] . ' 00:00') ?: null);
+            $demand->setEnd((int)$this->settings['end']);
         }
 
         if (!empty($this->settings['limit'])) {
