@@ -21,10 +21,10 @@ namespace Wrm\Events\Service\Cleanup;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 class Database
 {
