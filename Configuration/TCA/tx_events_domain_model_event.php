@@ -482,9 +482,9 @@ return [
                     'expandSingle' => 1,
                     'enabledControls' => array(
                         'info' => false,
-                        'new' => false,
-                        'dragdrop' => false,
-                        'sort' => false,
+                        'new' => true,
+                        'dragdrop' => true,
+                        'sort' => true,
                         'hide' => false,
                         'delete' => true,
                         'localize' => false,
