@@ -13,6 +13,12 @@ test:composer:
   script:
     - composer validate --no-check-publish --strict
 
+test:php:8.0:
+  image: php:8.0-alpine
+  stage: test
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
 test:php:7.4:
   image: php:7.4-alpine
   stage: test
@@ -49,25 +55,34 @@ test:cgl:
     - composer install --prefer-dist --no-progress
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix
 
-test:phpstan:
-  image: php:7.4-alpine
-  stage: test
-  before_script:
-  script:
-    - composer install --prefer-dist --no-progress
-
-test:phpstan:
-  image: php:7.3-alpine
-  stage: test
-  before_script:
-  script:
-    - composer install --prefer-dist --no-progress
-
-test:phpstan:
-  image: php:7.2-alpine
+test:phpstan:8.0:
+  image: php:8.0-alpine
   stage: test
   before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
+test:phpstan:7.4:
+  image: php:7.4-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
+test:phpstan:7.3:
+  image: php:7.3-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
+test:phpstan:7.2:
+  image: php:7.2-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
