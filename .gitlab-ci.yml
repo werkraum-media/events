@@ -8,7 +8,7 @@ before_script:
   - php -r "unlink('composer-setup.php');"
 
 test:composer:
-  image: php:7.4-alpine
+  image: php:8.0-alpine
   stage: test
   script:
     - composer validate --no-check-publish --strict
@@ -63,12 +63,20 @@ test:phpstan:8.0:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
-test:phpstan:7.4:
+test:phpstan:7.4:11.5:
   image: php:7.4-alpine
   stage: test
   before_script:
   script:
-    - composer install --prefer-dist --no-progress
+    - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^11.5"
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
+test:phpstan:7.4:10.4:
+  image: php:7.4-alpine
+  stage: test
+  before_script:
+  script:
+    - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^10.4"
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
 test:phpstan:7.3:
