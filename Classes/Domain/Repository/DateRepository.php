@@ -81,7 +81,10 @@ class DateRepository extends Repository
 
         if ($demand->getStart() === null && $demand->getEnd() === null) {
             $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
-            $constraints['untilnow'] = $query->greaterThanOrEqual('start', $now);
+            $constraints['nowAndFuture'] = $query->logicalOr([
+                $query->greaterThanOrEqual('start', $now),
+                $query->greaterThanOrEqual('end', $now)
+            ]);
         }
 
         if ($demand->getLimit() !== '') {
