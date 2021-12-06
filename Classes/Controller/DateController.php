@@ -8,6 +8,7 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
+use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
@@ -18,6 +19,11 @@ use Wrm\Events\Service\DataProcessingForModels;
  */
 class DateController extends AbstractController
 {
+    /**
+     * @var DateDemandFactory
+     */
+    protected $demandFactory;
+
     /**
      * @var dateRepository
      */
@@ -54,10 +60,12 @@ class DateController extends AbstractController
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(
+        DateDemandFactory $demandFactory,
         RegionRepository $regionRepository,
         DateRepository $dateRepository,
         CategoryRepository $categoryRepository
     ) {
+        $this->demandFactory = $demandFactory;
         $this->regionRepository = $regionRepository;
         $this->dateRepository = $dateRepository;
         $this->categoryRepository = $categoryRepository;
@@ -73,6 +81,10 @@ class DateController extends AbstractController
 
     protected function initializeAction(): void
     {
+        $contentObject = $this->configurationManager->getContentObject();
+        if ($contentObject !== null) {
+            $this->demandFactory->setContentObjectRenderer($contentObject);
+        }
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
         $this->pluginSettings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
@@ -90,8 +102,9 @@ class DateController extends AbstractController
         ) {
             $demand = $this->createDemandFromSearch();
         } else {
-            $demand = $this->createDemandFromSettings();
+            $demand = $this->demandFactory->fromSettings($this->settings);
         }
+        $dates = $this->dateRepository->findByDemand($demand);
         $this->view->assign('dates', $this->dateRepository->findByDemand($demand));
     }
 
@@ -127,32 +140,6 @@ class DateController extends AbstractController
     public function showAction(Date $date): void
     {
         $this->view->assign('date', $date);
-    }
-
-    protected function createDemandFromSettings(): DateDemand
-    {
-        $demand = $this->objectManager->get(DateDemand::class);
-
-        $demand->setRegion((string)$this->settings['region']);
-        $demand->setCategories((string)$this->settings['categories']);
-        $categoryCombination = (int)$this->settings['categoryCombination'] === 1 ? 'or' : 'and';
-        $demand->setCategoryCombination($categoryCombination);
-        $demand->setIncludeSubCategories((bool)$this->settings['includeSubcategories']);
-        $demand->setSortBy((string)$this->settings['sortByDate']);
-        $demand->setSortOrder((string)$this->settings['sortOrder']);
-        $demand->setHighlight((bool)$this->settings['highlight']);
-        if (!empty($this->settings['start'])) {
-            $demand->setStart((int)$this->settings['start']);
-        }
-        if (!empty($this->settings['end'])) {
-            $demand->setEnd((int)$this->settings['end']);
-        }
-
-        if (!empty($this->settings['limit'])) {
-            $demand->setLimit($this->settings['limit']);
-        }
-
-        return $demand;
     }
 
     protected function createDemandFromSearch(): DateDemand
