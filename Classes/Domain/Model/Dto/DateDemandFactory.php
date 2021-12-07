@@ -47,6 +47,7 @@ class DateDemandFactory
     ): void {
         $this->contentObjectRenderer = $contentObjectRenderer;
     }
+
     public function fromSettings(array $settings): DateDemand
     {
         $demand = new DateDemand();
@@ -74,6 +75,9 @@ class DateDemandFactory
         }
         if (!empty($settings['limit'])) {
             $demand->setLimit($settings['limit']);
+        }
+        if (!empty($settings['queryCallback'])) {
+            $demand->setQueryCallback($settings['queryCallback']);
         }
 
         return $demand;

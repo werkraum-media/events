@@ -80,6 +80,11 @@ class DateDemand
      */
     protected $considerDate = false;
 
+    /**
+     * @var string
+     */
+    protected $queryCallback = '';
+
     public static function createFromRequestValues(
         array $submittedValues,
         array $settings
@@ -110,6 +115,7 @@ class DateDemand
 
         $instance->setSortBy($settings['sortByDate'] ?? '');
         $instance->setSortOrder($settings['sortOrder'] ?? '');
+        $instance->setQueryCallback($settings['queryCallback'] ?? '');
 
         if (!empty($settings['limit'])) {
             $instance->setLimit($settings['limit']);
@@ -274,5 +280,15 @@ class DateDemand
     public function setConsiderDate(bool $considerDate): void
     {
         $this->considerDate = $considerDate;
+    }
+
+    public function getQueryCalback(): string
+    {
+        return $this->queryCallback;
+    }
+
+    public function setQueryCallback(string $queryCallback): void
+    {
+        $this->queryCallback = $queryCallback;
     }
 }

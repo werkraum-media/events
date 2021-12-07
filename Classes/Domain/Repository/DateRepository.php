@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Domain\Repository;
 
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
@@ -14,6 +15,16 @@ use Wrm\Events\Service\CategoryService;
 
 class DateRepository extends Repository
 {
+    /**
+     * @var Context
+     */
+    protected $context;
+
+    public function injectContext(Context $context): void
+    {
+        $this->context = $context;
+    }
+
     public function findByUids(string $uids): QueryResult
     {
         $uids = explode(',', $uids);
@@ -80,7 +91,12 @@ class DateRepository extends Repository
         }
 
         if ($demand->getStart() === null && $demand->getEnd() === null) {
-            $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
+            $now = $this->context->getPropertyFromAspect(
+                'date',
+                'full',
+                new \DateTimeImmutable()
+            );
+            $now = $now->modify('midnight');
             $constraints['nowAndFuture'] = $query->logicalOr([
                 $query->greaterThanOrEqual('start', $now),
                 $query->greaterThanOrEqual('end', $now)
@@ -96,6 +112,12 @@ class DateRepository extends Repository
         }
 
         $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
+
+        $callback = $demand->getQueryCalback();
+        if ($callback !== '') {
+            $params = ['query' => &$query];
+            GeneralUtility::callUserFunction($callback, $params, $this);
+        }
 
         return $query;
     }
