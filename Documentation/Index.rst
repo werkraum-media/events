@@ -60,5 +60,5 @@ DD Events
 	Developer/Index
 	KnownProblems/Index
 	ToDoList/Index
-	ChangeLog/Index
+	Changelog
 	Links

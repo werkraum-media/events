@@ -1,0 +1,37 @@
+2.1.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* ``DateDemandFactory`` supports TypoScript ``stdWrap`` on all settings on first level.
+
+* New option ``queryCallback`` for ``DateDemand`` was added.
+  This option allows to define a callback in TYPO3 way (e.g. function, closure or method ``->``).
+  This receives the ``DateRepository`` as well as the current ``QueryInterface`` to alter query after it was created based on the ``DateDemand``.
+
+Fixes
+-----
+
+* ``DateRepository`` now properly fetches ``Date`` if no ``start`` and no ``end`` was given.
+  It fetched only upcoming ``Date`` beforehand.
+  It will now fetch all ``Date`` where either the start OR end is in future.
+  That way also currently active ``Date`` are returned.
+  Converting default from "future" to "running and future".
+
+Tasks
+-----
+
+* Moved creation of ``DateDemand`` out of ``DateController`` into a new ``DateDemandFactory``.
+  That allows re use of creation from settings.
+  This also streamlines creation with ``EventDemand`` and ``EventDemandFactory``.
+
+Deprecation
+-----------
+
+Nothing
