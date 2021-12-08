@@ -1,35 +1,16 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
+﻿.. _start:
 
-.. include:: Includes.txt
-
-.. _start:
-
-=============================================================
-DD Events
-=============================================================
+======
+Events
+======
 
 .. only:: html
 
 	:Classification:
-		dd_events
-
-	:Version:
-		|release|
-
-	:Language:
-		en
+		events
 
 	:Description:
 		Extension to manage Destination Data managed events
-
-	:Keywords:
-		comma,separated,list,of,keywords
-
-	:Copyright:
-		2019
 
 	:Author:
 		Dirk Koritnik
@@ -53,12 +34,4 @@ DD Events
 	:maxdepth: 3
 	:titlesonly:
 
-	Introduction/Index
-	User/Index
-	Administrator/Index
-	Configuration/Index
-	Developer/Index
-	KnownProblems/Index
-	ToDoList/Index
 	Changelog
-	Links
