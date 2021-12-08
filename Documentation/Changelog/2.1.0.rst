@@ -15,6 +15,8 @@ Features
   This option allows to define a callback in TYPO3 way (e.g. function, closure or method ``->``).
   This receives the ``DateRepository`` as well as the current ``QueryInterface`` to alter query after it was created based on the ``DateDemand``.
 
+* Add Changelog to document changes for each version.
+
 Fixes
 -----
 
@@ -30,6 +32,8 @@ Tasks
 * Moved creation of ``DateDemand`` out of ``DateController`` into a new ``DateDemandFactory``.
   That allows re use of creation from settings.
   This also streamlines creation with ``EventDemand`` and ``EventDemandFactory``.
+
+* Removed outdated stuff from Documentation.
 
 Deprecation
 -----------
