@@ -66,7 +66,13 @@ class AddSpecialProperties
         ) {
             /** @var Date $date */
             $date = $event->getObject();
-            $date->_setProperty('originalDate', $this->getOriginalDate($date->_getProperty('_localizedUid')));
+
+            $localizedUid = $date->_getProperty('_localizedUid');
+            if (is_numeric($localizedUid) === false) {
+                return;
+            }
+
+            $date->_setProperty('originalDate', $this->getOriginalDate((int) $localizedUid));
         }
     }
 

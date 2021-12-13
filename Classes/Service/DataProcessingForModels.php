@@ -168,6 +168,10 @@ class DataProcessingForModels implements SingletonInterface
         }
 
         $configuration = ArrayUtility::getValueByPath($settings, 'dataProcessing.' . $className, '.');
+        if (is_array($configuration) === false) {
+            return [];
+        }
+
         $configuration = $this->typoScriptService->convertPlainArrayToTypoScriptArray($configuration);
         return [
             'dataProcessing.' => $configuration,

@@ -106,6 +106,9 @@ class EventRepository extends Repository
         return $result;
     }
 
+    /**
+     * @return ConstraintInterface[]
+     */
     private function getConstraints(QueryInterface $query, EventDemand $demand): array
     {
         $constraints = [];

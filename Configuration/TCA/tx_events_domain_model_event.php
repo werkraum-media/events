@@ -1,7 +1,5 @@
 <?php
 
-defined('TYPO3_MODE') or die();
-
 $l10nPathGeneral = 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf';
 $l10nPathLang = 'LLL:EXT:lang/locallang_core.xlf';
 $l10nPathFE = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';

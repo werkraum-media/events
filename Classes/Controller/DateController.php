@@ -111,6 +111,9 @@ class DateController extends AbstractController
     public function searchAction(): void
     {
         $arguments = GeneralUtility::_GET('tx_events_datelist') ?? [];
+        if (is_array($arguments) === false) {
+            $arguments = [];
+        }
         if (isset($arguments['events_search'])) {
             $arguments += $arguments['events_search'];
             unset($arguments['events_search']);
@@ -144,7 +147,7 @@ class DateController extends AbstractController
 
     protected function createDemandFromSearch(): DateDemand
     {
-        $arguments = $this->request->getArguments() ?? [];
+        $arguments = $this->request->getArguments();
         if (isset($arguments['events_search'])) {
             $arguments += $arguments['events_search'];
             unset($arguments['events_search']);

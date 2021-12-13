@@ -75,14 +75,14 @@ class Database
     public function getPastDates(): array
     {
         $queryBuilder = $this->connectionPool
-            ->getConnectionForTable(static::DATE_TABLE)
+            ->getConnectionForTable(self::DATE_TABLE)
             ->createQueryBuilder();
 
         $queryBuilder->getRestrictions()->removeAll();
 
         $midnightToday = new \DateTimeImmutable('midnight today');
         $records = $queryBuilder->select('uid')
-            ->from(static::DATE_TABLE)
+            ->from(self::DATE_TABLE)
             ->where($queryBuilder->expr()->lte(
                 'end',
                 $queryBuilder->createNamedParameter($midnightToday->format('Y-m-d H:i:s'))
@@ -98,9 +98,9 @@ class Database
     public function deleteDates(int ...$uids): void
     {
         $queryBuilder = $this->connectionPool
-            ->getQueryBuilderForTable(static::DATE_TABLE);
+            ->getQueryBuilderForTable(self::DATE_TABLE);
 
-        $queryBuilder->delete(static::DATE_TABLE)
+        $queryBuilder->delete(self::DATE_TABLE)
             ->where('uid in (:uids)')
             ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
             ->execute();
@@ -109,21 +109,21 @@ class Database
     public function deleteEventsWithoutDates(): void
     {
         $queryBuilder = $this->connectionPool
-            ->getConnectionForTable(static::EVENT_TABLE)
+            ->getConnectionForTable(self::EVENT_TABLE)
             ->createQueryBuilder();
 
         $queryBuilder->getRestrictions()->removeAll();
 
         $recordUids = $queryBuilder->select('event.uid')
-            ->from(static::EVENT_TABLE, 'event')
-            ->leftJoin('event', static::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))
+            ->from(self::EVENT_TABLE, 'event')
+            ->leftJoin('event', self::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))
             ->where($queryBuilder->expr()->isNull('date.uid'))
             ->execute()
             ->fetchAll(\PDO::FETCH_COLUMN);
 
-        $dataStructure = [static::EVENT_TABLE => []];
+        $dataStructure = [self::EVENT_TABLE => []];
         foreach ($recordUids as $recordUid) {
-            $dataStructure[static::EVENT_TABLE][$recordUid] = ['delete' => 1];
+            $dataStructure[self::EVENT_TABLE][$recordUid] = ['delete' => 1];
         }
 
         $dataHandler = clone $this->dataHandler;

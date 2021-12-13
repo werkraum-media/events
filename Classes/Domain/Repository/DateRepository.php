@@ -48,7 +48,11 @@ class DateRepository extends Repository
         $categories = $demand->getCategories();
 
         if ($categories) {
-            $categoryConstraints = $this->createCategoryConstraint($query, $categories, $demand->getIncludeSubCategories());
+            $categoryConstraints = $this->createCategoryConstraint(
+                $query,
+                $categories,
+                $demand->getIncludeSubCategories()
+            );
             if ($demand->getCategoryCombination() === 'or') {
                 $constraints['categories'] = $query->logicalOr($categoryConstraints);
             } else {
@@ -96,6 +100,12 @@ class DateRepository extends Repository
                 'full',
                 new \DateTimeImmutable()
             );
+            if (!$now instanceof \DateTimeImmutable) {
+                throw new \UnexpectedValueException(
+                    'Could not retrieve now as DateTimeImmutable, got "' . gettype($now) . '".',
+                    1639382648
+                );
+            }
             $now = $now->modify('midnight');
             $constraints['nowAndFuture'] = $query->logicalOr([
                 $query->greaterThanOrEqual('start', $now),
@@ -148,8 +158,11 @@ class DateRepository extends Repository
         return $query->logicalOr($constraints);
     }
 
-    protected function createCategoryConstraint(QueryInterface $query, string $categories, bool $includeSubCategories = false): array
-    {
+    protected function createCategoryConstraint(
+        QueryInterface $query,
+        string $categories,
+        bool $includeSubCategories = false
+    ): array {
         $constraints = [];
 
         if ($includeSubCategories) {
@@ -178,7 +191,10 @@ class DateRepository extends Repository
                 'tx_events_domain_model_date',
                 'tx_events_domain_model_event',
                 'event',
-                $queryBuilder->expr()->eq('tx_events_domain_model_date.event', $queryBuilder->quoteIdentifier('event.uid'))
+                $queryBuilder->expr()->eq(
+                    'tx_events_domain_model_date.event',
+                    $queryBuilder->quoteIdentifier('event.uid')
+                )
             )->where(
                 $queryBuilder->expr()->like('event.title', $queryBuilder->createNamedParameter('%' . $search . '%'))
             )->orderBy('tx_events_domain_model_date.start');

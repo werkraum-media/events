@@ -31,12 +31,12 @@ class CategoryService
      * @param int $counter
      * @return string comma separated list of category ids
      */
-    public function getChildrenCategories($idList, int $counter = 0)
+    public function getChildrenCategories($idList, int $counter = 0): string
     {
         $cacheIdentifier = sha1('children' . $idList);
 
         $entry = $this->cache->get($cacheIdentifier);
-        if (!$entry) {
+        if (!$entry || is_string($entry) === false) {
             $entry = $this->getChildrenCategoriesRecursive($idList, $counter);
             $this->cache->set($cacheIdentifier, $entry);
         }
@@ -68,9 +68,10 @@ class CategoryService
         $res = $queryBuilder
             ->select('uid')
             ->from('sys_category')
-            ->where(
-                $queryBuilder->expr()->in('parent', $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY))
-            )
+            ->where($queryBuilder->expr()->in(
+                'parent',
+                $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY)
+            ))
             ->execute();
 
         while ($row = $res->fetch()) {
@@ -101,9 +102,10 @@ class CategoryService
         $rows = $queryBuilder
             ->select('uid')
             ->from('sys_category')
-            ->where(
-                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY))
-            )
+            ->where($queryBuilder->expr()->in(
+                'uid',
+                $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY)
+            ))
             ->execute()
             ->fetchAll();
         foreach ($rows as $row) {

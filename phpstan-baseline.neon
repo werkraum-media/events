@@ -1,46 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot access offset 'considerDate' on mixed\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Cannot access offset 'end' on mixed\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Cannot access offset 'events_search' on mixed\\.$#"
-			count: 2
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Cannot access offset 'region' on mixed\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Cannot access offset 'searchword' on mixed\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Cannot access offset 'start' on mixed\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Parameter \\#1 \\$submittedValues of static method Wrm\\\\Events\\\\Domain\\\\Model\\\\Dto\\\\DateDemand\\:\\:createFromRequestValues\\(\\) expects array, mixed given\\.$#"
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
 			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
 			count: 1
 			path: Classes/Domain/Repository/CategoryRepository.php
@@ -61,11 +21,6 @@ parameters:
 			path: Classes/Extbase/AddSpecialProperties.php
 
 		-
-			message: "#^Parameter \\#1 \\$uidOfReferencedDate of method Wrm\\\\Events\\\\Extbase\\\\AddSpecialProperties\\:\\:getOriginalDate\\(\\) expects int, mixed given\\.$#"
-			count: 1
-			path: Classes/Extbase/AddSpecialProperties.php
-
-		-
 			message: "#^Cannot access offset 'uid' on mixed\\.$#"
 			count: 3
 			path: Classes/Service/CategoryService.php
@@ -77,11 +32,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
-			count: 1
-			path: Classes/Service/CategoryService.php
-
-		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\CategoryService\\:\\:getChildrenCategories\\(\\) should return string but returns mixed\\.$#"
 			count: 1
 			path: Classes/Service/CategoryService.php
 
@@ -98,16 +48,6 @@ parameters:
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: mixed given\\.$#"
 			count: 1
-			path: Classes/Service/Cleanup/Database.php
-
-		-
-			message: "#^Unsafe access to private constant Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Database\\:\\:DATE_TABLE through static\\:\\:\\.$#"
-			count: 5
-			path: Classes/Service/Cleanup/Database.php
-
-		-
-			message: "#^Unsafe access to private constant Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Database\\:\\:EVENT_TABLE through static\\:\\:\\.$#"
-			count: 4
 			path: Classes/Service/Cleanup/Database.php
 
 		-
@@ -129,21 +69,6 @@ parameters:
 			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteAll\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:deleteDangling\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Parameter \\#1 \\$plainArray of method TYPO3\\\\CMS\\\\Core\\\\TypoScript\\\\TypoScriptService\\:\\:convertPlainArrayToTypoScriptArray\\(\\) expects array, mixed given\\.$#"
-			count: 1
-			path: Classes/Service/DataProcessingForModels.php
 
 		-
 			message: "#^Access to an undefined property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$sysCategoriesPid\\.$#"
@@ -331,6 +256,21 @@ parameters:
 			path: Classes/Service/DestinationDataImportService.php
 
 		-
+			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#2 \\$baseTimestamp of function strtotime expects int\\|null, int\\|false given\\.$#"
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#2 \\$minute of method DateTime\\:\\:setTime\\(\\) expects int, string given\\.$#"
+			count: 4
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
 			message: "#^Parameter \\#1 \\$var of function count expects array\\|Countable, mixed given\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php
@@ -424,24 +364,4 @@ parameters:
 			message: "#^Property Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:\\$tmpCurrentEvent has no type specified\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php
-
-		-
-			message: "#^Right side of \\|\\| is always false\\.$#"
-			count: 1
-			path: Configuration/TCA/Overrides/sys_category.php
-
-		-
-			message: "#^Right side of \\|\\| is always false\\.$#"
-			count: 1
-			path: Configuration/TCA/Overrides/tt_content.php
-
-		-
-			message: "#^Right side of \\|\\| is always false\\.$#"
-			count: 1
-			path: Configuration/TCA/Overrides/tx_events_domain_model_event.php
-
-		-
-			message: "#^Right side of \\|\\| is always false\\.$#"
-			count: 1
-			path: Configuration/TCA/tx_events_domain_model_event.php
 

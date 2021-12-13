@@ -24,7 +24,6 @@ namespace Wrm\Events\Service\Cleanup;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
 class Files
@@ -47,12 +46,12 @@ class Files
         $this->storageRepository = $storageRepository;
     }
 
-    public function deleteAll()
+    public function deleteAll(): void
     {
         $this->delete($this->getFilesFromDb());
     }
 
-    public function deleteDangling()
+    public function deleteDangling(): void
     {
         $this->delete($this->getFilesFromDb(function (QueryBuilder $queryBuilder) {
             $queryBuilder->leftJoin(
@@ -107,7 +106,7 @@ class Files
     {
         $storage = $this->storageRepository->findByUid($storageUid);
 
-        if ($storage->hasFile($filePath) === false) {
+        if ($storage === null || $storage->hasFile($filePath) === false) {
             return;
         }
 
