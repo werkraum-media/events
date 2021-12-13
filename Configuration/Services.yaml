@@ -7,25 +7,30 @@ services:
   Wrm\Events\:
     resource: '../Classes/*'
 
-  Wrm\Events\Command\DestinationDataImportCommand:
-    tags:
-      - name: 'console.command'
-        command: 'events:destinationdataimport'
   events.levacy_comannd_identifier:
     class: 'Wrm\Events\Command\DestinationDataImportCommand'
     tags:
       - name: 'console.command'
         command: 'events:destinationdataimport‚'
+        description: 'Mind the trailing ",", there for backwards compatibility'
+
+  Wrm\Events\Command\DestinationDataImportCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:destinationdataimport'
+        description: 'Import Destination Data Events'
 
   Wrm\Events\Command\RemoveAllCommand:
     tags:
       - name: 'console.command'
         command: 'events:removeAll'
+        description: 'Remove all event data'
 
   Wrm\Events\Command\RemovePastCommand:
     tags:
       - name: 'console.command'
         command: 'events:removePast'
+        description: 'Remove past events'
 
   Wrm\Events\Extbase\AddSpecialProperties:
     tags:
