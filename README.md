@@ -1,12 +1,3 @@
-### Destination Data Event Import Extension
-
-##### Start Symfony Command to import Events local
-    
-    TYPO3_CONTEXT=Development php vendor/bin/typo3 events:import
-    
-##### Start Symfony Command to import Events on Stage
-
-    TYPO3_CONTEXT=Production/Staging /usr/local/bin/php7.1.6-cli typo3cms/stage.thueringer-staedte.de/current/vendor/bin/typo3 events:import
 
 ##### Clean category relations
 
