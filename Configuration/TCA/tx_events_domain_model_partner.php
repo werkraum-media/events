@@ -4,7 +4,6 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner',
         'label' => 'title',
-        'thumbnail' => 'images',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',

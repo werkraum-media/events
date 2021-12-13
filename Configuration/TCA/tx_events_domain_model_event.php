@@ -9,7 +9,6 @@ return [
     'ctrl' => [
         'title' => $l10nPath . ':tx_events_domain_model_event',
         'label' => 'title',
-        'thumbnail' => 'images',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
