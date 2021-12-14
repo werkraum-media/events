@@ -90,7 +90,11 @@ class Database
             ->execute()
             ->fetchAll();
 
-        return array_map(function (array $record) {
+        return array_map(function ($record) {
+            if (is_array($record) === false) {
+                return '';
+            }
+
             return $record['uid'];
         }, $records);
     }

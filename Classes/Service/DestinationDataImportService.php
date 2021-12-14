@@ -3,14 +3,16 @@
 namespace Wrm\Events\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
-use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -30,117 +32,134 @@ use Wrm\Events\Domain\Repository\RegionRepository;
 class DestinationDataImportService
 {
     /**
-     * @var
+     * @var string
      */
-    protected $restUrl;
+    private $restUrl;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restLicenseKey;
+    private $restLicenseKey;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restType;
+    private $restType;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restLimit;
+    private $restLimit;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restMode;
+    private $restMode;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restTemplate;
+    private $restTemplate;
+
     /**
-     * @var
+     * @var string
      */
-    protected $restExperience;
+    private $restExperience;
+
     /**
-     * @var
+     * @var int
      */
-    protected $storagePid;
+    private $storagePid;
+
     /**
-     * @var
+     * @var int
      */
-    protected $categoriesPid;
+    private $regionUid;
+
     /**
-     * @var
+     * @var int
      */
-    protected $regionUid;
+    private $categoriesPid;
+
     /**
-     * @var
+     * @var int
      */
-    protected $categoryParentUid;
+    private $categoryParentUid;
+
     /**
-     * @var
+     * @var string
      */
-    protected $filesFolder;
-    /**
-     * @var
-     */
-    protected $storage;
+    private $filesFolder;
+
     /**
      * @var array
      */
-    protected $settings = [];
-    /*
-     * @var
-     */
-    protected $environment;
+    private $settings = [];
+
     /**
-     * @var
+     * @var Environment
      */
-    protected $tmpCurrentEvent;
+    private $environment;
+
     /**
-     * @var
+     * @var Event
      */
-    protected $logger;
+    private $tmpCurrentEvent;
+
+    /**
+     * @var Logger
+     */
+    private $logger;
+
     /**
      * @var EventRepository
      */
-    protected $eventRepository;
+    private $eventRepository;
+
     /**
      * @var RegionRepository
      */
-    protected $regionRepository;
+    private $regionRepository;
+
     /**
      * @var OrganizerRepository
      */
-    protected $organizerRepository;
+    private $organizerRepository;
+
     /**
      * @var DateRepository
      */
-    protected $dateRepository;
+    private $dateRepository;
+
     /**
      * @var CategoryRepository
      */
-    protected $sysCategoriesRepository;
-    /**
-     * @var FileRepository
-     */
-    protected $fileRepository;
+    private $sysCategoriesRepository;
+
     /**
      * @var MetaDataRepository
      */
-    protected $metaDataRepository;
+    private $metaDataRepository;
+
     /**
      * @var ConfigurationManager
      */
-    protected $configurationManager;
+    private $configurationManager;
+
     /**
      * @var ObjectManager
      */
-    protected $objectManager;
+    private $objectManager;
+
     /**
      * @var PersistenceManager
      */
-    protected $persistenceManager;
+    private $persistenceManager;
+
     /**
      * @var ResourceFactory
      */
-    protected $resourceFactory;
+    private $resourceFactory;
 
     /**
      * ImportService constructor.
@@ -149,7 +168,6 @@ class DestinationDataImportService
      * @param OrganizerRepository $organizerRepository
      * @param DateRepository $dateRepository
      * @param CategoryRepository $sysCategoriesRepository
-     * @param FileRepository $fileRepository
      * @param MetaDataRepository $metaDataRepository
      * @param ConfigurationManager $configurationManager
      * @param PersistenceManager $persistenceManager
@@ -163,7 +181,6 @@ class DestinationDataImportService
         OrganizerRepository $organizerRepository,
         DateRepository $dateRepository,
         CategoryRepository $sysCategoriesRepository,
-        FileRepository $fileRepository,
         MetaDataRepository $metaDataRepository,
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
@@ -176,7 +193,6 @@ class DestinationDataImportService
         $this->organizerRepository = $organizerRepository;
         $this->dateRepository = $dateRepository;
         $this->sysCategoriesRepository = $sysCategoriesRepository;
-        $this->fileRepository = $fileRepository;
         $this->metaDataRepository = $metaDataRepository;
         $this->configurationManager = $configurationManager;
         $this->persistenceManager = $persistenceManager;
@@ -198,18 +214,16 @@ class DestinationDataImportService
         $this->restLimit = $this->settings['destinationData']['restLimit'];
         $this->restMode = $this->settings['destinationData']['restMode'];
         $this->restTemplate = $this->settings['destinationData']['restTemplate'];
-        $this->sysCategoriesPid = $this->settings['destinationData']['categoriesPid'];
-        $this->categoryParentUid = $this->settings['destinationData']['categoryParentUid'];
+        $this->categoriesPid = (int) $this->settings['destinationData']['categoriesPid'];
+        $this->categoryParentUid = (int) $this->settings['destinationData']['categoryParentUid'];
     }
 
-    /**
-     * @param $restExperience
-     * @param $storagePid
-     * @param $regionUid
-     * @param $filesFolder
-     */
-    public function import($restExperience, $storagePid, $regionUid, $filesFolder)
-    {
+    public function import(
+        string $restExperience,
+        int $storagePid,
+        int $regionUid,
+        string $filesFolder
+    ): int {
         $this->restExperience = $restExperience;
         $this->storagePid = $storagePid;
         $this->regionUid = $regionUid;
@@ -235,20 +249,32 @@ class DestinationDataImportService
         $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&mode=' . $this->restMode . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
         $this->logger->info('Try to get data from ' . $restUrl);
 
-        if ($jsonResponse = json_decode(file_get_contents($restUrl), true)) {
-            $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
-            return $this->processData($jsonResponse);
-        } else {
+        try {
+            $fetchedData = $this->fetchData($restUrl);
+        } catch (\Exception $e) {
             $this->logger->error('Could not receive data.');
             return 1;
         }
+
+        return $this->processData($fetchedData);
     }
 
-    /**
-     * @param $data
-     * @return int
-     */
-    public function processData($data)
+    private function fetchData(string $restUrl): array
+    {
+        $jsonContent = file_get_contents($restUrl);
+        if (is_string($jsonContent) === false) {
+            throw new \Exception('Could not receive data.', 1639495835);
+        }
+        $jsonResponse = json_decode($jsonContent, true);
+        if (is_array($jsonResponse) === false) {
+            throw new \Exception('Could not receive data.', 1639495835);
+        }
+
+        $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
+        return $jsonResponse;
+    }
+
+    public function processData(array $data): int
     {
         $this->logger->info('Processing json ' . count($data['items']));
 
@@ -265,9 +291,7 @@ class DestinationDataImportService
             $this->tmpCurrentEvent->setLanguageUid(-1);
 
             // Set selected Region
-            if ($selectedRegion !== null) {
-                $this->tmpCurrentEvent->setRegion($selectedRegion);
-            }
+            $this->tmpCurrentEvent->setRegion($selectedRegion);
 
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
@@ -339,9 +363,17 @@ class DestinationDataImportService
      *
      * @param array $categories
      */
-    protected function setCategories(array $categories)
+    private function setCategories(array $categories): void
     {
         $sysParentCategory = $this->sysCategoriesRepository->findByUid($this->categoryParentUid);
+        if (!$sysParentCategory instanceof Category) {
+            $this->logger->warning(
+                'Could not fetch system parent category by uid.',
+                ['uid' => $this->categoryParentUid]
+            );
+            return;
+        }
+
         foreach ($categories as $categoryTitle) {
             $tmpSysCategory = $this->sysCategoriesRepository->findOneByTitle($categoryTitle);
             if (!$tmpSysCategory) {
@@ -349,7 +381,7 @@ class DestinationDataImportService
                 $tmpSysCategory = $this->objectManager->get(Category::class);
                 $tmpSysCategory->setTitle($categoryTitle);
                 $tmpSysCategory->setParent($sysParentCategory);
-                $tmpSysCategory->setPid($this->sysCategoriesPid);
+                $tmpSysCategory->setPid($this->categoriesPid);
                 $this->sysCategoriesRepository->add($tmpSysCategory);
                 $this->tmpCurrentEvent->addCategory($tmpSysCategory);
             } else {
@@ -358,15 +390,10 @@ class DestinationDataImportService
         }
     }
 
-    /**
-     * @param array $timeIntervals
-     * @TODO: split into functions
-     */
-    protected function setDates(
+    private function setDates(
         array $timeIntervals,
         bool $canceled
-    ) {
-
+    ): void {
         // @TODO: does not seem to work -->
         //$currentEventDates = $this->tmpCurrentEvent->getDates();
         //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
@@ -406,14 +433,17 @@ class DestinationDataImportService
                     $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
                     $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
 
-                    for ($i = strtotime($start->format('l'), $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 day', $i)) {
+                    $i = (int) strtotime($start->format('l'), $start->getTimestamp());
+                    while ($i !== 0 && $i <= $until->getTimestamp()) {
+                        $i = (int) strtotime('+1 day', $i);
+
                         if ($i >= $today) {
                             $eventStart = new \DateTime();
                             $eventStart->setTimestamp($i);
-                            $eventStart->setTime($start->format('H'), $start->format('i'));
+                            $eventStart->setTime((int) $start->format('H'), (int) $start->format('i'));
                             $eventEnd = new \DateTime();
                             $eventEnd->setTimestamp($i);
-                            $eventEnd->setTime($until->format('H'), $until->format('i'));
+                            $eventEnd->setTime((int) $until->format('H'), (int) $until->format('i'));
                             $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
                                 $eventStart,
                                 $eventEnd,
@@ -433,10 +463,10 @@ class DestinationDataImportService
                             if ($i >= $today) {
                                 $eventStart = new \DateTime();
                                 $eventStart->setTimestamp($i);
-                                $eventStart->setTime($start->format('H'), $start->format('i'));
+                                $eventStart->setTime((int) $start->format('H'), (int) $start->format('i'));
                                 $eventEnd = new \DateTime();
                                 $eventEnd->setTimestamp($i);
-                                $eventEnd->setTime($until->format('H'), $until->format('i'));
+                                $eventEnd->setTime((int) $until->format('H'), (int) $until->format('i'));
                                 $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
                                     $eventStart,
                                     $eventEnd,
@@ -451,10 +481,7 @@ class DestinationDataImportService
         $this->logger->info('Finished setup dates');
     }
 
-    /**
-     * @param array $addresses
-     */
-    protected function setOrganizer(array $addresses)
+    private function setOrganizer(array $addresses): void
     {
         foreach ($addresses as $address) {
             if ($address['rel'] == "organizer") {
@@ -482,7 +509,7 @@ class DestinationDataImportService
     /**
      * @param array $event
      */
-    protected function setAddress(array $event)
+    private function setAddress(array $event): void
     {
         $this->tmpCurrentEvent->setName($event['name'] ?? '');
         $this->tmpCurrentEvent->setStreet($event['street'] ?? '');
@@ -496,7 +523,7 @@ class DestinationDataImportService
     /**
      * @param array $media
      */
-    protected function setSocial(array $media)
+    private function setSocial(array $media): void
     {
         foreach ($media as $link) {
             if ($link['rel'] == "socialmedia" && $link['value'] == "Facebook") {
@@ -514,33 +541,29 @@ class DestinationDataImportService
     /**
      * @param array $media
      */
-    protected function setTickets(array $media)
+    private function setTickets(array $media): void
     {
         foreach ($media as $link) {
             if ($link['rel'] == "ticket") {
                 $this->tmpCurrentEvent->setTicket($link['url']);
                 break;
-            } elseif ($link['rel'] == "booking" && !$this->multi_array_key_exists('ticket', $media)) {
+            } elseif ($link['rel'] == "booking" && !$this->multiArrayKeyExists('ticket', $media)) {
                 $this->tmpCurrentEvent->setTicket($link['url']);
                 break;
-            } elseif ($link['rel'] == "PRICE_KARTENLINK" && !$this->multi_array_key_exists('ticket', $media) && !$this->multi_array_key_exists('booking', $media)) {
+            } elseif ($link['rel'] == "PRICE_KARTENLINK" && !$this->multiArrayKeyExists('ticket', $media) && !$this->multiArrayKeyExists('booking', $media)) {
                 $this->tmpCurrentEvent->setTicket($link['url']);
             }
         }
     }
 
-    /**
-     * @param string $needle
-     * @param array $haystack
-     */
-    protected function multi_array_key_exists($needle, $haystack)
+    private function multiArrayKeyExists(string $needle, array $haystack): bool
     {
         foreach ($haystack as $key => $value) {
             if ($needle == $key) {
                 return true;
             }
             if (is_array($value)) {
-                if ($this->multi_array_key_exists($needle, $value) == true) {
+                if ($this->multiArrayKeyExists($needle, $value) == true) {
                     return true;
                 }
             }
@@ -548,21 +571,13 @@ class DestinationDataImportService
         return false;
     }
 
-    /**
-     * @param string $lat
-     * @param string $lng
-     */
-    protected function setLatLng(string $lat, string $lng)
+    private function setLatLng(string $lat, string $lng): void
     {
         $this->tmpCurrentEvent->setLatitude($lat);
         $this->tmpCurrentEvent->setLongitude($lng);
     }
 
-    /**
-     * Set Texts
-     * @param Array $texts
-     */
-    protected function setTexts(array $texts)
+    private function setTexts(array $texts): void
     {
         foreach ($texts as $text) {
             if ($text['rel'] == "details" && $text['type'] == "text/plain") {
@@ -577,19 +592,14 @@ class DestinationDataImportService
         }
     }
 
-    /**
-     * Load File
-     * @param String $globalId
-     * @param String $title
-     */
-    protected function getOrCreateEvent(string $globalId, string $title)
+    private function getOrCreateEvent(string $globalId, string $title): Event
     {
         $event = $this->eventRepository->findOneByGlobalId($globalId);
 
-        if ($event) {
-            // Global ID is found and events gets updated
-            $event = $this->eventRepository->findOneByGlobalId($globalId);
-            $this->logger->info('Found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database');
+        if ($event instanceof Event) {
+            $this->logger->info(
+                'Found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database'
+            );
             return $event;
         }
 
@@ -601,25 +611,29 @@ class DestinationDataImportService
         $event->setCategories(new ObjectStorage());
         $this->eventRepository->add($event);
         $this->persistenceManager->persistAll();
-        $this->logger->info('Not found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database. Created new one.');
+        $this->logger->info(
+            'Not found "' . substr($title, 0, 20) . '..." with global id ' . $globalId . ' in database.'
+            . ' Created new one.'
+        );
         return $event;
     }
 
-    /**
-     * @param array $assets
-     */
-    protected function setAssets(array $assets)
+    private function setAssets(array $assets): void
     {
         $this->logger->info("Set assets");
+
+        $storage = $this->resourceFactory->getDefaultStorage();
+        if (!$storage instanceof ResourceStorage) {
+            $this->logger->error('No default storage defined. Cancel import.');
+            exit();
+        }
 
         $error = false;
 
         foreach ($assets as $media_object) {
             if ($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
-                $this->storage = $this->resourceFactory->getDefaultStorage();
-
                 $orgFileUrl = urldecode($media_object['url']);
-                $orgFileNameSanitized = $this->storage->sanitizeFileName(
+                $orgFileNameSanitized = $storage->sanitizeFileName(
                     basename(
                         urldecode($media_object['url'])
                     )
@@ -627,15 +641,12 @@ class DestinationDataImportService
 
                 $this->logger->info('File attached:' . $orgFileUrl);
                 $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
-                //die();
 
-                if ($this->storage == null) {
-                    $this->logger->error('No default storage defined. Cancel import.');
-                    die();
-                }
-
+                $targetFilePath = $this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder
+                    . $orgFileNameSanitized;
                 // Check if file already exists
-                if (file_exists($this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder . $orgFileNameSanitized)) {
+
+                if (file_exists($targetFilePath)) {
                     $this->logger->info('File already exists');
                 } else {
                     $this->logger->info("File don't exist " . $orgFileNameSanitized);
@@ -645,12 +656,13 @@ class DestinationDataImportService
                         $this->logger->info('Adding file ' . $file);
 
                         try {
-                            $targetFolder = $this->storage->getFolder($this->filesFolder);
+                            $targetFolder = $storage->getFolder($this->filesFolder);
                         } catch (FolderDoesNotExistException $e) {
-                            $targetFolder = $this->storage->createFolder($this->filesFolder);
+                            $targetFolder = $storage->createFolder($this->filesFolder);
                         }
 
-                        $this->storage->addFile($this->environment->getPublicPath() . "/uploads/tx_events/" . $file, $targetFolder);
+                        $tempFilePath = $this->environment->getPublicPath() . "/uploads/tx_events/" . $file;
+                        $storage->addFile($tempFilePath, $targetFolder);
                     } else {
                         $error = true;
                     }
@@ -662,9 +674,27 @@ class DestinationDataImportService
                     // TODO: How to delete file references?
                     } else {
                         $this->logger->info('No relation found');
-                        $file = $this->storage->getFile($this->filesFolder . $orgFileNameSanitized);
-                        $this->metaDataRepository->update($file->getUid(), array('title' => $media_object['value'], 'description' => $media_object['description'], 'alternative' => 'DD Import'));
-                        $this->createFileRelations($file->getUid(), 'tx_events_domain_model_event', $this->tmpCurrentEvent->getUid(), 'images', $this->storagePid);
+                        $fileIdentifier = $this->filesFolder . $orgFileNameSanitized;
+                        $file = $storage->getFile($fileIdentifier);
+                        if (!$file instanceof File) {
+                            $this->logger->warning('Could not find file.', [$fileIdentifier]);
+                            continue;
+                        }
+                        $this->metaDataRepository->update(
+                            $file->getUid(),
+                            [
+                                'title' => $media_object['value'],
+                                'description' => $media_object['description'],
+                                'alternative' => 'DD Import'
+                            ]
+                        );
+                        $this->createFileRelations(
+                            $file->getUid(),
+                            'tx_events_domain_model_event',
+                            $this->tmpCurrentEvent->getUid(),
+                            'images',
+                            $this->storagePid
+                        );
                     }
                 }
             }
@@ -672,12 +702,7 @@ class DestinationDataImportService
         }
     }
 
-    /**
-     * Load File
-     * @param string $file
-     * @return string
-     */
-    protected function loadFile($file)
+    private function loadFile(string $file): string
     {
         $directory = $this->environment->getPublicPath() . "/uploads/tx_events/";
         $filename = basename($file);
@@ -688,20 +713,16 @@ class DestinationDataImportService
             return $filename;
         }
         $this->logger->error('Cannot load file ' . $file);
-        return false;
+        return '';
     }
 
-    /**
-     * Build relations for FAL
-     * @param int    $uid_local
-     * @param string $tablenames
-     * @param int    $uid_foreign
-     * @param string $fieldname
-     * @param string $storagePid
-     * @return bool
-     */
-    protected function createFileRelations($uid_local, $tablenames, $uid_foreign, $fieldname, $storagePid)
-    {
+    private function createFileRelations(
+        int $uid_local,
+        string $tablenames,
+        int $uid_foreign,
+        string $fieldname,
+        int $storagePid
+    ): bool {
         $newId = 'NEW1234';
 
         $data = array();
@@ -733,11 +754,7 @@ class DestinationDataImportService
         return false;
     }
 
-    /**
-     * Performs slug update
-     * @return bool
-     */
-    protected function doSlugUpdate()
+    private function doSlugUpdate(): void
     {
         $this->logger->info('Update slugs');
 
@@ -748,7 +765,8 @@ class DestinationDataImportService
             $GLOBALS['TCA']['tx_events_domain_model_event']['columns']['slug']['config']
         );
 
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_events_domain_model_event');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_events_domain_model_event');
         $queryBuilder = $connection->createQueryBuilder();
         $queryBuilder->getRestrictions()->removeAll();
 
@@ -763,6 +781,10 @@ class DestinationDataImportService
             ->execute();
 
         while ($record = $statement->fetch()) {
+            if (is_array($record) === false) {
+                continue;
+            }
+
             $queryBuilder = $connection->createQueryBuilder();
             $queryBuilder->update('tx_events_domain_model_event')
                 ->where(
@@ -775,28 +797,25 @@ class DestinationDataImportService
             $queryBuilder->getSQL();
             $queryBuilder->execute();
         }
-
-        return true;
     }
 
     /**
-     * Fetch the value for requested attribute.
+     * Fetch the boolean value for requested attribute.
      *
      * Returns first if multiple attributes with same key exist.
      * Casts "true" and "false" to true and false.
-     * Return null in case no attribute value could exists.
      */
     private function getAttributeValue(
         array $event,
         string $attributeKey
-    ) {
+    ): bool {
         $attributes = array_filter($event['attributes'] ?? [], function (array $attribute) use ($attributeKey) {
             $currentKey = $attribute['key'] ?? '';
             return $currentKey === $attributeKey;
         });
 
         if ($attributes === []) {
-            return null;
+            return false;
         }
 
         $value = $attributes[0]['value'] ?? null;
@@ -808,6 +827,6 @@ class DestinationDataImportService
             return false;
         }
 
-        return $value;
+        return (bool) $value;
     }
 }

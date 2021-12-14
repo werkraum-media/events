@@ -75,6 +75,10 @@ class CategoryService
             ->execute();
 
         while ($row = $res->fetch()) {
+            if (is_array($row) === false) {
+                continue;
+            }
+
             $counter++;
             if ($counter > 10000) {
                 $this->timeTracker->setTSlogMessage('EXT:dd_events: one or more recursive categories where found');
@@ -109,6 +113,10 @@ class CategoryService
             ->execute()
             ->fetchAll();
         foreach ($rows as $row) {
+            if (is_array($row) === false) {
+                continue;
+            }
+
             $list[] = $row['uid'];
         }
 

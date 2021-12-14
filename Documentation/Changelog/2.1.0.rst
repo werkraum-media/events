@@ -35,6 +35,8 @@ Tasks
 
 * Removed outdated stuff from Documentation.
 
+* Fixed nearly all PHPStan issues.
+
 Deprecation
 -----------
 
