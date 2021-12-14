@@ -23,6 +23,7 @@ use Wrm\Events\Domain\Model\Category;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Model\Organizer;
+use Wrm\Events\Domain\Model\Region;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
@@ -72,7 +73,7 @@ class DestinationDataImportService
     private $storagePid;
 
     /**
-     * @var int
+     * @var ?int
      */
     private $regionUid;
 
@@ -221,7 +222,7 @@ class DestinationDataImportService
     public function import(
         string $restExperience,
         int $storagePid,
-        int $regionUid,
+        ?int $regionUid,
         string $filesFolder
     ): int {
         $this->restExperience = $restExperience;
@@ -279,7 +280,10 @@ class DestinationDataImportService
         $this->logger->info('Processing json ' . count($data['items']));
 
         // Get selected region
-        $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
+        $selectedRegion = null;
+        if (is_int($this->regionUid)) {
+            $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
+        }
 
         foreach ($data['items'] as $event) {
             $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
@@ -291,7 +295,9 @@ class DestinationDataImportService
             $this->tmpCurrentEvent->setLanguageUid(-1);
 
             // Set selected Region
-            $this->tmpCurrentEvent->setRegion($selectedRegion);
+            if ($selectedRegion instanceof Region) {
+                $this->tmpCurrentEvent->setRegion($selectedRegion);
+            }
 
             // Set Title
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));

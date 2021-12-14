@@ -11,7 +11,7 @@ parameters:
 			path: Classes/Command/DestinationDataImportCommand.php
 
 		-
-			message: "#^Parameter \\#3 \\$regionUid of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects int, mixed given\\.$#"
+			message: "#^Parameter \\#3 \\$regionUid of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects int\\|null, mixed given\\.$#"
 			count: 1
 			path: Classes/Command/DestinationDataImportCommand.php
 

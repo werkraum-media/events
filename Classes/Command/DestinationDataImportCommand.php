@@ -30,27 +30,23 @@ class DestinationDataImportCommand extends Command
 
         $this->addArgument(
             'storage-pid',
-            InputArgument::OPTIONAL,
-            'What is the storage pid?',
-            '6'
+            InputArgument::REQUIRED,
+            'What is the storage pid?'
         );
         $this->addArgument(
             'region-uid',
             InputArgument::OPTIONAL,
-            'What is the region uid?',
-            '1'
+            'What is the region uid?'
         );
         $this->addArgument(
             'rest-experience',
-            InputArgument::OPTIONAL,
-            'What is the rest experience?',
-            'stadtmarketing-erfurt'
+            InputArgument::REQUIRED,
+            'What is the rest experience?'
         );
         $this->addArgument(
             'files-folder',
-            InputArgument::OPTIONAL,
-            'Where to save the image files?',
-            'staedte/erfurt/events/'
+            InputArgument::REQUIRED,
+            'Where to save the image files?'
         );
     }
 
