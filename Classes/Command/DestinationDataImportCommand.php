@@ -7,12 +7,22 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Wrm\Events\Service\DestinationDataImportService;
 
 class DestinationDataImportCommand extends Command
 {
+    /**
+     * @var DestinationDataImportService
+     */
+    private $destinationDataImportService;
+
+    public function __construct(
+        DestinationDataImportService $destinationDataImportService
+    ) {
+        parent::__construct();
+        $this->destinationDataImportService = $destinationDataImportService;
+    }
+
     public function configure(): void
     {
         $this->setDescription('Import Destination Data Events');
@@ -48,13 +58,11 @@ class DestinationDataImportCommand extends Command
     {
         Bootstrap::initializeBackendAuthentication();
 
-        return GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(DestinationDataImportService::class)
-            ->import(
-                $input->getArgument('rest-experience'),
-                $input->getArgument('storage-pid'),
-                $input->getArgument('region-uid'),
-                $input->getArgument('files-folder')
-            );
+        return $this->destinationDataImportService->import(
+            $input->getArgument('rest-experience'),
+            $input->getArgument('storage-pid'),
+            $input->getArgument('region-uid'),
+            $input->getArgument('files-folder')
+        );
     }
 }
