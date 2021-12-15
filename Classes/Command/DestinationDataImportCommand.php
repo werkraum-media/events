@@ -34,11 +34,6 @@ class DestinationDataImportCommand extends Command
             'What is the storage pid?'
         );
         $this->addArgument(
-            'region-uid',
-            InputArgument::OPTIONAL,
-            'What is the region uid?'
-        );
-        $this->addArgument(
             'rest-experience',
             InputArgument::REQUIRED,
             'What is the rest experience?'
@@ -47,6 +42,11 @@ class DestinationDataImportCommand extends Command
             'files-folder',
             InputArgument::REQUIRED,
             'Where to save the image files?'
+        );
+        $this->addArgument(
+            'region-uid',
+            InputArgument::OPTIONAL,
+            'What is the region uid?'
         );
     }
 

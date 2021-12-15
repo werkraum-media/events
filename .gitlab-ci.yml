@@ -1,4 +1,5 @@
 stages:
+  - validate
   - test
 
 before_script:
@@ -7,39 +8,39 @@ before_script:
   - php composer-setup.php --filename composer --install-dir /bin
   - php -r "unlink('composer-setup.php');"
 
-test:composer:
+validate:composer:
   image: php:8.0-alpine
-  stage: test
+  stage: validate
   script:
     - composer validate --no-check-publish --strict
 
-test:php:8.0:
+validate:php:8.0:
   image: php:8.0-alpine
-  stage: test
+  stage: validate
   script:
     - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
 
-test:php:7.4:
+validate:php:7.4:
   image: php:7.4-alpine
-  stage: test
+  stage: validate
   script:
     - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
 
-test:php:7.3:
+validate:php:7.3:
   image: php:7.3-alpine
-  stage: test
+  stage: validate
   script:
     - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
 
-test:php:7.2:
+validate:php:7.2:
   image: php:7.2-alpine
-  stage: test
+  stage: validate
   script:
     - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
 
-test:xml:
+validate:xml:
   image: php:7.3-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - apk add libxml2-utils wget
@@ -47,50 +48,90 @@ test:xml:
     - wget https://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd --output-document=.Build/xliff-core-1.2-strict.xsd
     - xmllint --schema .Build/xliff-core-1.2-strict.xsd --noout $(find Resources -name '*.xlf')
 
-test:cgl:
+validate:cgl:
   image: php:7.3-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - composer install --prefer-dist --no-progress
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix
 
-test:phpstan:8.0:
+validate:phpstan:8.0:
   image: php:8.0-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
-test:phpstan:7.4:11.5:
+validate:phpstan:7.4:11.5:
   image: php:7.4-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^11.5"
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
-test:phpstan:7.4:10.4:
+validate:phpstan:7.4:10.4:
   image: php:7.4-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^10.4"
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
-test:phpstan:7.3:
+validate:phpstan:7.3:
   image: php:7.3-alpine
-  stage: test
+  stage: validate
   before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
-test:phpstan:7.2:
+validate:phpstan:7.2:
+  image: php:7.2-alpine
+  stage: validate
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+
+test:phpunit:8.0:
+  image: php:8.0-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+
+test:phpunit:7.4:11.5:
+  image: php:7.4-alpine
+  stage: test
+  before_script:
+  script:
+    - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^11.5"
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+
+test:phpunit:7.4:10.4:
+  image: php:7.4-alpine
+  stage: test
+  before_script:
+  script:
+    - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^10.4"
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+
+test:phpunit:7.3:
+  image: php:7.3-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+
+test:phpunit:7.2:
   image: php:7.2-alpine
   stage: test
   before_script:
   script:
     - composer install --prefer-dist --no-progress
-    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox

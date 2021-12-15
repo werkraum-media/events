@@ -29,6 +29,7 @@ use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
+use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 
 class DestinationDataImportService
 {
@@ -163,6 +164,11 @@ class DestinationDataImportService
     private $resourceFactory;
 
     /**
+     * @var DataFetcher
+     */
+    private $dataFetcher;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param RegionRepository $regionRepository
@@ -175,6 +181,7 @@ class DestinationDataImportService
      * @param ResourceFactory $resourceFactory
      * @param ObjectManager $objectManager
      * @param Environment $environment
+     * @param DataFetcher $dataFetcher
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -187,7 +194,8 @@ class DestinationDataImportService
         PersistenceManager $persistenceManager,
         ResourceFactory $resourceFactory,
         ObjectManager $objectManager,
-        Environment $environment
+        Environment $environment,
+        DataFetcher $dataFetcher
     ) {
         $this->eventRepository = $eventRepository;
         $this->regionRepository = $regionRepository;
@@ -200,6 +208,7 @@ class DestinationDataImportService
         $this->resourceFactory = $resourceFactory;
         $this->objectManager = $objectManager;
         $this->environment = $environment;
+        $this->dataFetcher = $dataFetcher;
 
         // Get Typoscript Settings
         $this->settings = $this->configurationManager->getConfiguration(
@@ -708,17 +717,20 @@ class DestinationDataImportService
         }
     }
 
-    private function loadFile(string $file): string
+    private function loadFile(string $fileUrl): string
     {
         $directory = $this->environment->getPublicPath() . "/uploads/tx_events/";
-        $filename = basename($file);
-        $this->logger->info('Getting file ' . $file . ' as ' . $filename);
-        $asset = GeneralUtility::getUrl($file);
-        if ($asset) {
+        $filename = basename($fileUrl);
+        $this->logger->info('Getting file ' . $fileUrl . ' as ' . $filename);
+
+        $response = $this->dataFetcher->fetchImage($fileUrl);
+        $asset = $response->getBody()->__toString();
+        if ($response->getStatusCode() === 200 && $asset !== '') {
             file_put_contents($directory . $filename, $asset);
             return $filename;
         }
-        $this->logger->error('Cannot load file ' . $file);
+
+        $this->logger->error('Cannot load file ' . $fileUrl);
         return '';
     }
 

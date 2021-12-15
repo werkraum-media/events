@@ -1,0 +1,28 @@
+"tx_events_domain_model_organizer",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","name","street","district","city","zip","phone","web","email",,,,,,,,,,,,,,,,,,,,,,
+,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","+ 49 3672 / 486470","http://schillerhaus.rudolstadt.de","schillerhaus@rudolstadt.de",,,,,,,,,,,,,,,,,,,,,,
+,"2","2","0","0","0","0","0","-1","0","0","0","0","0","Stadtbibliothek Rudolstadt","Schulplatz 13",,"Rudolstadt","07407","0 36 72 - 48 64 20","http://www.stadtbibliothek-rudolstadt.de ","stadtbibliothek@rudolstadt.de",,,,,,,,,,,,,,,,,,,,,,
+,"3","2","0","0","0","0","0","-1","0","0","0","0","0","Lutherkirche","Caspar-Schulte-Straße",,"Rudolstadt","07407","03672 - 48 96 13",,,,,,,,,,,,,,,,,,,,,,,,
+"tx_events_domain_model_event",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","title","subtitle","global_id","slug","highlight","teaser","details","price_info","name","street","district","city","zip","country","web","phone","ticket","facebook","youtube","instagram","latitude","longitude","images","categories","pages","dates","organizer","partner","region","references_events"
+,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Allerlei Weihnachtliches (Heute mit Johannes Geißer)",,"e_100347853","e-100347853","0",,"Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.
+Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)
+Um Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.
+Es gilt die 2G-PLUS-Regel.",,"Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","Deutschland","http://www.schillerhaus.rudolstadt.de/","+ 49 3672 / 486470",,,,,"50.720971023259","11.335229873657","1","0",,"1","1",,"0",
+,"2","2","0","0","0","0","0","-1","0","0","0","0","0","Tüftlerzeit",,"e_100354481","e-100354481","0",,"Die Tüftlerzeit wird dieses Mal ein weihnachtliches Angebot bereithalten. Alle kleinen Tüftler dürfen gespannt sein.
+Voranmeldung über: kinderbibliothek@rudolstadt.de oder 03672-486420
+
+Bitte beachten Sie die derzeit geltenden Zugangsregeln.",,"Stadtbibliothek Rudolstadt","Schulplatz 13",,"Rudolstadt","07407","Deutschland","http://www.stadtbibliothek-rudolstadt.de/","0 36 72 - 48 64 20",,,,,"50.720835175056","11.342568397522","1","0",,"3","2",,"0",
+,"3","2","0","0","0","0","0","-1","0","0","0","0","0","Adventliche Orgelmusik (Orgel: KMD Frank Bettenhausen)",,"e_100350503","e-100350503","0",,"Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.  Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.
+
+Es gilt die 2G-PLUS-Regel.",,"Lutherkirche","Caspar-Schulte-Straße",,"Rudolstadt","07407","Deutschland",,"03672 - 48 96 13",,,,,"50.718688721183","11.327333450317","1","0",,"4","3",,"0",
+"tx_events_domain_model_date",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","event","start","end","canceled","postponed_date","canceled_link",,,,,,,,,,,,,,,,,,,,,,,,,,
+,"1","2","0","0","0","0",-1,0,"0","0","0","1","4101372000","4101377400","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"2","2","0","0","0","0",-1,0,"0","0","0","2","4101112800","4101118200","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"3","2","0","0","0","0",-1,0,"0","0","0","2","1642687200","1642694400","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"4","2","0","0","0","0",-1,0,"0","0","0","2","1645106400","1645113600","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"5","2","0","0","0","0",-1,0,"0","0","0","3","4099831200","4099834800","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"6","2","0","0","0","0",-1,0,"0","0","0","3","4100436000","4100439600","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"7","2","0","0","0","0",-1,0,"0","0","0","3","4101040800","4101044400","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"8","2","0","0","0","0",-1,0,"0","0","0","3","4101645600","4101649200","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,

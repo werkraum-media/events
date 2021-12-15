@@ -1,0 +1,541 @@
+{
+    "status": "OK",
+    "count": 3,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [
+                "Weihnachten"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.<br>Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)<br>Um Voranmeldung unter 03672-486470 oder&nbsp;<a data-cke-saved-href=\"mailto:schillerhaus@rudolstadt.de\" href=\"mailto:schillerhaus@rudolstadt.de\">schillerhaus@rudolstadt.de</a>&nbsp;wird gebeten. <br><strong>Es gilt die 2G-PLUS-Regel.</strong>&nbsp;<br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.\nEintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)\nUm Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schillerstraße 25",
+            "phone": "+ 49 3672 / 486470",
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.720971023258805,
+                    "longitude": 11.335229873657227
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+                {
+                    "rel": "venuewebsite",
+                    "url": "http://schillerhaus.rudolstadt.de/",
+                    "latitude": null,
+                    "longitude": null,
+                    "value": ""
+                },
+                {
+                    "rel": "default",
+                    "url": "https://dam.destination.one/849917/279ac45b3fc701a7197131f627164fffd9f8cc77bc75165e2fc2b864ed606920/theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg",
+                    "type": "image/jpeg",
+                    "latitude": null,
+                    "longitude": null,
+                    "width": 1920,
+                    "height": 1080,
+                    "value": "Theater-Rudolstadt_Johannes-Geißer_photo-by-Lisa-Stern_web_.jpg"
+                }
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin"
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Schillerhaus Rudolstadt",
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-19T15:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-19T16:30:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "1"
+                }
+            ],
+            "features": [],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Schillerhaus Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schillerstraße 25",
+                    "phone": "+ 49 3672 / 486470",
+                    "fax": "+ 49 3672 / 486475",
+                    "web": "http://schillerhaus.rudolstadt.de",
+                    "email": "schillerhaus@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        },
+        {
+            "global_id": "e_100354481",
+            "id": "100354481",
+            "title": "Tüftlerzeit",
+            "type": "Event",
+            "categories": [
+                "Kinder"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Tüftlerzeit wird dieses Mal ein weihnachtliches Angebot bereithalten. Alle kleinen Tüftler dürfen gespannt sein.<br>Voranmeldung über: kinderbibliothek@rudolstadt.de oder 03672-486420<br><br>Bitte beachten Sie die derzeit geltenden Zugangsregeln."
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Tüftlerzeit wird dieses Mal ein weihnachtliches Angebot bereithalten. Alle kleinen Tüftler dürfen gespannt sein.\nVoranmeldung über: kinderbibliothek@rudolstadt.de oder 03672-486420\n\nBitte beachten Sie die derzeit geltenden Zugangsregeln."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schulplatz 13",
+            "phone": "0 36 72 - 48 64 20",
+            "fax": "0 36 72 - 48 64 30",
+            "web": "http://www.stadtbibliothek-rudolstadt.de/",
+            "email": "stadtbibliothek@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.720835175055917,
+                    "longitude": 11.342568397521973
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+                {
+                    "rel": "venuewebsite",
+                    "url": "http://www.stadtbibliothek-rudolstadt.de/",
+                    "latitude": null,
+                    "longitude": null,
+                    "value": ""
+                },
+                {
+                    "rel": "default",
+                    "url": "https://dam.destination.one/828118/f13bbf5602ffc406ebae2faa3527654dea84194666bce4925a1ca8bd3f50c5e9/tueftlerzeit-sfz-rudolstadt-jpg.jpg",
+                    "type": "image/jpeg",
+                    "latitude": null,
+                    "longitude": null,
+                    "width": 1920,
+                    "height": 1080,
+                    "value": "Tueftlerzeit©SFZ-Rudolstadt.jpg"
+                }
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-16T15:00:00+01:00",
+                    "end": "2099-12-16T16:30:00+01:00",
+                    "tz": "Europe/Berlin"
+                },
+                {
+                    "weekdays": [],
+                    "start": "2022-01-20T15:00:00+01:00",
+                    "end": "2022-01-20T17:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                },
+                {
+                    "weekdays": [],
+                    "start": "2022-02-17T15:00:00+01:00",
+                    "end": "2022-02-17T17:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Stadtbibliothek Rudolstadt",
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100042570"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100042570"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-16T15:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-16T16:30:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "3"
+                },
+                {
+                    "key": "interval_last_match_start",
+                    "value": "2022-02-17T15:00:00+01"
+                },
+                {
+                    "key": "interval_last_match_end",
+                    "value": "2022-02-17T17:00:00+01"
+                }
+            ],
+            "features": [],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Stadtbibliothek Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schulplatz 13",
+                    "phone": "0 36 72 - 48 64 20",
+                    "fax": "0 36 72 - 48 64 30",
+                    "web": "http://www.stadtbibliothek-rudolstadt.de ",
+                    "email": "stadtbibliothek@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-11-10T23:02:00+00:00",
+            "changed": "2099-12-14T08:28:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        },
+        {
+            "global_id": "e_100350503",
+            "id": "100350503",
+            "title": "Adventliche Orgelmusik (Orgel: KMD Frank Bettenhausen)",
+            "type": "Event",
+            "categories": [
+                "Konzerte, Festivals, Show & Tanz",
+                "Weihnachten"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.&nbsp;&nbsp;Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.<br><br><strong>Es gilt die 2G-PLUS-Regel.</strong><br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.  Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.\n\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Caspar-Schulte-Straße",
+            "phone": "03672 - 48 96 13",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.718688721182531,
+                    "longitude": 11.327333450317383
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+                {
+                    "rel": "default",
+                    "url": "https://dam.destination.one/853436/109ac1cf87913e21b5e2b0ef0cc63d223a14374364952a855746a8e7c3fcfc36/lutherkirche-jpg.jpg",
+                    "type": "image/jpeg",
+                    "latitude": null,
+                    "longitude": null,
+                    "width": 1920,
+                    "height": 1080,
+                    "value": "Lutherkirche.jpg"
+                }
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-01T19:00:00+01:00",
+                    "end": "2099-12-01T20:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                },
+                {
+                    "weekdays": [],
+                    "start": "2099-12-08T19:00:00+01:00",
+                    "end": "2099-12-08T20:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                },
+                {
+                    "weekdays": [],
+                    "start": "2099-12-15T19:00:00+01:00",
+                    "end": "2099-12-15T20:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                },
+                {
+                    "weekdays": [],
+                    "start": "2099-12-22T19:00:00+01:00",
+                    "end": "2099-12-22T20:00:00+01:00",
+                    "tz": "Europe/Berlin"
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Lutherkirche",
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100118350"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100118350"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-15T19:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-15T20:00:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "2"
+                },
+                {
+                    "key": "interval_last_match_start",
+                    "value": "2099-12-22T19:00:00+01"
+                },
+                {
+                    "key": "interval_last_match_end",
+                    "value": "2099-12-22T20:00:00+01"
+                }
+            ],
+            "features": [],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Lutherkirche",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Caspar-Schulte-Straße",
+                    "phone": "03672 - 48 96 13",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-11-08T22:15:00+00:00",
+            "changed": "2099-12-14T08:38:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        }
+    ]
+}
