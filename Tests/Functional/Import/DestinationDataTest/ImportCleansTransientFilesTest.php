@@ -2,16 +2,9 @@
 
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Client\ClientInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Command\DestinationDataImportCommand;
-use Wrm\Events\Tests\ClientFactory;
 
 /**
  * @testdox DestinationData import
@@ -21,51 +14,31 @@ class ImportCleansTransientFilesTest extends AbstractTest
     /**
      * @test
      */
-    public function importCleansTransientFiles(): void
+    public function cleansTransientFiles(): void
     {
         $fileImportPath = 'staedte/beispielstadt/events/';
-        $this->setUpFrontendRootPage(1, [], [
-            'config' => implode(PHP_EOL, [
-                'module.tx_events_pi1.settings.destinationData {',
-                'restUrl = ' . $this->getInstancePath() . '/typo3conf/ext/events/Tests/Functional/Import/DestinationDataTest/Fixtures/Response.json',
-                'license = example-license',
-                'restType = Event',
-                'restLimit = 3',
-                'restMode = next_months,12',
-                'restTemplate = ET2014A.json',
-                'categoriesPid = ',
-                'categoryParentUid = ',
-                '}',
-            ]),
+        $this->setUpConfiguration([
+            'restUrl = ' . $this->getInstancePath() . '/typo3conf/ext/events/Tests/Functional/Import/DestinationDataTest/Fixtures/Response.json',
+            'license = example-license',
+            'restType = Event',
+            'restLimit = 3',
+            'restMode = next_months,12',
+            'restTemplate = ET2014A.json',
+            'categoriesPid = ',
+            'categoryParentUid = ',
         ]);
 
-        $requests = [];
-        $client = ClientFactory::createClientWithHistory([
+        $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
-        ], $requests);
-        $container = $this->getContainer();
-        if ($container instanceof Container) {
-            $container->set(ClientInterface::class, $client);
-            // For TYPO3 10 support
-            $container->set(GuzzleClientInterface::class, $client);
-        }
+        ]);
 
-        $subject = $this->getContainer()->get(DestinationDataImportCommand::class);
-        self::assertInstanceOf(Command::class, $subject);
-
-        $tester = new CommandTester($subject);
-        $tester->execute(
-            [
-                'storage-pid' => 2,
-                'rest-experience' => 'beispielstadt',
-                'files-folder' => $fileImportPath,
-            ],
-            [
-                'capture_stderr_separately' => true,
-            ]
-        );
+        $tester = $this->executeCommand([
+            'storage-pid' => 2,
+            'rest-experience' => 'beispielstadt',
+            'files-folder' => $fileImportPath,
+        ]);
 
         self::assertSame(0, $tester->getStatusCode());
 
