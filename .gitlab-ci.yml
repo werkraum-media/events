@@ -54,7 +54,7 @@ validate:cgl:
   before_script:
   script:
     - composer install --prefer-dist --no-progress
-    - ./vendor/bin/ecs check --no-progress-bar --clear-cache --fix
+    - ./vendor/bin/ecs check --no-progress-bar --clear-cache
 
 validate:phpstan:8.0:
   image: php:8.0-alpine
