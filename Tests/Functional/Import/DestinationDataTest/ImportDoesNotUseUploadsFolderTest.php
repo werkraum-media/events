@@ -9,12 +9,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * @testdox DestinationData import
  */
-class ImportDoesNotUserUploadsFolderTest extends AbstractTest
+class ImportDoesNotUseUploadsFolderTest extends AbstractTest
 {
     /**
      * @test
      */
-    public function doesNotUserUploadsFolder(): void
+    public function doesNotUseUploadsFolder(): void
     {
         $fileImportPath = 'staedte/beispielstadt/events/';
 
