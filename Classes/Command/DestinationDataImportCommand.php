@@ -54,10 +54,17 @@ class DestinationDataImportCommand extends Command
     {
         Bootstrap::initializeBackendAuthentication();
 
+        $regionUid = $input->getArgument('region-uid');
+        if (is_numeric($regionUid)) {
+            $regionUid = (int) $regionUid;
+        } else {
+            $regionUid = null;
+        }
+
         return $this->destinationDataImportService->import(
             $input->getArgument('rest-experience'),
             $input->getArgument('storage-pid'),
-            $input->getArgument('region-uid'),
+            $regionUid,
             $input->getArgument('files-folder')
         );
     }

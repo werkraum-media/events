@@ -8,7 +8,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * @testdox DestinationData import
  */
-class ImportsWithoutRegionIfNotProvided extends AbstractTest
+class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
 {
     /**
      * @test
@@ -33,9 +33,10 @@ class ImportsWithoutRegionIfNotProvided extends AbstractTest
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
         ]);
         $tester = $this->executeCommand([
-            'storage-pid' => 2,
+            'storage-pid' => '2',
             'rest-experience' => 'beispielstadt',
             'files-folder' => $fileImportPath,
+            'region-uid' => '',
         ]);
 
         self::assertSame(0, $tester->getStatusCode());

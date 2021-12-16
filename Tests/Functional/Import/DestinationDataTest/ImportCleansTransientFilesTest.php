@@ -35,7 +35,7 @@ class ImportCleansTransientFilesTest extends AbstractTest
         ]);
 
         $tester = $this->executeCommand([
-            'storage-pid' => 2,
+            'storage-pid' => '2',
             'rest-experience' => 'beispielstadt',
             'files-folder' => $fileImportPath,
         ]);
