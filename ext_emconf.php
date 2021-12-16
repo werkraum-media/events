@@ -7,7 +7,6 @@ $EM_CONF['events'] = [
     'author' => 'Dirk Koritnik',
     'author_email' => 'koritnik@werkraum-media.de',
     'state' => 'alpha',
-    'uploadfolder' => 1,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
     'version' => '2.0.0',

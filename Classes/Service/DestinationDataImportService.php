@@ -647,14 +647,14 @@ class DestinationDataImportService
 
         foreach ($assets as $media_object) {
             if ($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
-                $orgFileUrl = urldecode($media_object['url']);
+                $fileUrl = urldecode($media_object['url']);
                 $orgFileNameSanitized = $storage->sanitizeFileName(
                     basename(
                         urldecode($media_object['url'])
                     )
                 );
 
-                $this->logger->info('File attached:' . $orgFileUrl);
+                $this->logger->info('File attached:' . $fileUrl);
                 $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
 
                 $targetFilePath = $this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder
@@ -666,9 +666,9 @@ class DestinationDataImportService
                 } else {
                     $this->logger->info("File don't exist " . $orgFileNameSanitized);
                     // Load the file
-                    if ($file = $this->loadFile($orgFileUrl)) {
+                    if ($filename = $this->loadFile($fileUrl)) {
                         // Move file to defined folder
-                        $this->logger->info('Adding file ' . $file);
+                        $this->logger->info('Adding file ' . $filename);
 
                         try {
                             $targetFolder = $storage->getFolder($this->filesFolder);
@@ -676,8 +676,7 @@ class DestinationDataImportService
                             $targetFolder = $storage->createFolder($this->filesFolder);
                         }
 
-                        $tempFilePath = $this->environment->getPublicPath() . "/uploads/tx_events/" . $file;
-                        $storage->addFile($tempFilePath, $targetFolder);
+                        $storage->addFile($filename, $targetFolder, basename($fileUrl));
                     } else {
                         $error = true;
                     }
@@ -719,19 +718,23 @@ class DestinationDataImportService
 
     private function loadFile(string $fileUrl): string
     {
-        $directory = $this->environment->getPublicPath() . "/uploads/tx_events/";
-        $filename = basename($fileUrl);
-        $this->logger->info('Getting file ' . $fileUrl . ' as ' . $filename);
+        $this->logger->info('Getting file ' . $fileUrl);
+
+        $file = new \SplFileInfo($fileUrl);
+        $temporaryFilename = GeneralUtility::tempnam($file->getBasename());
 
         $response = $this->dataFetcher->fetchImage($fileUrl);
-        $asset = $response->getBody()->__toString();
-        if ($response->getStatusCode() === 200 && $asset !== '') {
-            file_put_contents($directory . $filename, $asset);
-            return $filename;
+        $fileContent = $response->getBody()->__toString();
+        if ($response->getStatusCode() !== 200) {
+            $this->logger->error('Cannot load file ' . $fileUrl);
         }
 
-        $this->logger->error('Cannot load file ' . $fileUrl);
-        return '';
+        if (GeneralUtility::writeFile($temporaryFilename, $fileContent, true) === false) {
+            $this->logger->error('Could not write temporary file.');
+            return '';
+        }
+
+        return $temporaryFilename;
     }
 
     private function createFileRelations(

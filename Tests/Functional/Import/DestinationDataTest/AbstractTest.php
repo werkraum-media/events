@@ -11,10 +11,6 @@ abstract class AbstractTest extends FunctionalTestCase
         'typo3conf/ext/events',
     ];
 
-    protected $additionalFoldersToCreate = [
-        'uploads/tx_events/'
-    ];
-
     protected function setUp(): void
     {
         parent::setUp();
