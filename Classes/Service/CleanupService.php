@@ -26,7 +26,7 @@ class CleanupService
     public function deleteAllData(): void
     {
         $this->database->truncateTables();
-        $this->files->deleteAll();
+        $this->files->deleteDangling();
     }
 
     public function deletePastData(): void

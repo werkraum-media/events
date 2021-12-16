@@ -46,57 +46,88 @@ class Files
         $this->storageRepository = $storageRepository;
     }
 
-    public function deleteAll(): void
-    {
-        $this->delete($this->getFilesFromDb());
-    }
-
     public function deleteDangling(): void
     {
-        $this->delete($this->getFilesFromDb(function (QueryBuilder $queryBuilder) {
-            $queryBuilder->leftJoin(
+        $this->markFileReferencesDeletedIfForeignRecordIsMissing();
+        $this->deleteFilesWithoutProperReference();
+    }
+
+    private function markFileReferencesDeletedIfForeignRecordIsMissing(): void
+    {
+        $referencesQuery = $this->connectionPool
+            ->getQueryBuilderForTable('sys_file_reference');
+        $referencesQuery->getRestrictions()->removeAll();
+        $referencesQuery->select(
+            'uid',
+            'uid_foreign',
+            'tablenames'
+        );
+        $referencesQuery->from('sys_file_reference');
+        $referencesQuery->where(
+            $referencesQuery->expr()->like(
+                'tablenames',
+                $referencesQuery->createNamedParameter('tx_events_domain_model_%')
+            )
+        );
+        $referencesQuery->orderBy('tablenames');
+        $referencesQuery->addOrderBy('uid_foreign');
+
+        $references = $referencesQuery->execute();
+
+        $uidsPerTable = [];
+        $referenceUidsToMarkAsDeleted = [];
+
+        while ($reference = $references->fetch()) {
+            if (is_array($reference) === false) {
+                continue;
+            }
+
+            $uidsPerTable[(string)$reference['tablenames']][$reference['uid']] = $reference['uid_foreign'];
+        }
+
+        foreach ($uidsPerTable as $tableName => $records) {
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable($tableName);
+            $queryBuilder->getRestrictions()->removeAll();
+            $queryBuilder->select('uid');
+            $queryBuilder->from($tableName);
+            $queryBuilder->where($queryBuilder->expr()->in('uid', $records));
+            $referenceUidsToMarkAsDeleted = array_merge(
+                $referenceUidsToMarkAsDeleted,
+                array_keys(array_diff($records, $queryBuilder->execute()->fetchAll(\PDO::FETCH_COLUMN)))
+            );
+        }
+
+        if ($referenceUidsToMarkAsDeleted === []) {
+            return;
+        }
+
+        $updateQuery = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
+        $updateQuery->update('sys_file_reference');
+        $updateQuery->where($updateQuery->expr()->in('uid', $referenceUidsToMarkAsDeleted));
+        $updateQuery->set('deleted', '1');
+        $updateQuery->execute();
+    }
+
+    private function deleteFilesWithoutProperReference(): void
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->select('file.identifier', 'file.storage', 'file.uid')
+            ->from('sys_file', 'file')
+            ->leftJoin(
                 'file',
                 'sys_file_reference',
                 'reference',
-                $queryBuilder->expr()->eq('file.uid', $queryBuilder->quoteIdentifier('reference.uid_local'))
-            );
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->orX(
-                    $queryBuilder->expr()->isNull('reference.uid'),
-                    $queryBuilder->expr()->eq('reference.deleted', 1),
-                    $queryBuilder->expr()->eq('reference.hidden', 1)
-                )
-            );
-        }));
-    }
+                'reference.uid_local = file.uid'
+            )
+            ->where($queryBuilder->expr()->eq('reference.deleted', 1));
+        /** @var array{int: array{storage: int, identifier: string, uid: int}} $filesToDelete */
+        $filesToDelete = $queryBuilder->execute()->fetchAll();
 
-    private function getFilesFromDb(callable $whereGenerator = null): array
-    {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
-
-        $queryBuilder->getRestrictions()->removeAll();
-
-        $queryBuilder->select('file.identifier', 'file.storage', 'file.uid')
-            ->from('sys_file', 'file')
-            ->where($queryBuilder->expr()->like(
-                'file.identifier',
-                $queryBuilder->createNamedParameter('/staedte/%/events/%')
-            ));
-
-        if ($whereGenerator !== null) {
-            $whereGenerator($queryBuilder);
-        }
-
-        return $queryBuilder->execute()->fetchAll();
-    }
-
-    private function delete(array $filesToDelete): void
-    {
         $uidsToRemove = [];
-
         foreach ($filesToDelete as $fileToDelete) {
-            $this->deleteFromFal($fileToDelete['storage'], $fileToDelete['identifier']);
-            $uidsToRemove[] = $fileToDelete['uid'];
+            $this->deleteFromFal((int) $fileToDelete['storage'], (string) $fileToDelete['identifier']);
+            $uidsToRemove[] = (int) $fileToDelete['uid'];
         }
 
         $this->deleteFromDb(...$uidsToRemove);
