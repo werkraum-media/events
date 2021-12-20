@@ -24,7 +24,6 @@ namespace Wrm\Events\Service\Cleanup;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 class Database
 {
@@ -33,21 +32,14 @@ class Database
      */
     private $connectionPool;
 
-    /**
-     * @var DataHandler
-     */
-    private $dataHandler;
-
     private const DATE_TABLE = 'tx_events_domain_model_date';
     private const EVENT_TABLE = 'tx_events_domain_model_event';
     private const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
 
     public function __construct(
-        ConnectionPool $connectionPool,
-        DataHandler $dataHandler
+        ConnectionPool $connectionPool
     ) {
         $this->connectionPool = $connectionPool;
-        $this->dataHandler = $dataHandler;
     }
 
     public function truncateTables(): void
@@ -72,7 +64,7 @@ class Database
             ->execute();
     }
 
-    public function getPastDates(): array
+    public function deletePastDates(): void
     {
         $queryBuilder = $this->connectionPool
             ->getConnectionForTable(self::DATE_TABLE)
@@ -81,32 +73,11 @@ class Database
         $queryBuilder->getRestrictions()->removeAll();
 
         $midnightToday = new \DateTimeImmutable('midnight today');
-        $records = $queryBuilder->select('uid')
-            ->from(self::DATE_TABLE)
+        $queryBuilder->delete(self::DATE_TABLE)
             ->where($queryBuilder->expr()->lte(
                 'end',
-                $queryBuilder->createNamedParameter($midnightToday->format('Y-m-d H:i:s'))
+                $queryBuilder->createNamedParameter($midnightToday->format('U'))
             ))
-            ->execute()
-            ->fetchAll();
-
-        return array_map(function ($record) {
-            if (is_array($record) === false) {
-                return '';
-            }
-
-            return $record['uid'];
-        }, $records);
-    }
-
-    public function deleteDates(int ...$uids): void
-    {
-        $queryBuilder = $this->connectionPool
-            ->getQueryBuilderForTable(self::DATE_TABLE);
-
-        $queryBuilder->delete(self::DATE_TABLE)
-            ->where('uid in (:uids)')
-            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
             ->execute();
     }
 
@@ -125,14 +96,13 @@ class Database
             ->execute()
             ->fetchAll(\PDO::FETCH_COLUMN);
 
-        $dataStructure = [self::EVENT_TABLE => []];
-        foreach ($recordUids as $recordUid) {
-            $dataStructure[self::EVENT_TABLE][$recordUid] = ['delete' => 1];
-        }
-
-        $dataHandler = clone $this->dataHandler;
-        $dataHandler->start([], $dataStructure);
-        $dataHandler->process_cmdmap();
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);
+        $queryBuilder->delete(self::EVENT_TABLE);
+        $queryBuilder->where($queryBuilder->expr()->in(
+            'uid',
+            $queryBuilder->createNamedParameter($recordUids, Connection::PARAM_INT_ARRAY)
+        ));
+        $queryBuilder->execute();
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category_record_mm');
         $queryBuilder->delete('sys_category_record_mm')

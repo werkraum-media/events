@@ -31,7 +31,7 @@ class CleanupService
 
     public function deletePastData(): void
     {
-        $this->database->deleteDates(...$this->database->getPastDates());
+        $this->database->deletePastDates();
         $this->database->deleteEventsWithoutDates();
         $this->files->deleteDangling();
     }

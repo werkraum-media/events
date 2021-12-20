@@ -6,19 +6,19 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Wrm\Events\Command\RemoveAllCommand;
+use Wrm\Events\Command\RemovePastCommand;
 
 /**
- * @testdox Cleanup RemoveAll
+ * @testdox Cleanup RemovePast
  */
-class RemoveAllTest extends FunctionalTestCase
+class RemovePastTest extends FunctionalTestCase
 {
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];
 
     protected $pathsToProvideInTestInstance = [
-        'typo3conf/ext/events/Tests/Functional/Cleanup/Fixtures/RemoveAllTestFileadmin/' => 'fileadmin/',
+        'typo3conf/ext/events/Tests/Functional/Cleanup/Fixtures/RemovePastTestFileadmin/' => 'fileadmin/',
     ];
 
     protected function setUp(): void
@@ -31,11 +31,11 @@ class RemoveAllTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function removesAllData(): void
+    public function removesPastData(): void
     {
-        $this->importDataSet('EXT:events/Tests/Functional/Cleanup/Fixtures/RemoveAllTest.xml');
+        $this->importDataSet('EXT:events/Tests/Functional/Cleanup/Fixtures/RemovePastTest.xml');
 
-        $subject = $this->getContainer()->get(RemoveAllCommand::class);
+        $subject = $this->getContainer()->get(RemovePastCommand::class);
         self::assertInstanceOf(Command::class, $subject);
 
         $tester = new CommandTester($subject);
@@ -53,52 +53,48 @@ class RemoveAllTest extends FunctionalTestCase
             'Regions are not kept.'
         );
         self::assertCount(
-            1,
-            $this->getAllRecords('tx_events_domain_model_partner'),
-            'Partners are not kept.'
+            2,
+            $this->getAllRecords('tx_events_domain_model_organizer'),
+            'Organizers are not kept.'
         );
 
         self::assertCount(
-            0,
-            $this->getAllRecords('tx_events_domain_model_organizer'),
-            'Organizers are still there.'
-        );
-        self::assertCount(
-            0,
+            1,
             $this->getAllRecords('tx_events_domain_model_event'),
             'Events are still there.'
         );
         self::assertCount(
-            0,
+            1,
             $this->getAllRecords('tx_events_domain_model_date'),
             'Dates are still there.'
         );
 
         self::assertCount(
-            0,
+            1,
             $this->getAllRecords('sys_category_record_mm'),
             'Relations to categories still exist.'
         );
 
         self::assertCount(
-            1,
+            2,
             $this->getAllRecords('sys_file'),
             'Unexpected number of sys_file records.'
         );
         self::assertCount(
-            1,
+            2,
             $this->getAllRecords('sys_file_reference'),
             'Unexpected number of sys_file_reference records.'
         );
         self::assertCount(
-            1,
+            2,
             $this->getAllRecords('sys_file_metadata'),
             'Unexpected number of sys_file_metadata records.'
         );
 
         $files = GeneralUtility::getFilesInDir('fileadmin/user_uploads');
         self::assertIsArray($files, 'Failed to retrieve files from filesystem.');
-        self::assertCount(1, $files, 'Unexpectd number of files in filesystem.');
-        self::assertSame('example-for-partner.gif', array_values($files)[0], 'Unexpectd file in filesystem.');
+        self::assertCount(2, $files, 'Unexpectd number of files in filesystem.');
+        self::assertSame('example-for-future-event.gif', array_values($files)[0], 'Unexpected file in filesystem.');
+        self::assertSame('example-for-partner.gif', array_values($files)[1], 'Unexpected file in filesystem.');
     }
 }
