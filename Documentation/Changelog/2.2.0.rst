@@ -1,0 +1,45 @@
+2.2.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Add PHP 8.0.
+
+* Add TYPO3 v11 LTS.
+
+* Empty TypoScript option ``categoryParentUid`` or ``0`` no longer triggers a warning.
+  Instead it is respected to not import or assign any category.
+
+* ``region-uid`` of ``DestinationDataImportCommand`` is now optional.
+  No region will be fetched and assigned to Events if no uid is provided.
+
+Fixes
+-----
+
+* Commands ``RemovePast`` and ``RemoveAll`` now properly remove files related to events which no longer exist.
+
+* Command ``RemovePast`` now properly removes past dates and associated events, category relations and files.
+
+Tasks
+-----
+
+* Added lots of tests for existing code base and adjustments made in this version.
+
+* Migrate readme to documentation.
+
+* Remove execution rights from PHP File.
+
+* Remove no longer existing TCA ``ctrl`` entry ``thumbnail``.
+
+* Fixed nearly all PHPStan issues.
+
+Deprecation
+-----------
+
+Nothing

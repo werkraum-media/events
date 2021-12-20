@@ -9,9 +9,6 @@ Nothing
 Features
 --------
 
-* ``region-uid`` of ``DestinationDataImportCommand`` is now optional.
-  No region will be fetched and assigned to Events if no uid is provided.
-
 * ``DateDemandFactory`` supports TypoScript ``stdWrap`` on all settings on first level.
 
 * New option ``queryCallback`` for ``DateDemand`` was added.
@@ -37,8 +34,6 @@ Tasks
   This also streamlines creation with ``EventDemand`` and ``EventDemandFactory``.
 
 * Removed outdated stuff from Documentation.
-
-* Fixed nearly all PHPStan issues.
 
 Deprecation
 -----------
