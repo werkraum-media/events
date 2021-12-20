@@ -8,17 +8,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * @testdox DestinationData import
  */
-class ImportsExampleAsExpectedTest extends AbstractTest
+class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
 {
     /**
      * @test
      */
-    public function importsExampleAsExpected(): void
+    public function importsWithoutCategoryIfNotProvided(): void
     {
         $fileImportPath = 'staedte/beispielstadt/events/';
 
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
         $this->setUpConfiguration([
             'restUrl = ' . $this->getInstancePath() . '/typo3conf/ext/events/Tests/Functional/Import/DestinationDataTest/Fixtures/Response.json',
             'license = example-license',
@@ -26,8 +25,8 @@ class ImportsExampleAsExpectedTest extends AbstractTest
             'restLimit = 3',
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
-            'categoriesPid = 2',
-            'categoryParentUid = 2',
+            'categoriesPid = ',
+            'categoryParentUid = ',
         ]);
 
         $requests = &$this->setUpResponses([
@@ -60,7 +59,13 @@ class ImportsExampleAsExpectedTest extends AbstractTest
             $this->getAllRecords('tx_events_domain_model_region'),
             'Added or removed unexpected region.'
         );
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsExampleAsExpected.csv');
+        self::assertCount(
+            0,
+            $this->getAllRecords('sys_category'),
+            'Added unexpected category.'
+        );
+        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutCategoryIfNotProvided.csv');
+
 
         $importedFiles = GeneralUtility::getFilesInDir($this->getInstancePath() . '/fileadmin/' . $fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');

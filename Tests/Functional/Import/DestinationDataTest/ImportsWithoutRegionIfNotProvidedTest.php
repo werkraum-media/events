@@ -16,6 +16,7 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
     public function importsWithoutRegionIfNotProvided(): void
     {
         $fileImportPath = 'staedte/beispielstadt/events/';
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
         $this->setUpConfiguration([
             'restUrl = ' . $this->getInstancePath() . '/typo3conf/ext/events/Tests/Functional/Import/DestinationDataTest/Fixtures/Response.json',
             'license = example-license',
@@ -23,8 +24,8 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
             'restLimit = 3',
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
-            'categoriesPid = ',
-            'categoryParentUid = ',
+            'categoriesPid = 2',
+            'categoryParentUid = 2',
         ]);
 
         $requests = &$this->setUpResponses([
@@ -69,6 +70,12 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
             ],
             array_values($importedFiles),
             'Got unexpected number of files'
+        );
+
+        self::assertFileEquals(
+            __DIR__ . '/Assertions/EmptyLogFile.txt',
+            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
+            'Logfile was not empty.'
         );
     }
 }

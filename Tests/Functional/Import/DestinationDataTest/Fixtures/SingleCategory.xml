@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <sys_category>
+        <uid>1</uid>
+        <pid>2</pid>
+        <title>Top Category</title>
+    </sys_category>
+    <sys_category>
+        <uid>2</uid>
+        <pid>2</pid>
+        <title>Event Category Parent</title>
+        <parent>1</parent>
+    </sys_category>
+</dataset>
+

@@ -380,6 +380,10 @@ class DestinationDataImportService
      */
     private function setCategories(array $categories): void
     {
+        if ($this->categoryParentUid === 0) {
+            return;
+        }
+
         $sysParentCategory = $this->sysCategoriesRepository->findByUid($this->categoryParentUid);
         if (!$sysParentCategory instanceof Category) {
             $this->logger->warning(

@@ -60,5 +60,11 @@ class ImportDoesNotUseUploadsFolderTest extends AbstractTest
         );
 
         self::assertFalse(file_exists(Environment::getPublicPath() . '/uploads/tx_events/'), 'Uploads folder exists.');
+
+        self::assertFileEquals(
+            __DIR__ . '/Assertions/EmptyLogFile.txt',
+            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
+            'Logfile was not empty.'
+        );
     }
 }
