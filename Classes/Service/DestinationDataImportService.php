@@ -312,7 +312,7 @@ class DestinationDataImportService
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
 
             // Set Highlight (Is only set in rest if true)
-            if ($event['highlight']) {
+            if (isset($event['highlight']) && $event['highlight']) {
                 $this->tmpCurrentEvent->setHighlight($event['highlight']);
             }
 
@@ -599,6 +599,10 @@ class DestinationDataImportService
     private function setTexts(array $texts): void
     {
         foreach ($texts as $text) {
+            if (isset($text['value']) === false) {
+                continue;
+            }
+
             if ($text['rel'] == "details" && $text['type'] == "text/plain") {
                 $this->tmpCurrentEvent->setDetails(str_replace('\n\n', '\n', $text['value']));
             }
@@ -702,7 +706,7 @@ class DestinationDataImportService
                             $file->getUid(),
                             [
                                 'title' => $media_object['value'],
-                                'description' => $media_object['description'],
+                                'description' => $media_object['description'] ?? '',
                                 'alternative' => 'DD Import'
                             ]
                         );
