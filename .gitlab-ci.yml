@@ -94,7 +94,7 @@ validate:phpstan:7.2:
   before_script:
   script:
     - composer install --prefer-dist --no-progress
-    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
 
 test:phpunit:8.0:
   image: php:8.0-alpine
