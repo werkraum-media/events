@@ -55,7 +55,7 @@
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "guzzlehttp/guzzle": "^6.3 || ^7.3",
-        "phpspec/prophecy-phpunit": "^1.0"
+        "phpspec/prophecy-phpunit": "^1.0 || ^2.0"
     },
     "config": {
         "allow-plugins": {
