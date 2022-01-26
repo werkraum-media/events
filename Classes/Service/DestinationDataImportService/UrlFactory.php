@@ -40,6 +40,7 @@ class UrlFactory
             'mode' => $this->settings['restMode'] ?? '',
             'limit' => $this->settings['restLimit'] ?? '',
             'template' => $this->settings['restTemplate'] ?? '',
+            'q' => $import->getSearchQuery()
         ];
 
         $parameter = array_filter($parameter);

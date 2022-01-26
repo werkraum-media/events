@@ -49,6 +49,11 @@ class DestinationDataImportCommand extends Command
             InputArgument::OPTIONAL,
             'What is the region uid?'
         );
+        $this->addArgument(
+            'query',
+            InputArgument::OPTIONAL,
+            'What is the additional query "q" parameter?'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -62,11 +67,17 @@ class DestinationDataImportCommand extends Command
             $regionUid = null;
         }
 
+        $query = $input->getArgument('query');
+        if (is_string($query) === false) {
+            $query = '';
+        }
+
         return $this->destinationDataImportService->import(new Import(
             $input->getArgument('rest-experience'),
             $input->getArgument('storage-pid'),
             $regionUid,
-            $input->getArgument('files-folder')
+            $input->getArgument('files-folder'),
+            $query
         ));
     }
 }

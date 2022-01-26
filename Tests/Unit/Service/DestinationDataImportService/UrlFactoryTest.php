@@ -74,6 +74,7 @@ class UrlFactoryTest extends TestCase
                 'import' => (function () {
                     $import = $this->prophesize(Import::class);
                     $import->getRestExperience()->willReturn('experience');
+                    $import->getSearchQuery()->willReturn('');
 
                     return $import;
                 })(),
@@ -91,6 +92,7 @@ class UrlFactoryTest extends TestCase
                 'import' => (function () {
                     $import = $this->prophesize(Import::class);
                     $import->getRestExperience()->willReturn('');
+                    $import->getSearchQuery()->willReturn('');
 
                     return $import;
                 })(),
@@ -103,6 +105,7 @@ class UrlFactoryTest extends TestCase
                 'import' => (function () {
                     $import = $this->prophesize(Import::class);
                     $import->getRestExperience()->willReturn('experience');
+                    $import->getSearchQuery()->willReturn('');
 
                     return $import;
                 })(),
@@ -113,6 +116,19 @@ class UrlFactoryTest extends TestCase
                     'restTemplate' => 'restTemplate',
                 ],
                 'expectedResult' => 'https://example.com/path?experience=experience&licensekey=licenseKey&limit=restLimit&template=restTemplate',
+            ],
+            'With search query' => [
+                'import' => (function () {
+                    $import = $this->prophesize(Import::class);
+                    $import->getRestExperience()->willReturn('experience');
+                    $import->getSearchQuery()->willReturn('name:"Test Something"');
+
+                    return $import;
+                })(),
+                'settings' => [
+                    'restUrl' => 'https://example.com/path',
+                ],
+                'expectedResult' => 'https://example.com/path?experience=experience&q=name%3A%22Test+Something%22',
             ],
         ];
     }

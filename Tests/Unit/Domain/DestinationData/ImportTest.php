@@ -19,6 +19,7 @@ class ImportTest extends TestCase
             '',
             0,
             null,
+            '',
             ''
         );
 
@@ -37,6 +38,7 @@ class ImportTest extends TestCase
             'experience',
             0,
             null,
+            '',
             ''
         );
 
@@ -55,6 +57,7 @@ class ImportTest extends TestCase
             '',
             20,
             null,
+            '',
             ''
         );
 
@@ -73,6 +76,7 @@ class ImportTest extends TestCase
             '',
             0,
             30,
+            '',
             ''
         );
 
@@ -91,12 +95,32 @@ class ImportTest extends TestCase
             '',
             0,
             null,
-            'test/folder'
+            'test/folder',
+            ''
         );
 
         self::assertSame(
             'test/folder',
             $subject->getFilesFolder()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function returnsSearchQuery(): void
+    {
+        $subject = new Import(
+            '',
+            0,
+            null,
+            'test/folder',
+            'name:"Test"'
+        );
+
+        self::assertSame(
+            'name:"Test"',
+            $subject->getSearchQuery()
         );
     }
 }
