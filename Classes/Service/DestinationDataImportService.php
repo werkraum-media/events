@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Wrm\Events\Domain\DestinationData\Import;
 use Wrm\Events\Domain\Model\Category;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Event;
@@ -34,49 +35,9 @@ use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 class DestinationDataImportService
 {
     /**
-     * @var string
+     * @var Import
      */
-    private $restUrl;
-
-    /**
-     * @var string
-     */
-    private $restLicenseKey;
-
-    /**
-     * @var string
-     */
-    private $restType;
-
-    /**
-     * @var string
-     */
-    private $restLimit;
-
-    /**
-     * @var string
-     */
-    private $restMode;
-
-    /**
-     * @var string
-     */
-    private $restTemplate;
-
-    /**
-     * @var string
-     */
-    private $restExperience;
-
-    /**
-     * @var int
-     */
-    private $storagePid;
-
-    /**
-     * @var ?int
-     */
-    private $regionUid;
+    private $import;
 
     /**
      * @var int
@@ -87,16 +48,6 @@ class DestinationDataImportService
      * @var int
      */
     private $categoryParentUid;
-
-    /**
-     * @var string
-     */
-    private $filesFolder;
-
-    /**
-     * @var array
-     */
-    private $settings = [];
 
     /**
      * @var Environment
@@ -210,34 +161,19 @@ class DestinationDataImportService
         $this->environment = $environment;
         $this->dataFetcher = $dataFetcher;
 
-        // Get Typoscript Settings
-        $this->settings = $this->configurationManager->getConfiguration(
+        $settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'Events',
             'Pi1'
-        );
-
-        // Set properties
-        $this->restUrl = $this->settings['destinationData']['restUrl'];
-        $this->restLicenseKey = $this->settings['destinationData']['license'];
-        $this->restType = $this->settings['destinationData']['restType'];
-        $this->restLimit = $this->settings['destinationData']['restLimit'];
-        $this->restMode = $this->settings['destinationData']['restMode'];
-        $this->restTemplate = $this->settings['destinationData']['restTemplate'];
-        $this->categoriesPid = (int) $this->settings['destinationData']['categoriesPid'];
-        $this->categoryParentUid = (int) $this->settings['destinationData']['categoryParentUid'];
+        )['destinationData'] ?? [];
+        $this->categoriesPid = (int) $settings['categoriesPid'];
+        $this->categoryParentUid = (int) $settings['categoryParentUid'];
     }
 
     public function import(
-        string $restExperience,
-        int $storagePid,
-        ?int $regionUid,
-        string $filesFolder
+        Import $import
     ): int {
-        $this->restExperience = $restExperience;
-        $this->storagePid = $storagePid;
-        $this->regionUid = $regionUid;
-        $this->filesFolder = $filesFolder;
+        $this->import = $import;
 
         // Get configuration
         $frameworkConfiguration = $this->configurationManager->getConfiguration(
@@ -247,41 +183,23 @@ class DestinationDataImportService
         // Set storage pid
         $persistenceConfiguration = [
             'persistence' => [
-                'storagePid' => $this->storagePid,
+                'storagePid' => $this->import->getStoragePid(),
             ],
         ];
 
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-
         $this->logger->info('Starting Destination Data Import Service');
-        $restUrl = $this->restUrl . '?experience=' . $this->restExperience . '&licensekey=' . $this->restLicenseKey . '&type=' . $this->restType . '&mode=' . $this->restMode . '&limit=' . $this->restLimit . '&template=' . $this->restTemplate;
-        $this->logger->info('Try to get data from ' . $restUrl);
 
         try {
-            $fetchedData = $this->fetchData($restUrl);
+            $data = $this->dataFetcher->fetchSearchResult($import);
         } catch (\Exception $e) {
             $this->logger->error('Could not receive data.');
             return 1;
         }
 
-        return $this->processData($fetchedData);
-    }
-
-    private function fetchData(string $restUrl): array
-    {
-        $jsonContent = file_get_contents($restUrl);
-        if (is_string($jsonContent) === false) {
-            throw new \Exception('Could not receive data.', 1639495835);
-        }
-        $jsonResponse = json_decode($jsonContent, true);
-        if (is_array($jsonResponse) === false) {
-            throw new \Exception('Could not receive data.', 1639495835);
-        }
-
-        $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
-        return $jsonResponse;
+        return $this->processData($data);
     }
 
     public function processData(array $data): int
@@ -290,8 +208,8 @@ class DestinationDataImportService
 
         // Get selected region
         $selectedRegion = null;
-        if (is_int($this->regionUid)) {
-            $selectedRegion = $this->regionRepository->findByUid($this->regionUid);
+        if (is_int($this->import->getRegionUid())) {
+            $selectedRegion = $this->regionRepository->findByUid($this->import->getRegionUid());
         }
 
         foreach ($data['items'] as $event) {
@@ -665,7 +583,7 @@ class DestinationDataImportService
                 $this->logger->info('File attached:' . $fileUrl);
                 $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
 
-                $targetFilePath = $this->environment->getPublicPath() . '/fileadmin/' . $this->filesFolder
+                $targetFilePath = $this->environment->getPublicPath() . '/fileadmin/' . $this->import->getFilesFolder()
                     . $orgFileNameSanitized;
                 // Check if file already exists
 
@@ -679,9 +597,9 @@ class DestinationDataImportService
                         $this->logger->info('Adding file ' . $filename);
 
                         try {
-                            $targetFolder = $storage->getFolder($this->filesFolder);
+                            $targetFolder = $storage->getFolder($this->import->getFilesFolder());
                         } catch (FolderDoesNotExistException $e) {
-                            $targetFolder = $storage->createFolder($this->filesFolder);
+                            $targetFolder = $storage->createFolder($this->import->getFilesFolder());
                         }
 
                         $storage->addFile($filename, $targetFolder, basename($fileUrl));
@@ -696,7 +614,7 @@ class DestinationDataImportService
                     // TODO: How to delete file references?
                     } else {
                         $this->logger->info('No relation found');
-                        $fileIdentifier = $this->filesFolder . $orgFileNameSanitized;
+                        $fileIdentifier = $this->import->getFilesFolder() . $orgFileNameSanitized;
                         $file = $storage->getFile($fileIdentifier);
                         if (!$file instanceof File) {
                             $this->logger->warning('Could not find file.', [$fileIdentifier]);
@@ -715,7 +633,7 @@ class DestinationDataImportService
                             'tx_events_domain_model_event',
                             $this->tmpCurrentEvent->getUid(),
                             'images',
-                            $this->storagePid
+                            $this->import->getStoragePid()
                         );
                     }
                 }

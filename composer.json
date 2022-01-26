@@ -54,7 +54,8 @@
         "typo3/testing-framework": "^6.14",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "guzzlehttp/guzzle": "^6.3 || ^7.3"
+        "guzzlehttp/guzzle": "^6.3 || ^7.3",
+        "phpspec/prophecy-phpunit": "^1.0"
     },
     "config": {
         "allow-plugins": {

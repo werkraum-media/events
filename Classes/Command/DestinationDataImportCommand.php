@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use Wrm\Events\Domain\DestinationData\Import;
 use Wrm\Events\Service\DestinationDataImportService;
 
 class DestinationDataImportCommand extends Command
@@ -61,11 +62,11 @@ class DestinationDataImportCommand extends Command
             $regionUid = null;
         }
 
-        return $this->destinationDataImportService->import(
+        return $this->destinationDataImportService->import(new Import(
             $input->getArgument('rest-experience'),
             $input->getArgument('storage-pid'),
             $regionUid,
             $input->getArgument('files-folder')
-        );
+        ));
     }
 }

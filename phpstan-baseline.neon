@@ -1,22 +1,17 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$restExperience of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$restExperience of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects string, mixed given\\.$#"
 			count: 1
 			path: Classes/Command/DestinationDataImportCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$storagePid of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects int, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$storagePid of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects int, mixed given\\.$#"
 			count: 1
 			path: Classes/Command/DestinationDataImportCommand.php
 
 		-
-			message: "#^Parameter \\#3 \\$regionUid of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects int\\|null, mixed given\\.$#"
-			count: 1
-			path: Classes/Command/DestinationDataImportCommand.php
-
-		-
-			message: "#^Parameter \\#4 \\$filesFolder of method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\:\\:import\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#4 \\$filesFolder of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects string, mixed given\\.$#"
 			count: 1
 			path: Classes/Command/DestinationDataImportCommand.php
 
