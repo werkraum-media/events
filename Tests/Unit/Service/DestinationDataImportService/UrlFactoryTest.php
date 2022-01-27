@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use Wrm\Events\Domain\DestinationData\Import;
+use Wrm\Events\Domain\Model\Import;
 use Wrm\Events\Service\DestinationDataImportService\UrlFactory;
 use Wrm\Events\Tests\ProphecyTrait;
 

@@ -14,6 +14,10 @@ use Wrm\Events\Tests\ClientFactory;
 
 abstract class AbstractTest extends FunctionalTestCase
 {
+    protected $coreExtensionsToLoad = [
+        'filelist',
+    ];
+
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];
@@ -65,9 +69,11 @@ abstract class AbstractTest extends FunctionalTestCase
         return $requests;
     }
 
-    protected function executeCommand(array $argumentsAndOptions): CommandTester
-    {
-        $subject = $this->getContainer()->get(DestinationDataImportCommand::class);
+    protected function executeCommand(
+        array $argumentsAndOptions,
+        string $command = DestinationDataImportCommand::class
+    ): CommandTester {
+        $subject = $this->getContainer()->get($command);
         self::assertInstanceOf(Command::class, $subject);
 
         $tester = new CommandTester($subject);

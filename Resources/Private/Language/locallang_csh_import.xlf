@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-01-27T08:22:40Z" product-name="Events">
+        <header/>
+        <body>
+            <trans-unit id="tx_events_domain_model_import">
+                <source>Import Configuration</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.div.typo3">
+                <source>TYPO3</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.div.rest">
+                <source>REST</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.palette.relations">
+                <source>Relations</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.palette.typo3_storage">
+                <source>TYPO3 Storages</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.palette.categories">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.title.description">
+                <source>Only for backend search and UX, not used for actual import.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.storage_pid">
+                <source>Storage Page</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.storage_pid.description">
+                <source>TYPO3 page to use for storing imported data.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.region">
+                <source>Region</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.categories_pid">
+                <source>Categories Storage Folder</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.categories_pid.description">
+                <source>TYPO3 page to use for storing imported categories.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.category_parent">
+                <source>Parent Category</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.category_parent.description">
+                <source>Existing TYPO3 category used as parent for all categories created during import.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.files_folder">
+                <source>Folder</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.files_folder.description">
+                <source>TYPO3 folder to use for storing imported files.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_experience">
+                <source>Experience</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_experience.description">
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-experience.html (todo check, was not loadable)</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_search_query">
+                <source>Search Query</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_search_query.description">
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-q.html (todo check, was not loadable)</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

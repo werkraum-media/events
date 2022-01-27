@@ -9,6 +9,12 @@ Nothing
 Features
 --------
 
+* Import configuration can now be configured as database records within TYPO3 folders.
+  This allows for better support (e.g. permission of backend users and validation and wizards like page selection).
+  Two new import commands are added.
+  One allows to process all available import configurations.
+  The other allows to process a single import configuration which needs to be configured.
+
 * Add new option ``query`` to ``DestinationDataImportCommand``.
   It is appended as ``q`` parameter to the initial search URL to fetch data for import.
   The value is documented at https://developer.et4.de/reference/current/#eT4META-search-param-q.html.

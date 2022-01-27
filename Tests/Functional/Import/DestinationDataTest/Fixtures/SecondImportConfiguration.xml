@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_events_domain_model_import>
+        <uid>2</uid>
+        <pid>2</pid>
+        <title>Second Example import configuration</title>
+
+        <storage_pid>3</storage_pid>
+        <files_folder>1:/staedte/anderestadt/events/</files_folder>
+        <categories_pid>2</categories_pid>
+        <category_parent>2</category_parent>
+
+        <region>1</region>
+
+        <rest_experience>anderestadt</rest_experience>
+        <rest_search_query>name:"Beispiel2"</rest_search_query>
+    </tx_events_domain_model_import>
+
+    <pages>
+        <pid>1</pid>
+        <uid>3</uid>
+        <title>Storage</title>
+        <doktype>254</doktype>
+    </pages>
+</dataset>

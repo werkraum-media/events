@@ -96,3 +96,18 @@ CREATE TABLE tx_events_domain_model_date (
     canceled_link varchar(1024) DEFAULT '' NOT NULL,
 
 );
+
+CREATE TABLE tx_events_domain_model_import (
+    title varchar(1024) DEFAULT '' NOT NULL,
+
+    storage_pid int(11) unsigned DEFAULT '0' NOT NULL,
+    files_folder varchar(1024) DEFAULT '' NOT NULL,
+
+    categories_pid int(11) unsigned DEFAULT '0' NOT NULL,
+    category_parent int(11) unsigned DEFAULT '0' NOT NULL,
+
+    region int(11) unsigned DEFAULT '0' NOT NULL,
+
+    rest_experience varchar(1024) DEFAULT '' NOT NULL,
+    rest_search_query varchar(1024) DEFAULT '' NOT NULL,
+);

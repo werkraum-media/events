@@ -19,7 +19,8 @@
         "typo3/cms-core": "^10.4 || ^11.5",
         "typo3/cms-extbase": "^10.4 || ^11.5",
         "typo3/cms-fluid": "^10.4 || ^11.5",
-        "typo3/cms-frontend": "^10.4 || ^11.5"
+        "typo3/cms-frontend": "^10.4 || ^11.5",
+        "typo3/cms-filelist": "^10.4 || ^11.5"
     },
     "autoload": {
         "psr-4": {

@@ -1,19 +1,14 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$restExperience of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects string, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
 			count: 1
-			path: Classes/Command/DestinationDataImportCommand.php
+			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
-			message: "#^Parameter \\#2 \\$storagePid of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects int, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$min \\(999\\) of function random_int expects lower number than parameter \\#2 \\$max \\(int\\<1, max\\>\\)\\.$#"
 			count: 1
-			path: Classes/Command/DestinationDataImportCommand.php
-
-		-
-			message: "#^Parameter \\#4 \\$filesFolder of class Wrm\\\\Events\\\\Domain\\\\DestinationData\\\\Import constructor expects string, mixed given\\.$#"
-			count: 1
-			path: Classes/Command/DestinationDataImportCommand.php
+			path: Classes/Domain/DestinationData/LegacyImportFactory.php
 
 		-
 			message: "#^Call to method deleteFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"

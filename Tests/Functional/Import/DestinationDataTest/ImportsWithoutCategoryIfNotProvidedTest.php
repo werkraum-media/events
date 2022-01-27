@@ -15,7 +15,9 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
      */
     public function importsWithoutCategoryIfNotProvided(): void
     {
-        $fileImportPath = 'staedte/beispielstadt/events/';
+        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
+        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
+        GeneralUtility::mkdir_deep($fileImportPath);
 
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
         $this->setUpConfiguration([
@@ -39,7 +41,7 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
         $tester = $this->executeCommand([
             'storage-pid' => '2',
             'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPath,
+            'files-folder' => $fileImportPathConfiguration,
             'region-uid' => '1',
         ]);
 
@@ -69,7 +71,7 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutCategoryIfNotProvided.csv');
 
 
-        $importedFiles = GeneralUtility::getFilesInDir($this->getInstancePath() . '/fileadmin/' . $fileImportPath);
+        $importedFiles = GeneralUtility::getFilesInDir($fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
         self::assertSame(
             [

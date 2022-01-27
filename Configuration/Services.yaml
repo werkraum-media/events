@@ -20,6 +20,18 @@ services:
         command: 'events:destinationdataimport'
         description: 'Import Destination Data Events'
 
+  Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:destinationdataimportviaconfiguration'
+        description: 'Import Destination Data Events'
+
+  Wrm\Events\Command\ImportDestinationDataViaAllConfigruationsCommand:
+    tags:
+      - name: 'console.command'
+        command: 'events:destinationdataimportviaallconfigurations'
+        description: 'Import Destination Data Events from all configurations'
+
   Wrm\Events\Command\RemoveAllCommand:
     tags:
       - name: 'console.command'

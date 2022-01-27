@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
-use Wrm\Events\Domain\DestinationData\Import;
+use Wrm\Events\Domain\Model\Import;
 
 /**
  * Provides API to fetch data from remote.

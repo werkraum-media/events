@@ -2,7 +2,6 @@
 
 namespace Wrm\Events\Service;
 
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -11,7 +10,6 @@ use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -19,17 +17,16 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\DestinationData\Import;
 use Wrm\Events\Domain\Model\Category;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Event;
+use Wrm\Events\Domain\Model\Import;
 use Wrm\Events\Domain\Model\Organizer;
 use Wrm\Events\Domain\Model\Region;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
-use Wrm\Events\Domain\Repository\RegionRepository;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 
 class DestinationDataImportService
@@ -38,21 +35,6 @@ class DestinationDataImportService
      * @var Import
      */
     private $import;
-
-    /**
-     * @var int
-     */
-    private $categoriesPid;
-
-    /**
-     * @var int
-     */
-    private $categoryParentUid;
-
-    /**
-     * @var Environment
-     */
-    private $environment;
 
     /**
      * @var Event
@@ -68,11 +50,6 @@ class DestinationDataImportService
      * @var EventRepository
      */
     private $eventRepository;
-
-    /**
-     * @var RegionRepository
-     */
-    private $regionRepository;
 
     /**
      * @var OrganizerRepository
@@ -110,11 +87,6 @@ class DestinationDataImportService
     private $persistenceManager;
 
     /**
-     * @var ResourceFactory
-     */
-    private $resourceFactory;
-
-    /**
      * @var DataFetcher
      */
     private $dataFetcher;
@@ -122,52 +94,35 @@ class DestinationDataImportService
     /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
-     * @param RegionRepository $regionRepository
      * @param OrganizerRepository $organizerRepository
      * @param DateRepository $dateRepository
      * @param CategoryRepository $sysCategoriesRepository
      * @param MetaDataRepository $metaDataRepository
      * @param ConfigurationManager $configurationManager
      * @param PersistenceManager $persistenceManager
-     * @param ResourceFactory $resourceFactory
      * @param ObjectManager $objectManager
-     * @param Environment $environment
      * @param DataFetcher $dataFetcher
      */
     public function __construct(
         EventRepository $eventRepository,
-        RegionRepository $regionRepository,
         OrganizerRepository $organizerRepository,
         DateRepository $dateRepository,
         CategoryRepository $sysCategoriesRepository,
         MetaDataRepository $metaDataRepository,
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
-        ResourceFactory $resourceFactory,
         ObjectManager $objectManager,
-        Environment $environment,
         DataFetcher $dataFetcher
     ) {
         $this->eventRepository = $eventRepository;
-        $this->regionRepository = $regionRepository;
         $this->organizerRepository = $organizerRepository;
         $this->dateRepository = $dateRepository;
         $this->sysCategoriesRepository = $sysCategoriesRepository;
         $this->metaDataRepository = $metaDataRepository;
         $this->configurationManager = $configurationManager;
         $this->persistenceManager = $persistenceManager;
-        $this->resourceFactory = $resourceFactory;
         $this->objectManager = $objectManager;
-        $this->environment = $environment;
         $this->dataFetcher = $dataFetcher;
-
-        $settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'Events',
-            'Pi1'
-        )['destinationData'] ?? [];
-        $this->categoriesPid = (int) $settings['categoriesPid'];
-        $this->categoryParentUid = (int) $settings['categoryParentUid'];
     }
 
     public function import(
@@ -207,10 +162,7 @@ class DestinationDataImportService
         $this->logger->info('Processing json ' . count($data['items']));
 
         // Get selected region
-        $selectedRegion = null;
-        if (is_int($this->import->getRegionUid())) {
-            $selectedRegion = $this->regionRepository->findByUid($this->import->getRegionUid());
-        }
+        $selectedRegion = $this->import->getRegion();
 
         foreach ($data['items'] as $event) {
             $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
@@ -298,16 +250,8 @@ class DestinationDataImportService
      */
     private function setCategories(array $categories): void
     {
-        if ($this->categoryParentUid === 0) {
-            return;
-        }
-
-        $sysParentCategory = $this->sysCategoriesRepository->findByUid($this->categoryParentUid);
+        $sysParentCategory = $this->import->getCategoryParent();
         if (!$sysParentCategory instanceof Category) {
-            $this->logger->warning(
-                'Could not fetch system parent category by uid.',
-                ['uid' => $this->categoryParentUid]
-            );
             return;
         }
 
@@ -318,7 +262,7 @@ class DestinationDataImportService
                 $tmpSysCategory = $this->objectManager->get(Category::class);
                 $tmpSysCategory->setTitle($categoryTitle);
                 $tmpSysCategory->setParent($sysParentCategory);
-                $tmpSysCategory->setPid($this->categoriesPid);
+                $tmpSysCategory->setPid($this->import->getCategoriesPid());
                 $this->sysCategoriesRepository->add($tmpSysCategory);
                 $this->tmpCurrentEvent->addCategory($tmpSysCategory);
             } else {
@@ -563,18 +507,14 @@ class DestinationDataImportService
     {
         $this->logger->info("Set assets");
 
-        $storage = $this->resourceFactory->getDefaultStorage();
-        if (!$storage instanceof ResourceStorage) {
-            $this->logger->error('No default storage defined. Cancel import.');
-            exit();
-        }
+        $importFolder = $this->import->getFilesFolder();
 
         $error = false;
 
         foreach ($assets as $media_object) {
             if ($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
                 $fileUrl = urldecode($media_object['url']);
-                $orgFileNameSanitized = $storage->sanitizeFileName(
+                $orgFileNameSanitized = $importFolder->getStorage()->sanitizeFileName(
                     basename(
                         urldecode($media_object['url'])
                     )
@@ -583,11 +523,7 @@ class DestinationDataImportService
                 $this->logger->info('File attached:' . $fileUrl);
                 $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
 
-                $targetFilePath = $this->environment->getPublicPath() . '/fileadmin/' . $this->import->getFilesFolder()
-                    . $orgFileNameSanitized;
-                // Check if file already exists
-
-                if (file_exists($targetFilePath)) {
+                if ($importFolder->hasFile($orgFileNameSanitized)) {
                     $this->logger->info('File already exists');
                 } else {
                     $this->logger->info("File don't exist " . $orgFileNameSanitized);
@@ -596,13 +532,7 @@ class DestinationDataImportService
                         // Move file to defined folder
                         $this->logger->info('Adding file ' . $filename);
 
-                        try {
-                            $targetFolder = $storage->getFolder($this->import->getFilesFolder());
-                        } catch (FolderDoesNotExistException $e) {
-                            $targetFolder = $storage->createFolder($this->import->getFilesFolder());
-                        }
-
-                        $storage->addFile($filename, $targetFolder, basename($fileUrl));
+                        $importFolder->addFile($filename, basename($fileUrl));
                     } else {
                         $error = true;
                     }
@@ -614,12 +544,17 @@ class DestinationDataImportService
                     // TODO: How to delete file references?
                     } else {
                         $this->logger->info('No relation found');
-                        $fileIdentifier = $this->import->getFilesFolder() . $orgFileNameSanitized;
-                        $file = $storage->getFile($fileIdentifier);
-                        if (!$file instanceof File) {
-                            $this->logger->warning('Could not find file.', [$fileIdentifier]);
+                        if ($importFolder->hasFile($orgFileNameSanitized) === false) {
+                            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
                             continue;
                         }
+
+                        $file = $importFolder->getStorage()->getFileInFolder($orgFileNameSanitized, $importFolder);
+                        if (!$file instanceof File) {
+                            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
+                            continue;
+                        }
+
                         $this->metaDataRepository->update(
                             $file->getUid(),
                             [
