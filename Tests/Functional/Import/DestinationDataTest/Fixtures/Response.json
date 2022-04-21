@@ -260,9 +260,12 @@
                 },
                 {
                     "weekdays": [],
-                    "start": "2099-01-20T15:00:00+01:00",
-                    "end": "2099-01-20T17:00:00+01:00",
-                    "tz": "Europe/Berlin"
+                    "start": "2099-04-01T11:00:00+02:00",
+                    "end": "2099-04-01T13:00:00+02:00",
+                    "repeatUntil": "2099-04-03T00:00+02:00",
+                    "tz": "Europe/Berlin",
+                    "freq": "Daily",
+                    "interval": 1
                 },
                 {
                     "weekdays": [],
@@ -436,16 +439,16 @@
                     "tz": "Europe/Berlin"
                 },
                 {
-                    "weekdays": [],
-                    "start": "2099-12-08T19:00:00+01:00",
-                    "end": "2099-12-08T20:00:00+01:00",
-                    "tz": "Europe/Berlin"
-                },
-                {
-                    "weekdays": [],
-                    "start": "2099-12-15T19:00:00+01:00",
-                    "end": "2099-12-15T20:00:00+01:00",
-                    "tz": "Europe/Berlin"
+                    "weekdays": [
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "start": "2099-11-02T11:00:00+01:00",
+                    "end": "2099-11-02T13:00:00+01:00",
+                    "repeatUntil": "2099-11-25T13:00:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "freq": "Weekly",
+                    "interval": 1
                 },
                 {
                     "weekdays": [],
