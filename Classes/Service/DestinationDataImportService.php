@@ -28,6 +28,7 @@ use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
+use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
 
 class DestinationDataImportService
 {
@@ -92,6 +93,11 @@ class DestinationDataImportService
     private $dataFetcher;
 
     /**
+     * @var DatesFactory
+     */
+    private $datesFactory;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
@@ -112,7 +118,8 @@ class DestinationDataImportService
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
         ObjectManager $objectManager,
-        DataFetcher $dataFetcher
+        DataFetcher $dataFetcher,
+        DatesFactory $datesFactory
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
@@ -123,6 +130,7 @@ class DestinationDataImportService
         $this->persistenceManager = $persistenceManager;
         $this->objectManager = $objectManager;
         $this->dataFetcher = $dataFetcher;
+        $this->datesFactory = $datesFactory;
     }
 
     public function import(
@@ -279,86 +287,18 @@ class DestinationDataImportService
         //$currentEventDates = $this->tmpCurrentEvent->getDates();
         //$this->tmpCurrentEvent->removeAllDates($currentEventDates);
         // <--
-
         // TODO: Workaround delete dates
         $currentEventDates = $this->tmpCurrentEvent->getDates();
         $this->logger->info('Found ' . count($currentEventDates) . ' to delete');
-
         foreach ($currentEventDates as $currentDate) {
             $this->dateRepository->remove($currentDate);
         }
 
-        $today = new \DateTime('today');
-        $today = $today->getTimestamp();
-
-        foreach ($timeIntervals as $date) {
-            // Check if dates are given as interval or not
-            if (empty($date['interval'])) {
-                if (strtotime($date['start']) > $today) {
-                    $this->logger->info('Setup single date');
-                    $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                    $end = new \DateTime($date['end'], new \DateTimeZone($date['tz']));
-                    $this->logger->info('Start transformed ' . $start->format('Y-m-d H:i'));
-                    $this->logger->info('End transformed ' . $end->format('Y-m-d H:i'));
-                    $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
-                        $start,
-                        $end,
-                        $canceled
-                    ));
-                }
-            } else {
-                if ($date['freq'] == 'Daily' && empty($date['weekdays']) && !empty($date['repeatUntil'])) {
-                    $this->logger->info('Setup daily interval dates');
-                    $this->logger->info('Start ' . $date['start']);
-                    $this->logger->info('End ' . $date['repeatUntil']);
-                    $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                    $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
-
-                    $i = (int) strtotime($start->format('l'), $start->getTimestamp());
-                    while ($i !== 0 && $i <= $until->getTimestamp()) {
-                        $i = (int) strtotime('+1 day', $i);
-
-                        if ($i >= $today) {
-                            $eventStart = new \DateTime();
-                            $eventStart->setTimestamp($i);
-                            $eventStart->setTime((int) $start->format('H'), (int) $start->format('i'));
-                            $eventEnd = new \DateTime();
-                            $eventEnd->setTimestamp($i);
-                            $eventEnd->setTime((int) $until->format('H'), (int) $until->format('i'));
-                            $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
-                                $eventStart,
-                                $eventEnd,
-                                $canceled
-                            ));
-                        }
-                    }
-                } elseif ($date['freq'] == 'Weekly' && !empty($date['weekdays']) && !empty($date['repeatUntil'])) {
-                    foreach ($date['weekdays'] as $day) {
-                        $this->logger->info('Setup weekly interval dates for ' . $day);
-                        $this->logger->info('Start ' . $date['start']);
-                        $this->logger->info('End ' . $date['repeatUntil']);
-                        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-                        $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
-
-                        for ($i = strtotime($day, $start->getTimestamp()); $i <= $until->getTimestamp(); $i = strtotime('+1 week', $i)) {
-                            if ($i >= $today) {
-                                $eventStart = new \DateTime();
-                                $eventStart->setTimestamp($i);
-                                $eventStart->setTime((int) $start->format('H'), (int) $start->format('i'));
-                                $eventEnd = new \DateTime();
-                                $eventEnd->setTimestamp($i);
-                                $eventEnd->setTime((int) $until->format('H'), (int) $until->format('i'));
-                                $this->tmpCurrentEvent->addDate(Date::createFromDestinationData(
-                                    $eventStart,
-                                    $eventEnd,
-                                    $canceled
-                                ));
-                            }
-                        }
-                    }
-                }
-            }
+        $dates = $this->datesFactory->createDates($timeIntervals, $canceled);
+        foreach ($dates as $date) {
+            $this->tmpCurrentEvent->addDate($date);
         }
+
         $this->logger->info('Finished setup dates');
     }
 

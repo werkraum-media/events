@@ -159,6 +159,17 @@ class Date extends AbstractEntity
         return '';
     }
 
+    public static function createFromDestinationDataDate(
+        array $date,
+        bool $canceled
+    ): self {
+        return self::createFromDestinationData(
+            new \DateTime($date['start'], new \DateTimeZone($date['tz'])),
+            new \DateTime($date['end'], new \DateTimeZone($date['tz'])),
+            $canceled
+        );
+    }
+
     public static function createFromDestinationData(
         \DateTime $start,
         \DateTime $end,
