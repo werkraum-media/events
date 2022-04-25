@@ -46,18 +46,9 @@ class DatesFactoryTest extends TestCase
             'Empty Intervals' => [
                 'unkownInput' => [],
             ],
-            'Intervals with interval no repeatUntil' => [
+            'Single interval without values' => [
                 'unkownInput' => [
                     [
-                        'interval' => 1,
-                    ],
-                ],
-            ],
-            'Intervals with interval and repeatUntil bu no freq' => [
-                'unkownInput' => [
-                    [
-                        'interval' => 1,
-                        'repeatUntil' => 'something',
                     ],
                 ],
             ],
@@ -75,6 +66,7 @@ class DatesFactoryTest extends TestCase
             'start' => '2099-06-21T16:00:00+02:00',
             'end' => '2099-06-21T22:00:00+02:00',
             'tz' => 'Europe/Berlin',
+            'interval' => 1,
         ]], false);
 
         self::assertInstanceOf(\Generator::class, $result);
@@ -100,6 +92,7 @@ class DatesFactoryTest extends TestCase
             'start' => '2099-06-21T16:00:00+02:00',
             'end' => '2099-06-21T22:00:00+02:00',
             'tz' => 'Europe/Berlin',
+            'interval' => 1,
         ]], true);
 
         self::assertInstanceOf(\Generator::class, $result);
@@ -258,6 +251,7 @@ class DatesFactoryTest extends TestCase
                 'start' => '2099-06-21T16:00:00+02:00',
                 'end' => '2099-06-21T22:00:00+02:00',
                 'tz' => 'Europe/Berlin',
+                'interval' => 1,
             ],
             [
                 'start' => '2099-04-01T16:00:00+02:00',
@@ -304,6 +298,7 @@ class DatesFactoryTest extends TestCase
                 'start' => '2099-06-21T16:00:00+02:00',
                 'end' => '2099-06-21T22:00:00+02:00',
                 'tz' => 'Europe/Berlin',
+                'interval' => 1,
             ],
             [
                 'start' => '2099-04-01T16:00:00+02:00',

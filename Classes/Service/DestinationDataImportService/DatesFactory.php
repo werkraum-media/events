@@ -45,7 +45,11 @@ class DatesFactory
 
     private function isDateSingleDate(array $date): bool
     {
-        return empty($date['interval']);
+        $frequency = $date['freq'] ?? '';
+        $start = $date['start'] ?? '';
+
+        return $frequency === ''
+            && $start !== '';
     }
 
     private function isDateInterval(array $date): bool
