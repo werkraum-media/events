@@ -168,6 +168,12 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Alle</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                </items>
                                 <foreign_table>tx_events_domain_model_region</foreign_table>
                                 <foreign_table_where>AND tx_events_domain_model_region.deleted = 0 AND tx_events_domain_model_region.hidden = 0</foreign_table_where>
                                 <size>1</size>
