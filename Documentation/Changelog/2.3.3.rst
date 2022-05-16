@@ -1,0 +1,27 @@
+2.3.3
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Add option to select "all" regions within FlexForm.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
