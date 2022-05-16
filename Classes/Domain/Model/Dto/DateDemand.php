@@ -62,6 +62,11 @@ class DateDemand
     protected $end = null;
 
     /**
+     * @var bool
+     */
+    protected $useMidnight = true;
+
+    /**
      * @var string
      */
     protected $searchword = '';
@@ -270,6 +275,25 @@ class DateDemand
     public function setEnd(?int $end): void
     {
         $this->end = $end;
+    }
+
+    public function setUseMidnight(bool $useMidnight): void
+    {
+        $this->useMidnight = $useMidnight;
+    }
+
+    public function shouldShowFromNow(): bool
+    {
+        return $this->getStart() === null
+            && $this->getEnd() === null
+            && $this->useMidnight === false;
+    }
+
+    public function shouldShowFromMidnight(): bool
+    {
+        return $this->getStart() === null
+            && $this->getEnd() === null
+            && $this->useMidnight === true;
     }
 
     public function getConsiderDate(): bool

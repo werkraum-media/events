@@ -73,6 +73,9 @@ class DateDemandFactory
         if (!empty($settings['end'])) {
             $demand->setEnd((int)$settings['end']);
         }
+        if (isset($settings['useMidnight'])) {
+            $demand->setUseMidnight((bool)$settings['useMidnight']);
+        }
         if (!empty($settings['limit'])) {
             $demand->setLimit($settings['limit']);
         }

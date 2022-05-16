@@ -94,7 +94,7 @@ class DateRepository extends Repository
             ]);
         }
 
-        if ($demand->getStart() === null && $demand->getEnd() === null) {
+        if ($demand->shouldShowFromNow() || $demand->shouldShowFromMidnight()) {
             $now = $this->context->getPropertyFromAspect(
                 'date',
                 'full',
@@ -106,7 +106,13 @@ class DateRepository extends Repository
                     1639382648
                 );
             }
-            $now = $now->modify('midnight');
+
+            $now = $now->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+            if ($demand->shouldShowFromMidnight()) {
+                $now = $now->modify('midnight');
+            }
+
             $constraints['nowAndFuture'] = $query->logicalOr([
                 $query->greaterThanOrEqual('start', $now),
                 $query->greaterThanOrEqual('end', $now)

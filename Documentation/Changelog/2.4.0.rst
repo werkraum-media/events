@@ -1,0 +1,29 @@
+2.3.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* New Option `useMidnight = 0` is available.
+  This allows to explicitly show dates from now instead of midnight which is kept as
+  default.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
