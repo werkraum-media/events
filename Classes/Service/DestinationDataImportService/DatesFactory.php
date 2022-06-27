@@ -141,19 +141,19 @@ class DatesFactory
 
         foreach ($date['weekdays'] as $day) {
             $i = strtotime($day, $start->getTimestamp());
-            while ($i <= $until->getTimestamp()) {
+            while ($i !== 0 && $i <= $until->getTimestamp()) {
+                $timeStampToUse = (string) $i;
+                $i = strtotime('+1 week', $i);
                 if ($i < $today) {
                     continue;
                 }
 
                 yield $this->createDateFromStartAndUntil(
-                    (string) $i,
+                    $timeStampToUse,
                     $start,
                     $until,
                     $canceled
                 );
-
-                $i = strtotime('+1 week', $i);
             }
         }
     }
