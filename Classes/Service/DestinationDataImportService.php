@@ -498,7 +498,7 @@ class DestinationDataImportService
                         $this->metaDataRepository->update(
                             $file->getUid(),
                             [
-                                'title' => $media_object['value'],
+                                'title' => $this->getShortenedString($media_object['value'], 100),
                                 'description' => $media_object['description'] ?? '',
                                 'alternative' => 'DD Import'
                             ]
@@ -650,5 +650,14 @@ class DestinationDataImportService
         }
 
         return (bool) $value;
+    }
+
+    private function getShortenedString(string $string, int $lenght): string
+    {
+        if ($string === mb_substr($string, 0, $lenght)) {
+            return $string;
+        }
+
+        return mb_substr($string, 0, $lenght - 3) . ' …';
     }
 }

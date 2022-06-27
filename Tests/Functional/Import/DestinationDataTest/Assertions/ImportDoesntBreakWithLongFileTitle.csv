@@ -1,0 +1,26 @@
+"tx_events_domain_model_organizer",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","name","street","district","city","zip","phone","web","email",,,,,,,,,,,,,,,,,,,,,,
+,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","+ 49 3672 / 486470","http://schillerhaus.rudolstadt.de","schillerhaus@rudolstadt.de",,,,,,,,,,,,,,,,,,,,,,
+"tx_events_domain_model_event",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","title","subtitle","global_id","slug","highlight","teaser","details","price_info","name","street","district","city","zip","country","web","phone","ticket","facebook","youtube","instagram","latitude","longitude","images","categories","pages","dates","organizer","partner","region","references_events"
+,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Allerlei Weihnachtliches (Heute mit Johannes Geißer)",,"e_100347853","e-100347853","0",,"Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.
+Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)
+Um Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.
+Es gilt die 2G-PLUS-Regel.",,"Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","Deutschland","http://www.schillerhaus.rudolstadt.de/","+ 49 3672 / 486470",,,,,"50.720971023259","11.335229873657","1","1",,"1","1",,"1",
+"tx_events_domain_model_date",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","event","start","end","canceled","postponed_date","canceled_link",,,,,,,,,,,,,,,,,,,,,,,,,,
+,"1","2","0","0","0","0",-1,0,"0","0","0","1","4101372000","4101377400","no","0",,,,,,,,,,,,,,,,,,,,,,,,,,,
+"sys_category",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","hidden","starttime","endtime","sys_language_uid","l10n_parent","title","items","parent",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,1,2,0,0,0,0,0,0,"Top Category",0,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,2,2,0,0,0,0,0,0,"Event Category Parent",0,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,3,2,0,0,0,0,0,0,"Weihnachten",0,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"sys_category_record_mm",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid_local","uid_foreign","tablenames","fieldname",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,3,1,"tx_events_domain_model_event","categories",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"sys_file_metadata",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","pid","title","description","alternative",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,1,0,"This title is longer then the supported 255 chars as limited by default by TYPO3 database. Also c …","This is a supported description","DD Import",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"sys_file_reference",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,"uid","uid_local","uid_foreign","tablenames","fieldname","title","description",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,1,1,1,"tx_events_domain_model_event","images",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
