@@ -1,0 +1,33 @@
+2.4.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Crop title of imported files.
+  `sys_file_metadata` table column `title` is limited in length.
+  We now crop long file titles to maximum of 100 characters to prevent issues during storing title.
+
+* Fix endless import loop.
+  Import of weekly dates got broken while refactoring.
+  We keep existing logic of creation but ensure that we won't end up in an endless loop.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

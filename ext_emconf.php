@@ -9,10 +9,10 @@ $EM_CONF['events'] = [
     'state' => 'alpha',
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '2.4.0',
+    'version' => '2.4.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.00-10.4.99',
+            'typo3' => '10.4.00-11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],
