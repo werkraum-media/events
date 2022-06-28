@@ -91,9 +91,14 @@ class DateController extends AbstractController
         );
     }
 
-    public function listAction(): void
+    /**
+     * @param array $search
+     */
+    public function listAction(array $search = []): void
     {
-        if (
+        if ($search !== []) {
+            $demand = DateDemand::createFromRequestValues($search, $this->settings);
+        } elseif (
             ($this->request->hasArgument('searchword') && $this->request->getArgument('searchword') != '')
             || ($this->request->hasArgument('region') && $this->request->getArgument('region') != '')
             || ($this->request->hasArgument('start') && $this->request->getArgument('start') != '')
@@ -104,17 +109,24 @@ class DateController extends AbstractController
         } else {
             $demand = $this->demandFactory->fromSettings($this->settings);
         }
-        $dates = $this->dateRepository->findByDemand($demand);
-        $this->view->assign('dates', $this->dateRepository->findByDemand($demand));
+
+        $this->view->assignMultiple([
+            'search' => $search,
+            'demand' => $demand,
+            'dates' => $this->dateRepository->findByDemand($demand),
+        ]);
     }
 
-    public function searchAction(): void
+    /**
+     * @param array $search
+     */
+    public function searchAction(array $search = []): void
     {
-        $arguments = GeneralUtility::_GET('tx_events_datelist') ?? [];
+        $arguments = GeneralUtility::_GET('tx_events_datelist') ?? $search;
         if (is_array($arguments) === false) {
             $arguments = [];
         }
-        if (isset($arguments['events_search'])) {
+        if (isset($arguments['events_search']) && is_array($arguments['events_search'])) {
             $arguments += $arguments['events_search'];
             unset($arguments['events_search']);
         }
@@ -125,6 +137,7 @@ class DateController extends AbstractController
             'start' => $arguments['start'] ?? '',
             'end' => $arguments['end'] ?? '',
             'considerDate' => $arguments['considerDate'] ?? '',
+            'search' => $search,
             'demand' => DateDemand::createFromRequestValues($arguments, $this->settings),
             'regions' => $this->regionRepository->findAll(),
             'categories' => $this->categoryRepository->findAllCurrentlyAssigned(),

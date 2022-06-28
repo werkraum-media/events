@@ -66,6 +66,11 @@ class Date extends AbstractEntity
         $this->start = $start;
     }
 
+    public function getHasUsefulStartTime(): bool
+    {
+        return $this->getStart()->format('H:i') !== '00:00';
+    }
+
     /**
      * @return \DateTime end
      */
@@ -83,7 +88,15 @@ class Date extends AbstractEntity
         $this->end = $end;
     }
 
+    public function getHasUsefulEndTime(): bool
+    {
+        return $this->getEnd()->format('H:i') !== '23:59';
+    }
 
+    public function getEndsOnSameDay(): bool
+    {
+        return $this->getStart()->format('Y-m-d') === $this->getEnd()->format('Y-m-d');
+    }
 
     /**
      * @return Event

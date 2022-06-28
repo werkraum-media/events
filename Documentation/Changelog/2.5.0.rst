@@ -1,0 +1,47 @@
+2.5.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Respect search in list and search action of date controller.
+  The argument prefix has to be ``search``.
+  The value is used to create the demand and filter the dates.
+  The value is also provided to the view.
+
+  That uses Extbase native argument mapping by name. No need for hardcoded plugin
+  namespaces or to provide some arguments from request to the view.
+
+  The search is a plain array and therefore allows to pass whatever the templates
+  provide.
+
+* Extend ``DateDemand``. It now supports filtering by request values for Regions.
+
+* Extend ``Date`` to provide helpful methods for templates.
+  New methods:
+
+  * ``getHasUsefulStartTime()``
+
+  * ``getHasUsefulEndTime()``
+
+  * ``getEndsOnSameDay()``
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

@@ -22,7 +22,7 @@ class DateDemand
     protected $categories = '';
 
     /**
-     * @var array
+     * @var int[]
      */
     protected $userCategories = [];
 
@@ -38,8 +38,14 @@ class DateDemand
 
     /**
      * @var string
+     * Legacy, superceeded by regions which allows multi select / filter.
      */
     protected $region = '';
+
+    /**
+     * @var int[]
+     */
+    protected $regions = [];
 
     /**
      * @var bool
@@ -99,6 +105,9 @@ class DateDemand
         $instance->setSynonyms($settings['synonyms'] ?? []);
 
         $instance->setRegion($submittedValues['region'] ?? '');
+        if (isset($submittedValues['regions']) && is_array($submittedValues['regions'])) {
+            $instance->setRegions($submittedValues['regions']);
+        }
 
         if ($submittedValues['highlight'] ?? false) {
             $instance->setHighlight($settings['highlight'] ?? false);
@@ -114,8 +123,8 @@ class DateDemand
             $instance->setConsiderDate((bool)$submittedValues['considerDate']);
         }
 
-        if (is_array($submittedValues['userCategories'])) {
-            $instance->userCategories = array_map('intval', $submittedValues['userCategories']);
+        if (isset($submittedValues['userCategories']) && is_array($submittedValues['userCategories'])) {
+            $instance->setUserCategories($submittedValues['userCategories']);
         }
 
         $instance->setSortBy($settings['sortByDate'] ?? '');
@@ -154,6 +163,17 @@ class DateDemand
         return $this->categories;
     }
 
+    /**
+     * @param int[] $categories
+     */
+    public function setUserCategories(array $categories): void
+    {
+        $this->userCategories = array_map('intval', $categories);
+    }
+
+    /**
+     * @return int[]
+     */
     public function getUserCategories(): array
     {
         return $this->userCategories;
@@ -192,6 +212,19 @@ class DateDemand
     public function setRegion(string $region): void
     {
         $this->region = $region;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getRegions(): array
+    {
+        return $this->regions;
+    }
+
+    public function setRegions(array $regions): void
+    {
+        $this->regions = array_map('intval', $regions);
     }
 
     public function getHighlight(): bool
