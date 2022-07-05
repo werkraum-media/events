@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_events_domain_model_import>
+        <uid>1</uid>
+        <pid>2</pid>
+        <title>Example for test</title>
+        <storage_pid>2</storage_pid>
+        <features_pid>3</features_pid>
+        <features_parent>4</features_parent>
+    </tx_events_domain_model_import>
+
+    <pages>
+        <pid>2</pid>
+        <uid>3</uid>
+        <title>Features Storage</title>
+        <doktype>254</doktype>
+    </pages>
+
+    <sys_category>
+        <uid>1</uid>
+        <pid>2</pid>
+        <title>Top Category</title>
+    </sys_category>
+    <sys_category>
+        <uid>2</uid>
+        <pid>2</pid>
+        <title>Event Category Parent</title>
+        <parent>1</parent>
+    </sys_category>
+    <sys_category>
+        <uid>4</uid>
+        <pid>2</pid>
+        <title>Event Feature Parent</title>
+        <parent>1</parent>
+    </sys_category>
+    <sys_category>
+        <uid>5</uid>
+        <pid>3</pid>
+        <title>vorhandenes Feature</title>
+        <parent>4</parent>
+        <hidden>0</hidden>
+    </sys_category>
+</dataset>

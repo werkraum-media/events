@@ -54,8 +54,10 @@ class CategoryRepository extends Repository
     /**
      * @return array<Category>
      */
-    public function findAllCurrentlyAssigned(): array
-    {
+    public function findAllCurrentlyAssigned(
+        int $parentUid = 0,
+        string $relation = 'categories'
+    ): array {
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_event');
         $qb->select('category.*');
         $qb->from('tx_events_domain_model_event', 'event');
@@ -66,7 +68,7 @@ class CategoryRepository extends Repository
             'mm',
             'event.uid = mm.uid_foreign'
             . ' AND mm.tablenames = ' . $qb->createNamedParameter('tx_events_domain_model_event')
-            . ' AND mm.fieldname = ' . $qb->createNamedParameter('categories')
+            . ' AND mm.fieldname = ' . $qb->createNamedParameter($relation)
         );
 
         $qb->leftJoin(
@@ -75,10 +77,13 @@ class CategoryRepository extends Repository
             'category',
             'category.uid = mm.uid_local'
             . ' AND mm.tablenames = ' . $qb->createNamedParameter('tx_events_domain_model_event')
-            . ' AND mm.fieldname = ' . $qb->createNamedParameter('categories')
+            . ' AND mm.fieldname = ' . $qb->createNamedParameter($relation)
         );
 
         $qb->where($qb->expr()->neq('category.uid', $qb->createNamedParameter(0)));
+        if ($parentUid > 0) {
+            $qb->andWhere($qb->expr()->eq('category.parent', $qb->createNamedParameter($parentUid)));
+        }
         $qb->orderBy('category.title', 'asc');
         $qb->groupBy('category.uid');
 
@@ -86,5 +91,28 @@ class CategoryRepository extends Repository
             Category::class,
             $qb->execute()->fetchAll()
         );
+    }
+
+    public function findOneForImport(
+        Category $parentCategory,
+        int $pid,
+        string $title
+    ): ?Category {
+        $query = $this->createQuery();
+
+        $query->getQuerySettings()->setStoragePageIds([$pid]);
+        // Necessary as enableFieldsToBeIgnored would not be respected.
+        // Both combined lead to only ignoring defined enable fields.
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
+
+        $query->matching($query->logicalAnd([
+            $query->equals('parent', $parentCategory),
+            $query->equals('title', $title)
+        ]));
+
+        $query->setLimit(1);
+
+        return $query->execute()->getFirst();
     }
 }

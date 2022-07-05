@@ -27,6 +27,11 @@ class DateDemand
     protected $userCategories = [];
 
     /**
+     * @var int[]
+     */
+    protected $features = [];
+
+    /**
      * @var bool
      */
     protected $includeSubCategories = false;
@@ -127,6 +132,10 @@ class DateDemand
             $instance->setUserCategories($submittedValues['userCategories']);
         }
 
+        if (is_array($submittedValues['features'])) {
+            $instance->setFeatures($submittedValues['features']);
+        }
+
         $instance->setSortBy($settings['sortByDate'] ?? '');
         $instance->setSortOrder($settings['sortOrder'] ?? '');
         $instance->setQueryCallback($settings['queryCallback'] ?? '');
@@ -182,6 +191,22 @@ class DateDemand
     public function setCategories(string $categories): void
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @param int[] $categories
+     */
+    public function setFeatures(array $categories): void
+    {
+        $this->features = array_map('intval', $categories);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getFeatures(): array
+    {
+        return $this->features;
     }
 
     public function getIncludeSubCategories(): bool

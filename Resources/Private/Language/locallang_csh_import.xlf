@@ -21,6 +21,9 @@
             <trans-unit id="tx_events_domain_model_import.palette.categories">
                 <source>Categories</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.palette.features">
+                <source>Features</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_import.title">
                 <source>Title</source>
             </trans-unit>
@@ -47,6 +50,18 @@
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.category_parent.description">
                 <source>Existing TYPO3 category used as parent for all categories created during import.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.features_pid">
+                <source>Features Storage Folder</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.features_pid.description">
+                <source>TYPO3 page to use for storing imported features.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.features_parent">
+                <source>Parent Features Category</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.features_parent.description">
+                <source>Existing TYPO3 category used as parent for all features created during import.</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.files_folder">
                 <source>Folder</source>

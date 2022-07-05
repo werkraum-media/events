@@ -27,6 +27,7 @@ CREATE TABLE tx_events_domain_model_event (
 	longitude varchar(255) DEFAULT '' NOT NULL,
 	images int(11) unsigned NOT NULL default '0',
 	categories int(11) DEFAULT '0' NOT NULL,
+	features int(11) DEFAULT '0' NOT NULL,
 	pages text,
 	dates int(11) unsigned DEFAULT '0' NOT NULL,
 	organizer int(11) unsigned DEFAULT '0',
@@ -105,6 +106,9 @@ CREATE TABLE tx_events_domain_model_import (
 
     categories_pid int(11) unsigned DEFAULT '0' NOT NULL,
     category_parent int(11) unsigned DEFAULT '0' NOT NULL,
+
+    features_pid int(11) unsigned DEFAULT '0' NOT NULL,
+    features_parent int(11) unsigned DEFAULT '0' NOT NULL,
 
     region int(11) unsigned DEFAULT '0' NOT NULL,
 

@@ -156,6 +156,11 @@ class Event extends AbstractEntity
     protected $categories;
 
     /**
+     * @var ObjectStorage<Category>
+     */
+    protected $features;
+
+    /**
      * @var ObjectStorage<Partner>
      */
     protected $partner;
@@ -198,6 +203,7 @@ class Event extends AbstractEntity
         $this->images = new ObjectStorage();
         $this->dates = new ObjectStorage();
         $this->categories = new ObjectStorage();
+        $this->features = new ObjectStorage();
         $this->partner = new ObjectStorage();
         $this->referencesEvents = new ObjectStorage();
     }
@@ -545,6 +551,25 @@ class Event extends AbstractEntity
     public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
+    }
+
+    public function getFeatures(): array
+    {
+        $features = $this->features->toArray();
+
+        usort($features, function (Category $catA, Category $catB) {
+            return $catA->getSorting() <=> $catB->getSorting();
+        });
+
+        return $features;
+    }
+
+    /**
+     * @param ObjectStorage<Category> $features
+     */
+    public function setFeatures(ObjectStorage $features): void
+    {
+        $this->features = $features;
     }
 
     public function setLanguageUid(int $languageUid): void

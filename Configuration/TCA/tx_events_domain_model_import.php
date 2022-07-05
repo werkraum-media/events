@@ -18,7 +18,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'title, hidden, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3, --palette--;;typo3_storage, --palette--;;categories, --palette--;;relations, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest, rest_experience, rest_search_query'
+            'showitem' => 'title, hidden, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3, --palette--;;typo3_storage, --palette--;;categories, --palette--;;features,--palette--;;relations, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest, rest_experience, rest_search_query'
         ],
     ],
     'palettes' => [
@@ -29,6 +29,10 @@ return [
         'categories' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.categories',
             'showitem' => 'category_parent, categories_pid'
+        ],
+        'features' => [
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.features',
+            'showitem' => 'features_parent, features_pid, '
         ],
         'relations' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.relations',
@@ -104,6 +108,32 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.category_parent',
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.category_parent.description',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'sys_category',
+                'size' => 1,
+                'maxitems' => 1,
+                'minitems' => 0,
+            ],
+        ],
+        'features_pid' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_pid',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_pid.description',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'pages',
+                'size' => 1,
+                'maxitems' => 1,
+                'minitems' => 0,
+            ],
+        ],
+        'features_parent' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_parent',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_parent.description',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',

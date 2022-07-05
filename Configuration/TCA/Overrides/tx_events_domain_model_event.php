@@ -13,4 +13,17 @@
             ]
         ]
     );
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+        $extKey,
+        $table,
+        'features',
+        [
+            'label' => 'Features',
+            'fieldConfiguration' => [
+                'minitems' => 0,
+                'multiple' => true,
+            ]
+        ]
+    );
 })('events', 'tx_events_domain_model_event');

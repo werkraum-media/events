@@ -60,6 +60,10 @@ class DateRepository extends Repository
             }
         }
 
+        if ($demand->getFeatures() !== []) {
+            $constraints['features'] = $this->createFeaturesConstraint($query, $demand);
+        }
+
         if ($demand->getRegion() !== '') {
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }
@@ -181,6 +185,19 @@ class DateRepository extends Repository
             $constraints[] = $query->contains('event.categories', $category);
         }
         return $constraints;
+    }
+
+    private function createFeaturesConstraint(
+        QueryInterface $query,
+        DateDemand $demand
+    ): ConstraintInterface {
+        $constraints = [];
+
+        foreach ($demand->getFeatures() as $feature) {
+            $constraints[] = $query->contains('event.features', $feature);
+        }
+
+        return $query->logicalAnd($constraints);
     }
 
     public function findSearchWord(string $search): array

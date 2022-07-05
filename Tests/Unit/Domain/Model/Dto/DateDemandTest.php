@@ -105,6 +105,30 @@ class DateDemandTest extends TestCase
     /**
      * @test
      */
+    public function featuresAreSetByRequest(): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'features' => [
+                    '10', '20',
+                ],
+            ],
+            [
+            ]
+        );
+
+        self::assertSame(
+            [
+                10,
+                20,
+            ],
+            $result->getFeatures()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function regionsAreSetByRequest(): void
     {
         $result = DateDemand::createFromRequestValues(

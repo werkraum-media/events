@@ -60,6 +60,7 @@ return [
                     region,
                     partner,
                     categories,
+                    features,
                     references_events,
                     pages,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.media,
@@ -457,12 +458,9 @@ return [
 
         'categories' => [
             'exclude' => true,
-            'label' => $l10nPath . ':tx_events_domain_model_event.categories',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
-            ]
+        ],
+        'features' => [
+            'exclude' => true,
         ],
 
         'dates' => [

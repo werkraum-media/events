@@ -27,6 +27,8 @@ use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
+use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
+use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
 
@@ -63,11 +65,6 @@ class DestinationDataImportService
     private $dateRepository;
 
     /**
-     * @var CategoryRepository
-     */
-    private $sysCategoriesRepository;
-
-    /**
      * @var MetaDataRepository
      */
     private $metaDataRepository;
@@ -98,39 +95,44 @@ class DestinationDataImportService
     private $datesFactory;
 
     /**
+     * @var CategoriesAssignment
+     */
+    private $categoriesAssignment;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
      * @param DateRepository $dateRepository
-     * @param CategoryRepository $sysCategoriesRepository
      * @param MetaDataRepository $metaDataRepository
      * @param ConfigurationManager $configurationManager
      * @param PersistenceManager $persistenceManager
      * @param ObjectManager $objectManager
      * @param DataFetcher $dataFetcher
+     * @param CategoriesAssignment $categoriesAssignment
      */
     public function __construct(
         EventRepository $eventRepository,
         OrganizerRepository $organizerRepository,
         DateRepository $dateRepository,
-        CategoryRepository $sysCategoriesRepository,
         MetaDataRepository $metaDataRepository,
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
         ObjectManager $objectManager,
         DataFetcher $dataFetcher,
-        DatesFactory $datesFactory
+        DatesFactory $datesFactory,
+        CategoriesAssignment $categoriesAssignment
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
         $this->dateRepository = $dateRepository;
-        $this->sysCategoriesRepository = $sysCategoriesRepository;
         $this->metaDataRepository = $metaDataRepository;
         $this->configurationManager = $configurationManager;
         $this->persistenceManager = $persistenceManager;
         $this->objectManager = $objectManager;
         $this->dataFetcher = $dataFetcher;
         $this->datesFactory = $datesFactory;
+        $this->categoriesAssignment = $categoriesAssignment;
     }
 
     public function import(
@@ -224,6 +226,11 @@ class DestinationDataImportService
                 $this->setCategories($event['categories']);
             }
 
+            // Set Features
+            if ($event['features']) {
+                $this->setFeatures($event['features']);
+            }
+
             // Set Organizer
             if ($event['addresses'] ?? false) {
                 $this->setOrganizer($event['addresses']);
@@ -262,31 +269,27 @@ class DestinationDataImportService
         return 0;
     }
 
-    /**
-     *
-     * @param array $categories
-     */
     private function setCategories(array $categories): void
     {
-        $sysParentCategory = $this->import->getCategoryParent();
-        if (!$sysParentCategory instanceof Category) {
-            return;
-        }
+        $categories = $this->categoriesAssignment->getCategories(new CategoryImport(
+            $this->import->getCategoryParent(),
+            $this->import->getCategoriesPid(),
+            $categories
+        ));
 
-        foreach ($categories as $categoryTitle) {
-            $tmpSysCategory = $this->sysCategoriesRepository->findOneByTitle($categoryTitle);
-            if (!$tmpSysCategory) {
-                $this->logger->info('Creating new category: ' . $categoryTitle);
-                $tmpSysCategory = $this->objectManager->get(Category::class);
-                $tmpSysCategory->setTitle($categoryTitle);
-                $tmpSysCategory->setParent($sysParentCategory);
-                $tmpSysCategory->setPid($this->import->getCategoriesPid());
-                $this->sysCategoriesRepository->add($tmpSysCategory);
-                $this->tmpCurrentEvent->addCategory($tmpSysCategory);
-            } else {
-                $this->tmpCurrentEvent->addCategory($tmpSysCategory);
-            }
-        }
+        $this->tmpCurrentEvent->setCategories($categories);
+    }
+
+    private function setFeatures(array $features): void
+    {
+        $features = $this->categoriesAssignment->getCategories(new CategoryImport(
+            $this->import->getFeaturesParent(),
+            $this->import->getFeaturesPid(),
+            $features,
+            true
+        ));
+
+        $this->tmpCurrentEvent->setFeatures($features);
     }
 
     private function setDates(
@@ -456,7 +459,6 @@ class DestinationDataImportService
         $event = $this->objectManager->get(Event::class);
         // Create event and persist
         $event->setGlobalId($globalId);
-        $event->setCategories(new ObjectStorage());
         $this->eventRepository->add($event);
         $this->persistenceManager->persistAll();
         $this->logger->info(

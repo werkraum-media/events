@@ -32,6 +32,16 @@ class Import extends AbstractDomainObject
     protected $categoryParent;
 
     /**
+     * @var int
+     */
+    protected $featuresPid;
+
+    /**
+     * @var Category|null
+     */
+    protected $featuresParent;
+
+    /**
      * @var Region|null
      */
     protected $region;
@@ -53,6 +63,8 @@ class Import extends AbstractDomainObject
         string $restSearchQuery = '',
         int $categoriesPid = 0,
         ?Category $categoryParent = null,
+        int $featuresPid = 0,
+        ?Category $featuresParent = null,
         ?Region $region = null
     ) {
         $this->filesFolder = $filesFolder;
@@ -60,6 +72,9 @@ class Import extends AbstractDomainObject
 
         $this->categoriesPid = $categoriesPid;
         $this->categoryParent = $categoryParent;
+
+        $this->featuresPid = $featuresPid;
+        $this->featuresParent = $featuresParent;
 
         $this->restExperience = $restExperience;
         $this->restSearchQuery = $restSearchQuery;
@@ -85,6 +100,16 @@ class Import extends AbstractDomainObject
     public function getCategoryParent(): ?Category
     {
         return $this->categoryParent;
+    }
+
+    public function getFeaturesPid(): int
+    {
+        return $this->featuresPid;
+    }
+
+    public function getFeaturesParent(): ?Category
+    {
+        return $this->featuresParent;
     }
 
     public function getRegion(): ?Region

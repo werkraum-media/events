@@ -140,7 +140,8 @@ class DateController extends AbstractController
             'search' => $search,
             'demand' => DateDemand::createFromRequestValues($arguments, $this->settings),
             'regions' => $this->regionRepository->findAll(),
-            'categories' => $this->categoryRepository->findAllCurrentlyAssigned(),
+            'categories' => $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['categoriesParent'] ?? 0, 'categories'),
+            'features' => $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['featuresParent'] ?? 0, 'features'),
         ]);
     }
 

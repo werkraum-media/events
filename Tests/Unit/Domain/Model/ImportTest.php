@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Wrm\Events\Domain\Model\Region;
 use Wrm\Events\Tests\ProphecyTrait;
 
-
 /**
  * @covers \Wrm\Events\Domain\Model\Import
  */
@@ -89,6 +88,8 @@ class ImportTest extends TestCase
             '',
             0,
             null,
+            0,
+            null,
             $region->reveal()
         );
 
@@ -158,6 +159,54 @@ class ImportTest extends TestCase
         self::assertSame(
             $category->reveal(),
             $subject->getCategoryParent()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function returnsFeaturesPid(): void
+    {
+        $folder = $this->prophesize(Folder::class);
+
+        $subject = new Import(
+            $folder->reveal(),
+            0,
+            '',
+            '',
+            0,
+            null,
+            10
+        );
+
+        self::assertSame(
+            10,
+            $subject->getFeaturesPid()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function returnsFeaturesParent(): void
+    {
+        $feature = $this->prophesize(Category::class);
+        $folder = $this->prophesize(Folder::class);
+
+        $subject = new Import(
+            $folder->reveal(),
+            0,
+            '',
+            '',
+            0,
+            null,
+            0,
+            $feature->reveal()
+        );
+
+        self::assertSame(
+            $feature->reveal(),
+            $subject->getFeaturesParent()
         );
     }
 
