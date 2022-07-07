@@ -19,7 +19,7 @@ CREATE TABLE tx_events_domain_model_event (
 	country varchar(255) DEFAULT '' NOT NULL,
 	web varchar(255) DEFAULT '' NOT NULL,
     phone varchar(255) DEFAULT '' NOT NULL,
-	ticket varchar(255) DEFAULT '' NOT NULL,
+	ticket text,
 	facebook varchar(255) DEFAULT '' NOT NULL,
 	youtube varchar(255) DEFAULT '' NOT NULL,
 	instagram varchar(255) DEFAULT '' NOT NULL,
