@@ -121,8 +121,10 @@ class DatesFactory
         bool $canceled
     ): \Generator {
         $today = $this->getToday();
-        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-        $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+        $timeZone = new \DateTimeZone($date['tz']);
+        $start = new \DateTimeImmutable($date['start'], $timeZone);
+        $end = new \DateTimeImmutable($date['end'], $timeZone);
+        $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
         $i = (int) strtotime($start->format('l'), $start->getTimestamp());
         while ($i !== 0 && $i <= $until->getTimestamp()) {
@@ -131,10 +133,10 @@ class DatesFactory
                 continue;
             }
 
-            yield $this->createDateFromStartAndUntil(
-                (string) $i,
+            yield $this->createDateFromStartAndEnd(
+                $i,
                 $start,
-                $until,
+                $end,
                 $canceled
             );
         }
@@ -148,38 +150,44 @@ class DatesFactory
         bool $canceled
     ): \Generator {
         $today = $this->getToday();
-        $start = new \DateTime($date['start'], new \DateTimeZone($date['tz']));
-        $until = new \DateTime($date['repeatUntil'], new \DateTimeZone($date['tz']));
+        $timeZone = new \DateTimeZone($date['tz']);
+        $start = new \DateTimeImmutable($date['start'], $timeZone);
+        $end = new \DateTimeImmutable($date['end'], $timeZone);
+        $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
         foreach ($date['weekdays'] as $day) {
             $i = strtotime($day, $start->getTimestamp());
             while ($i !== 0 && $i <= $until->getTimestamp()) {
-                $timeStampToUse = (string) $i;
+                $timeStampToUse = $i;
                 $i = strtotime('+1 week', $i);
                 if ($i < $today) {
                     continue;
                 }
 
-                yield $this->createDateFromStartAndUntil(
+                yield $this->createDateFromStartAndEnd(
                     $timeStampToUse,
                     $start,
-                    $until,
+                    $end,
                     $canceled
                 );
             }
         }
     }
 
-    private function createDateFromStartAndUntil(
-        string $timestamp,
-        \DateTime $start,
-        \DateTime $until,
+    private function createDateFromStartAndEnd(
+        int $timestamp,
+        \DateTimeImmutable $start,
+        \DateTimeImmutable $end,
         bool $canceled
     ): Date {
-        $eventStart = new \DateTime('@' . $timestamp);
-        $eventStart->setTime((int) $start->format('H'), (int) $start->format('i'));
-        $eventEnd = new \DateTime('@' . $timestamp);
-        $eventEnd->setTime((int) $until->format('H'), (int) $until->format('i'));
+        $eventStart = $start->setTimestamp($timestamp)->setTime(
+            (int) $start->format('H'),
+            (int) $start->format('i')
+        );
+        $eventEnd = $end->setTimestamp($timestamp)->setTime(
+            (int) $end->format('H'),
+            (int) $end->format('i')
+        );
 
         return Date::createFromDestinationData(
             $eventStart,

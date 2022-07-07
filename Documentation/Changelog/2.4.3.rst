@@ -1,0 +1,30 @@
+2.4.3
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Fix broken date creation during import.
+  The import of recurring dates was broken.
+  We did not respect the time zone.
+  And we did not respect the end time, but used the until instead.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

@@ -164,22 +164,22 @@ class Date extends AbstractEntity
         bool $canceled
     ): self {
         return self::createFromDestinationData(
-            new \DateTime($date['start'], new \DateTimeZone($date['tz'])),
-            new \DateTime($date['end'], new \DateTimeZone($date['tz'])),
+            new \DateTimeImmutable($date['start'], new \DateTimeZone($date['tz'])),
+            new \DateTimeImmutable($date['end'], new \DateTimeZone($date['tz'])),
             $canceled
         );
     }
 
     public static function createFromDestinationData(
-        \DateTime $start,
-        \DateTime $end,
+        \DateTimeImmutable $start,
+        \DateTimeImmutable $end,
         bool $canceled
     ): self {
         $date = new Date();
         $date->setLanguageUid(-1);
 
-        $date->setStart($start);
-        $date->setEnd($end);
+        $date->setStart(new \DateTime($start->format(\DateTime::W3C), $start->getTimezone()));
+        $date->setEnd(new \DateTime($end->format(\DateTime::W3C), $end->getTimezone()));
 
         if ($canceled) {
             $date->setCanceled('canceled');
