@@ -5,20 +5,28 @@ declare(strict_types=1);
 namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
 use PHPUnit\Framework\TestCase;
+use TYPO3\CMS\Core\Context\Context;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use Wrm\Events\Tests\ProphecyTrait;
 
 /**
  * @covers \Wrm\Events\Service\DestinationDataImportService\DatesFactory
  */
 class DatesFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      */
     public function canBeCreated(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         self::assertInstanceOf(
             DatesFactory::class,
@@ -32,7 +40,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNoResultOnUnkownInput(array $unkownInput): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates($unkownInput, false);
 
@@ -60,7 +72,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsSingleNotCanceledDate(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'start' => '2099-06-21T16:00:00+02:00',
@@ -86,7 +102,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsSingleCanceledDate(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'start' => '2099-06-21T16:00:00+02:00',
@@ -111,7 +131,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnDailyBasis(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'start' => '2099-04-01T16:00:00+02:00',
@@ -142,8 +166,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnDailyBasis(): void
     {
+        $context = $this->prophesize(Context::class);
 
-        $subject = new DatesFactory();
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'start' => '2099-04-01T16:00:00+02:00',
@@ -174,7 +201,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'weekdays' => [
@@ -209,7 +240,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnWeeklyBasis(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([[
             'weekdays' => [
@@ -244,7 +279,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([
             [
@@ -291,7 +330,11 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnMixedIntervals(): void
     {
-        $subject = new DatesFactory();
+        $context = $this->prophesize(Context::class);
+
+        $subject = new DatesFactory(
+            $context->reveal()
+        );
 
         $result = $subject->createDates([
             [

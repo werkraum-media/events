@@ -2,10 +2,22 @@
 
 namespace Wrm\Events\Service\DestinationDataImportService;
 
+use TYPO3\CMS\Core\Context\Context;
 use Wrm\Events\Domain\Model\Date;
 
 class DatesFactory
 {
+    /**
+     * @var Context
+     */
+    private $context;
+
+    public function __construct(
+        Context $context
+    ) {
+        $this->context = $context;
+    }
+
     /**
      * @return \Generator<Date>
      */
@@ -178,6 +190,12 @@ class DatesFactory
 
     private function getToday(): int
     {
-        return (int) date('U', strtotime('midnight'));
+        $today = $this->context->getPropertyFromAspect('date', 'full', new \DateTimeImmutable());
+        if (!$today instanceof \DateTimeImmutable) {
+            $today = new \DateTimeImmutable();
+        }
+
+        $midnight = $today->modify('midnight');
+        return (int) $midnight->format('U');
     }
 }
