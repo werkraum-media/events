@@ -359,36 +359,49 @@ class DestinationDataImportService
         }
     }
 
-    /**
-     * @param array $media
-     */
     private function setTickets(array $media): void
     {
         foreach ($media as $link) {
-            if ($link['rel'] == "ticket") {
+            if (isset($link['rel']) === false) {
+                continue;
+            }
+
+            if ($link['rel'] === 'ticket') {
                 $this->tmpCurrentEvent->setTicket($link['url']);
-                break;
-            } elseif ($link['rel'] == "booking" && !$this->multiArrayKeyExists('ticket', $media)) {
+                return;
+            }
+
+            if (
+                $link['rel'] === 'booking'
+                && !$this->hasRelation('ticket', $media)
+            ) {
                 $this->tmpCurrentEvent->setTicket($link['url']);
-                break;
-            } elseif ($link['rel'] == "PRICE_KARTENLINK" && !$this->multiArrayKeyExists('ticket', $media) && !$this->multiArrayKeyExists('booking', $media)) {
+                return;
+            }
+
+            if (
+                $link['rel'] === 'PRICE_KARTENLINK'
+                && !$this->hasRelation('ticket', $media)
+                && !$this->hasRelation('booking', $media)
+            ) {
                 $this->tmpCurrentEvent->setTicket($link['url']);
+                return;
             }
         }
     }
 
-    private function multiArrayKeyExists(string $needle, array $haystack): bool
+    private function hasRelation(string $needle, array $haystack): bool
     {
         foreach ($haystack as $key => $value) {
-            if ($needle == $key) {
+            if (isset($haystack['rel']) && $haystack['rel'] === $needle) {
                 return true;
             }
-            if (is_array($value)) {
-                if ($this->multiArrayKeyExists($needle, $value) == true) {
-                    return true;
-                }
+
+            if (is_array($value) && $this->hasRelation($needle, $value)) {
+                return true;
             }
         }
+
         return false;
     }
 
