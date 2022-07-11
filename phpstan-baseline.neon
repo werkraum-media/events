@@ -34,3 +34,8 @@ parameters:
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php
 
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
+

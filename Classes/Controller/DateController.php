@@ -2,7 +2,7 @@
 
 namespace Wrm\Events\Controller;
 
-use TYPO3\CMS\Core\Database\QueryGenerator;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -12,6 +12,8 @@ use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
+use Wrm\Events\Events\Controller\DateListVariables;
+use Wrm\Events\Events\Controller\DateSearchVariables;
 use Wrm\Events\Service\DataProcessingForModels;
 
 /**
@@ -40,43 +42,29 @@ class DateController extends AbstractController
     protected $categoryRepository;
 
     /**
-     * @var QueryGenerator
+     * @var EventDispatcher
      */
-    protected $queryGenerator;
+    protected $eventDispatcher;
 
     /**
      * @var DataProcessingForModels
      */
     protected $dataProcessing;
 
-    /**
-     * @var array
-     */
-    protected $pluginSettings;
-
-    /*
-     * @param RegionRepository $regionRepository
-     * @param DateRepository $dateRepository
-     * @param CategoryRepository $categoryRepository
-     */
     public function __construct(
         DateDemandFactory $demandFactory,
         RegionRepository $regionRepository,
         DateRepository $dateRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        DataProcessingForModels $dataProcessing,
+        EventDispatcher $eventDispatcher
     ) {
         $this->demandFactory = $demandFactory;
         $this->regionRepository = $regionRepository;
         $this->dateRepository = $dateRepository;
         $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * @param DataProcessingForModels $dataProcessing
-     */
-    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing): void
-    {
         $this->dataProcessing = $dataProcessing;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     protected function initializeAction(): void
@@ -86,9 +74,6 @@ class DateController extends AbstractController
             $this->demandFactory->setContentObjectRenderer($contentObject);
         }
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
-        $this->pluginSettings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
     }
 
     /**
@@ -110,11 +95,15 @@ class DateController extends AbstractController
             $demand = $this->demandFactory->fromSettings($this->settings);
         }
 
-        $this->view->assignMultiple([
-            'search' => $search,
-            'demand' => $demand,
-            'dates' => $this->dateRepository->findByDemand($demand),
-        ]);
+        $event = $this->eventDispatcher->dispatch(new DateListVariables(
+            $search,
+            $demand,
+            $this->dateRepository->findByDemand($demand)
+        ));
+        if (!$event instanceof DateListVariables) {
+            throw new \Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . get_class($event), 1657542318);
+        }
+        $this->view->assignMultiple($event->getVariablesForView());
     }
 
     /**
@@ -131,18 +120,26 @@ class DateController extends AbstractController
             unset($arguments['events_search']);
         }
 
+        // For legacy systems.
         $this->view->assignMultiple([
             'searchword' => $arguments['searchword'] ?? '',
             'selRegion' => $arguments['region'] ?? '',
             'start' => $arguments['start'] ?? '',
             'end' => $arguments['end'] ?? '',
             'considerDate' => $arguments['considerDate'] ?? '',
-            'search' => $search,
-            'demand' => DateDemand::createFromRequestValues($arguments, $this->settings),
-            'regions' => $this->regionRepository->findAll(),
-            'categories' => $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['categoriesParent'] ?? 0, 'categories'),
-            'features' => $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['featuresParent'] ?? 0, 'features'),
         ]);
+
+        $event = $this->eventDispatcher->dispatch(new DateSearchVariables(
+            $search,
+            DateDemand::createFromRequestValues($arguments, $this->settings),
+            $this->regionRepository->findAll(),
+            $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['categoriesParent'] ?? 0, 'categories'),
+            $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['featuresParent'] ?? 0, 'features')
+        ));
+        if (!$event instanceof DateSearchVariables) {
+            throw new \Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . get_class($event), 1657542318);
+        }
+        $this->view->assignMultiple($event->getVariablesForView());
     }
 
     public function teaserAction(): void

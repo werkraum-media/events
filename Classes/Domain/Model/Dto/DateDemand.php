@@ -132,7 +132,7 @@ class DateDemand
             $instance->setUserCategories($submittedValues['userCategories']);
         }
 
-        if (is_array($submittedValues['features'])) {
+        if (isset($submittedValues['features']) && is_array($submittedValues['features'])) {
             $instance->setFeatures($submittedValues['features']);
         }
 

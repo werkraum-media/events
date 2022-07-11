@@ -39,6 +39,11 @@ Features
 
   It is possible to add them to user submitted filter.
 
+* Add PSR-14 events to Date controller. Those events allow to alter the variables
+  assigned to views within list and search action.
+  This might be used to add further variables or to alter variables, e.g. hide some
+  categories, group dates, etc.
+
 Fixes
 -----
 

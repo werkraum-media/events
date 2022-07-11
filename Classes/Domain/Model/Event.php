@@ -534,6 +534,9 @@ class Event extends AbstractEntity
         $this->categories->attach($category);
     }
 
+    /**
+     * @return array<Category>
+     */
     public function getCategories(): array
     {
         $categories = $this->categories->toArray();
@@ -553,6 +556,9 @@ class Event extends AbstractEntity
         $this->categories = $categories;
     }
 
+    /**
+     * @return array<Category>
+     */
     public function getFeatures(): array
     {
         $features = $this->features->toArray();
