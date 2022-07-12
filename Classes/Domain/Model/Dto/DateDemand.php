@@ -42,12 +42,6 @@ class DateDemand
     protected $categoryCombination = '';
 
     /**
-     * @var string
-     * Legacy, superceeded by regions which allows multi select / filter.
-     */
-    protected $region = '';
-
-    /**
      * @var int[]
      */
     protected $regions = [];
@@ -109,7 +103,7 @@ class DateDemand
         $instance->setSearchword($submittedValues['searchword'] ?? '');
         $instance->setSynonyms($settings['synonyms'] ?? []);
 
-        $instance->setRegion($submittedValues['region'] ?? '');
+        $instance->setRegions(GeneralUtility::intExplode(',', $submittedValues['region'] ?? '', true));
         if (isset($submittedValues['regions']) && is_array($submittedValues['regions'])) {
             $instance->setRegions($submittedValues['regions']);
         }
@@ -231,12 +225,7 @@ class DateDemand
 
     public function getRegion(): string
     {
-        return $this->region;
-    }
-
-    public function setRegion(string $region): void
-    {
-        $this->region = $region;
+        return implode(',', $this->regions);
     }
 
     /**

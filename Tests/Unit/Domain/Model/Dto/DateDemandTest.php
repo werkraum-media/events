@@ -129,6 +129,31 @@ class DateDemandTest extends TestCase
     /**
      * @test
      */
+    public function regionIsSetByRequest(): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'region' => '10',
+            ],
+            [
+            ]
+        );
+
+        self::assertSame(
+            [
+                10,
+            ],
+            $result->getRegions()
+        );
+        self::assertSame(
+            '10',
+            $result->getRegion()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function regionsAreSetByRequest(): void
     {
         $result = DateDemand::createFromRequestValues(
@@ -147,6 +172,10 @@ class DateDemandTest extends TestCase
                 20,
             ],
             $result->getRegions()
+        );
+        self::assertSame(
+            '10,20',
+            $result->getRegion()
         );
     }
 

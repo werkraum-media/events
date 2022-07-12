@@ -22,6 +22,7 @@ namespace Wrm\Events\Domain\Model\Dto;
  */
 
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class DateDemandFactory
@@ -59,7 +60,7 @@ class DateDemandFactory
             }
         }
 
-        $demand->setRegion((string)$settings['region']);
+        $demand->setRegions(GeneralUtility::intExplode(',', (string)$settings['region'], true));
         $demand->setCategories((string)$settings['categories']);
         $categoryCombination = (int)$settings['categoryCombination'] === 1 ? 'or' : 'and';
         $demand->setCategoryCombination($categoryCombination);
