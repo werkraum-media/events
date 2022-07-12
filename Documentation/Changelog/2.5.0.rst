@@ -47,7 +47,8 @@ Features
 Fixes
 -----
 
-Nothing
+* Do not break within repository if no longer existing category is requested.
+  The code didn't catch that situation and would fail with an TYPO3 exception.
 
 Tasks
 -----

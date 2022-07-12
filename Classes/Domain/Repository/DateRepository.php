@@ -45,19 +45,10 @@ class DateRepository extends Repository
     {
         $query = $this->createQuery();
         $constraints = [];
-        $categories = $demand->getCategories();
 
-        if ($categories) {
-            $categoryConstraints = $this->createCategoryConstraint(
-                $query,
-                $categories,
-                $demand->getIncludeSubCategories()
-            );
-            if ($demand->getCategoryCombination() === 'or') {
-                $constraints['categories'] = $query->logicalOr($categoryConstraints);
-            } else {
-                $constraints['categories'] = $query->logicalAnd($categoryConstraints);
-            }
+        $categoriesConstraint = $this->createCategoryConstraint($query, $demand);
+        if ($categoriesConstraint instanceof ConstraintInterface) {
+            $constraints['categories'] = $categoriesConstraint;
         }
 
         if ($demand->getFeatures() !== []) {
@@ -170,21 +161,30 @@ class DateRepository extends Repository
 
     protected function createCategoryConstraint(
         QueryInterface $query,
-        string $categories,
-        bool $includeSubCategories = false
-    ): array {
+        DateDemand $demand
+    ): ?ConstraintInterface {
+        $categories = $demand->getCategories();
         $constraints = [];
 
-        if ($includeSubCategories) {
-            $categoryService = GeneralUtility::makeInstance(CategoryService::class);
-            $categories = $categoryService->getChildrenCategories($categories);
+        if ($demand->getIncludeSubCategories()) {
+            $categories = GeneralUtility::makeInstance(CategoryService::class)
+                ->getChildrenCategories($categories);
         }
 
         $categories = GeneralUtility::intExplode(',', $categories, true);
         foreach ($categories as $category) {
             $constraints[] = $query->contains('event.categories', $category);
         }
-        return $constraints;
+
+        if ($constraints === []) {
+            return null;
+        }
+
+        if ($demand->getCategoryCombination() === 'or') {
+            return $query->logicalOr($constraints);
+        }
+
+        return $query->logicalAnd($constraints);
     }
 
     private function createFeaturesConstraint(
