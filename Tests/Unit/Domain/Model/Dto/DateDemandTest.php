@@ -149,4 +149,135 @@ class DateDemandTest extends TestCase
             $result->getRegions()
         );
     }
+
+    /**
+     * @test
+     */
+    public function startIsSetByRequest(): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'start' => '2022-07-12',
+            ],
+            [
+            ]
+        );
+
+        self::assertInstanceOf(
+            \DateTimeImmutable::class,
+            $result->getStartObject()
+        );
+        self::assertSame(
+            '2022-07-12',
+            $result->getStartObject()->format('Y-m-d')
+        );
+        self::assertSame(
+            1657576800,
+            $result->getStart()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function endIsSetByRequest(): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'end' => '2022-07-12',
+            ],
+            [
+            ]
+        );
+
+        self::assertInstanceOf(
+            \DateTimeImmutable::class,
+            $result->getEndObject()
+        );
+        self::assertSame(
+            '2022-07-12',
+            $result->getEndObject()->format('Y-m-d')
+        );
+        self::assertSame(
+            1657663140,
+            $result->getEnd()
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider possibleEndAndStartNullCombinations
+     */
+    public function returnsEndsOnSameDayIfAnyIsNull(
+        string $start,
+        string $end
+    ): void {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'start' => $start,
+                'end' => $end,
+            ],
+            [
+            ]
+        );
+
+        self::assertTrue(
+            $result->getEndsOnSameDay()
+        );
+    }
+
+    public function possibleEndAndStartNullCombinations(): \Generator
+    {
+        yield 'Both are empty' => [
+            'start' => '',
+            'end' => '',
+        ];
+        yield 'Start is empty' => [
+            'start' => '',
+            'end' => '2022-07-12',
+        ];
+        yield 'End is empty' => [
+            'start' => '2022-07-12',
+            'end' => '',
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function returnsEndsOnSameDayIfBothAreOnSameDay(): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'start' => '2022-07-12',
+                'end' => '2022-07-12',
+            ],
+            [
+            ]
+        );
+
+        self::assertTrue(
+            $result->getEndsOnSameDay()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function returnsEndsOnSameDayIfBothAreOnDifferentDays(): void
+    {
+
+        $result = DateDemand::createFromRequestValues(
+            [
+                'start' => '2022-07-12',
+                'end' => '2022-07-13',
+            ],
+            [
+            ]
+        );
+
+        self::assertFalse(
+            $result->getEndsOnSameDay()
+        );
+    }
 }

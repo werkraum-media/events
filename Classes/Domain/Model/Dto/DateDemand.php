@@ -63,14 +63,14 @@ class DateDemand
     protected $limit = '';
 
     /**
-     * @var int|null
+     * @var null|\DateTimeImmutable
      */
-    protected $start = null;
+    protected $startObject = null;
 
     /**
-     * @var int|null
+     * @var null|\DateTimeImmutable
      */
-    protected $end = null;
+    protected $endObject = null;
 
     /**
      * @var bool
@@ -315,24 +315,58 @@ class DateDemand
         return $this->synonyms[$searchWord] ?? [];
     }
 
+    public function getStartObject(): ?\DateTimeImmutable
+    {
+        return $this->startObject;
+    }
+
     public function getStart(): ?int
     {
-        return $this->start;
+        if ($this->getStartObject() === null) {
+            return null;
+        }
+
+        return (int) $this->getStartObject()->format('U');
     }
 
     public function setStart(?int $start): void
     {
-        $this->start = $start;
+        if ($start === null) {
+            return;
+        }
+        $this->startObject = new \DateTimeImmutable(date('Y-m-d H:i', $start));
+    }
+
+    public function getEndObject(): ?\DateTimeImmutable
+    {
+        return $this->endObject;
+    }
+
+    public function getEndsOnSameDay(): bool
+    {
+        if ($this->getStartObject() === null || $this->getEndObject() === null) {
+            return true;
+        }
+
+        return $this->getStartObject()->format('Y-m-d') === $this->getEndObject()->format('Y-m-d');
     }
 
     public function getEnd(): ?int
     {
-        return $this->end;
+        if ($this->getEndObject() === null) {
+            return null;
+        }
+
+        return (int) $this->getEndObject()->format('U');
     }
 
     public function setEnd(?int $end): void
     {
-        $this->end = $end;
+        if ($end === null) {
+            return;
+        }
+
+        $this->endObject = new \DateTimeImmutable(date('Y-m-d H:i', $end));
     }
 
     public function setUseMidnight(bool $useMidnight): void

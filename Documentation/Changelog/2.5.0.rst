@@ -44,6 +44,9 @@ Features
   This might be used to add further variables or to alter variables, e.g. hide some
   categories, group dates, etc.
 
+* Provide start and end as ``\DateTimeImmutable`` instances within ``DateDemand``.
+  This allows to respect time zone and usage of ``f:format.date`` ViewHelper.
+
 Fixes
 -----
 
