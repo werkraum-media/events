@@ -115,7 +115,7 @@ class DateDemand
         }
 
         if ($submittedValues['highlight'] ?? false) {
-            $instance->setHighlight($settings['highlight'] ?? false);
+            $instance->setHighlight(true);
         }
 
         if (isset($submittedValues['start']) && $submittedValues['start'] !== '') {

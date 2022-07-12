@@ -266,7 +266,6 @@ class DateDemandTest extends TestCase
      */
     public function returnsEndsOnSameDayIfBothAreOnDifferentDays(): void
     {
-
         $result = DateDemand::createFromRequestValues(
             [
                 'start' => '2022-07-12',
@@ -279,5 +278,58 @@ class DateDemandTest extends TestCase
         self::assertFalse(
             $result->getEndsOnSameDay()
         );
+    }
+
+    /**
+     * @test
+     * @dataProvider possibleSubmittedHighlights
+     *
+     * @param mixed $highlight
+     */
+    public function returnsHighlightIfSet($highlight): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'highlight' => $highlight,
+            ],
+            [
+            ]
+        );
+
+        self::assertTrue($result->getHighlight());
+    }
+
+    public function possibleSubmittedHighlights(): \Generator
+    {
+        yield 'true' => ['highlight' => true];
+        yield '1 as integer' => ['highlight' => 1];
+        yield '1 as string' => ['highlight' => '1'];
+    }
+
+    /**
+     * @test
+     * @dataProvider possibleSubmittedFalsyHighlights
+     *
+     * @param mixed $highlight
+     */
+    public function returnsNoHighlightIfNotSet($highlight): void
+    {
+        $result = DateDemand::createFromRequestValues(
+            [
+                'highlight' => $highlight,
+            ],
+            [
+            ]
+        );
+
+        self::assertFalse($result->getHighlight());
+    }
+
+    public function possibleSubmittedFalsyHighlights(): \Generator
+    {
+        yield 'false' => ['highlight' => false];
+        yield '0 as integer' => ['highlight' => 0];
+        yield '0 as string' => ['highlight' => '0'];
+        yield 'empty string' => ['highlight' => ''];
     }
 }
