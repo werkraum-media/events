@@ -81,6 +81,7 @@ class DateController extends AbstractController
      */
     public function listAction(array $search = []): void
     {
+        $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
             $demand = DateDemand::createFromRequestValues($search, $this->settings);
         } elseif (
@@ -91,8 +92,6 @@ class DateController extends AbstractController
             || ($this->request->hasArgument('events_search') && $this->request->getArgument('events_search') != [])
         ) {
             $demand = $this->createDemandFromSearch();
-        } else {
-            $demand = $this->demandFactory->fromSettings($this->settings);
         }
 
         $event = $this->eventDispatcher->dispatch(new DateListVariables(
@@ -129,9 +128,14 @@ class DateController extends AbstractController
             'considerDate' => $arguments['considerDate'] ?? '',
         ]);
 
+        $demand = $this->demandFactory->fromSettings($this->settings);
+        if ($search !== []) {
+            $demand = DateDemand::createFromRequestValues($search, $this->settings);
+        }
+
         $event = $this->eventDispatcher->dispatch(new DateSearchVariables(
             $search,
-            DateDemand::createFromRequestValues($arguments, $this->settings),
+            $demand,
             $this->regionRepository->findAll(),
             $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['categoriesParent'] ?? 0, 'categories'),
             $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['featuresParent'] ?? 0, 'features')
