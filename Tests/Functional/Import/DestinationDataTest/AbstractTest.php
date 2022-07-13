@@ -7,6 +7,8 @@ use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\Container;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wrm\Events\Command\DestinationDataImportCommand;
@@ -85,5 +87,19 @@ abstract class AbstractTest extends FunctionalTestCase
         );
 
         return $tester;
+    }
+
+    /**
+     * @api Actual tests can use this method to define the actual date of "now".
+     */
+    protected function setDateAspect(\DateTimeImmutable $dateTime): void
+    {
+        $context = $this->getContainer()->get(Context::class);
+        if (!$context instanceof Context) {
+            throw new \TypeError('Retrieved context was of unexpected type.', 1638182021);
+        }
+
+        $aspect = new DateTimeAspect($dateTime);
+        $context->setAspect('date', $aspect);
     }
 }

@@ -90,7 +90,7 @@ class DatesFactory
         array $date,
         bool $canceled
     ): \Generator {
-        if (strtotime($date['start']) > $this->getToday()) {
+        if (new \DateTimeImmutable($date['start']) > $this->getToday()) {
             yield Date::createFromDestinationDataDate($date, $canceled);
         }
     }
@@ -126,15 +126,16 @@ class DatesFactory
         $end = new \DateTimeImmutable($date['end'], $timeZone);
         $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
-        $i = (int) strtotime($start->format('l'), $start->getTimestamp());
-        while ($i !== 0 && $i <= $until->getTimestamp()) {
-            $i = (int) strtotime('+1 day', $i);
-            if ($i < $today) {
+        $nextDate = $start;
+        while ($nextDate <= $until) {
+            $dateToUse = $nextDate;
+            $nextDate = $dateToUse->modify('+1 day');
+            if ($dateToUse < $today) {
                 continue;
             }
 
             yield $this->createDateFromStartAndEnd(
-                $i,
+                $dateToUse,
                 $start,
                 $end,
                 $canceled
@@ -156,16 +157,16 @@ class DatesFactory
         $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
         foreach ($date['weekdays'] as $day) {
-            $i = strtotime($day, $start->getTimestamp());
-            while ($i !== 0 && $i <= $until->getTimestamp()) {
-                $timeStampToUse = $i;
-                $i = strtotime('+1 week', $i);
-                if ($i < $today) {
+            $nextDate = $start->modify($day);
+            while ($nextDate <= $until) {
+                $dateToUse = $nextDate;
+                $nextDate = $dateToUse->modify('+1 week');
+                if ($dateToUse < $today) {
                     continue;
                 }
 
                 yield $this->createDateFromStartAndEnd(
-                    $timeStampToUse,
+                    $dateToUse,
                     $start,
                     $end,
                     $canceled
@@ -175,35 +176,25 @@ class DatesFactory
     }
 
     private function createDateFromStartAndEnd(
-        int $timestamp,
+        \DateTimeImmutable $dateToUse,
         \DateTimeImmutable $start,
         \DateTimeImmutable $end,
         bool $canceled
     ): Date {
-        $eventStart = $start->setTimestamp($timestamp)->setTime(
-            (int) $start->format('H'),
-            (int) $start->format('i')
-        );
-        $eventEnd = $end->setTimestamp($timestamp)->setTime(
-            (int) $end->format('H'),
-            (int) $end->format('i')
-        );
-
         return Date::createFromDestinationData(
-            $eventStart,
-            $eventEnd,
+            $dateToUse->setTime((int) $start->format('H'), (int) $start->format('i')),
+            $dateToUse->setTime((int) $end->format('H'), (int) $end->format('i')),
             $canceled
         );
     }
 
-    private function getToday(): int
+    private function getToday(): \DateTimeImmutable
     {
         $today = $this->context->getPropertyFromAspect('date', 'full', new \DateTimeImmutable());
         if (!$today instanceof \DateTimeImmutable) {
             $today = new \DateTimeImmutable();
         }
 
-        $midnight = $today->modify('midnight');
-        return (int) $midnight->format('U');
+        return $today->modify('midnight');
     }
 }

@@ -1,0 +1,6 @@
+"tx_events_domain_model_event",,,,,
+,"uid","pid","title","global_id","dates"
+,"1","2","Kurzführung - Historische Altstadt","e_100354481",1
+"tx_events_domain_model_date",,,,,
+,"uid","pid","event","start","end"
+,"1","2",1,1657717200,1657722600

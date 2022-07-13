@@ -1,0 +1,28 @@
+2.4.4
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Fix missing first date on import of daily events.
+  The first date of daily events was missing during import.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

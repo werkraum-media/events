@@ -152,12 +152,12 @@ class DatesFactoryTest extends TestCase
         self::assertCount(3, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4078821600', $result[0]->getStart()->format('U'));
-        self::assertSame('4078825200', $result[0]->getEnd()->format('U'));
+        self::assertSame('4078735200', $result[0]->getStart()->format('U'));
+        self::assertSame('4078738800', $result[0]->getEnd()->format('U'));
         self::assertSame('canceled', $result[0]->getCanceled());
 
-        self::assertSame('4078994400', $result[2]->getStart()->format('U'));
-        self::assertSame('4078998000', $result[2]->getEnd()->format('U'));
+        self::assertSame('4078908000', $result[2]->getStart()->format('U'));
+        self::assertSame('4078911600', $result[2]->getEnd()->format('U'));
         self::assertSame('canceled', $result[2]->getCanceled());
     }
 
@@ -187,12 +187,12 @@ class DatesFactoryTest extends TestCase
         self::assertCount(3, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4078821600', $result[0]->getStart()->format('U'));
-        self::assertSame('4078825200', $result[0]->getEnd()->format('U'));
+        self::assertSame('4078735200', $result[0]->getStart()->format('U'));
+        self::assertSame('4078738800', $result[0]->getEnd()->format('U'));
         self::assertSame('no', $result[0]->getCanceled());
 
-        self::assertSame('4078994400', $result[2]->getStart()->format('U'));
-        self::assertSame('4078998000', $result[2]->getEnd()->format('U'));
+        self::assertSame('4078908000', $result[2]->getStart()->format('U'));
+        self::assertSame('4078911600', $result[2]->getEnd()->format('U'));
         self::assertSame('no', $result[2]->getCanceled());
     }
 

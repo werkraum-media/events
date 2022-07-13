@@ -190,47 +190,57 @@ class DestinationDataImportService
             $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
 
             // Set Highlight (Is only set in rest if true)
-            if (isset($event['highlight']) && $event['highlight']) {
+            if ($event['highlight'] ?? false) {
                 $this->tmpCurrentEvent->setHighlight($event['highlight']);
             }
 
             // Set Texts
-            if ($event['texts']) {
+            if ($event['texts'] ?? false) {
                 $this->setTexts($event['texts']);
             }
 
             // Set address and geo data
-            if ($event['name'] || $event['street'] || $event['city'] || $event['zip'] || $event['country'] || $event['web']) {
+            if (
+                ($event['name'] ?? false)
+                || ($event['street'] ?? false)
+                || ($event['city'] ?? false)
+                || ($event['zip'] ?? false)
+                || ($event['country'] ?? false)
+                || ($event['web'] ?? false)
+            ) {
                 $this->setAddress($event);
             }
 
             // Set LatLng
-            if ($event['geo']['main']['latitude'] && $event['geo']['main']['longitude']) {
+            if (
+                ($event['geo']['main']['latitude'] ?? false)
+                && ($event['geo']['main']['longitude'] ?? false)
+            ) {
                 $this->setLatLng($event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
             }
 
             // Set Categories
-            if ($event['categories']) {
+            if ($event['categories'] ?? false) {
                 $this->setCategories($event['categories']);
             }
 
             // Set Organizer
-            if ($event['addresses']) {
+            if ($event['addresses'] ?? false) {
                 $this->setOrganizer($event['addresses']);
             }
 
             // Set Social
-            if ($event['media_objects']) {
+            if ($event['media_objects'] ?? false) {
                 $this->setSocial($event['media_objects']);
             }
 
             // Set Tickets
-            if ($event['media_objects']) {
+            if ($event['media_objects'] ?? false) {
                 $this->setTickets($event['media_objects']);
             }
 
             // Set Dates
-            if ($event['timeIntervals']) {
+            if ($event['timeIntervals'] ?? false) {
                 $this->setDates(
                     $event['timeIntervals'],
                     (bool) $this->getAttributeValue($event, 'DETAILS_ABGESAGT')
@@ -238,7 +248,7 @@ class DestinationDataImportService
             }
 
             // Set Assets
-            if ($event['media_objects']) {
+            if ($event['media_objects'] ?? false) {
                 $this->setAssets($event['media_objects']);
             }
 

@@ -1,0 +1,190 @@
+{
+    "status": "OK",
+    "count": 3,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100354481",
+            "id": "100354481",
+            "title": "Tüftlerzeit",
+            "type": "Event",
+            "categories": [
+                "Kinder"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Tüftlerzeit wird dieses Mal ein weihnachtliches Angebot bereithalten. Alle kleinen Tüftler dürfen gespannt sein.<br>Voranmeldung über: kinderbibliothek@rudolstadt.de oder 03672-486420<br><br>Bitte beachten Sie die derzeit geltenden Zugangsregeln."
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Tüftlerzeit wird dieses Mal ein weihnachtliches Angebot bereithalten. Alle kleinen Tüftler dürfen gespannt sein.\nVoranmeldung über: kinderbibliothek@rudolstadt.de oder 03672-486420\n\nBitte beachten Sie die derzeit geltenden Zugangsregeln."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schulplatz 13",
+            "phone": "0 36 72 - 48 64 20",
+            "fax": "0 36 72 - 48 64 30",
+            "web": "http://www.stadtbibliothek-rudolstadt.de/",
+            "email": "stadtbibliothek@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.720835175055917,
+                    "longitude": 11.342568397521973
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2022-07-13T11:00:00+02:00",
+                    "end": "2022-07-13T13:00:00+02:00",
+                    "repeatUntil": "2022-07-17T16:00+02:00",
+                    "tz": "Europe/Berlin",
+                    "freq": "Daily",
+                    "interval": 1
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Stadtbibliothek Rudolstadt",
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100042570"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100042570"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-16T15:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-16T16:30:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "3"
+                },
+                {
+                    "key": "interval_last_match_start",
+                    "value": "2022-02-17T15:00:00+01"
+                },
+                {
+                    "key": "interval_last_match_end",
+                    "value": "2022-02-17T17:00:00+01"
+                }
+            ],
+            "features": [
+                "vorhandenes Feature",
+                "Barrierefrei",
+                "Zielgruppe Jugendliche",
+                "neues Feature"
+            ],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Stadtbibliothek Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schulplatz 13",
+                    "phone": "0 36 72 - 48 64 20",
+                    "fax": "0 36 72 - 48 64 30",
+                    "web": "http://www.stadtbibliothek-rudolstadt.de ",
+                    "email": "stadtbibliothek@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-11-10T23:02:00+00:00",
+            "changed": "2099-12-14T08:28:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "texts": [
+            ],
+            "timeIntervals": [
+                {
+                    "end": "2022-04-30T17:00:00+02:00",
+                    "freq": "Daily",
+                    "interval": 1,
+                    "repeatUntil": "2022-07-17T17:00:00+02:00",
+                    "start": "2022-07-13T16:00:00+02:00",
+                    "tz": "Europe/Berlin",
+                    "weekdays": []
+                }
+            ],
+            "title": "Kurzf\u00fchrung - Historische Altstadt",
+            "type": "Event",
+            "web": "http://www.erfurt-tourismus.de/stadtfuehrung/individuell/kurzfuehrung-historische-altstadt/",
+            "zip": "99084"
+        }
+    ]
+}

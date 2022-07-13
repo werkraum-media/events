@@ -1,0 +1,111 @@
+{
+    "status": "OK",
+    "count": 3,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100354481",
+            "id": "100354481",
+            "type": "Event",
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schulplatz 13",
+            "phone": "0 36 72 - 48 64 20",
+            "fax": "0 36 72 - 48 64 30",
+            "web": "http://www.stadtbibliothek-rudolstadt.de/",
+            "email": "stadtbibliothek@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.720835175055917,
+                    "longitude": 11.342568397521973
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2022-07-13T15:00:00+02:00",
+                    "end": "2022-07-13T16:30:00+02:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Stadtbibliothek Rudolstadt",
+            "attributes": [
+            ],
+            "features": [
+            ],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Stadtbibliothek Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schulplatz 13",
+                    "phone": "0 36 72 - 48 64 20",
+                    "fax": "0 36 72 - 48 64 30",
+                    "web": "http://www.stadtbibliothek-rudolstadt.de ",
+                    "email": "stadtbibliothek@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-11-10T23:02:00+00:00",
+            "changed": "2099-12-14T08:28:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "texts": [
+            ],
+            "title": "Kurzf\u00fchrung - Historische Altstadt",
+            "type": "Event",
+            "web": "http://www.erfurt-tourismus.de/stadtfuehrung/individuell/kurzfuehrung-historische-altstadt/",
+            "zip": "99084"
+        }
+    ]
+}

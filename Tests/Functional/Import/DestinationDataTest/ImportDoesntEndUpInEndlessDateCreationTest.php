@@ -18,7 +18,7 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
-        $this->setDateAspect(new \DateTimeImmutable('2022-07-01'));
+        $this->setDateAspect(new \DateTimeImmutable('2022-07-01'), new \DateTimeZone('Europe/Berlin'));
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
         $this->setUpConfiguration([
@@ -51,16 +51,5 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
             $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
             'Logfile was not empty.'
         );
-    }
-
-    private function setDateAspect(\DateTimeImmutable $dateTime): void
-    {
-        $context = $this->getContainer()->get(Context::class);
-        if (!$context instanceof Context) {
-            throw new \TypeError('Retrieved context was of unexpected type.', 1638182021);
-        }
-
-        $aspect = new DateTimeAspect($dateTime);
-        $context->setAspect('date', $aspect);
     }
 }
