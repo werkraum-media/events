@@ -14,6 +14,12 @@ validate:composer:
   script:
     - composer validate --no-check-publish --strict
 
+validate:php:8.1:
+  image: php:8.1-alpine
+  stage: validate
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
 validate:php:8.0:
   image: php:8.0-alpine
   stage: validate
@@ -56,6 +62,14 @@ validate:cgl:
     - composer install --prefer-dist --no-progress
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache
 
+validate:phpstan:8.1:
+  image: php:8.1-alpine
+  stage: validate
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
 validate:phpstan:8.0:
   image: php:8.0-alpine
   stage: validate
@@ -95,6 +109,14 @@ validate:phpstan:7.2:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
+
+test:phpunit:8.1:
+  image: php:8.1-alpine
+  stage: test
+  before_script:
+  script:
+    - composer install --prefer-dist --no-progress
+    - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
 
 test:phpunit:8.0:
   image: php:8.0-alpine
