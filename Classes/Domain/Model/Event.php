@@ -55,41 +55,6 @@ class Event extends AbstractEntity
     /**
      * @var string
      */
-    protected $name = '';
-
-    /**
-     * @var string
-     */
-    protected $street = '';
-
-    /**
-     * @var string
-     */
-    protected $district = '';
-
-    /**
-     * @var string
-     */
-    protected $city = '';
-
-    /**
-     * @var string
-     */
-    protected $zip = '';
-
-    /**
-     * @var string
-     */
-    protected $country = '';
-
-    /**
-     * @var string
-     */
-    protected $phone = '';
-
-    /**
-     * @var string
-     */
     protected $web = '';
 
     /**
@@ -113,16 +78,6 @@ class Event extends AbstractEntity
     protected $instagram = '';
 
     /**
-     * @var string
-     */
-    protected $latitude = '';
-
-    /**
-     * @var string
-     */
-    protected $longitude = '';
-
-    /**
      * @var ObjectStorage<FileReference>
      * @Extbase\ORM\Cascade remove
      */
@@ -136,12 +91,17 @@ class Event extends AbstractEntity
     protected $dates;
 
     /**
-     * @var \Wrm\Events\Domain\Model\Organizer
+     * @var Location|null
+     */
+    protected $location = null;
+
+    /**
+     * @var Organizer|null
      */
     protected $organizer = null;
 
     /**
-     * @var Region
+     * @var Region|null
      */
     protected $region = null;
 
@@ -179,6 +139,55 @@ class Event extends AbstractEntity
      * @var DataProcessingForModels
      */
     protected $dataProcessing = null;
+
+    // Legacy location related info
+
+    /**
+     * @var string
+     */
+    protected $name = '';
+
+    /**
+     * @var string
+     */
+    protected $street = '';
+
+    /**
+     * @var string
+     */
+    protected $district = '';
+
+    /**
+     * @var string
+     */
+    protected $city = '';
+
+    /**
+     * @var string
+     */
+    protected $zip = '';
+
+    /**
+     * @var string
+     */
+    protected $country = '';
+
+    /**
+     * @var string
+     */
+    protected $phone = '';
+
+    /**
+     * @var string
+     */
+    protected $latitude = '';
+
+    /**
+     * @var string
+     */
+    protected $longitude = '';
+
+    // End of legacy location info
 
     public function __construct()
     {
@@ -268,69 +277,6 @@ class Event extends AbstractEntity
         $this->priceInfo = $priceInfo;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getStreet(): string
-    {
-        return $this->street;
-    }
-
-    public function setStreet(string $street): void
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @return string $district
-     */
-    public function getDistrict(): string
-    {
-        return $this->district;
-    }
-
-    public function setDistrict(string $district): void
-    {
-        $this->district = $district;
-    }
-
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): void
-    {
-        $this->city = $city;
-    }
-
-    public function getZip(): string
-    {
-        return $this->zip;
-    }
-
-    public function setZip(string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): void
-    {
-        $this->phone = $phone;
-    }
-
     public function getWeb(): string
     {
         return $this->web;
@@ -379,26 +325,6 @@ class Event extends AbstractEntity
     public function setInstagram(string $instagram): void
     {
         $this->instagram = $instagram;
-    }
-
-    public function getLatitude(): string
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(string $latitude): void
-    {
-        $this->latitude = $latitude;
-    }
-
-    public function getLongitude(): string
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(string $longitude): void
-    {
-        $this->longitude = $longitude;
     }
 
     /**
@@ -477,6 +403,31 @@ class Event extends AbstractEntity
         return $this->referencesEvents;
     }
 
+    public function setLocation(?Location $location): void
+    {
+        $this->location = $location;
+
+        // Keep this block as long as event still has the properties for legacy reasons.
+        // This ensures there is only a single point of truth, the new location object.
+        // That way we detect issues earlier and can migrate them until we get rid of the legacy code base.
+        if ($location instanceof Location) {
+            $this->name = '';
+            $this->street = '';
+            $this->district = '';
+            $this->city = '';
+            $this->zip = '';
+            $this->country = '';
+            $this->phone = '';
+            $this->latitude = '';
+            $this->longitude = '';
+        }
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
     public function setOrganizer(Organizer $organizer): void
     {
         $this->organizer = $organizer;
@@ -505,16 +456,6 @@ class Event extends AbstractEntity
     public function isHighlight(): bool
     {
         return $this->highlight;
-    }
-
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): void
-    {
-        $this->country = $country;
     }
 
     public function getPages(): array
@@ -591,5 +532,88 @@ class Event extends AbstractEntity
     public function getLocalizedUid(): int
     {
         return $this->_localizedUid;
+    }
+
+    // Legacy location related info
+
+    public function getName(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getName();
+        }
+
+        return $this->name;
+    }
+
+    public function getStreet(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getStreet();
+        }
+
+        return $this->street;
+    }
+
+    public function getDistrict(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getDistrict();
+        }
+
+        return $this->district;
+    }
+
+    public function getCountry(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getCountry();
+        }
+
+        return $this->country;
+    }
+
+    public function getCity(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getCity();
+        }
+
+        return $this->city;
+    }
+
+    public function getZip(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getZip();
+        }
+
+        return $this->zip;
+    }
+
+    public function getPhone(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getPhone();
+        }
+
+        return $this->phone;
+    }
+
+    public function getLatitude(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getLatitude();
+        }
+
+        return $this->latitude;
+    }
+
+    public function getLongitude(): string
+    {
+        if ($this->location instanceof Location) {
+            return $this->location->getLongitude();
+        }
+
+        return $this->longitude;
     }
 }

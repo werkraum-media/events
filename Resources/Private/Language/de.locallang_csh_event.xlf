@@ -71,37 +71,9 @@
                 <source>Price Info</source>
                 <target>Preis Information</target>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.name">
-                <source>Name</source>
-                <target>Name</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.street">
-                <source>Street</source>
-                <target>Straße</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.district">
-                <source>District</source>
-                <target>Bundesland</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.city">
-                <source>City</source>
-                <target>Stadt</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.zip">
-                <source>Zip</source>
-                <target>Postleitzahl</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.country">
-                <source>Country</source>
-                <target>Land</target>
-            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.web">
                 <source>Web</source>
                 <target>Internet</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.phone">
-                <source>Phone</source>
-                <target>Telefon</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_event.ticket">
                 <source>Ticket</source>
@@ -119,14 +91,6 @@
                 <source>Instagram</source>
                 <target>Instagram</target>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.latitude">
-                <source>Latitude</source>
-                <target>Breitengrad</target>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_event.longitude">
-                <source>Longitude</source>
-                <target>Längengrad</target>
-            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.images">
                 <source>Images</source>
                 <target>Bilder</target>
@@ -142,6 +106,10 @@
             <trans-unit id="tx_events_domain_model_event.dates">
                 <source>Dates</source>
                 <target>Termine</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.location">
+                <source>Location</source>
+                <target>Veranstaltungsort</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_event.organizer">
                 <source>Organizer</source>

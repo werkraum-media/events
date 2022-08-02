@@ -31,6 +31,7 @@ use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
 
 class DestinationDataImportService
 {
@@ -100,6 +101,11 @@ class DestinationDataImportService
     private $categoriesAssignment;
 
     /**
+     * @var LocationAssignment
+     */
+    private $locationAssignment;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
@@ -110,6 +116,7 @@ class DestinationDataImportService
      * @param ObjectManager $objectManager
      * @param DataFetcher $dataFetcher
      * @param CategoriesAssignment $categoriesAssignment
+     * @param LocationAssignment $locationAssignment
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -121,7 +128,8 @@ class DestinationDataImportService
         ObjectManager $objectManager,
         DataFetcher $dataFetcher,
         DatesFactory $datesFactory,
-        CategoriesAssignment $categoriesAssignment
+        CategoriesAssignment $categoriesAssignment,
+        LocationAssignment $locationAssignment
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
@@ -133,6 +141,7 @@ class DestinationDataImportService
         $this->dataFetcher = $dataFetcher;
         $this->datesFactory = $datesFactory;
         $this->categoriesAssignment = $categoriesAssignment;
+        $this->locationAssignment = $locationAssignment;
     }
 
     public function import(
@@ -201,25 +210,9 @@ class DestinationDataImportService
                 $this->setTexts($event['texts']);
             }
 
-            // Set address and geo data
-            if (
-                ($event['name'] ?? false)
-                || ($event['street'] ?? false)
-                || ($event['city'] ?? false)
-                || ($event['zip'] ?? false)
-                || ($event['country'] ?? false)
-                || ($event['web'] ?? false)
-            ) {
-                $this->setAddress($event);
-            }
-
-            // Set LatLng
-            if (
-                ($event['geo']['main']['latitude'] ?? false)
-                && ($event['geo']['main']['longitude'] ?? false)
-            ) {
-                $this->setLatLng($event['geo']['main']['latitude'], $event['geo']['main']['longitude']);
-            }
+            $this->tmpCurrentEvent->setLocation(
+                $this->locationAssignment->getLocation($event)
+            );
 
             // Set Categories
             if ($event['categories'] ?? false) {
@@ -239,6 +232,10 @@ class DestinationDataImportService
             // Set Social
             if ($event['media_objects'] ?? false) {
                 $this->setSocial($event['media_objects']);
+            }
+
+            if ($event['web'] ?? false) {
+                $this->tmpCurrentEvent->setWeb($event['web']);
             }
 
             // Set Tickets
@@ -341,20 +338,6 @@ class DestinationDataImportService
     }
 
     /**
-     * @param array $event
-     */
-    private function setAddress(array $event): void
-    {
-        $this->tmpCurrentEvent->setName($event['name'] ?? '');
-        $this->tmpCurrentEvent->setStreet($event['street'] ?? '');
-        $this->tmpCurrentEvent->setCity($event['city'] ?? '');
-        $this->tmpCurrentEvent->setZip($event['zip'] ?? '');
-        $this->tmpCurrentEvent->setCountry($event['country'] ?? '');
-        $this->tmpCurrentEvent->setPhone($event['phone'] ?? '');
-        $this->tmpCurrentEvent->setWeb($event['web'] ?? '');
-    }
-
-    /**
      * @param array $media
      */
     private function setSocial(array $media): void
@@ -416,12 +399,6 @@ class DestinationDataImportService
         }
 
         return false;
-    }
-
-    private function setLatLng(string $lat, string $lng): void
-    {
-        $this->tmpCurrentEvent->setLatitude($lat);
-        $this->tmpCurrentEvent->setLongitude($lng);
     }
 
     private function setTexts(array $texts): void

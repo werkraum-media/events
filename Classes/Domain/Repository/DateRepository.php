@@ -55,6 +55,10 @@ class DateRepository extends Repository
             $constraints['features'] = $this->createFeaturesConstraint($query, $demand);
         }
 
+        if ($demand->getLocations() !== []) {
+            $constraints['locations'] = $query->in('event.location', $demand->getLocations());
+        }
+
         if ($demand->getRegion() !== '') {
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }

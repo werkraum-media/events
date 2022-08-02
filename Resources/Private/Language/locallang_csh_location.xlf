@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-08-02T11:40:42Z" product-name="Events Locations TCA">
+        <header/>
+        <body>
+            <trans-unit id="tx_events_domain_model_location.global_id" xml:space="preserve">
+                <source>Global UID</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.global_id.description" xml:space="preserve">
+                <source>Auto generated from the values.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.slug" xml:space="preserve">
+                <source>Slug</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.name" xml:space="preserve">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.street" xml:space="preserve">
+                <source>Street</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.district" xml:space="preserve">
+                <source>District</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.city" xml:space="preserve">
+                <source>City</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.zip" xml:space="preserve">
+                <source>Zip</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.country" xml:space="preserve">
+                <source>Country</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.phone" xml:space="preserve">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.latitude" xml:space="preserve">
+                <source>Latitude</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_location.longitude" xml:space="preserve">
+                <source>Longitude</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

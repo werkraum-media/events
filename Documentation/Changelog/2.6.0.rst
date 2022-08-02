@@ -4,7 +4,11 @@
 Breaking
 --------
 
-Nothing
+* The location columns within events will no longer be filled.
+  The new location will be used instead.
+  The model will fall back for existing old records.
+  Therefore this should not end in an effect on existing systems.
+  The model no longer has setters for location beside the location itself.
 
 Features
 --------
@@ -12,6 +16,11 @@ Features
 * Support PHP 8.1.
 
 * Search location name and organizer name when a search word for dates was given.
+
+* Introduce new record ``Location``.
+  This is the actual event location which is stored as separate record instead of
+  inline properties within the event.
+  This allows to filter by location.
 
 Fixes
 -----
@@ -26,4 +35,8 @@ Nothing
 Deprecation
 -----------
 
-Nothing
+* Usage of location related properties from within the Event.
+  Use the new sub property Location instead.
+
+* Location related database columns within ``tx_events_domain_model_event``.
+  Use ``tx_events_domain_model_location`` instead.

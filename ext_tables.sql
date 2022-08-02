@@ -31,6 +31,7 @@ CREATE TABLE tx_events_domain_model_event (
 	pages text,
 	dates int(11) unsigned DEFAULT '0' NOT NULL,
 	organizer int(11) unsigned DEFAULT '0',
+	location int(11) unsigned DEFAULT '0',
 	partner text,
 	region int(11) unsigned DEFAULT '0',
 	references_events text,
@@ -114,4 +115,20 @@ CREATE TABLE tx_events_domain_model_import (
 
     rest_experience varchar(1024) DEFAULT '' NOT NULL,
     rest_search_query varchar(1024) DEFAULT '' NOT NULL,
+);
+
+CREATE TABLE tx_events_domain_model_location (
+    global_id varchar(255) DEFAULT '' NOT NULL,
+    slug varchar(255) DEFAULT '' NOT NULL,
+    name varchar(255) DEFAULT '' NOT NULL,
+    street varchar(255) DEFAULT '' NOT NULL,
+    city varchar(255) DEFAULT '' NOT NULL,
+    zip varchar(255) DEFAULT '' NOT NULL,
+    district varchar(255) DEFAULT '' NOT NULL,
+    country varchar(255) DEFAULT '' NOT NULL,
+    phone varchar(255) DEFAULT '' NOT NULL,
+    latitude varchar(255) DEFAULT '' NOT NULL,
+    longitude varchar(255) DEFAULT '' NOT NULL,
+
+    KEY global_id (global_id)
 );

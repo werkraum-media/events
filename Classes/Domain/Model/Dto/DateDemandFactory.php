@@ -61,6 +61,7 @@ class DateDemandFactory
         }
 
         $demand->setRegions(GeneralUtility::intExplode(',', (string)$settings['region'], true));
+        $demand->setLocations(GeneralUtility::intExplode(',', (string)$settings['locations'], true));
         $demand->setCategories((string)$settings['categories']);
         $categoryCombination = (int)$settings['categoryCombination'] === 1 ? 'or' : 'and';
         $demand->setCategoryCombination($categoryCombination);

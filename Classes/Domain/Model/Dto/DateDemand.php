@@ -47,6 +47,11 @@ class DateDemand
     protected $regions = [];
 
     /**
+     * @var int[]
+     */
+    protected $locations = [];
+
+    /**
      * @var bool
      */
     protected $highlight = false;
@@ -102,6 +107,10 @@ class DateDemand
         $instance = new self();
         $instance->setSearchword($submittedValues['searchword'] ?? '');
         $instance->setSynonyms($settings['synonyms'] ?? []);
+
+        if (isset($submittedValues['locations']) && is_array($submittedValues['locations'])) {
+            $instance->setLocations($submittedValues['locations']);
+        }
 
         $instance->setRegions(GeneralUtility::intExplode(',', $submittedValues['region'] ?? '', true));
         if (isset($submittedValues['regions']) && is_array($submittedValues['regions'])) {
@@ -239,6 +248,19 @@ class DateDemand
     public function setRegions(array $regions): void
     {
         $this->regions = array_map('intval', $regions);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getLocations(): array
+    {
+        return $this->locations;
+    }
+
+    public function setLocations(array $locations): void
+    {
+        $this->locations = array_map('intval', $locations);
     }
 
     public function getHighlight(): bool
