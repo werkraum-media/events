@@ -21,7 +21,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'name',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/Extension.svg'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_location.svg'
     ],
     'types' => [
         '1' => [

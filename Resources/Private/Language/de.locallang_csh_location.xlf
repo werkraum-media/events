@@ -3,6 +3,10 @@
     <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2022-08-02T11:44:34Z" product-name="Events Locations TCA">
         <header/>
         <body>
+            <trans-unit id="tx_events_domain_model_location" xml:space="preserve">
+                <source>Location</source>
+                <target>Veranstaltungsort</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_location.global_id" xml:space="preserve">
                 <source>Global UID</source>
                 <target>Globale UID</target>
