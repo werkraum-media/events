@@ -11,6 +11,8 @@ Features
 
 * Support PHP 8.1.
 
+* Search location name and organizer name when a search word for dates was given.
+
 Fixes
 -----
 

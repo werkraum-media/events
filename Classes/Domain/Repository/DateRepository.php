@@ -141,6 +141,8 @@ class DateRepository extends Repository
             'event.title',
             'event.teaser',
             'event.categories.title',
+            'event.name', // Location name
+            'event.organizer.name',
         ];
 
         $wordsToSearch = $demand->getSynonymsForSearchword();
