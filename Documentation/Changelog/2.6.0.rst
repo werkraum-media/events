@@ -22,6 +22,12 @@ Features
   inline properties within the event.
   This allows to filter by location.
 
+* Provide new stable Pagination within Controller and used Templates.
+  This makes the Extension compatible with v10, v11 and v12 regarding pagination.
+  The template now also follows https://www.a11ymatters.com/pattern/pagination/ for
+  accessibility.
+  Feel free to copy the template to projects.
+
 Fixes
 -----
 

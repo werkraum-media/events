@@ -37,6 +37,7 @@ Table of Contents
 
 	Commands
 	Changelog
+	Maintenance
 
 Clean category relations
 ========================

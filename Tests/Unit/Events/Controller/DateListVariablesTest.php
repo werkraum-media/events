@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Wrm\Tests\Unit\Events\Controller;
 
 use PHPUnit\Framework\TestCase;
+use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Events\Controller\DateListVariables;
@@ -25,7 +26,8 @@ class DateListVariablesTest extends TestCase
         $subject = new DateListVariables(
             [],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal()
+            $this->prophesize(QueryResult::class)->reveal(),
+            $this->prophesize(PaginationInterface::class)->reveal()
         );
 
         self::assertInstanceOf(
@@ -44,7 +46,8 @@ class DateListVariablesTest extends TestCase
                 'executed' => '1',
             ],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal()
+            $this->prophesize(QueryResult::class)->reveal(),
+            $this->prophesize(PaginationInterface::class)->reveal()
         );
 
         self::assertSame(
@@ -65,7 +68,8 @@ class DateListVariablesTest extends TestCase
             [
             ],
             $demand,
-            $this->prophesize(QueryResult::class)->reveal()
+            $this->prophesize(QueryResult::class)->reveal(),
+            $this->prophesize(PaginationInterface::class)->reveal()
         );
 
         self::assertSame(
@@ -84,7 +88,8 @@ class DateListVariablesTest extends TestCase
             [
             ],
             new DateDemand(),
-            $dates
+            $dates,
+            $this->prophesize(PaginationInterface::class)->reveal()
         );
 
         self::assertSame(
@@ -100,12 +105,14 @@ class DateListVariablesTest extends TestCase
     {
         $demand = new DateDemand();
         $dates = $this->prophesize(QueryResult::class)->reveal();
+        $pagination = $this->prophesize(PaginationInterface::class)->reveal();
         $subject = new DateListVariables(
             [
                 'executed' => '1',
             ],
             $demand,
-            $dates
+            $dates,
+            $pagination
         );
 
         self::assertSame(
@@ -115,6 +122,7 @@ class DateListVariablesTest extends TestCase
                 ],
                 'demand' => $demand,
                 'dates' => $dates,
+                'pagination' => $pagination,
             ],
             $subject->getVariablesForView()
         );
@@ -127,12 +135,14 @@ class DateListVariablesTest extends TestCase
     {
         $demand = new DateDemand();
         $dates = $this->prophesize(QueryResult::class)->reveal();
+        $pagination = $this->prophesize(PaginationInterface::class)->reveal();
         $subject = new DateListVariables(
             [
                 'executed' => '1',
             ],
             $demand,
-            $dates
+            $dates,
+            $pagination
         );
 
         $subject->addVariable('variable 1', 'Value 1');
@@ -145,6 +155,7 @@ class DateListVariablesTest extends TestCase
                 ],
                 'demand' => $demand,
                 'dates' => $dates,
+                'pagination' => $pagination,
                 'variable 1' => 'Value 1',
                 'variable 2' => 'Value 2',
             ],
@@ -159,12 +170,14 @@ class DateListVariablesTest extends TestCase
     {
         $demand = new DateDemand();
         $dates = $this->prophesize(QueryResult::class)->reveal();
+        $pagination = $this->prophesize(PaginationInterface::class)->reveal();
         $subject = new DateListVariables(
             [
                 'executed' => '1',
             ],
             $demand,
-            $dates
+            $dates,
+            $pagination
         );
 
         $subject->addVariable('variable 1', 'Value 1');
@@ -178,6 +191,7 @@ class DateListVariablesTest extends TestCase
                 ],
                 'demand' => $demand,
                 'dates' => 'Value 2',
+                'pagination' => $pagination,
                 'variable 1' => 'Value 2',
             ],
             $subject->getVariablesForView()

@@ -1,8 +1,9 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
 
-
-<f:widget.paginate objects="{dates}" as="paginatedDates" configuration="{itemsPerPage: 25, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 5, addQueryStringMethod: 'GET'}">
-    <f:for each="{paginatedDates}" as="date" iteration="index">
+    <f:for each="{pagination.paginator.paginatedItems}" as="date" iteration="index">
         <div class="row mt-3 mb-3 pb-3">
             <div class="col-2">
                 <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
@@ -49,6 +50,9 @@
             </f:else>
         </f:if>
     </f:for>
-</f:widget.paginate>
+
+    {f:render(partial: 'Pagination', arguments: {
+        pagination: pagination
+    })}
 
 </html>

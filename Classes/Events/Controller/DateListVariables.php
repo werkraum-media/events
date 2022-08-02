@@ -3,6 +3,7 @@
 
 namespace Wrm\Events\Events\Controller;
 
+use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
@@ -25,6 +26,11 @@ final class DateListVariables
     private $dates;
 
     /**
+     * @var PaginationInterface
+     */
+    private $pagination;
+
+    /**
      * @var array
      */
     private $variables = [];
@@ -32,11 +38,13 @@ final class DateListVariables
     public function __construct(
         array $search,
         DateDemand $demand,
-        QueryResult $dates
+        QueryResult $dates,
+        PaginationInterface $pagination
     ) {
         $this->search = $search;
         $this->demand = $demand;
         $this->dates = $dates;
+        $this->pagination = $pagination;
     }
 
     public function getSearch(): array
@@ -71,6 +79,7 @@ final class DateListVariables
             'search' => $this->search,
             'demand' => $this->demand,
             'dates' => $this->dates,
+            'pagination' => $this->pagination,
         ], $this->variables);
     }
 }

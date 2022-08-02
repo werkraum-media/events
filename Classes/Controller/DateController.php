@@ -14,6 +14,7 @@ use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
 use Wrm\Events\Events\Controller\DateListVariables;
 use Wrm\Events\Events\Controller\DateSearchVariables;
+use Wrm\Events\Pagination\Factory;
 use Wrm\Events\Service\DataProcessingForModels;
 
 /**
@@ -47,6 +48,11 @@ class DateController extends AbstractController
     protected $eventDispatcher;
 
     /**
+     * @var Factory
+     */
+    protected $paginationFactory;
+
+    /**
      * @var DataProcessingForModels
      */
     protected $dataProcessing;
@@ -57,7 +63,8 @@ class DateController extends AbstractController
         DateRepository $dateRepository,
         CategoryRepository $categoryRepository,
         DataProcessingForModels $dataProcessing,
-        EventDispatcher $eventDispatcher
+        EventDispatcher $eventDispatcher,
+        Factory $paginationFactory
     ) {
         $this->demandFactory = $demandFactory;
         $this->regionRepository = $regionRepository;
@@ -65,6 +72,7 @@ class DateController extends AbstractController
         $this->categoryRepository = $categoryRepository;
         $this->dataProcessing = $dataProcessing;
         $this->eventDispatcher = $eventDispatcher;
+        $this->paginationFactory = $paginationFactory;
     }
 
     protected function initializeAction(): void
@@ -78,9 +86,12 @@ class DateController extends AbstractController
 
     /**
      * @param array $search
+     * @param int $currentPage
      */
-    public function listAction(array $search = []): void
-    {
+    public function listAction(
+        array $search = [],
+        int $currentPage = 1
+    ): void {
         $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
             $demand = DateDemand::createFromRequestValues($search, $this->settings);
@@ -94,10 +105,17 @@ class DateController extends AbstractController
             $demand = $this->createDemandFromSearch();
         }
 
+        $dates = $this->dateRepository->findByDemand($demand);
         $event = $this->eventDispatcher->dispatch(new DateListVariables(
             $search,
             $demand,
-            $this->dateRepository->findByDemand($demand)
+            $dates,
+            $this->paginationFactory->create(
+                $currentPage,
+                $this->settings['itemsPerPage'] ?? 25,
+                $this->settings['maximumLinks'] ?? 5,
+                $dates
+            )
         ));
         if (!$event instanceof DateListVariables) {
             throw new \Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . get_class($event), 1657542318);
