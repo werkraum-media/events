@@ -22,7 +22,7 @@ class Import extends AbstractDomainObject
     protected $filesFolder;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $categoriesPid;
 
@@ -32,7 +32,7 @@ class Import extends AbstractDomainObject
     protected $categoryParent;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $featuresPid;
 
@@ -70,9 +70,17 @@ class Import extends AbstractDomainObject
         $this->filesFolder = $filesFolder;
         $this->storagePid = $storagePid;
 
+        // Do not allow categories on pid 0
+        if ($categoriesPid === 0) {
+            $categoriesPid = null;
+        }
         $this->categoriesPid = $categoriesPid;
         $this->categoryParent = $categoryParent;
 
+        // Do not allow features on pid 0
+        if ($featuresPid === 0) {
+            $featuresPid = null;
+        }
         $this->featuresPid = $featuresPid;
         $this->featuresParent = $featuresParent;
 
@@ -92,7 +100,7 @@ class Import extends AbstractDomainObject
         return $this->filesFolder;
     }
 
-    public function getCategoriesPid(): int
+    public function getCategoriesPid(): ?int
     {
         return $this->categoriesPid;
     }
@@ -102,7 +110,7 @@ class Import extends AbstractDomainObject
         return $this->categoryParent;
     }
 
-    public function getFeaturesPid(): int
+    public function getFeaturesPid(): ?int
     {
         return $this->featuresPid;
     }

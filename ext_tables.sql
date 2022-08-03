@@ -105,11 +105,11 @@ CREATE TABLE tx_events_domain_model_import (
     storage_pid int(11) unsigned DEFAULT '0' NOT NULL,
     files_folder varchar(1024) DEFAULT '' NOT NULL,
 
-    categories_pid int(11) unsigned DEFAULT '0' NOT NULL,
-    category_parent int(11) unsigned DEFAULT '0' NOT NULL,
+    categories_pid int(11) unsigned,
+    category_parent int(11) unsigned,
 
-    features_pid int(11) unsigned DEFAULT '0' NOT NULL,
-    features_parent int(11) unsigned DEFAULT '0' NOT NULL,
+    features_pid int(11) unsigned,
+    features_parent int(11) unsigned,
 
     region int(11) unsigned DEFAULT '0' NOT NULL,
 

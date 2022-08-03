@@ -128,7 +128,14 @@
                     "value": "1"
                 }
             ],
-            "features": [],
+            "features": [
+                "vorhandenes Feature",
+                "Barrierefrei",
+                "Zielgruppe Jugendliche",
+                "Karten an der Abendkasse",
+                "Ausreichende Lüftung",
+                "Beachtung der Hygienehinweise"
+            ],
             "addresses": [
                 {
                     "name": "Städtetourismus in Thüringen e.V.",

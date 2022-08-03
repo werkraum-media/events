@@ -7,12 +7,12 @@ use Wrm\Events\Domain\Model\Category;
 class Import
 {
     /**
-     * @var null|Category
+     * @var Category|null
      */
     private $parentCategory;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $pid;
 
@@ -28,7 +28,7 @@ class Import
 
     public function __construct(
         ?Category $parentCategory,
-        int $pid,
+        ?int $pid,
         array $categoryTitles,
         bool $hideByDefault = false
     ) {
@@ -43,7 +43,7 @@ class Import
         return $this->parentCategory;
     }
 
-    public function getPid(): int
+    public function getPid(): ?int
     {
         return $this->pid;
     }

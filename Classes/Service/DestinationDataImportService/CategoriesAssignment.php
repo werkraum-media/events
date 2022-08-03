@@ -35,7 +35,7 @@ class CategoriesAssignment
     ): ObjectStorage {
         $categories = new ObjectStorage();
 
-        if ($import->getParentCategory() === null) {
+        if ($import->getParentCategory() === null || $import->getPid() === null) {
             return $categories;
         }
 

@@ -31,7 +31,9 @@ Features
 Fixes
 -----
 
-Nothing
+* Do not break old scheduler tasks as no features can be configured.
+  Ensure we properly handle none configured features within configurations.
+  Allow null within database and handle Extbase converting this to integer 0.
 
 Tasks
 -----
