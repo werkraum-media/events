@@ -170,6 +170,9 @@ class DateRepository extends Repository
         DateDemand $demand
     ): ?ConstraintInterface {
         $categories = $demand->getCategories();
+        if ($categories === '') {
+            return null;
+        }
         $constraints = [];
 
         if ($demand->getIncludeSubCategories()) {
