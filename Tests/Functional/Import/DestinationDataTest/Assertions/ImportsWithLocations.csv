@@ -1,0 +1,4 @@
+"tx_events_domain_model_location",,,,,,,,,,,,,,,,,,,,
+,"uid","pid","cruser_id","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","name","street","district","city","zip","country","latitude","longitude","phone"
+,"1","2","0","0","0","0",-1,0,"0","0","0","Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","Deutschland","50.720971023259","11.335229873657","+ 49 3672 / 486470"
+,"2","2","0","0","0","0",-1,0,"0","0","0","Schillerhaus Rudolstadt","Other address",,"Rudolstadt","07407","Deutschland","50.720971023259","11.335229873657","+ 49 3672 / 486470"

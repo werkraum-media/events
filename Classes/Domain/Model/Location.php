@@ -56,11 +56,6 @@ class Location extends AbstractEntity
      */
     protected $globalId = '';
 
-    /**
-     * @var string
-     */
-    protected $slug = '';
-
     public function __construct(
         string $name,
         string $street,
@@ -71,7 +66,6 @@ class Location extends AbstractEntity
         string $phone,
         string $latitude,
         string $longitude,
-        string $slug,
         int $languageUid
     ) {
         $this->name = $name;
@@ -83,7 +77,6 @@ class Location extends AbstractEntity
         $this->phone = $phone;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->slug = $slug;
         $this->_languageUid = $languageUid;
 
         $this->globalId = $this->generateGlobalId();

@@ -155,7 +155,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '',
-            '',
             -1
         ));
 
@@ -174,7 +173,6 @@ class LocationDataTest extends TestCase
         $subject->setLocation(new Location(
             '',
             'Mußterstraße 24',
-            '',
             '',
             '',
             '',
@@ -207,7 +205,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '',
-            '',
             -1
         ));
 
@@ -233,7 +230,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '',
-            '',
             -1
         ));
 
@@ -253,7 +249,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '41367',
-            '',
             '',
             '',
             '',
@@ -285,7 +280,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '',
-            '',
             -1
         ));
 
@@ -309,7 +303,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '+49 2161 333 333 333',
-            '',
             '',
             '',
             -1
@@ -337,7 +330,6 @@ class LocationDataTest extends TestCase
             '',
             '50.720971023259',
             '',
-            '',
             -1
         ));
 
@@ -363,7 +355,6 @@ class LocationDataTest extends TestCase
             '',
             '',
             '11.335229873657',
-            '',
             -1
         ));
 

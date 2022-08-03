@@ -119,7 +119,6 @@ CREATE TABLE tx_events_domain_model_import (
 
 CREATE TABLE tx_events_domain_model_location (
     global_id varchar(255) DEFAULT '' NOT NULL,
-    slug varchar(255) DEFAULT '' NOT NULL,
     name varchar(255) DEFAULT '' NOT NULL,
     street varchar(255) DEFAULT '' NOT NULL,
     city varchar(255) DEFAULT '' NOT NULL,

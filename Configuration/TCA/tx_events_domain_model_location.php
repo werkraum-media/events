@@ -31,7 +31,6 @@ return [
                     l10n_diffsource,
                     hidden,
                     name,
-                    slug,
                     global_id,
 
                     street,
@@ -145,22 +144,6 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim'
-            ],
-        ],
-        'slug' => [
-            'exclude' => true,
-            'label' => $l10nPath . ':tx_events_domain_model_location.slug',
-            'config' => [
-                'type' => 'slug',
-                'size' => 50,
-                'generatorOptions' => [
-                    'fields' => ['name'],
-                    'fieldSeparator' => '/',
-                    'prefixParentPageSlug' => false,
-                ],
-                'fallbackCharacter' => '-',
-                'eval' => 'uniqueInSite',
-                'default' => '',
             ],
         ],
         'name' => [
