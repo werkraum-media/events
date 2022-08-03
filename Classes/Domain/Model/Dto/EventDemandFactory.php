@@ -30,24 +30,41 @@ class EventDemandFactory
         /** @var EventDemand $demand */
         $demand = GeneralUtility::makeInstance(EventDemand::class);
 
-        $demand->setRegion((string)$settings['region']);
+        if (!empty($settings['region'])) {
+            $demand->setRegion((string)$settings['region']);
+        }
 
-        $demand->setCategories((string)$settings['categories']);
+        if (!empty($settings['categories'])) {
+            $demand->setCategories((string)$settings['categories']);
+        }
 
         $categoryCombination = 'and';
-        if ((int)$settings['categoryCombination'] === 1) {
+        if (
+            isset($settings['categoryCombination'])
+            && (int)$settings['categoryCombination'] === 1
+        ) {
             $categoryCombination = 'or';
         }
         $demand->setCategoryCombination($categoryCombination);
 
-        $demand->setIncludeSubCategories((bool)$settings['includeSubcategories']);
+        if (isset($settings['includeSubcategories'])) {
+            $demand->setIncludeSubCategories((bool)$settings['includeSubcategories']);
+        }
 
-        $demand->setSortBy((string)$settings['sortByEvent']);
-        $demand->setSortOrder((string)$settings['sortOrder']);
+        if (!empty($settings['sortByEvent'])) {
+            $demand->setSortBy((string)$settings['sortByEvent']);
+        }
+        if (!empty($settings['sortOrder'])) {
+            $demand->setSortOrder((string)$settings['sortOrder']);
+        }
 
-        $demand->setHighlight((bool)$settings['highlight']);
+        if (isset($settings['highlight'])) {
+            $demand->setHighlight((bool)$settings['highlight']);
+        }
 
-        $demand->setRecordUids(GeneralUtility::intExplode(',', $settings['selectedRecords'], true));
+        if (!empty($settings['selectedRecords'])) {
+            $demand->setRecordUids(GeneralUtility::intExplode(',', $settings['selectedRecords'], true));
+        }
 
         if (!empty($settings['limit'])) {
             $demand->setLimit($settings['limit']);

@@ -60,15 +60,33 @@ class DateDemandFactory
             }
         }
 
-        $demand->setRegions(GeneralUtility::intExplode(',', (string)$settings['region'], true));
-        $demand->setLocations(GeneralUtility::intExplode(',', (string)$settings['locations'], true));
-        $demand->setCategories((string)$settings['categories']);
-        $categoryCombination = (int)$settings['categoryCombination'] === 1 ? 'or' : 'and';
+        if (!empty($settings['region'])) {
+            $demand->setRegions(GeneralUtility::intExplode(',', (string)$settings['region'], true));
+        }
+        if (!empty($settings['locations'])) {
+            $demand->setLocations(GeneralUtility::intExplode(',', (string)$settings['locations'], true));
+        }
+        if (!empty($settings['categories'])) {
+            $demand->setCategories((string)$settings['categories']);
+        }
+        $categoryCombination = 'and';
+        if (isset($settings['categoryCombination']) && (int)$settings['categoryCombination'] === 1) {
+            $categoryCombination = 'or';
+        }
         $demand->setCategoryCombination($categoryCombination);
-        $demand->setIncludeSubCategories((bool)$settings['includeSubcategories']);
-        $demand->setSortBy((string)$settings['sortByDate']);
-        $demand->setSortOrder((string)$settings['sortOrder']);
-        $demand->setHighlight((bool)$settings['highlight']);
+
+        if (isset($settings['includeSubcategories'])) {
+            $demand->setIncludeSubCategories((bool)$settings['includeSubcategories']);
+        }
+        if (isset($settings['sortByDate'])) {
+            $demand->setSortBy((string)$settings['sortByDate']);
+        }
+        if (!empty($settings['sortOrder'])) {
+            $demand->setSortOrder((string)$settings['sortOrder']);
+        }
+        if (isset($settings['highlight'])) {
+            $demand->setHighlight((bool)$settings['highlight']);
+        }
         if (!empty($settings['start'])) {
             $demand->setStart((int)$settings['start']);
         }
