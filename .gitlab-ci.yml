@@ -3,7 +3,7 @@ stages:
   - test
 
 before_script:
-  - apk add zip
+  - apk add zip graphicsmagick
   - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   - php composer-setup.php --filename composer --install-dir /bin
   - php -r "unlink('composer-setup.php');"
@@ -47,7 +47,6 @@ validate:php:7.2:
 validate:xml:
   image: php:7.3-alpine
   stage: validate
-  before_script:
   script:
     - apk add libxml2-utils wget
     - composer install --prefer-dist --no-progress
@@ -57,7 +56,6 @@ validate:xml:
 validate:cgl:
   image: php:7.3-alpine
   stage: validate
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - ./vendor/bin/ecs check --no-progress-bar --clear-cache
@@ -65,7 +63,6 @@ validate:cgl:
 validate:phpstan:8.1:
   image: php:8.1-alpine
   stage: validate
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -73,7 +70,6 @@ validate:phpstan:8.1:
 validate:phpstan:8.0:
   image: php:8.0-alpine
   stage: validate
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -81,7 +77,6 @@ validate:phpstan:8.0:
 validate:phpstan:7.4:11.5:
   image: php:7.4-alpine
   stage: validate
-  before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^11.5"
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -89,7 +84,6 @@ validate:phpstan:7.4:11.5:
 validate:phpstan:7.4:10.4:
   image: php:7.4-alpine
   stage: validate
-  before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^10.4"
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -97,7 +91,6 @@ validate:phpstan:7.4:10.4:
 validate:phpstan:7.3:
   image: php:7.3-alpine
   stage: validate
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -105,7 +98,6 @@ validate:phpstan:7.3:
 validate:phpstan:7.2:
   image: php:7.2-alpine
   stage: validate
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress
@@ -113,7 +105,6 @@ validate:phpstan:7.2:
 test:phpunit:8.1:
   image: php:8.1-alpine
   stage: test
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
@@ -121,7 +112,6 @@ test:phpunit:8.1:
 test:phpunit:8.0:
   image: php:8.0-alpine
   stage: test
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
@@ -129,7 +119,6 @@ test:phpunit:8.0:
 test:phpunit:7.4:11.5:
   image: php:7.4-alpine
   stage: test
-  before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^11.5"
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
@@ -137,7 +126,6 @@ test:phpunit:7.4:11.5:
 test:phpunit:7.4:10.4:
   image: php:7.4-alpine
   stage: test
-  before_script:
   script:
     - composer require --no-ansi --no-interaction --no-progress typo3/cms-core:"^10.4"
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
@@ -145,7 +133,6 @@ test:phpunit:7.4:10.4:
 test:phpunit:7.3:
   image: php:7.3-alpine
   stage: test
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
@@ -153,7 +140,6 @@ test:phpunit:7.3:
 test:phpunit:7.2:
   image: php:7.2-alpine
   stage: test
-  before_script:
   script:
     - composer install --prefer-dist --no-progress
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox

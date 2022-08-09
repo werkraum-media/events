@@ -1,0 +1,15 @@
+page = PAGE
+page {
+    10 < styles.content.get
+}
+
+plugin.tx_events {
+    persistence {
+        storagePid = 2
+    }
+
+    settings {
+        sortByDate = start
+        sortOrder = ASC
+    }
+}
