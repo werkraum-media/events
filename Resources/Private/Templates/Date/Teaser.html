@@ -25,12 +25,20 @@
                 </div>
                 <div class="caption">
                     <div class="caption-text mt-3">
-                        {date.event.region.title} | <f:format.date format="d. m. Y - H:i">{date.start}</f:format.date>
+                        {date.event.region.title} | 
+                        <f:if condition="{f:format.date(format: 'H:i', date: '{date.start}')} == '00:00'">
+                            <f:then>
+                                <f:format.date format="d. m. Y">{date.start}</f:format.date>
+                            </f:then>
+                            <f:else>
+                                <f:format.date format="d. m. Y - H:i">{date.start}</f:format.date>
+                            </f:else>
+                        </f:if>
                         <h4>{date.event.title}</h4>
                         <p>{date.event.teaser}</p>
                         <f:if condition="{date.event.highlight}">
                             <f:then>
-                                <b>Hightlight</b>
+                                <b>Highlight</b>
                             </f:then>
                         </f:if>
                     </div>

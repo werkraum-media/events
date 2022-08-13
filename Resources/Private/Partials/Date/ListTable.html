@@ -6,7 +6,9 @@
     <f:for each="{pagination.paginator.paginatedItems}" as="date" iteration="index">
         <div class="row mt-3 mb-3 pb-3">
             <div class="col-2">
-                <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
+                <f:if condition="{f:format.date(format: 'H:i', date: '{date.start}')} != '00:00'">
+                    <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
+                </f:if>
                 <b><f:format.date format="%a">{date.start}</f:format.date></b><br>
                 <b><f:format.date format="d.m.">{date.start}</f:format.date></b><br>
                 {date.event.region.title}<br>
