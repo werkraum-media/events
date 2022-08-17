@@ -146,6 +146,7 @@ test:phpunit:7.2:
     - php -d memory_limit=-1 ./vendor/bin/phpunit --testdox
 
 deploy:composer:package:
+  before_script: []
   image: alpine:3.15.5
   stage: deploy
   script:
