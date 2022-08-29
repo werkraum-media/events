@@ -11,5 +11,6 @@ plugin.tx_events {
     settings {
         sortByDate = start
         sortOrder = ASC
+        start = 1660158000
     }
 }

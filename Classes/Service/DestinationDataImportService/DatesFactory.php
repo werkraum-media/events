@@ -126,16 +126,15 @@ class DatesFactory
         $end = new \DateTimeImmutable($date['end'], $timeZone);
         $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
-        $nextDate = $start;
-        while ($nextDate <= $until) {
-            $dateToUse = $nextDate;
-            $nextDate = $dateToUse->modify('+1 day');
-            if ($dateToUse < $today) {
+        $period = new \DatePeriod($start, new \DateInterval('P1D'), $until);
+        foreach ($period as $day) {
+            $day = $day->setTimezone($timeZone);
+            if ($day < $today) {
                 continue;
             }
 
             yield $this->createDateFromStartAndEnd(
-                $dateToUse,
+                $day,
                 $start,
                 $end,
                 $canceled
@@ -157,16 +156,18 @@ class DatesFactory
         $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
         foreach ($date['weekdays'] as $day) {
-            $nextDate = $start->modify($day);
-            while ($nextDate <= $until) {
-                $dateToUse = $nextDate;
-                $nextDate = $dateToUse->modify('+1 week');
-                if ($dateToUse < $today) {
+            $dateToUse = $start->modify($day);
+            $dateToUse = $dateToUse->setTime((int) $start->format('H'), (int) $start->format('i'));
+
+            $period = new \DatePeriod($dateToUse, new \DateInterval('P1W'), $until);
+            foreach ($period as $day) {
+                $day = $day->setTimezone($timeZone);
+                if ($day < $today) {
                     continue;
                 }
 
                 yield $this->createDateFromStartAndEnd(
-                    $dateToUse,
+                    $day,
                     $start,
                     $end,
                     $canceled

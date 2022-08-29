@@ -6,26 +6,22 @@ namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\DateTimeAspect;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
-use Wrm\Events\Tests\ProphecyTrait;
 
 /**
  * @covers \Wrm\Events\Service\DestinationDataImportService\DatesFactory
  */
 class DatesFactoryTest extends TestCase
 {
-    use ProphecyTrait;
-
     /**
      * @test
      */
     public function canBeCreated(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('now'))
         );
 
         self::assertInstanceOf(
@@ -40,10 +36,8 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNoResultOnUnkownInput(array $unkownInput): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates($unkownInput, false);
@@ -72,15 +66,13 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsSingleNotCanceledDate(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
-            'start' => '2099-06-21T16:00:00+02:00',
-            'end' => '2099-06-21T22:00:00+02:00',
+            'start' => '2022-04-01T16:00:00+02:00',
+            'end' => '2022-04-01T17:00:00+02:00',
             'tz' => 'Europe/Berlin',
             'interval' => 1,
         ]], false);
@@ -92,8 +84,8 @@ class DatesFactoryTest extends TestCase
         self::assertCount(1, $result);
 
         self::assertInstanceOf(Date::class, $firstEntry);
-        self::assertSame('4085733600', $firstEntry->getStart()->format('U'));
-        self::assertSame('4085755200', $firstEntry->getEnd()->format('U'));
+        self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
+        self::assertSame(1648825200, $firstEntry->getEnd()->getTimestamp());
         self::assertSame('no', $firstEntry->getCanceled());
     }
 
@@ -102,28 +94,27 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsSingleCanceledDate(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
-            'start' => '2099-06-21T16:00:00+02:00',
-            'end' => '2099-06-21T22:00:00+02:00',
+            'start' => '2022-04-01T16:00:00+02:00',
+            'end' => '2022-04-01T17:00:00+02:00',
             'tz' => 'Europe/Berlin',
             'interval' => 1,
         ]], true);
 
         self::assertInstanceOf(\Generator::class, $result);
-        $result = iterator_to_array($result);
+
+        $firstEntry = $result->current();
 
         self::assertCount(1, $result);
 
-        self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4085733600', $result[0]->getStart()->format('U'));
-        self::assertSame('4085755200', $result[0]->getEnd()->format('U'));
-        self::assertSame('canceled', $result[0]->getCanceled());
+        self::assertInstanceOf(Date::class, $firstEntry);
+        self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
+        self::assertSame(1648825200, $firstEntry->getEnd()->getTimestamp());
+        self::assertSame('canceled', $firstEntry->getCanceled());
     }
 
     /**
@@ -131,16 +122,14 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnDailyBasis(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
-            'start' => '2099-04-01T16:00:00+02:00',
-            'end' => '2099-04-01T17:00:00+02:00',
-            'repeatUntil' => '2099-04-03T18:00:00+02:00',
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-02T17:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -149,16 +138,16 @@ class DatesFactoryTest extends TestCase
         self::assertInstanceOf(\Generator::class, $result);
         $result = iterator_to_array($result);
 
-        self::assertCount(3, $result);
+        self::assertCount(5, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4078735200', $result[0]->getStart()->format('U'));
-        self::assertSame('4078738800', $result[0]->getEnd()->format('U'));
+        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
+        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
         self::assertSame('canceled', $result[0]->getCanceled());
 
-        self::assertSame('4078908000', $result[2]->getStart()->format('U'));
-        self::assertSame('4078911600', $result[2]->getEnd()->format('U'));
-        self::assertSame('canceled', $result[2]->getCanceled());
+        self::assertSame(1667401200, $result[4]->getStart()->getTimestamp());
+        self::assertSame(1667404800, $result[4]->getEnd()->getTimestamp());
+        self::assertSame('canceled', $result[4]->getCanceled());
     }
 
     /**
@@ -166,16 +155,14 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnDailyBasis(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
-            'start' => '2099-04-01T16:00:00+02:00',
-            'end' => '2099-04-01T17:00:00+02:00',
-            'repeatUntil' => '2099-04-03T18:00:00+02:00',
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-02T17:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -184,16 +171,16 @@ class DatesFactoryTest extends TestCase
         self::assertInstanceOf(\Generator::class, $result);
         $result = iterator_to_array($result);
 
-        self::assertCount(3, $result);
+        self::assertCount(5, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4078735200', $result[0]->getStart()->format('U'));
-        self::assertSame('4078738800', $result[0]->getEnd()->format('U'));
+        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
+        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
         self::assertSame('no', $result[0]->getCanceled());
 
-        self::assertSame('4078908000', $result[2]->getStart()->format('U'));
-        self::assertSame('4078911600', $result[2]->getEnd()->format('U'));
-        self::assertSame('no', $result[2]->getCanceled());
+        self::assertSame(1667401200, $result[4]->getStart()->getTimestamp());
+        self::assertSame(1667404800, $result[4]->getEnd()->getTimestamp());
+        self::assertSame('no', $result[4]->getCanceled());
     }
 
     /**
@@ -201,10 +188,8 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
@@ -212,9 +197,9 @@ class DatesFactoryTest extends TestCase
                 'Saturday',
                 'Sunday',
             ],
-            'start' => '2099-03-02T11:00:00+01:00',
-            'end' => '2099-03-02T13:00:00+01:00',
-            'repeatUntil' => '2099-03-15T13:00:00+02:00',
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-06T17:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -226,12 +211,20 @@ class DatesFactoryTest extends TestCase
         self::assertCount(4, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4076560800', $result[0]->getStart()->format('U'));
-        self::assertSame('4076568000', $result[0]->getEnd()->format('U'));
+        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
+        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
         self::assertSame('canceled', $result[0]->getCanceled());
 
-        self::assertSame('4077252000', $result[3]->getStart()->format('U'));
-        self::assertSame('4077259200', $result[3]->getEnd()->format('U'));
+        self::assertSame(1667660400, $result[1]->getStart()->getTimestamp());
+        self::assertSame(1667664000, $result[1]->getEnd()->getTimestamp());
+        self::assertSame('canceled', $result[1]->getCanceled());
+
+        self::assertSame(1667142000, $result[2]->getStart()->getTimestamp());
+        self::assertSame(1667145600, $result[2]->getEnd()->getTimestamp());
+        self::assertSame('canceled', $result[2]->getCanceled());
+
+        self::assertSame(1667746800, $result[3]->getStart()->getTimestamp());
+        self::assertSame(1667750400, $result[3]->getEnd()->getTimestamp());
         self::assertSame('canceled', $result[3]->getCanceled());
     }
 
@@ -240,10 +233,8 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnWeeklyBasis(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([[
@@ -251,9 +242,9 @@ class DatesFactoryTest extends TestCase
                 'Saturday',
                 'Sunday',
             ],
-            'start' => '2099-03-02T11:00:00+01:00',
-            'end' => '2099-03-02T13:00:00+01:00',
-            'repeatUntil' => '2099-03-15T13:00:00+02:00',
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-06T17:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -265,12 +256,20 @@ class DatesFactoryTest extends TestCase
         self::assertCount(4, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame('4076560800', $result[0]->getStart()->format('U'));
-        self::assertSame('4076568000', $result[0]->getEnd()->format('U'));
+        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
+        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
         self::assertSame('no', $result[0]->getCanceled());
 
-        self::assertSame('4077252000', $result[3]->getStart()->format('U'));
-        self::assertSame('4077259200', $result[3]->getEnd()->format('U'));
+        self::assertSame(1667660400, $result[1]->getStart()->getTimestamp());
+        self::assertSame(1667664000, $result[1]->getEnd()->getTimestamp());
+        self::assertSame('no', $result[1]->getCanceled());
+
+        self::assertSame(1667142000, $result[2]->getStart()->getTimestamp());
+        self::assertSame(1667145600, $result[2]->getEnd()->getTimestamp());
+        self::assertSame('no', $result[2]->getCanceled());
+
+        self::assertSame(1667746800, $result[3]->getStart()->getTimestamp());
+        self::assertSame(1667750400, $result[3]->getEnd()->getTimestamp());
         self::assertSame('no', $result[3]->getCanceled());
     }
 
@@ -279,23 +278,21 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([
             [
-                'start' => '2099-06-21T16:00:00+02:00',
-                'end' => '2099-06-21T22:00:00+02:00',
+                'start' => '2022-06-21T16:00:00+02:00',
+                'end' => '2022-06-21T22:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'interval' => 1,
             ],
             [
-                'start' => '2099-04-01T16:00:00+02:00',
-                'end' => '2099-04-01T17:00:00+02:00',
-                'repeatUntil' => '2099-04-03T18:00:00+02:00',
+                'start' => '2022-04-01T16:00:00+02:00',
+                'end' => '2022-04-01T17:00:00+02:00',
+                'repeatUntil' => '2022-04-03T18:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -305,9 +302,9 @@ class DatesFactoryTest extends TestCase
                     'Saturday',
                     'Sunday',
                 ],
-                'start' => '2099-03-02T11:00:00+01:00',
-                'end' => '2099-03-02T13:00:00+01:00',
-                'repeatUntil' => '2099-03-15T13:00:00+02:00',
+                'start' => '2022-03-02T11:00:00+01:00',
+                'end' => '2022-03-02T13:00:00+01:00',
+                'repeatUntil' => '2022-03-15T13:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
@@ -330,23 +327,21 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnMixedIntervals(): void
     {
-        $context = $this->prophesize(Context::class);
-
         $subject = new DatesFactory(
-            $context->reveal()
+            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
         );
 
         $result = $subject->createDates([
             [
-                'start' => '2099-06-21T16:00:00+02:00',
-                'end' => '2099-06-21T22:00:00+02:00',
+                'start' => '2022-06-21T16:00:00+02:00',
+                'end' => '2022-06-21T22:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'interval' => 1,
             ],
             [
-                'start' => '2099-04-01T16:00:00+02:00',
-                'end' => '2099-04-01T17:00:00+02:00',
-                'repeatUntil' => '2099-04-03T18:00:00+02:00',
+                'start' => '2022-04-01T16:00:00+02:00',
+                'end' => '2022-04-01T17:00:00+02:00',
+                'repeatUntil' => '2022-04-03T18:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -356,9 +351,9 @@ class DatesFactoryTest extends TestCase
                     'Saturday',
                     'Sunday',
                 ],
-                'start' => '2099-03-02T11:00:00+01:00',
-                'end' => '2099-03-02T13:00:00+01:00',
-                'repeatUntil' => '2099-03-15T13:00:00+02:00',
+                'start' => '2022-03-02T11:00:00+01:00',
+                'end' => '2022-03-02T13:00:00+01:00',
+                'repeatUntil' => '2022-03-15T13:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
@@ -374,5 +369,12 @@ class DatesFactoryTest extends TestCase
             self::assertInstanceOf(Date::class, $date);
             self::assertSame('no', $date->getCanceled());
         }
+    }
+
+    private function getContext(\DateTimeImmutable $dateTime): Context
+    {
+        $context = new Context();
+        $context->setAspect('date', new DateTimeAspect($dateTime));
+        return $context;
     }
 }

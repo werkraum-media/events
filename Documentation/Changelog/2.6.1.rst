@@ -1,0 +1,32 @@
+2.6.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Respect timezone for recurring events.
+  Some events occur over multiple time zones (same time zone but summer and winter time).
+  We ensure PHP creates those objects as expected so we do not use the current offset,
+  but the one of that date.
+
+* Tests won't work after a specific date, we ensure they will work all the time. 
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

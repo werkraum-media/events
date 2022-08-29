@@ -88,8 +88,8 @@
             "timeIntervals": [
                 {
                     "weekdays": [],
-                    "start": "2099-12-19T15:00:00+01:00",
-                    "end": "2099-12-19T16:30:00+01:00",
+                    "start": "2022-12-19T15:00:00+01:00",
+                    "end": "2022-12-19T16:30:00+01:00",
                     "tz": "Europe/Berlin",
                     "interval": 1
                 }
@@ -117,11 +117,11 @@
                 },
                 {
                     "key": "interval_first_match_start",
-                    "value": "2099-12-19T15:00:00+01"
+                    "value": "2022-12-19T15:00:00+01"
                 },
                 {
                     "key": "interval_first_match_end",
-                    "value": "2099-12-19T16:30:00+01"
+                    "value": "2022-12-19T16:30:00+01"
                 },
                 {
                     "key": "interval_match_count",
@@ -165,8 +165,8 @@
                     "rel": "organizer"
                 }
             ],
-            "created": "2099-10-31T12:29:00+00:00",
-            "changed": "2099-12-14T08:29:00+00:00",
+            "created": "2022-10-31T12:29:00+00:00",
+            "changed": "2022-12-14T08:29:00+00:00",
             "source": {
                 "url": "http://destination.one/",
                 "value": "destination.one"
@@ -262,24 +262,24 @@
             "timeIntervals": [
                 {
                     "weekdays": [],
-                    "start": "2099-12-16T15:00:00+01:00",
-                    "end": "2099-12-16T16:30:00+01:00",
+                    "start": "2022-12-16T15:00:00+01:00",
+                    "end": "2022-12-16T16:30:00+01:00",
                     "tz": "Europe/Berlin",
                     "interval": 1
                 },
                 {
                     "weekdays": [],
-                    "start": "2099-04-01T11:00:00+02:00",
-                    "end": "2099-04-01T13:00:00+02:00",
-                    "repeatUntil": "2099-04-03T00:00+02:00",
+                    "start": "2022-04-01T11:00:00+02:00",
+                    "end": "2022-04-01T13:00:00+02:00",
+                    "repeatUntil": "2022-04-03T00:00+02:00",
                     "tz": "Europe/Berlin",
                     "freq": "Daily",
                     "interval": 1
                 },
                 {
                     "weekdays": [],
-                    "start": "2099-02-17T15:00:00+01:00",
-                    "end": "2099-02-17T17:00:00+01:00",
+                    "start": "2022-02-17T15:00:00+01:00",
+                    "end": "2022-02-17T17:00:00+01:00",
                     "tz": "Europe/Berlin",
                     "interval": 1
                 }
@@ -307,11 +307,11 @@
                 },
                 {
                     "key": "interval_first_match_start",
-                    "value": "2099-12-16T15:00:00+01"
+                    "value": "2022-12-16T15:00:00+01"
                 },
                 {
                     "key": "interval_first_match_end",
-                    "value": "2099-12-16T16:30:00+01"
+                    "value": "2022-12-16T16:30:00+01"
                 },
                 {
                     "key": "interval_match_count",
@@ -356,8 +356,8 @@
                     "rel": "organizer"
                 }
             ],
-            "created": "2099-11-10T23:02:00+00:00",
-            "changed": "2099-12-14T08:28:00+00:00",
+            "created": "2022-11-10T23:02:00+00:00",
+            "changed": "2022-12-14T08:28:00+00:00",
             "source": {
                 "url": "http://destination.one/",
                 "value": "destination.one"
@@ -444,8 +444,8 @@
             "timeIntervals": [
                 {
                     "weekdays": [],
-                    "start": "2099-12-01T19:00:00+01:00",
-                    "end": "2099-12-01T20:00:00+01:00",
+                    "start": "2022-12-01T19:00:00+01:00",
+                    "end": "2022-12-01T20:00:00+01:00",
                     "tz": "Europe/Berlin",
                     "interval": 1
                 },
@@ -454,17 +454,17 @@
                         "Saturday",
                         "Sunday"
                     ],
-                    "start": "2099-11-02T11:00:00+01:00",
-                    "end": "2099-11-02T13:00:00+01:00",
-                    "repeatUntil": "2099-11-25T13:00:00+01:00",
+                    "start": "2022-11-02T11:00:00+01:00",
+                    "end": "2022-11-02T13:00:00+01:00",
+                    "repeatUntil": "2022-11-25T13:00:00+01:00",
                     "tz": "Europe/Berlin",
                     "freq": "Weekly",
                     "interval": 1
                 },
                 {
                     "weekdays": [],
-                    "start": "2099-12-22T19:00:00+01:00",
-                    "end": "2099-12-22T20:00:00+01:00",
+                    "start": "2022-12-22T19:00:00+01:00",
+                    "end": "2022-12-22T20:00:00+01:00",
                     "tz": "Europe/Berlin",
                     "interval": 1
                 }
@@ -492,11 +492,11 @@
                 },
                 {
                     "key": "interval_first_match_start",
-                    "value": "2099-12-15T19:00:00+01"
+                    "value": "2022-12-15T19:00:00+01"
                 },
                 {
                     "key": "interval_first_match_end",
-                    "value": "2099-12-15T20:00:00+01"
+                    "value": "2022-12-15T20:00:00+01"
                 },
                 {
                     "key": "interval_match_count",
@@ -504,11 +504,11 @@
                 },
                 {
                     "key": "interval_last_match_start",
-                    "value": "2099-12-22T19:00:00+01"
+                    "value": "2022-12-22T19:00:00+01"
                 },
                 {
                     "key": "interval_last_match_end",
-                    "value": "2099-12-22T20:00:00+01"
+                    "value": "2022-12-22T20:00:00+01"
                 }
             ],
             "features": [],
@@ -538,8 +538,8 @@
                     "rel": "organizer"
                 }
             ],
-            "created": "2099-11-08T22:15:00+00:00",
-            "changed": "2099-12-14T08:38:00+00:00",
+            "created": "2022-11-08T22:15:00+00:00",
+            "changed": "2022-12-14T08:38:00+00:00",
             "source": {
                 "url": "http://destination.one/",
                 "value": "destination.one"

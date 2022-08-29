@@ -15,6 +15,8 @@ class ImportsExampleAsExpectedTest extends AbstractTest
      */
     public function importsExampleAsExpected(): void
     {
+        $this->setDateAspect(new \DateTimeImmutable('2021-07-13', new \DateTimeZone('Europe/Berlin')));
+
         $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);

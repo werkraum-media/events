@@ -16,6 +16,8 @@ class ImportsAllConfigurationTest extends AbstractTest
      */
     public function importsConfiguration(): void
     {
+        $this->setDateAspect(new \DateTimeImmutable('2021-07-13', new \DateTimeZone('Europe/Berlin')));
+
         $fileImportPathConfiguration1 = 'staedte/beispielstadt/events/';
         $fileImportPath1 = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration1;
         GeneralUtility::mkdir_deep($fileImportPath1);
