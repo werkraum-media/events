@@ -1,0 +1,33 @@
+2.6.3
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Do not fetch dates without available event
+
+  As dates don't make sense without an available event.
+  The event provides necessary info like the title.
+  Events might be hidden within system, while dates are still available.
+
+  Relates: #10075
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

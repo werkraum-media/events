@@ -44,7 +44,9 @@ class DateRepository extends Repository
     protected function createDemandQuery(DateDemand $demand): QueryInterface
     {
         $query = $this->createQuery();
-        $constraints = [];
+        $constraints = [
+            $this->createEventConstraint($query),
+        ];
 
         $categoriesConstraint = $this->createCategoryConstraint($query, $demand);
         if ($categoriesConstraint instanceof ConstraintInterface) {
@@ -122,9 +124,7 @@ class DateRepository extends Repository
             $query->setLimit((int) $demand->getLimit());
         }
 
-        if (!empty($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
-        }
+        $query->matching($query->logicalAnd($constraints));
 
         $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
 
@@ -232,5 +232,14 @@ class DateRepository extends Repository
             )->orderBy('tx_events_domain_model_date.start');
 
         return $statement->execute()->fetchAll();
+    }
+
+    private function createEventConstraint(
+        QueryInterface $query
+    ): ConstraintInterface {
+        return $query->logicalAnd(
+            // Use sub property to trigger join and pulling in event table constraints (hidden)
+            $query->logicalNot($query->equals('event.uid', null))
+        );
     }
 }

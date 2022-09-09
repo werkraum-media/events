@@ -1,0 +1,11 @@
+tt_content
+,uid,pid,CType,list_type,header
+,1,1,list,events_datelist,All Dates
+tx_events_domain_model_event
+,uid,pid,title,hidden
+,1,2,Event 1 hidden,1
+,2,2,Event 2 visible,0
+tx_events_domain_model_date
+,uid,pid,event,start,end
+,1,2,1,1662458400,1662469200
+,2,2,2,1662458400,1662469200

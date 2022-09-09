@@ -29,7 +29,7 @@ class FilterTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet('EXT:events/Tests/Functional/Frontend/Fixtures/Database/SiteStructure.xml');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
         $this->setUpFrontendRootPage(1, [
             'constants' => [
                 'EXT:events/Configuration/TypoScript/constants.typoscript',
