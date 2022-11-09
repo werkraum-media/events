@@ -5,15 +5,15 @@
 
     <f:for each="{pagination.paginator.paginatedItems}" as="date" iteration="index">
         <div class="row mt-3 mb-3 pb-3">
-            <div class="col-2">
+            <div class="col-12 order-2 mb-3 mb-md-0 col-md-2 order-md-1">
                 <f:if condition="{f:format.date(format: 'H:i', date: '{date.start}')} != '00:00'">
-                    <b><f:format.date format="H:i">{date.start}</f:format.date></b><br>
+                    <b class="d-inline d-md-block"><f:format.date format="H.i">{date.start}</f:format.date></b>
                 </f:if>
-                <b><f:format.date format="%a">{date.start}</f:format.date></b><br>
-                <b><f:format.date format="d.m.">{date.start}</f:format.date></b><br>
+                <b class="d-inline d-md-block"><f:format.date format="%a">{date.start}</f:format.date></b>
+                <b class="d-inline d-md-block"><f:format.date format="d.m.">{date.start}</f:format.date></b>
                 {date.event.region.title}<br>
             </div>
-            <div class="col-6">
+            <div class="col-12 order-3 col-md-6 order-md-2">
 
                 <f:if condition="{date.canceled} == 'canceled'">
                     <h4 class="bg-secondary text-white p-2">
@@ -28,7 +28,7 @@
                 <p><strong>{date.event.teaser}</strong></p>
                 <f:format.crop maxCharacters="150">{date.event.details}</f:format.crop>
             </div>
-            <div class="col-4 position-relative">
+            <div class="col-12 order-1 mb-3 mb-md-0 col-md-4 order-md-3 position-relative">
                 <f:if condition="{date.event.images.0}">
                     <f:then>
                         <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
