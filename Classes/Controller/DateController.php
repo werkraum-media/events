@@ -18,9 +18,6 @@ use Wrm\Events\Events\Controller\DateSearchVariables;
 use Wrm\Events\Pagination\Factory;
 use Wrm\Events\Service\DataProcessingForModels;
 
-/**
- * DateController
- */
 class DateController extends AbstractController
 {
     /**
@@ -104,7 +101,7 @@ class DateController extends AbstractController
     ): void {
         $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
-            $demand = DateDemand::createFromRequestValues($search, $this->settings);
+            $demand = $this->demandFactory->createFromRequestValues($search, $this->settings);
         }
 
         $dates = $this->dateRepository->findByDemand($demand);
@@ -132,7 +129,7 @@ class DateController extends AbstractController
     {
         $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
-            $demand = DateDemand::createFromRequestValues($search, $this->settings);
+            $demand = $this->demandFactory->createFromRequestValues($search, $this->settings);
         }
 
         $event = $this->eventDispatcher->dispatch(new DateSearchVariables(

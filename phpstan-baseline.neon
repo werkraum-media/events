@@ -14,11 +14,6 @@ parameters:
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
-			message: "#^Parameter \\#1 \\$min \\(999\\) of function random_int expects lower number than parameter \\#2 \\$max \\(int\\<1, max\\>\\)\\.$#"
-			count: 1
-			path: Classes/Domain/DestinationData/LegacyImportFactory.php
-
-		-
 			message: "#^Call to method deleteFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php

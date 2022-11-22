@@ -19,6 +19,7 @@ class ImportsWithoutLocationTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleImportConfigurationWithoutRegion.xml');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',
@@ -31,12 +32,7 @@ class ImportsWithoutLocationTest extends AbstractTest
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithoutLocation.json') ?: ''),
         ]);
-        $tester = $this->executeCommand([
-            'storage-pid' => '2',
-            'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPathConfiguration,
-            'region-uid' => '',
-        ]);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
         self::assertCount(

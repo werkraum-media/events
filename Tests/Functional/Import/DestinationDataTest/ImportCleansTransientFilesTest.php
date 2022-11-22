@@ -20,6 +20,7 @@ class ImportCleansTransientFilesTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/DefaultImportConfiguration.xml');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',
@@ -27,8 +28,6 @@ class ImportCleansTransientFilesTest extends AbstractTest
             'restLimit = 3',
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
-            'categoriesPid = ',
-            'categoryParentUid = ',
         ]);
 
         $requests = &$this->setUpResponses([
@@ -38,11 +37,7 @@ class ImportCleansTransientFilesTest extends AbstractTest
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
         ]);
 
-        $tester = $this->executeCommand([
-            'storage-pid' => '2',
-            'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPathConfiguration,
-        ]);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
 

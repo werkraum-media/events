@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Wrm\Events\Command\DestinationDataImportCommand;
+use Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand;
 use Wrm\Events\Tests\ClientFactory;
 
 abstract class AbstractTest extends FunctionalTestCase
@@ -72,8 +72,8 @@ abstract class AbstractTest extends FunctionalTestCase
     }
 
     protected function executeCommand(
-        array $argumentsAndOptions,
-        string $command = DestinationDataImportCommand::class
+        array $argumentsAndOptions = ['configurationUid' => '1'],
+        string $command = ImportDestinationDataViaConfigruationCommand::class
     ): CommandTester {
         $subject = $this->getContainer()->get($command);
         self::assertInstanceOf(Command::class, $subject);

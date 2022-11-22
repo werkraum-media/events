@@ -41,9 +41,7 @@ class ImportsSingleConfigurationTest extends AbstractTest
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
         ]);
 
-        $tester = $this->executeCommand([
-            'configurationUid' => '1',
-        ], ImportDestinationDataViaConfigruationCommand::class);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
 

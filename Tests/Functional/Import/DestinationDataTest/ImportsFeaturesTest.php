@@ -24,9 +24,7 @@ class ImportsFeaturesTest extends AbstractTest
         $this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithFeatures.json') ?: ''),
         ]);
-        $tester = $this->executeCommand([
-            'configurationUid' => '1',
-        ], ImportDestinationDataViaConfigruationCommand::class);
+        $tester = $this->executeCommand();
 
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFeaturesAddsNewFeatures.csv');

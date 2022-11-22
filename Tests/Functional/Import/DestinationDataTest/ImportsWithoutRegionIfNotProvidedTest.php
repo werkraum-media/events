@@ -19,6 +19,7 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleImportConfigurationWithoutRegion.xml');
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
@@ -27,8 +28,6 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
             'restLimit = 3',
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
-            'categoriesPid = 2',
-            'categoryParentUid = 2',
         ]);
 
         $requests = &$this->setUpResponses([
@@ -37,12 +36,7 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
         ]);
-        $tester = $this->executeCommand([
-            'storage-pid' => '2',
-            'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPathConfiguration,
-            'region-uid' => '',
-        ]);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
 

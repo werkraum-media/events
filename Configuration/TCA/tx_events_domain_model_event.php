@@ -47,15 +47,6 @@ return [
                     dates,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.location,
                     location,
-                    name,
-                    street,
-                    district,
-                    city,
-                    zip,
-                    country,
-                    phone,
-                    latitude,
-                    longitude,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.relations,
                     organizer,
                     region,
@@ -263,69 +254,6 @@ return [
                 'eval' => 'trim'
             ]
         ],
-        'name' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.name',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'street' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.street',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'district' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.district',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'city' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.city',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'zip' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.zip',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'country' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.country',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'phone' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.phone',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
         'web' => [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.web',
@@ -368,24 +296,6 @@ return [
         'instagram' => [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.instagram',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'latitude' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.latitude',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim'
-            ],
-        ],
-        'longitude' => [
-            'exclude' => true,
-            'label' => $l10nLocationPath . ':tx_events_domain_model_location.longitude',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

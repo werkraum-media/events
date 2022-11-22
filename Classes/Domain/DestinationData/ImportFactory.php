@@ -99,13 +99,7 @@ class ImportFactory
         return $result;
     }
 
-    /**
-     * Only public in order to be used by LegacyImportFactory.
-     * Make private once the class is removed.
-     *
-     * @internal
-     */
-    public function create(array $data): Import
+    private function create(array $data): Import
     {
         $this->createWorkarounds($data);
 

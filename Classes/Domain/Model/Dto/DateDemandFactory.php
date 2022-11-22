@@ -105,4 +105,54 @@ class DateDemandFactory
 
         return $demand;
     }
+
+    public function createFromRequestValues(
+        array $submittedValues,
+        array $settings
+    ): DateDemand {
+        $instance = new DateDemand();
+        $instance->setSearchword($submittedValues['searchword'] ?? '');
+        $instance->setSynonyms($settings['synonyms'] ?? []);
+
+        if (isset($submittedValues['locations']) && is_array($submittedValues['locations'])) {
+            $instance->setLocations($submittedValues['locations']);
+        }
+
+        $instance->setRegions(GeneralUtility::intExplode(',', $submittedValues['region'] ?? '', true));
+        if (isset($submittedValues['regions']) && is_array($submittedValues['regions'])) {
+            $instance->setRegions($submittedValues['regions']);
+        }
+
+        if ($submittedValues['highlight'] ?? false) {
+            $instance->setHighlight(true);
+        }
+
+        if (isset($submittedValues['start']) && $submittedValues['start'] !== '') {
+            $instance->setStart(strtotime($submittedValues['start'] . ' 00:00') ?: null);
+        }
+        if (isset($submittedValues['end']) && $submittedValues['end'] !== '') {
+            $instance->setEnd(strtotime($submittedValues['end'] . ' 23:59') ?: null);
+        }
+        if (isset($submittedValues['considerDate']) && $submittedValues['considerDate'] !== '') {
+            $instance->setConsiderDate((bool)$submittedValues['considerDate']);
+        }
+
+        if (isset($submittedValues['userCategories']) && is_array($submittedValues['userCategories'])) {
+            $instance->setUserCategories($submittedValues['userCategories']);
+        }
+
+        if (isset($submittedValues['features']) && is_array($submittedValues['features'])) {
+            $instance->setFeatures($submittedValues['features']);
+        }
+
+        $instance->setSortBy($settings['sortByDate'] ?? '');
+        $instance->setSortOrder($settings['sortOrder'] ?? '');
+        $instance->setQueryCallback($settings['queryCallback'] ?? '');
+
+        if (!empty($settings['limit'])) {
+            $instance->setLimit($settings['limit']);
+        }
+
+        return $instance;
+    }
 }

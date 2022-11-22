@@ -21,6 +21,7 @@ class ImportsTicketsTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/DefaultImportConfiguration.xml');
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
         $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
         $this->setUpConfiguration([
@@ -30,20 +31,13 @@ class ImportsTicketsTest extends AbstractTest
             'restLimit = 3',
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
-            'categoriesPid = 2',
-            'categoryParentUid = 2',
         ]);
 
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithTickets.json') ?: ''),
         ]);
 
-        $tester = $this->executeCommand([
-            'storage-pid' => '2',
-            'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPathConfiguration,
-            'region-uid' => '1',
-        ]);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
 

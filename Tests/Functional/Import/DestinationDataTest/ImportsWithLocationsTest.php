@@ -19,6 +19,8 @@ class ImportsWithLocationsTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
+        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/DefaultImportConfiguration.xml');
+
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',
@@ -31,12 +33,7 @@ class ImportsWithLocationsTest extends AbstractTest
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithLocations.json') ?: ''),
         ]);
-        $tester = $this->executeCommand([
-            'storage-pid' => '2',
-            'rest-experience' => 'beispielstadt',
-            'files-folder' => $fileImportPathConfiguration,
-            'region-uid' => '',
-        ]);
+        $tester = $this->executeCommand();
 
         self::assertSame(0, $tester->getStatusCode());
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithLocations.csv');

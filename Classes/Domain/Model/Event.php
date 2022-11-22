@@ -140,55 +140,6 @@ class Event extends AbstractEntity
      */
     protected $dataProcessing = null;
 
-    // Legacy location related info
-
-    /**
-     * @var string
-     */
-    protected $name = '';
-
-    /**
-     * @var string
-     */
-    protected $street = '';
-
-    /**
-     * @var string
-     */
-    protected $district = '';
-
-    /**
-     * @var string
-     */
-    protected $city = '';
-
-    /**
-     * @var string
-     */
-    protected $zip = '';
-
-    /**
-     * @var string
-     */
-    protected $country = '';
-
-    /**
-     * @var string
-     */
-    protected $phone = '';
-
-    /**
-     * @var string
-     */
-    protected $latitude = '';
-
-    /**
-     * @var string
-     */
-    protected $longitude = '';
-
-    // End of legacy location info
-
     public function __construct()
     {
         $this->initStorageObjects();
@@ -406,21 +357,6 @@ class Event extends AbstractEntity
     public function setLocation(?Location $location): void
     {
         $this->location = $location;
-
-        // Keep this block as long as event still has the properties for legacy reasons.
-        // This ensures there is only a single point of truth, the new location object.
-        // That way we detect issues earlier and can migrate them until we get rid of the legacy code base.
-        if ($location instanceof Location) {
-            $this->name = '';
-            $this->street = '';
-            $this->district = '';
-            $this->city = '';
-            $this->zip = '';
-            $this->country = '';
-            $this->phone = '';
-            $this->latitude = '';
-            $this->longitude = '';
-        }
     }
 
     public function getLocation(): ?Location
@@ -532,88 +468,5 @@ class Event extends AbstractEntity
     public function getLocalizedUid(): int
     {
         return $this->_localizedUid;
-    }
-
-    // Legacy location related info
-
-    public function getName(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getName();
-        }
-
-        return $this->name;
-    }
-
-    public function getStreet(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getStreet();
-        }
-
-        return $this->street;
-    }
-
-    public function getDistrict(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getDistrict();
-        }
-
-        return $this->district;
-    }
-
-    public function getCountry(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getCountry();
-        }
-
-        return $this->country;
-    }
-
-    public function getCity(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getCity();
-        }
-
-        return $this->city;
-    }
-
-    public function getZip(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getZip();
-        }
-
-        return $this->zip;
-    }
-
-    public function getPhone(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getPhone();
-        }
-
-        return $this->phone;
-    }
-
-    public function getLatitude(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getLatitude();
-        }
-
-        return $this->latitude;
-    }
-
-    public function getLongitude(): string
-    {
-        if ($this->location instanceof Location) {
-            return $this->location->getLongitude();
-        }
-
-        return $this->longitude;
     }
 }

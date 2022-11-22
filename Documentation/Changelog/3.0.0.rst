@@ -30,6 +30,21 @@ string value necessary or Fluid forms.
 Those are not considered public API. Use ``getStartObject()`` and ``getEndObject()``
 instead.
 
+The static method ``createFromRequestValues()`` was moved as an instance method to
+the factory, in order to streamline factories.
+
+The old location properties were removed from events.
+The locations are imported as dedicated instance already.
+The corresponding TCA and database columns got removed as well.
+
+The Form ViewHelper got removed as it was unused.
+
+Removed command
+^^^^^^^^^^^^^^^
+
+The legacy command was removed. It now is necessary to create import configurations
+and use new commands to import those configurations.
+
 Features
 --------
 

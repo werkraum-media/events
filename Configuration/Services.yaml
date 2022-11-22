@@ -7,19 +7,6 @@ services:
   Wrm\Events\:
     resource: '../Classes/*'
 
-  events.levacy_comannd_identifier:
-    class: 'Wrm\Events\Command\DestinationDataImportCommand'
-    tags:
-      - name: 'console.command'
-        command: 'events:destinationdataimport‚'
-        description: 'Mind the trailing ",", there for backwards compatibility'
-
-  Wrm\Events\Command\DestinationDataImportCommand:
-    tags:
-      - name: 'console.command'
-        command: 'events:destinationdataimport'
-        description: 'Import Destination Data Events'
-
   Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand:
     tags:
       - name: 'console.command'
