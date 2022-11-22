@@ -76,25 +76,26 @@ class RemovePastTest extends FunctionalTestCase
         );
 
         self::assertCount(
-            2,
+            3,
             $this->getAllRecords('sys_file'),
             'Unexpected number of sys_file records.'
         );
         self::assertCount(
-            2,
+            3,
             $this->getAllRecords('sys_file_reference'),
             'Unexpected number of sys_file_reference records.'
         );
         self::assertCount(
-            2,
+            3,
             $this->getAllRecords('sys_file_metadata'),
             'Unexpected number of sys_file_metadata records.'
         );
 
         $files = GeneralUtility::getFilesInDir('fileadmin/user_uploads');
         self::assertIsArray($files, 'Failed to retrieve files from filesystem.');
-        self::assertCount(2, $files, 'Unexpectd number of files in filesystem.');
+        self::assertCount(3, $files, 'Unexpected number of files in filesystem.');
         self::assertSame('example-for-future-event.gif', array_values($files)[0], 'Unexpected file in filesystem.');
         self::assertSame('example-for-partner.gif', array_values($files)[1], 'Unexpected file in filesystem.');
+        self::assertSame('example-to-keep.gif', array_values($files)[2], 'Unexpected file in filesystem.');
     }
 }

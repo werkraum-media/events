@@ -68,6 +68,10 @@ Fixes
 
   Relates: #10175
 
+* Do not delete files which are unrelated to the events extension.
+
+  Relates: #10011
+
 Tasks
 -----
 

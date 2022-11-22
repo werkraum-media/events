@@ -132,6 +132,26 @@
         <identifier_hash>475768e491580fb8b74ed36c2b1aaf619ca5e11d</identifier_hash>
         <folder_hash>b4ab666a114d9905a50606d1837b74d952dfd90f</folder_hash>
     </sys_file>
+    <sys_file>
+        <uid>4</uid>
+        <pid>0</pid>
+        <tstamp>1371467047</tstamp>
+        <type>2</type>
+        <storage>1</storage>
+        <identifier>/user_uploads/example-to-keep.gif</identifier>
+        <extension>gif</extension>
+        <mime_type>image/gif</mime_type>
+        <name>example-to-keep.gif</name>
+        <sha1>359ae0fb420fe8afe1a8b8bc5e46d75090a826b9</sha1>
+        <size>637</size>
+        <creation_date>1370877201</creation_date>
+        <modification_date>1369407629</modification_date>
+        <last_indexed>0</last_indexed>
+        <missing>0</missing>
+        <metadata>0</metadata>
+        <identifier_hash>475768e491580fb8b74ed36c2b1aaf619ca5e11d</identifier_hash>
+        <folder_hash>b4ab666a114d9905a50606d1837b74d952dfd90f</folder_hash>
+    </sys_file>
 
     <sys_file_metadata>
         <uid>1</uid>
@@ -156,6 +176,14 @@
         <crdate>1371467047</crdate>
         <cruser_id>1</cruser_id>
         <file>3</file>
+    </sys_file_metadata>
+    <sys_file_metadata>
+        <uid>4</uid>
+        <pid>0</pid>
+        <tstamp>1371467047</tstamp>
+        <crdate>1371467047</crdate>
+        <cruser_id>1</cruser_id>
+        <file>4</file>
     </sys_file_metadata>
 
     <sys_file_reference>
@@ -202,6 +230,22 @@
         <uid_local>3</uid_local>
         <uid_foreign>2</uid_foreign>
         <tablenames>tx_events_domain_model_event</tablenames>
+        <fieldname>images</fieldname>
+        <sorting_foreign>1</sorting_foreign>
+        <table_local>sys_file</table_local>
+    </sys_file_reference>
+    <sys_file_reference>
+        <uid>4</uid>
+        <pid>2</pid>
+        <tstamp>1373537480</tstamp>
+        <crdate>1371484347</crdate>
+        <cruser_id>1</cruser_id>
+        <deleted>1</deleted>
+        <hidden>0</hidden>
+        <sys_language_uid>0</sys_language_uid>
+        <uid_local>4</uid_local>
+        <uid_foreign>1</uid_foreign>
+        <tablenames>tt_content</tablenames>
         <fieldname>images</fieldname>
         <sorting_foreign>1</sorting_foreign>
         <table_local>sys_file</table_local>

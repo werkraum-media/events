@@ -120,7 +120,15 @@ class Files
                 'reference',
                 'reference.uid_local = file.uid'
             )
-            ->where($queryBuilder->expr()->eq('reference.deleted', 1));
+            ->where($queryBuilder->expr()->eq(
+                'reference.deleted',
+                1
+            ))
+            ->andWhere($queryBuilder->expr()->like(
+                'reference.tablenames',
+                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+            ))
+            ;
         /** @var array{int: array{storage: int, identifier: string, uid: int}} $filesToDelete */
         $filesToDelete = $queryBuilder->execute()->fetchAll();
 
