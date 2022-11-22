@@ -17,7 +17,7 @@
             </trans-unit>
             <trans-unit id="tx_events.searchform.date_to">
                 <source>Date to</source>
-                <target>Date bis</target>
+                <target>Datum bis</target>
             </trans-unit>
             <trans-unit id="tx_events.searchform.regions">
                 <source>All regions</source>

@@ -201,7 +201,7 @@ class DateDemandTest extends TestCase
             $result->getStartObject()->format('Y-m-d')
         );
         self::assertSame(
-            1657576800,
+            '2022-07-12',
             $result->getStart()
         );
     }
@@ -228,7 +228,7 @@ class DateDemandTest extends TestCase
             $result->getEndObject()->format('Y-m-d')
         );
         self::assertSame(
-            1657663140,
+            '2022-07-12',
             $result->getEnd()
         );
     }

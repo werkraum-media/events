@@ -77,20 +77,20 @@ class DateRepository extends Repository
             $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
         }
 
-        if ($demand->getStart() !== null) {
-            $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStart());
+        if ($demand->getStartObject() !== null) {
+            $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStartObject());
         }
-        if ($demand->getEnd() != null) {
+        if ($demand->getEndObject() != null) {
             // Dates might have end of 0 if only start exists.
             // This is respected to take start as end date.
             $constraints['ends'] = $query->logicalOr([
                 $query->logicalAnd([
-                    $query->lessThanOrEqual('end', $demand->getEnd()),
+                    $query->lessThanOrEqual('end', $demand->getEndObject()),
                     $query->greaterThan('end', 0)
                 ]),
                 $query->logicalAnd([
                     $query->equals('end', 0),
-                    $query->lessThanOrEqual('start', $demand->getEnd())
+                    $query->lessThanOrEqual('start', $demand->getEndObject())
                 ]),
             ]);
         }

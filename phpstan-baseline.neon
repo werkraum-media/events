@@ -1,6 +1,10 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Cannot call method typoLink_URL\\(\\) on TYPO3\\\\CMS\\\\Frontend\\\\ContentObject\\\\ContentObjectRenderer\\|null\\.$#"
+			count: 1
+			path: Classes/Controller/DateController.php
+		-
 			message: "#^Parameter \\#1 \\$categories of method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php

@@ -1,0 +1,64 @@
+3.0.0
+=====
+
+Breaking
+--------
+
+Namespace changes
+^^^^^^^^^^^^^^^^^
+
+A new namespace was defined for plugins which is "events_search".
+The search parameters are now collected below namespace "search" instead of
+"events_search" leading to ``events_search[search][parametername]=value`` instead of
+``tx_events_signature[events_search][parametername]=value``.
+
+The form now is submitted as post and redirects to a proper URL with GET.
+
+The code was bloated and made it hard to fix bugs.
+
+Necessary steps:
+
+- Check usage of old namespace within templates and other sources.
+
+- Check usage of old nesting of parameters.
+
+API Changes
+^^^^^^^^^^^
+
+The methods of ``DateDemand`` have changed, ``getStart()`` and ``getEnd()`` return a
+string value necessary or Fluid forms.
+Those are not considered public API. Use ``getStartObject()`` and ``getEndObject()``
+instead.
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Keep filter during pagination
+
+  Search requests are POST by default.
+  We apply PRG (=Post Redirect Get) on them to create proper GET requests.
+  Those can be used to generate the URLs for pagination.
+
+  We follow Extbase, and do not explicitly ask for arguments from foreign namespaces.
+  Instead we configure a pluginNamespace that's shared between plugins.
+  This is all necessary as we still ship pre defined plugins.
+  This should belong into integration of each project.
+
+  See: https://en.wikipedia.org/wiki/Post/Redirect/Get
+
+  Relates: #10175
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

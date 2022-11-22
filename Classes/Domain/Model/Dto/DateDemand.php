@@ -331,13 +331,18 @@ class DateDemand
         return $this->startObject;
     }
 
-    public function getStart(): ?int
+    /**
+     * Returns necessary format for forms.
+     *
+     * @internal Only for Extbase/Fluid.
+     */
+    public function getStart(): string
     {
         if ($this->getStartObject() === null) {
-            return null;
+            return '';
         }
 
-        return (int) $this->getStartObject()->format('U');
+        return $this->getStartObject()->format('Y-m-d');
     }
 
     public function setStart(?int $start): void
@@ -362,13 +367,18 @@ class DateDemand
         return $this->getStartObject()->format('Y-m-d') === $this->getEndObject()->format('Y-m-d');
     }
 
-    public function getEnd(): ?int
+    /**
+     * Returns necessary format for forms.
+     *
+     * @internal Only for Extbase/Fluid.
+     */
+    public function getEnd(): string
     {
         if ($this->getEndObject() === null) {
-            return null;
+            return '';
         }
 
-        return (int) $this->getEndObject()->format('U');
+        return $this->getEndObject()->format('Y-m-d');
     }
 
     public function setEnd(?int $end): void
@@ -387,15 +397,15 @@ class DateDemand
 
     public function shouldShowFromNow(): bool
     {
-        return $this->getStart() === null
-            && $this->getEnd() === null
+        return $this->getStartObject() === null
+            && $this->getEndObject() === null
             && $this->useMidnight === false;
     }
 
     public function shouldShowFromMidnight(): bool
     {
-        return $this->getStart() === null
-            && $this->getEnd() === null
+        return $this->getStartObject() === null
+            && $this->getEndObject() === null
             && $this->useMidnight === true;
     }
 

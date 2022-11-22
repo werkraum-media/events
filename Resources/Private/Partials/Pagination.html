@@ -8,13 +8,13 @@
                     <f:if condition="{pagination.previousPageNumber} > 1">
                         <f:then>
                             <a class="page-link"
-                                href="{f:uri.action(arguments: {currentPage: pagination.previousPageNumber})}"
+                                href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.previousPageNumber})}"
                             >
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </f:then>
                         <f:else>
-                            <a class="page-link" href="{f:uri.action()}">
+                            <a class="page-link" href="{f:uri.action(addQueryString: 1)}">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </f:else>
@@ -25,7 +25,7 @@
             <f:if condition="{pagination.displayRangeStart} > 1">
                 <li class="page-item">
                     <a class="page-link"
-                        href="{f:uri.action()}"
+                        href="{f:uri.action(addQueryString: 1)}"
                         aria-label="Goto Page 1"
                     >
                         1
@@ -54,7 +54,7 @@
                             <f:if condition="{page} > 1">
                                 <f:then>
                                     <a class="page-link"
-                                        href="{f:uri.action(arguments: {currentPage: page})}"
+                                        href="{f:uri.action(addQueryString: 1, arguments: {currentPage: page})}"
                                         aria-label="Goto Page {page}"
                                     >
                                         {page}
@@ -62,7 +62,7 @@
                                 </f:then>
                                 <f:else>
                                     <a class="page-link"
-                                        href="{f:uri.action()}"
+                                        href="{f:uri.action(addQueryString: 1)}"
                                         aria-label="Goto Page 1"
                                     >
                                         1
@@ -83,7 +83,7 @@
             <f:if condition="{pagination.displayRangeEnd} < {pagination.lastPageNumber}">
                 <li class="page-item">
                     <a class="page-link"
-                        href="{f:uri.action(arguments: {currentPage: pagination.lastPageNumber})}"
+                        href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.lastPageNumber})}"
                         aria-label="Goto Page {pagination.lastPageNumber}"
                     >
                         {pagination.lastPageNumber}
@@ -94,7 +94,7 @@
             <f:if condition="{pagination.nextPageNumber}">
                 <li class="page-item">
                     <a class="page-link"
-                        href="{f:uri.action(arguments: {currentPage: pagination.nextPageNumber})}"
+                        href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.nextPageNumber})}"
                     >
                       <span aria-hidden="true">&raquo;</span>
                     </a>
