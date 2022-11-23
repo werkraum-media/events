@@ -43,6 +43,10 @@
                 <source>Link regarding cancellation</source>
                 <target>Link bezüglich Absage</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.slug">
+                <source>Slug</source>
+                <target>URL-Segment</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>
                 <target>Verknüpfte Veranstaltungen</target>

@@ -48,7 +48,14 @@ and use new commands to import those configurations.
 Features
 --------
 
-Nothing
+* Provide routing
+
+  The extension now provides a basic routing.
+  This can either be imported or used as an example.
+
+  Date also has a slug field now.
+
+  Relates: #10179
 
 Fixes
 -----

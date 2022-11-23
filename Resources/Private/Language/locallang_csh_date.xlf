@@ -33,6 +33,9 @@
             <trans-unit id="tx_events_domain_model_date.canceled_link">
                 <source>Link regarding cancellation</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_date.slug">
+                <source>Slug</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_date.event">
                 <source>Associated event</source>
             </trans-unit>

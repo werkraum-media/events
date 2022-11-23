@@ -2,8 +2,8 @@
 ,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","name","street","district","city","zip","phone","web","email"
 ,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Schillerhaus Rudolstadt","Schillerstraße 25",,"Rudolstadt","07407","+ 49 3672 / 486470","http://schillerhaus.rudolstadt.de","schillerhaus@rudolstadt.de"
 "tx_events_domain_model_event",,,,,,,,,,,,,,,,,,,,,
-,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","title","subtitle","global_id","slug","highlight","teaser","dates",
-,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Allerlei Weihnachtliches (Heute mit Johannes Geißer)",,"e_100347853","e-100347853","0",,"1",
+,"uid","pid","cruser_id","deleted","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","t3ver_stage","title","subtitle","global_id","highlight","teaser","dates",,
+,"1","2","0","0","0","0","0","-1","0","0","0","0","0","Allerlei Weihnachtliches (Heute mit Johannes Geißer)",,"e_100347853","0",,"1",,
 "tx_events_domain_model_date",,,,,,,,,,,,,,,,,,,,,
 ,"uid","pid","cruser_id","hidden","starttime","endtime","sys_language_uid","l10n_parent","t3ver_oid","t3ver_wsid","t3ver_state","event","start","end","canceled","postponed_date","canceled_link",,,,
 ,"1","2","0","0","0","0",-1,0,"0","0","0","1","4101372000","4101377400","no","0",,,,,

@@ -32,6 +32,7 @@ use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import 
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
 use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
+use Wrm\Events\Service\DestinationDataImportService\Slugger;
 
 class DestinationDataImportService
 {
@@ -106,6 +107,11 @@ class DestinationDataImportService
     private $locationAssignment;
 
     /**
+     * @var Slugger
+     */
+    private $slugger;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
@@ -117,6 +123,7 @@ class DestinationDataImportService
      * @param DataFetcher $dataFetcher
      * @param CategoriesAssignment $categoriesAssignment
      * @param LocationAssignment $locationAssignment
+     * @param Slugger $slugger
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -129,7 +136,8 @@ class DestinationDataImportService
         DataFetcher $dataFetcher,
         DatesFactory $datesFactory,
         CategoriesAssignment $categoriesAssignment,
-        LocationAssignment $locationAssignment
+        LocationAssignment $locationAssignment,
+        Slugger $slugger
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
@@ -142,6 +150,7 @@ class DestinationDataImportService
         $this->datesFactory = $datesFactory;
         $this->categoriesAssignment = $categoriesAssignment;
         $this->locationAssignment = $locationAssignment;
+        $this->slugger = $slugger;
     }
 
     public function import(
@@ -261,7 +270,11 @@ class DestinationDataImportService
             $this->eventRepository->update($this->tmpCurrentEvent);
             $this->persistenceManager->persistAll();
         }
-        $this->doSlugUpdate();
+
+        $this->logger->info('Update slugs');
+        $this->slugger->update('tx_events_domain_model_event');
+        $this->slugger->update('tx_events_domain_model_date');
+
         $this->logger->info('Finished import');
         return 0;
     }
@@ -576,51 +589,6 @@ class DestinationDataImportService
             $this->logger->info($error);
         }
         return false;
-    }
-
-    private function doSlugUpdate(): void
-    {
-        $this->logger->info('Update slugs');
-
-        $slugHelper = GeneralUtility::makeInstance(
-            SlugHelper::class,
-            'tx_events_domain_model_event',
-            'slug',
-            $GLOBALS['TCA']['tx_events_domain_model_event']['columns']['slug']['config']
-        );
-
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_events_domain_model_event');
-        $queryBuilder = $connection->createQueryBuilder();
-        $queryBuilder->getRestrictions()->removeAll();
-
-        $statement = $queryBuilder->select('uid', 'global_id')
-            ->from('tx_events_domain_model_event')
-            ->where(
-                $queryBuilder->expr()->orX(
-                    $queryBuilder->expr()->eq('slug', $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)),
-                    $queryBuilder->expr()->isNull('slug')
-                )
-            )
-            ->execute();
-
-        while ($record = $statement->fetch()) {
-            if (is_array($record) === false) {
-                continue;
-            }
-
-            $queryBuilder = $connection->createQueryBuilder();
-            $queryBuilder->update('tx_events_domain_model_event')
-                ->where(
-                    $queryBuilder->expr()->eq(
-                        'uid',
-                        $queryBuilder->createNamedParameter($record['uid'], \PDO::PARAM_INT)
-                    )
-                )
-                ->set('slug', $slugHelper->sanitize((string)$record['global_id']));
-            $queryBuilder->getSQL();
-            $queryBuilder->execute();
-        }
     }
 
     /**

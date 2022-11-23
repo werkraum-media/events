@@ -23,7 +23,7 @@ return [
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_date.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, canceled, postponed_date, canceled_link, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, start, end, canceled, postponed_date, canceled_link, slug, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -199,7 +199,22 @@ return [
                 ],
             ],
         ],
-
+        'slug' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'generatorOptions' => [
+                    'fields' => ['event-title', 'start', 'uid'],
+                    'fieldSeparator' => '-',
+                    'prefixParentPageSlug' => false,
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'uniqueInSite',
+                'default' => '',
+            ],
+        ],
         'event' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.event',
