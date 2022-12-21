@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Service;
 
+use Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -168,7 +169,7 @@ class DestinationDataImportService
 
         try {
             $data = $this->dataFetcher->fetchSearchResult($import);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('Could not receive data.');
             return 1;
         }
@@ -526,7 +527,13 @@ class DestinationDataImportService
         $file = new \SplFileInfo($fileUrl);
         $temporaryFilename = GeneralUtility::tempnam($file->getBasename());
 
-        $response = $this->dataFetcher->fetchImage($fileUrl);
+        try {
+            $response = $this->dataFetcher->fetchImage($fileUrl);
+        } catch (Exception $e) {
+            $this->logger->error('Cannot load file ' . $fileUrl);
+            return '';
+        }
+
         $fileContent = $response->getBody()->__toString();
         if ($response->getStatusCode() !== 200) {
             $this->logger->error('Cannot load file ' . $fileUrl);

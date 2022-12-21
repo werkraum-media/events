@@ -1,0 +1,33 @@
+2.6.4
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Do not break import on missing image
+
+  Guzzle might throw exceptions instead of returning the response.
+  We extend our import to also watch out for exceptions and handle them the same way
+  as a response other than 200.
+
+  Relates: #10253
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
