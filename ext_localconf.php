@@ -45,4 +45,9 @@ call_user_func(function () {
         \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         ['source' => 'EXT:events/Resources/Public/Icons/Extension.svg']
     );
+    $iconRegistry->registerIcon(
+        'pages-module-events',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
+    );
 });

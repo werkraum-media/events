@@ -13,6 +13,9 @@ Features
   A default of ``+60 days`` is hard coded.
   The actual date span can be configured via TypoScript.
 
+* Pages can now define they store event records. 
+  A new entry was added to select and the icon within page tree will be replaced.
+
 Fixes
 -----
 
@@ -27,7 +30,7 @@ Fixes
 Tasks
 -----
 
-Nothing
+* Update Icons.
 
 Deprecation
 -----------

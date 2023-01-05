@@ -12,6 +12,10 @@
             <trans-unit id="tx_events.flexform.selected.selectedRecords">
                 <source>Records to show</source>
             </trans-unit>
+
+            <trans-unit id="pages.module.events">
+                <source>Events</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

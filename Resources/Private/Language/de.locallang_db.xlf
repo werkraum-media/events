@@ -15,6 +15,11 @@
                 <source>Records to show</source>
                 <target>Anzuzeigende Veranstaltungen</target>
             </trans-unit>
+
+            <trans-unit id="pages.module.events">
+                <source>Events</source>
+                <target>Veranstaltungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
