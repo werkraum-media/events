@@ -3,6 +3,9 @@
 namespace Wrm\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use Wrm\Events\Domain\Model\Date;
 
 class DatesFactory
@@ -12,10 +15,24 @@ class DatesFactory
      */
     private $context;
 
+    /**
+     * @var ConfigurationManager
+     */
+    private $configurationManager;
+
+    /**
+     * @var Logger
+     */
+    private $logger;
+
     public function __construct(
-        Context $context
+        Context $context,
+        ConfigurationManager $configurationManager,
+        LogManager $logManager
     ) {
         $this->context = $context;
+        $this->configurationManager = $configurationManager;
+        $this->logger = $logManager->getLogger(__CLASS__);
     }
 
     /**
@@ -45,10 +62,12 @@ class DatesFactory
         bool $canceled
     ): ?\Generator {
         if ($this->isDateSingleDate($date)) {
+            $this->logger->info('Is single date', ['date' => $date]);
             return $this->createSingleDate($date, $canceled);
         }
 
         if ($this->isDateInterval($date)) {
+            $this->logger->info('Is interval date', ['date' => $date]);
             return $this->createDateFromInterval($date, $canceled);
         }
 
@@ -66,10 +85,6 @@ class DatesFactory
 
     private function isDateInterval(array $date): bool
     {
-        if (empty($date['repeatUntil'])) {
-            return false;
-        }
-
         $frequency = $date['freq'] ?? '';
 
         if ($frequency == 'Daily' && empty($date['weekdays'])) {
@@ -102,6 +117,8 @@ class DatesFactory
         array $date,
         bool $canceled
     ): ?\Generator {
+        $date = $this->ensureRepeatUntil($date);
+
         if ($date['freq'] == 'Daily') {
             return $this->createDailyDates($date, $canceled);
         }
@@ -111,6 +128,24 @@ class DatesFactory
         }
 
         return null;
+    }
+
+    private function ensureRepeatUntil(array $date): array
+    {
+        if (empty($date['repeatUntil']) === false) {
+            return $date;
+        }
+
+        $settings = $this->configurationManager->getConfiguration(
+            ConfigurationManager::CONFIGURATION_TYPE_SETTINGS,
+            'Events',
+            'Import'
+        );
+        $configuredModification = $settings['repeatUntil'] ?? '+60 days';
+        $date['repeatUntil'] = $this->getToday()->modify($configuredModification)->format('c');
+        $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $date['repeatUntil']]);
+
+        return $date;
     }
 
     /**
@@ -130,6 +165,7 @@ class DatesFactory
         foreach ($period as $day) {
             $day = $day->setTimezone($timeZone);
             if ($day < $today) {
+                $this->logger->debug('Date was in the past.', ['day' => $day]);
                 continue;
             }
 
@@ -163,6 +199,7 @@ class DatesFactory
             foreach ($period as $day) {
                 $day = $day->setTimezone($timeZone);
                 if ($day < $today) {
+                    $this->logger->debug('Date was in the past.', ['day' => $day]);
                     continue;
                 }
 

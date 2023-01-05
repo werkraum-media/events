@@ -45,12 +45,17 @@ abstract class AbstractTest extends FunctionalTestCase
         parent::tearDown();
     }
 
-    protected function setUpConfiguration(array $configuration): void
-    {
+    protected function setUpConfiguration(
+        array $destinationDataSettings,
+        array $importSettings = []
+    ): void {
         $this->setUpFrontendRootPage(1, [], [
             'config' => implode(PHP_EOL, [
                 'module.tx_events_pi1.settings.destinationData {',
-                implode(PHP_EOL, $configuration),
+                implode(PHP_EOL, $destinationDataSettings),
+                '}',
+                'module.tx_events_import.settings {',
+                implode(PHP_EOL, $importSettings),
                 '}',
             ]),
         ]);

@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
 
@@ -15,14 +19,25 @@ use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
  */
 class DatesFactoryTest extends TestCase
 {
+    private function createTestSubject(
+        string $contextDate
+    ): DatesFactory {
+        $logger = $this->createStub(Logger::class);
+        $logManager = $this->createStub(LogManager::class);
+        $logManager->method('getLogger')->willReturn($logger);
+
+        return new DatesFactory(
+            $this->createContext(new \DateTimeImmutable($contextDate)),
+            $this->createStub(ConfigurationManager::class),
+            $logManager
+        );
+    }
     /**
      * @test
      */
     public function canBeCreated(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('now'))
-        );
+        $subject = $this->createTestSubject('now');
 
         self::assertInstanceOf(
             DatesFactory::class,
@@ -36,9 +51,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNoResultOnUnkownInput(array $unkownInput): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates($unkownInput, false);
 
@@ -66,9 +79,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsSingleNotCanceledDate(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'start' => '2022-04-01T16:00:00+02:00',
@@ -92,11 +103,34 @@ class DatesFactoryTest extends TestCase
     /**
      * @test
      */
+    public function returnsWeeklyWithConfiguredRepeat(): void
+    {
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates([[
+            'weekdays' => [
+                'Monday',
+                'Friday',
+            ],
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1
+        ]], false);
+
+        self::assertInstanceOf(\Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(16, $result);
+    }
+
+    /**
+     * @test
+     */
     public function returnsSingleCanceledDate(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'start' => '2022-04-01T16:00:00+02:00',
@@ -122,9 +156,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnDailyBasis(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
@@ -155,9 +187,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnDailyBasis(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
@@ -188,9 +218,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'weekdays' => [
@@ -233,9 +261,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnWeeklyBasis(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-08-29T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([[
             'weekdays' => [
@@ -278,9 +304,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([
             [
@@ -327,9 +351,7 @@ class DatesFactoryTest extends TestCase
      */
     public function returnsNotCanceledDatesOnMixedIntervals(): void
     {
-        $subject = new DatesFactory(
-            $this->getContext(new \DateTimeImmutable('2022-01-01T13:17:24 Europe/Berlin'))
-        );
+        $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates([
             [
@@ -371,7 +393,7 @@ class DatesFactoryTest extends TestCase
         }
     }
 
-    private function getContext(\DateTimeImmutable $dateTime): Context
+    private function createContext(\DateTimeImmutable $dateTime): Context
     {
         $context = new Context();
         $context->setAspect('date', new DateTimeAspect($dateTime));

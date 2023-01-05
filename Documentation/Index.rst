@@ -36,6 +36,7 @@ Table of Contents
 	:titlesonly:
 
 	Commands
+	Settings
 	Changelog
 	Maintenance
 

@@ -18,16 +18,20 @@ plugin.tx_events {
             }
         }
     }
+
     persistence {
         storagePid = {$plugin.tx_events.persistence.storagePid}
         recursive = 1
     }
+
     features {
         skipDefaultArguments = 1
     }
+
     mvc {
         callDefaultActionIfActionCantBeResolved = 1
     }
+
     settings {
 
         defaulDetailEventsPid =
@@ -52,6 +56,7 @@ plugin.tx_events {
             categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
             categoryParentUid = {$plugin.tx_events.settings.destinationData.categoryParentUid}
         }
+
         dataProcessing {
             Wrm\Events\Domain\Model\Event {
                 10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
@@ -67,6 +72,7 @@ plugin.tx_events {
                 }
             }
         }
+
     }
 }
 
@@ -74,3 +80,9 @@ plugin.tx_events_datelist.view.pluginNamespace = events_search
 plugin.tx_events_datesearch.view.pluginNamespace = events_search
 
 module.tx_events < plugin.tx_events
+
+module.tx_events_import {
+    settings {
+        repeatUntil = +60 days
+    }
+}

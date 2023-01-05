@@ -1,4 +1,4 @@
-3.0.1
+3.1.0
 =====
 
 Breaking
@@ -9,7 +9,9 @@ Nothing
 Features
 --------
 
-Nothing
+* Handles date intervals without given ``repeatUntil`` property.
+  A default of ``+60 days`` is hard coded.
+  The actual date span can be configured via TypoScript.
 
 Fixes
 -----

@@ -5,6 +5,7 @@
         <uid>1</uid>
         <title>Root page</title>
         <slug>1</slug>
+        <is_siteroot>1</is_siteroot>
     </pages>
     <pages>
         <pid>1</pid>
@@ -13,4 +14,3 @@
         <doktype>254</doktype>
     </pages>
 </dataset>
-
