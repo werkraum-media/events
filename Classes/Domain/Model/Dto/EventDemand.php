@@ -34,7 +34,7 @@ class EventDemand
     /**
      * @var string
      */
-    protected $region = null;
+    protected $region = '';
 
     /**
      * @var bool
