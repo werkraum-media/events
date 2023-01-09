@@ -36,3 +36,6 @@ services:
       - name: event.listener
         identifier: 'WrmEventsAddSpecialPropertiesToDate'
         event: TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent
+
+  Wrm\Events\Updates\MigrateOldLocations:
+    public: true
