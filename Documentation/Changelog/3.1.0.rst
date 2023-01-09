@@ -16,6 +16,16 @@ Features
 * Pages can now define they store event records. 
   A new entry was added to select and the icon within page tree will be replaced.
 
+* Provided update wizard to migrate old location data to new one.
+  It is important to execute the database compare once, so old columns are prefixed but not removed.
+  Execute wizard and you are done.
+  Locations will be extracted from old events and placed on same pid.
+  You might wanna move all locations to a dedicated new pid in the end, e.g. with an sql query (Replace 2 by your page uid):
+
+  .. code-block:: sql
+
+     UPDATE tx_events_domain_model_location SET pid = 2
+
 Fixes
 -----
 

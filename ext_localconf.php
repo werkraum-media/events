@@ -50,4 +50,6 @@ call_user_func(function () {
         \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
     );
+
+    \Wrm\Events\Updates\MigrateOldLocations::register();
 });

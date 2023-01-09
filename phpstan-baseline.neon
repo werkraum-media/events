@@ -4,10 +4,12 @@ parameters:
 			message: "#^Cannot call method typoLink_URL\\(\\) on TYPO3\\\\CMS\\\\Frontend\\\\ContentObject\\\\ContentObjectRenderer\\|null\\.$#"
 			count: 1
 			path: Classes/Controller/DateController.php
+
 		-
 			message: "#^Parameter \\#1 \\$categories of method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php
+
 		-
 			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
 			count: 1
@@ -37,4 +39,39 @@ parameters:
 			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
+
+		-
+			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Cannot call method fetchAssociative\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Result\\|int supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Cannot call method fetchAssociative\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Updates\\\\MigrateOldLocations\\:\\:getExitingLocationUid\\(\\) should return int but returns mixed\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Offset 'sys_language_uid' does not exist on array\\{location\\: int\\}\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
+
+		-
+			message: "#^Offset 'uid' does not exist on array\\{location\\: int\\}\\.$#"
+			count: 1
+			path: Classes/Updates/MigrateOldLocations.php
 
