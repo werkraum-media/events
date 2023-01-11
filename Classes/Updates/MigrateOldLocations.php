@@ -107,23 +107,23 @@ class MigrateOldLocations implements UpgradeWizardInterface
 
     private function getExitingLocationUid(array $event): int
     {
-        $oldColumns = [
-            'sys_language_uid' => 'sys_language_uid',
-            'zzz_deleted_name' => 'name',
-            'zzz_deleted_street' => 'street',
-            'zzz_deleted_district' => 'district',
-            'zzz_deleted_city' => 'city',
-            'zzz_deleted_zip' => 'zip',
-            'zzz_deleted_country' => 'country',
-            'zzz_deleted_phone' => 'phone',
-            'zzz_deleted_latitude' => 'latitude',
-            'zzz_deleted_longitude' => 'longitude',
+        $columns = [
+            'sys_language_uid',
+            'name',
+            'street',
+            'district',
+            'city',
+            'zip',
+            'country',
+            'phone',
+            'latitude',
+            'longitude',
         ];
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_location');
         $qb->select('uid', 'l10n_parent');
         $qb->from('tx_events_domain_model_location');
-        foreach ($oldColumns as $oldName => $newName) {
-            $qb->andWhere($qb->expr()->eq($newName, $qb->createNamedParameter($event[$oldName])));
+        foreach ($columns as $column) {
+            $qb->andWhere($qb->expr()->eq($column, $qb->createNamedParameter($event[$column])));
         }
 
         $uids = $qb->execute()->fetchAssociative();
@@ -138,19 +138,24 @@ class MigrateOldLocations implements UpgradeWizardInterface
     {
         $this->logger->info('Location will be created.', ['event' => $event]);
 
-        $record = [
-            'pid' => $event['pid'],
-            'sys_language_uid' => $event['sys_language_uid'],
-            'name' => $event['zzz_deleted_name'],
-            'street' => $event['zzz_deleted_street'],
-            'district' => $event['zzz_deleted_district'],
-            'city' => $event['zzz_deleted_city'],
-            'zip' => $event['zzz_deleted_zip'],
-            'country' => $event['zzz_deleted_country'],
-            'phone' => $event['zzz_deleted_phone'],
-            'latitude' => $event['zzz_deleted_latitude'],
-            'longitude' => $event['zzz_deleted_longitude'],
+        $columnsToMap = [
+            'pid',
+            'sys_language_uid',
+            'name',
+            'street',
+            'district',
+            'city',
+            'zip',
+            'country',
+            'phone',
+            'latitude',
+            'longitude',
         ];
+        $record = [];
+
+        foreach ($columnsToMap as $columnName) {
+            $record[$columnName] = $event[$columnName];
+        }
         $recordUid = 'NEW12121';
         $l10nParentUid = $this->uidsForTranslation[$event['l10n_parent'] . '-0'] ?? 0;
         $dataHandler = clone $this->dataHandler;
@@ -214,23 +219,23 @@ class MigrateOldLocations implements UpgradeWizardInterface
 
     private function getQueryBuilder(): QueryBuilder
     {
-        $oldColumns = [
-            'zzz_deleted_name',
-            'zzz_deleted_street',
-            'zzz_deleted_district',
-            'zzz_deleted_city',
-            'zzz_deleted_zip',
-            'zzz_deleted_country',
-            'zzz_deleted_phone',
-            'zzz_deleted_latitude',
-            'zzz_deleted_longitude',
+        $columns = [
+            'name',
+            'street',
+            'district',
+            'city',
+            'zip',
+            'country',
+            'phone',
+            'latitude',
+            'longitude',
         ];
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_event');
         $qb->getRestrictions()->removeAll();
-        $qb->select(...$oldColumns);
+        $qb->select(...$columns);
         $qb->addSelect('uid', 'pid', 'sys_language_uid', 'l10n_parent');
         $qb->from('tx_events_domain_model_event');
-        foreach ($oldColumns as $columnName) {
+        foreach ($columns as $columnName) {
             $qb->orWhere($qb->expr()->neq($columnName, $qb->createNamedParameter('')));
         }
         $qb->orderBy('sys_language_uid', 'ASC');
