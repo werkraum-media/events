@@ -37,6 +37,8 @@ Fixes
 
   Relates: #10253
 
+* Support import of png images from Destination One.
+
 Tasks
 -----
 

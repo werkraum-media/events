@@ -463,12 +463,19 @@ class DestinationDataImportService
     {
         $this->logger->info("Set assets");
 
+        $allowedMimeTypes = [
+            'image/jpeg',
+            'image/png',
+        ];
         $importFolder = $this->import->getFilesFolder();
 
         $error = false;
 
         foreach ($assets as $media_object) {
-            if ($media_object['rel'] == "default" && $media_object['type'] == "image/jpeg") {
+            if (
+                $media_object['rel'] == "default"
+                && in_array($media_object['type'], $allowedMimeTypes)
+            ) {
                 $fileUrl = urldecode($media_object['url']);
                 $orgFileNameSanitized = $importFolder->getStorage()->sanitizeFileName(
                     basename(
