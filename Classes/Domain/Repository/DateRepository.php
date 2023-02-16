@@ -145,7 +145,7 @@ class DateRepository extends Repository
             'event.title',
             'event.teaser',
             'event.categories.title',
-            'event.name', // Location name
+            'event.location.name',
             'event.organizer.name',
         ];
 

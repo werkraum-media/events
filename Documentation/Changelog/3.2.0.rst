@@ -31,6 +31,9 @@ Fixes
 
 * Properly link to first page within Pagination partial.
 
+* Do not break while searching dates by search word.
+  Properly search within location name instead of no longer existing event name column.
+
 Tasks
 -----
 
