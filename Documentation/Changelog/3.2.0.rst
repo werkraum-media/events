@@ -29,7 +29,7 @@ Features
 Fixes
 -----
 
-Nothing
+* Properly link to first page within Pagination partial.
 
 Tasks
 -----
