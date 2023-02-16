@@ -1,0 +1,42 @@
+3.2.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Provide routing for content elements.
+  Can be included within site configuration:
+
+  .. code-block:: yaml
+
+     imports:
+       -
+         resource: 'EXT:events/Configuration/CeRouting.yaml'
+
+  Expects pluginNamespace to be "events":
+
+  .. code-block:: typoscript
+
+     view {
+         pluginNamespace = events
+     }
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

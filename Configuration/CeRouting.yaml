@@ -1,9 +1,9 @@
-# Legacy, used for Plugins
+# Used for Content Elements = CE
+# Works if they all use namespace "events"
 routeEnhancers:
   EventsDateShow:
     type: Extbase
-    extension: Events
-    plugin: DateShow
+    namespace: events
     defaultController: 'Date::show'
     routes:
       -
@@ -16,7 +16,7 @@ routeEnhancers:
         routeFieldName: slug
   EventsPagination:
     type: Plugin
-    namespace: 'events_search'
+    namespace: events
     routePath: '/{localizedPage}-{currentPage}'
     aspects:
       localizedPage:
