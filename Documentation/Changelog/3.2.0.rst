@@ -34,6 +34,8 @@ Fixes
 * Do not break while searching dates by search word.
   Properly search within location name instead of no longer existing event name column.
 
+* Do not break on date list if no order is defined.
+
 Tasks
 -----
 

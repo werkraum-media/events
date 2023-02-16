@@ -126,7 +126,9 @@ class DateRepository extends Repository
 
         $query->matching($query->logicalAnd($constraints));
 
-        $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
+        if ($demand->getSortBy() && $demand->getSortOrder()) {
+            $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
+        }
 
         $callback = $demand->getQueryCalback();
         if ($callback !== '') {
