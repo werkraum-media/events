@@ -1,0 +1,25 @@
+tt_content
+,uid,pid,CType,list_type,header
+,1,1,list,events_datelist,All Dates
+tx_events_domain_model_event
+,uid,pid,title
+,1,2,Event 1 starts before search, ends before search
+,2,2,Event 2 starts before search, no end
+,3,2,Event 3 starts after search, ends after search
+,4,2,Event 4 starts after search, no end
+,5,2,Event 5 starts before search, ends after search
+,6,2,Event 6 starts inside search, ends inside search
+,7,2,Event 7 starts inside search, ends after search
+,8,2,Event 8 starts inside search, no end
+,9,2,Event 9 starts before search, ends inside search
+tx_events_domain_model_date
+,uid,pid,event,start,end
+,1,2,1,1676419200,1676484000
+,2,2,2,1676419200,0
+,3,2,3,1676678400,1676743200
+,4,2,4,1676678400,0
+,5,2,5,1676419200,1676678400
+,6,2,6,1676559600,1676570400
+,7,2,7,1676559600,1676678400
+,8,2,8,1676559600,0
+,9,2,9,1676419200,1676570400

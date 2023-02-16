@@ -84,4 +84,93 @@ class DatesTest extends FunctionalTestCase
         self::assertStringNotContainsString('Event 1 hidden', $html);
         self::assertStringContainsString('Event 2 visible', $html);
     }
+
+    /**
+     * @test
+     */
+    public function returnsDateAfterStart(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameters([
+            'events_search[search][start]' => '2023-02-16',
+        ]);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string) $response->getBody();
+
+        self::assertStringNotContainsString('Event 1', $html);
+        self::assertStringNotContainsString('Event 2', $html);
+        self::assertStringContainsString('Event 3', $html);
+        self::assertStringContainsString('Event 4', $html);
+        self::assertStringContainsString('Event 5', $html);
+        self::assertStringContainsString('Event 6', $html);
+        self::assertStringContainsString('Event 7', $html);
+        self::assertStringContainsString('Event 8', $html);
+        self::assertStringContainsString('Event 9', $html);
+    }
+
+    /**
+     * @test
+     */
+    public function returnsDateBeforeEnd(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameters([
+            'events_search[search][end]' => '2023-02-17',
+        ]);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string) $response->getBody();
+
+        self::assertStringContainsString('Event 1', $html);
+        self::assertStringContainsString('Event 2', $html);
+        self::assertStringNotContainsString('Event 3', $html);
+        self::assertStringNotContainsString('Event 4', $html);
+        self::assertStringContainsString('Event 5', $html);
+        self::assertStringContainsString('Event 6', $html);
+        self::assertStringContainsString('Event 7', $html);
+        self::assertStringContainsString('Event 8', $html);
+        self::assertStringContainsString('Event 9', $html);
+    }
+
+    /**
+     * Covers issue https://redmine.werkraum-media.de/issues/10350.
+     * A date can span multiple dates.
+     * The visitor might search a time frame within the spaned dates and expects the date to be shown.
+     *
+     * @test
+     */
+    public function returnsDateWithinTimeSpan(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameters([
+            'events_search[search][start]' => '2023-02-16',
+            'events_search[search][end]' => '2023-02-17',
+        ]);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string) $response->getBody();
+
+        self::assertStringNotContainsString('Event 1', $html);
+        self::assertStringNotContainsString('Event 2', $html);
+        self::assertStringNotContainsString('Event 3', $html);
+        self::assertStringNotContainsString('Event 4', $html);
+        self::assertStringContainsString('Event 5', $html);
+        self::assertStringContainsString('Event 6', $html);
+        self::assertStringContainsString('Event 7', $html);
+        self::assertStringContainsString('Event 8', $html);
+        self::assertStringContainsString('Event 9', $html);
+    }
 }

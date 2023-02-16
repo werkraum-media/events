@@ -19,7 +19,7 @@ plugin.tx_events {
             # cat=plugin.tx_events//a; type=string; label=Rest Url
             restUrl = http://meta.et4.de/rest.ashx/search/
             # cat=plugin.tx_events//a; type=string; label=License
-            license = ***REMOVED***
+            license =
             # cat=plugin.tx_events//a; type=string; label=Data Type
             restType = Event
             # cat=plugin.tx_events//a; type=string; label=Data Limit

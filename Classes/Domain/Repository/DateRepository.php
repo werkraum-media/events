@@ -77,22 +77,9 @@ class DateRepository extends Repository
             $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
         }
 
-        if ($demand->getStartObject() !== null) {
-            $constraints['starts'] = $query->greaterThanOrEqual('start', $demand->getStartObject());
-        }
-        if ($demand->getEndObject() != null) {
-            // Dates might have end of 0 if only start exists.
-            // This is respected to take start as end date.
-            $constraints['ends'] = $query->logicalOr([
-                $query->logicalAnd([
-                    $query->lessThanOrEqual('end', $demand->getEndObject()),
-                    $query->greaterThan('end', 0)
-                ]),
-                $query->logicalAnd([
-                    $query->equals('end', 0),
-                    $query->lessThanOrEqual('start', $demand->getEndObject())
-                ]),
-            ]);
+        $timingConstraint = $this->createTimingConstraint($query, $demand);
+        if ($timingConstraint instanceof ConstraintInterface) {
+            $constraints['timing'] = $timingConstraint;
         }
 
         if ($demand->shouldShowFromNow() || $demand->shouldShowFromMidnight()) {
@@ -196,6 +183,54 @@ class DateRepository extends Repository
         }
 
         return $query->logicalAnd($constraints);
+    }
+
+    private function createTimingConstraint(
+        QueryInterface $query,
+        DateDemand $demand
+    ): ?ConstraintInterface {
+        // Dates might have end of 0 if only start exists.
+
+        if ($demand->getStartObject() !== null && $demand->getEndObject() === null) {
+            return $query->logicalOr([
+                $query->greaterThanOrEqual('start', $demand->getStartObject()),
+                $query->greaterThanOrEqual('end', $demand->getStartObject()),
+            ]);
+        }
+
+        if ($demand->getStartObject() === null && $demand->getEndObject() !== null) {
+            return $query->logicalOr([
+                $query->logicalAnd([
+                    $query->lessThanOrEqual('end', $demand->getEndObject()),
+                    $query->greaterThan('end', 0),
+                ]),
+                $query->lessThanOrEqual('start', $demand->getEndObject()),
+            ]);
+        }
+
+        if ($demand->getStartObject() !== null && $demand->getEndObject() !== null) {
+            return $query->logicalOr([
+                $query->logicalAnd([
+                    $query->logicalOr([
+                        $query->greaterThanOrEqual('start', $demand->getStartObject()),
+                        $query->greaterThanOrEqual('end', $demand->getStartObject()),
+                    ]),
+                    $query->logicalOr([
+                        $query->lessThanOrEqual('start', $demand->getEndObject()),
+                        $query->logicalAnd([
+                            $query->lessThanOrEqual('end', $demand->getEndObject()),
+                            $query->greaterThan('end', 0),
+                        ]),
+                    ]),
+                ]),
+                $query->logicalAnd([
+                    $query->lessThanOrEqual('start', $demand->getStartObject()),
+                    $query->greaterThanOrEqual('end', $demand->getEndObject()),
+                ]),
+            ]);
+        }
+
+        return null;
     }
 
     private function createFeaturesConstraint(
