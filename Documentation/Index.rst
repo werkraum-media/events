@@ -10,7 +10,7 @@ Events
 		events
 
 	:Description:
-		Extension to manage Destination Data managed events
+		Extension to manage events, that can be imported from Destination Data
 
 	:Author:
 		Dirk Koritnik
@@ -28,6 +28,13 @@ Events
 	The content of this document is related to TYPO3,
 	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
+A basic events extension.
+
+This is shared as is. It is developed and used by the agency for some years already.
+The code and test coverage dates back some years.
+We continuously try to improve the overall situation.
+Don't expect heavy documentation at this state.
+
 Table of Contents
 =================
 
@@ -39,16 +46,3 @@ Table of Contents
 	Settings
 	Changelog
 	Maintenance
-
-Clean category relations
-========================
-
-.. code-block:: sql
-
-    TRUNCATE TABLE tx_events_domain_model_event;
-    TRUNCATE TABLE tx_events_domain_model_date;
-    TRUNCATE TABLE tx_events_domain_model_organizer;
-    DELETE FROM sys_category_record_mm WHERE tablenames = 'tx_events_domain_model_event';
-    DELETE FROM sys_file_reference WHERE tablenames = 'tx_events_domain_model_event';
-    DELETE FROM sys_file WHERE identifier LIKE '%/events/%';
-    DELETE FROM sys_file_metadata WHERE alternative = 'DD Import';
