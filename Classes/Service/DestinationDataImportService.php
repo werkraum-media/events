@@ -423,13 +423,13 @@ class DestinationDataImportService
             }
 
             if ($text['rel'] == "details" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setDetails(str_replace('\n\n', '\n', $text['value']));
+                $this->tmpCurrentEvent->setDetails(str_replace("\n\n", "\n", $text['value']));
             }
             if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setTeaser(str_replace('\n\n', '\n', $text['value']));
+                $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", $text['value']));
             }
             if ($text['rel'] == "PRICE_INFO" && $text['type'] == "text/plain") {
-                $this->tmpCurrentEvent->setPriceInfo(str_replace('\n\n', '\n', $text['value']));
+                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", $text['value']));
             }
         }
     }
