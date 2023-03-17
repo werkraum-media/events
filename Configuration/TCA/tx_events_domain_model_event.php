@@ -232,7 +232,6 @@ return [
             'config' => [
                 'type' => 'text',
                 'enableRichtext' => true,
-                'richtextConfiguration' => 'Default',
                 'fieldControl' => [
                     'fullScreenRichtext' => [
                         'disabled' => false,

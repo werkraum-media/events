@@ -1,0 +1,28 @@
+3.2.2
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Remove missing rte config from events TCA
+* Fix linebreak replacement in import
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
