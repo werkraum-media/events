@@ -52,6 +52,11 @@ class DateDemand
     protected $locations = [];
 
     /**
+     * @var int[]
+     */
+    protected $organizers = [];
+
+    /**
      * @var bool
      */
     protected $highlight = false;
@@ -211,6 +216,19 @@ class DateDemand
     public function setLocations(array $locations): void
     {
         $this->locations = array_map('intval', $locations);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getOrganizers(): array
+    {
+        return $this->organizers;
+    }
+
+    public function setOrganizers(array $organizers): void
+    {
+        $this->organizers = array_values(array_map('intval', $organizers));
     }
 
     public function getHighlight(): bool
