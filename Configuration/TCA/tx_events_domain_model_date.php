@@ -206,7 +206,7 @@ return [
                 'type' => 'slug',
                 'size' => 50,
                 'generatorOptions' => [
-                    'fields' => ['event-title', 'start', 'uid'],
+                    'fields' => ['event-title', 'start-with-time'],
                     'fieldSeparator' => '-',
                     'prefixParentPageSlug' => false,
                 ],

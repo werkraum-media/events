@@ -40,8 +40,11 @@ class Date implements SluggerType
 
     public function prepareRecordForSlugGeneration(array $record): array
     {
+        $start = new \DateTimeImmutable('@' . $record['start']);
+
         $record['event-title'] = $this->getEventTitle((int) $record['event']);
-        $record['start'] = (new \DateTimeImmutable('@' . $record['start']))->format('Y-m-d');
+        $record['start'] = $start->format('Y-m-d');
+        $record['start-with-time'] = $start->format('Y-m-d\TH-i-s');
         return $record;
     }
 
