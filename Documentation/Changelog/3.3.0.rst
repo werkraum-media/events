@@ -20,7 +20,13 @@ Features
 Fixes
 -----
 
-Nothing
+* Fix changing slugs for dates on re import.
+  The UID was part of the slug.
+  Each import will delete all dates and re create them.
+  That would lead to new slugs due to new uid.
+  The default now was changed to use the event title (as before) and start (as
+  before) with time (new).
+  That should hopefully be unique enough.
 
 Tasks
 -----
