@@ -56,7 +56,7 @@ class DatesFactoryTest extends TestCase
         $result = $subject->createDates($unkownInput, false);
 
         self::assertInstanceOf(\Generator::class, $result);
-        self::assertCount(0, $result);
+        self::assertCount(0, iterator_to_array($result));
     }
 
     public function possibleUnkownInput(): array
@@ -92,7 +92,7 @@ class DatesFactoryTest extends TestCase
 
         $firstEntry = $result->current();
 
-        self::assertCount(1, $result);
+        self::assertCount(1, iterator_to_array($result));
 
         self::assertInstanceOf(Date::class, $firstEntry);
         self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
@@ -143,7 +143,7 @@ class DatesFactoryTest extends TestCase
 
         $firstEntry = $result->current();
 
-        self::assertCount(1, $result);
+        self::assertCount(1, iterator_to_array($result));
 
         self::assertInstanceOf(Date::class, $firstEntry);
         self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
