@@ -11,6 +11,12 @@ Features
 
 * Add PHP 8.2 support.
 
+* Added option to filter dates by organizers.
+  The new setting works the same way as existing ``locations``.
+  Add a comma separated list of UIDs.
+  This can be used via FlexForms or TypoScript.
+  Can also be used as filter from request, where an array of UIDs is expected.
+
 Fixes
 -----
 

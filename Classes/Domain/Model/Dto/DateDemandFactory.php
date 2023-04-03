@@ -66,6 +66,9 @@ class DateDemandFactory
         if (!empty($settings['locations'])) {
             $demand->setLocations(GeneralUtility::intExplode(',', (string)$settings['locations'], true));
         }
+        if (!empty($settings['organizers'])) {
+            $demand->setOrganizers(GeneralUtility::intExplode(',', (string)$settings['organizers'], true));
+        }
         if (!empty($settings['categories'])) {
             $demand->setCategories((string)$settings['categories']);
         }
@@ -116,6 +119,10 @@ class DateDemandFactory
 
         if (isset($submittedValues['locations']) && is_array($submittedValues['locations'])) {
             $instance->setLocations($submittedValues['locations']);
+        }
+
+        if (isset($submittedValues['organizers']) && is_array($submittedValues['organizers'])) {
+            $instance->setOrganizers($submittedValues['organizers']);
         }
 
         $instance->setRegions(GeneralUtility::intExplode(',', $submittedValues['region'] ?? '', true));

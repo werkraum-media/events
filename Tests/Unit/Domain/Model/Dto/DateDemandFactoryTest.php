@@ -473,4 +473,42 @@ class DateDemandFactoryTest extends TestCase
         yield '0 as string' => ['highlight' => '0'];
         yield 'empty string' => ['highlight' => ''];
     }
+
+    /**
+     * @test
+     */
+    public function returnsOrganizersFromSettings(): void
+    {
+        $typoScriptService = $this->createStub(TypoScriptService::class);
+
+        $subject = new DateDemandFactory(
+            $typoScriptService
+        );
+        $result = $subject->fromSettings([
+            'organizers' => '10, ,0, 2,',
+        ]);
+
+        self::assertSame([10, 0, 2], $result->getOrganizers());
+    }
+
+    /**
+     * @test
+     */
+    public function returnsOrganizersFromRequest(): void
+    {
+        $typoScriptService = $this->createStub(TypoScriptService::class);
+
+        $subject = new DateDemandFactory(
+            $typoScriptService
+        );
+        $result = $subject->createFromRequestValues(
+            [
+                'organizers' => [10, 0, 2],
+            ],
+            [
+            ]
+        );
+
+        self::assertSame([10, 0, 2], $result->getOrganizers());
+    }
 }

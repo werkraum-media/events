@@ -61,6 +61,10 @@ class DateRepository extends Repository
             $constraints['locations'] = $query->in('event.location', $demand->getLocations());
         }
 
+        if ($demand->getOrganizers() !== []) {
+            $constraints['organizer'] = $query->in('event.organizer', $demand->getOrganizers());
+        }
+
         if ($demand->getRegion() !== '') {
             $constraints['region'] = $query->equals('event.region', $demand->getRegion());
         }
