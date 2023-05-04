@@ -51,5 +51,6 @@ call_user_func(function () {
         ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
     );
 
+    \Wrm\Events\Caching\PageCacheTimeout::register();
     \Wrm\Events\Updates\MigrateOldLocations::register();
 });

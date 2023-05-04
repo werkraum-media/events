@@ -47,7 +47,7 @@ jobs:
           tools: composer:v2
 
       - name: Install xmllint
-        run: sudo apt-get install libxml2-utils
+        run: sudo apt update && sudo apt install libxml2-utils
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

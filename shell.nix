@@ -1,7 +1,18 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { }
+  ,phps ? import <phps>
+}:
 
 let
-  php = pkgs.php82;
+  php = phps.packages.x86_64-linux.php82.buildEnv {
+    extensions = { enabled, all }: enabled ++ (with all; [
+      xdebug
+    ]);
+    extraConfig = ''
+      xdebug.mode = debug
+      memory_limit = 4G
+    '';
+  };
   inherit(pkgs.php82Packages) composer;
 
   projectInstall = pkgs.writeShellApplication {
@@ -12,9 +23,10 @@ let
     ];
     text = ''
       rm -rf vendor/ composer.lock .Build/
-      composer install --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
+      composer update --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
     '';
   };
+
   projectValidateComposer = pkgs.writeShellApplication {
     name = "project-validate-composer";
     runtimeInputs = [
@@ -25,6 +37,7 @@ let
       composer validate
     '';
   };
+
   projectValidateXml = pkgs.writeShellApplication {
     name = "project-validate-xml";
     runtimeInputs = [
@@ -40,15 +53,64 @@ let
       xmllint --schema xliff-core-1.2-strict.xsd --noout $(find Resources -name '*.xlf')
     '';
   };
-  projectCodingGuideline = pkgs.writeShellApplication {
-    name = "project-coding-guideline";
+
+  projectPhpstan = pkgs.writeShellApplication {
+    name = "project-phpstan";
+
     runtimeInputs = [
       php
-      projectInstall
     ];
+
     text = ''
-      project-install
+      ./vendor/bin/phpstan
+    '';
+  };
+
+  projectCgl = pkgs.writeShellApplication {
+    name = "project-cgl";
+
+    runtimeInputs = [
+      php
+    ];
+
+    text = ''
       ./vendor/bin/ecs check --no-progress-bar --clear-cache
+    '';
+  };
+
+  projectCglFix = pkgs.writeShellApplication {
+    name = "project-cgl-fix";
+
+    runtimeInputs = [
+      php
+    ];
+
+    text = ''
+      ./vendor/bin/ecs check --fix --no-progress-bar --clear-cache
+    '';
+  };
+
+  projectTestsUnit = pkgs.writeShellApplication {
+    name = "project-tests-unit";
+
+    runtimeInputs = [
+      php
+    ];
+
+    text = ''
+      ./vendor/bin/phpunit --testsuite unit --color --testdox
+    '';
+  };
+
+  projectTestsFunctional = pkgs.writeShellApplication {
+    name = "project-tests-functional";
+
+    runtimeInputs = [
+      php
+    ];
+
+    text = ''
+      ./vendor/bin/phpunit --testsuite functional --color --testdox
     '';
   };
 
@@ -58,7 +120,11 @@ in pkgs.mkShell {
     projectInstall
     projectValidateComposer
     projectValidateXml
-    projectCodingGuideline
+    projectPhpstan
+    projectCgl
+    projectCglFix
+    projectTestsUnit
+    projectTestsFunctional
     php
     composer
   ];
