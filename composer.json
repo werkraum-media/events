@@ -46,6 +46,7 @@
         }
     },
     "require-dev": {
+        "codappix/typo3-php-datasets": "^1.2",
         "guzzlehttp/guzzle": "^6.3 || ^7.3",
         "jangregor/phpstan-prophecy": "1.0.0",
         "phpspec/prophecy-phpunit": "^1.0 || ^2.0",

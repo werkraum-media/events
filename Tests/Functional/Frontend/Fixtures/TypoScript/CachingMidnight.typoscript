@@ -1,0 +1,6 @@
+plugin.tx_events {
+    settings {
+        start >
+        useMidnight = 1
+    }
+}

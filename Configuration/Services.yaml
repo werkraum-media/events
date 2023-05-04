@@ -39,3 +39,9 @@ services:
 
   Wrm\Events\Updates\MigrateOldLocations:
     public: true
+
+  Wrm\Events\Caching\PageCacheTimeout:
+    tags:
+      - name: event.listener
+        event: Wrm\Events\Events\Controller\DateListVariables
+        method: 'trackDates'

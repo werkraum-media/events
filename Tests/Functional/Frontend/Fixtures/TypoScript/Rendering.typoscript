@@ -1,3 +1,9 @@
+config {
+    cache_period = 86400
+    no_cache = 0
+    sendCacheHeaders = 1
+}
+
 page = PAGE
 page {
     10 < styles.content.get
