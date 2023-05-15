@@ -22,9 +22,9 @@ class ImportsSingleConfigurationTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleImportConfiguration.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfiguration.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',

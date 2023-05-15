@@ -20,7 +20,7 @@ class ImportsFeaturesTest extends AbstractTest
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
         ]);
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/FeaturesImportConfiguration.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FeaturesImportConfiguration.php');
         $this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithFeatures.json') ?: ''),
         ]);

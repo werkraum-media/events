@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Functional\Frontend;
 
+use Codappix\Typo3PhpDatasets\TestingFramework;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wrm\Events\Frontend\Daest;
@@ -32,6 +33,8 @@ use Wrm\Events\Frontend\Daest;
  */
 class DatesTest extends FunctionalTestCase
 {
+    use TestingFramework;
+
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];
@@ -48,7 +51,7 @@ class DatesTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
         $this->setUpFrontendRootPage(1, [
             'constants' => [
                 'EXT:events/Configuration/TypoScript/constants.typoscript',

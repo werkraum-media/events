@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
+use Codappix\Typo3PhpDatasets\TestingFramework;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Console\Command\Command;
@@ -16,6 +17,8 @@ use Wrm\Events\Tests\ClientFactory;
 
 abstract class AbstractTest extends FunctionalTestCase
 {
+    use TestingFramework;
+
     protected $coreExtensionsToLoad = [
         'filelist',
     ];
@@ -28,7 +31,7 @@ abstract class AbstractTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/Structure.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/Structure.php');
         $this->setUpBackendUserFromFixture(1);
 
         $languageServiceFactory = $this->getContainer()->get(LanguageServiceFactory::class);
