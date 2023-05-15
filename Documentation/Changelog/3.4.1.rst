@@ -1,0 +1,30 @@
+3.4.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Do not delete files if they are still in use.
+  The clean up task had an issue to clean up to many files.
+  It didn't check if a file that could be deleted because one event got deleted,
+  was still in use by another event.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
