@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Functional\Frontend;
 
+use Codappix\Typo3PhpDatasets\TestingFramework;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -13,6 +14,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class FilterTest extends FunctionalTestCase
 {
+    use TestingFramework;
+
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];
@@ -29,7 +32,7 @@ class FilterTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
         $this->setUpFrontendRootPage(1, [
             'constants' => [
                 'EXT:events/Configuration/TypoScript/constants.typoscript',
@@ -47,7 +50,7 @@ class FilterTest extends FunctionalTestCase
      */
     public function canFilterByASingleLocationViaFlexform(): void
     {
-        $this->importDataSet('EXT:events/Tests/Functional/Frontend/Fixtures/Database/FilterByASingleLocationViaFlexform.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByASingleLocationViaFlexform.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
@@ -65,7 +68,7 @@ class FilterTest extends FunctionalTestCase
      */
     public function canFilterByTwoLocationsViaFlexform(): void
     {
-        $this->importDataSet('EXT:events/Tests/Functional/Frontend/Fixtures/Database/FilterByTwoLocationsViaFlexform.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByTwoLocationsViaFlexform.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);

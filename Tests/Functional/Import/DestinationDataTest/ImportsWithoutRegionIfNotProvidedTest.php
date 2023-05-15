@@ -19,8 +19,8 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleImportConfigurationWithoutRegion.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithoutRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',

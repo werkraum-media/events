@@ -20,7 +20,7 @@ class ImportCleansTransientFilesTest extends AbstractTest
         $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
         GeneralUtility::mkdir_deep($fileImportPath);
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/DefaultImportConfiguration.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',

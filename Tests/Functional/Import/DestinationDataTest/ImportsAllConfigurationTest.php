@@ -26,10 +26,10 @@ class ImportsAllConfigurationTest extends AbstractTest
         $fileImportPath2 = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration2;
         GeneralUtility::mkdir_deep($fileImportPath2);
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleRegion.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleCategory.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SingleImportConfiguration.xml');
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/SecondImportConfiguration.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfiguration.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SecondImportConfiguration.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',

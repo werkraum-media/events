@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace Wrm\Events\Tests\Functional\Frontend;
 
 use Codappix\Typo3PhpDatasets\PhpDataSet;
+use Codappix\Typo3PhpDatasets\TestingFramework;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
@@ -35,6 +36,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class CacheTest extends FunctionalTestCase
 {
+    use TestingFramework;
+
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
         'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
@@ -52,7 +55,7 @@ class CacheTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.csv');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
         (new PhpDataSet())->import(['tt_content' => [[
             'uid' => '1',
             'pid' => '1',

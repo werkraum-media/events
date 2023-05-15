@@ -14,7 +14,7 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->importDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Fixtures/MinimalImportConfiguration.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/MinimalImportConfiguration.php');
         $this->setDateAspect(new \DateTimeImmutable('2022-07-13', new \DateTimeZone('UTC')));
     }
 

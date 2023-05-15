@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Tests\Functional\Cleanup;
 
+use Codappix\Typo3PhpDatasets\TestingFramework;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -13,6 +14,8 @@ use Wrm\Events\Command\RemovePastCommand;
  */
 class RemovePastTest extends FunctionalTestCase
 {
+    use TestingFramework;
+
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];
@@ -33,7 +36,7 @@ class RemovePastTest extends FunctionalTestCase
      */
     public function removesPastData(): void
     {
-        $this->importDataSet('EXT:events/Tests/Functional/Cleanup/Fixtures/RemovePastTest.xml');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/RemovePastTestDatabase.php');
 
         $subject = $this->getContainer()->get(RemovePastCommand::class);
         self::assertInstanceOf(Command::class, $subject);
