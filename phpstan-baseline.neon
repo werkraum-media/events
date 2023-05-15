@@ -16,6 +16,21 @@ parameters:
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
+			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(TEntity, TEntity\\)\\: int, Closure\\(Wrm\\\\Events\\\\Domain\\\\Model\\\\Category, Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			count: 2
+			path: Classes/Domain/Model/Event.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getCategories\\(\\) should return array\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Event.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getFeatures\\(\\) should return array\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Event.php
+
+		-
 			message: "#^Call to method deleteFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
