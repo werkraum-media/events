@@ -112,7 +112,9 @@ class Files
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
         $queryBuilder->getRestrictions()->removeAll();
-        $queryBuilder->select('file.identifier', 'file.storage', 'file.uid')
+        $queryBuilder
+            ->select('file.identifier', 'file.storage', 'file.uid')
+            ->addSelectLiteral('SUM(' . $queryBuilder->expr()->eq('reference.deleted', 1) . ') AS deleted_sum')
             ->from('sys_file', 'file')
             ->leftJoin(
                 'file',
@@ -120,15 +122,18 @@ class Files
                 'reference',
                 'reference.uid_local = file.uid'
             )
-            ->where($queryBuilder->expr()->eq(
-                'reference.deleted',
-                1
-            ))
-            ->andWhere($queryBuilder->expr()->like(
+            ->where($queryBuilder->expr()->like(
                 'reference.tablenames',
                 $queryBuilder->createNamedParameter('tx_events_domain_model_%')
             ))
-            ;
+            ->groupBy('file.uid')
+            ->having(
+                $queryBuilder->expr()->eq(
+                    'deleted_sum',
+                    $queryBuilder->expr()->count('*')
+                )
+            )
+        ;
         /** @var array{int: array{storage: int, identifier: string, uid: int}} $filesToDelete */
         $filesToDelete = $queryBuilder->execute()->fetchAll();
 
@@ -160,16 +165,30 @@ class Files
             ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
             ->execute();
 
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_reference');
-        $queryBuilder->delete('sys_file_reference')
-            ->where('uid_local in (:uids)')
-            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
-            ->execute();
-
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
         $queryBuilder->delete('sys_file_metadata')
             ->where('file in (:uids)')
             ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
             ->execute();
+
+        $this->deleteReferences();
+    }
+
+    private function deleteReferences(): void
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder
+            ->delete('sys_file_reference')
+            ->where($queryBuilder->expr()->like(
+                'tablenames',
+                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+            ))
+            ->andWhere($queryBuilder->expr()->eq(
+                'deleted',
+                1
+            ))
+        ;
+        $queryBuilder->execute();
     }
 }
