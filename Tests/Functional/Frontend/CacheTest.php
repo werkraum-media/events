@@ -24,20 +24,18 @@ declare(strict_types=1);
 namespace Wrm\Events\Tests\Functional\Frontend;
 
 use Codappix\Typo3PhpDatasets\PhpDataSet;
-use Codappix\Typo3PhpDatasets\TestingFramework;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\TypoScriptInstruction;
 
 /**
  * @covers \Wrm\Events\Caching\PageCacheTimeout
  */
-class CacheTest extends AbstractFunctionalTestCase
+class CacheTest extends AbstractTestCase
 {
-    use TestingFramework;
-
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
         'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
@@ -71,9 +69,7 @@ class CacheTest extends AbstractFunctionalTestCase
      */
     public function setupReturnsSystemDefaults(): void
     {
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('max-age=86400', $response->getHeaderLine('Cache-Control'));
@@ -101,9 +97,7 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]);
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('max-age=86400', $response->getHeaderLine('Cache-Control'));
@@ -115,6 +109,8 @@ class CacheTest extends AbstractFunctionalTestCase
      */
     public function setupReturnsEarlierIfEventsChangeBeforeSystemDefault(): void
     {
+        $end = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')))->modify('+2 hours');
+
         (new PhpDataSet())->import([
             'tx_events_domain_model_event' => [
                 [
@@ -128,18 +124,15 @@ class CacheTest extends AbstractFunctionalTestCase
                     'pid' => '2',
                     'event' => '1',
                     'start' => time(),
-                    'end' => time() + 50,
+                    'end' => $end->format('U'),
                 ],
             ],
         ]);
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
-        self::assertMaxAge(50, $response);
-        self::assertSame('public', $response->getHeaderLine('Pragma'));
+        self::assertCacheHeaders($end, $response);
     }
 
     /**
@@ -147,6 +140,8 @@ class CacheTest extends AbstractFunctionalTestCase
      */
     public function setupReturnsMidnightIfConfigured(): void
     {
+        $midnight = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')));
+
         (new PhpDataSet())->import([
             'tx_events_domain_model_event' => [
                 [
@@ -171,27 +166,31 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]));
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
-        $midnight = (int) (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')))->format('U');
-        $age = $midnight - time();
-        self::assertMaxAge($age, $response);
+        self::assertCacheHeaders($midnight, $response);
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
-    private static function assertMaxAge(int $age, ResponseInterface $response): void
+    private static function assertCacheHeaders(DateTimeImmutable $end, ResponseInterface $response): void
     {
-        [$prefix, $value] = explode('=', $response->getHeaderLine('Cache-Control'));
+        self::assertSame('public', $response->getHeaderLine('Pragma'));
 
+        $expectedExpires = $end
+            ->setTimezone(new DateTimeZone('GMT'))
+            ->format(DateTimeImmutable::RFC7231)
+        ;
+        self::assertSame($expectedExpires, $response->getHeaderLine('Expires'));
+
+        [$prefix, $value] = explode('=', $response->getHeaderLine('Cache-Control'));
         self::assertSame('max-age', $prefix);
 
-        // We might be one sec off due to how fast code is executed, so add a small offset
+        // We might be seconds off due to our created offset within the rendering.
         $value = (int)$value;
-        self::assertLessThanOrEqual($age + 1, $value, 'Max age of cached response is higher than expected.');
-        self::assertGreaterThanOrEqual($age - 1, $value, 'Max age of cached response is less than expected.');
+        $age = ((int) $end->format('U')) - time();
+        self::assertLessThanOrEqual($age + 3, $value, 'Max age of cached response is higher than expected.');
+        self::assertGreaterThanOrEqual($age - 3, $value, 'Max age of cached response is less than expected.');
     }
 
     private function getTypoScriptFiles(): array
@@ -206,5 +205,25 @@ class CacheTest extends AbstractFunctionalTestCase
                 'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript'
             ],
         ];
+    }
+
+    private function getRequestWithSleep(): InternalRequest
+    {
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withInstructions([
+            $this->getTypoScriptInstruction()
+                ->withTypoScript([
+                    'page.' => [
+                        '30.' => [
+                            'userFunc.' => [
+                                'sleep' => '2',
+                            ],
+                        ],
+                    ],
+                ])
+        ]);
+
+        return $request;
     }
 }

@@ -25,12 +25,11 @@ namespace Wrm\Events\Tests\Functional\Frontend;
 
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use Wrm\Events\Frontend\Dates;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Frontend\Dates
  */
-class DatesTest extends AbstractFunctionalTestCase
+class DatesTest extends AbstractTestCase
 {
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',

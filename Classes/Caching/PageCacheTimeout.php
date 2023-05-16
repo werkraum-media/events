@@ -25,6 +25,9 @@ namespace Wrm\Events\Caching;
 
 use DateTime;
 use DateTimeImmutable;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
 use Wrm\Events\Events\Controller\DateListVariables;
 
@@ -37,26 +40,45 @@ use Wrm\Events\Events\Controller\DateListVariables;
 class PageCacheTimeout implements SingletonInterface
 {
     /**
-     * @var int
+     * @var null|DateTimeImmutable
      */
-    private $earliestTimeout = 0;
+    private $endOfEvent = null;
+
+    /**
+     * @var FrontendInterface
+     */
+    private $runtimeCache;
+
+    /**
+     * @var Context
+     */
+    private $context;
+
+    public function __construct(
+        CacheManager $cacheManager,
+        Context $context
+    ) {
+        $this->runtimeCache = $cacheManager->getCache('runtime');
+        $this->context = $context;
+    }
 
     public function calculateCacheTimout(
         array $parameters
     ): int {
-        $timeout = $parameters['cacheTimeout'];
+        $typo3Timeout = $parameters['cacheTimeout'];
+        $ourTimeout = $this->getTimeout();
 
-        if ($this->earliestTimeout <= 0) {
-            return $timeout;
+        if ($ourTimeout === null) {
+            return $typo3Timeout;
         }
 
-        return min($timeout, $this->earliestTimeout);
+        return min($typo3Timeout, $ourTimeout);
     }
 
     public function trackDates(DateListVariables $event): void
     {
         if ($event->getDemand()->shouldShowFromMidnight()) {
-            $this->updateTimeout((int) (new DateTimeImmutable('tomorrow midnight'))->format('U'));
+            $this->updateTimeout((new DateTimeImmutable('tomorrow midnight')));
             return;
         }
 
@@ -66,23 +88,36 @@ class PageCacheTimeout implements SingletonInterface
                 continue;
             }
 
-            $this->updateTimeout((int)DateTimeImmutable::createFromMutable($endDate)->format('U'));
+            $this->updateTimeout(DateTimeImmutable::createFromMutable($endDate));
         }
     }
 
-    private function updateTimeout(int $timestamp): void
+    private function updateTimeout(DateTimeImmutable $end): void
     {
-        $newTimeout = $timestamp - time();
-        if ($newTimeout <= 0) {
+        $now = new DateTimeImmutable();
+
+        if (
+            $end <= $now
+            || (
+                $this->endOfEvent instanceof DateTimeImmutable
+                && $this->endOfEvent >= $end
+            )
+        ) {
             return;
         }
 
-        if ($this->earliestTimeout === 0) {
-            $this->earliestTimeout = $newTimeout;
-            return;
+        $this->runtimeCache->remove('core-tslib_fe-get_cache_timeout');
+        $this->endOfEvent = $end;
+    }
+
+    private function getTimeout(): ?int
+    {
+        if (!$this->endOfEvent instanceof DateTimeImmutable) {
+            return null;
         }
 
-        $this->earliestTimeout = min($this->earliestTimeout, $newTimeout);
+        $executionTime = $this->context->getPropertyFromAspect('date', 'timestamp');
+        return ((int) $this->endOfEvent->format('U')) - $executionTime;
     }
 
     public static function register(): void
