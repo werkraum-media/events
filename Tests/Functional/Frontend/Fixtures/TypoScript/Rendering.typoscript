@@ -6,7 +6,24 @@ config {
 
 page = PAGE
 page {
-    10 < styles.content.get
+    10 = USER
+    10 {
+        // Simulates foreign access prior our rendering.
+        // TYPO3 has an internal cache in order to not recalculate timeout.
+        userFunc = Wrm\EventsExample\UserFunc->accessTsfeTimeout
+    }
+
+    20 < styles.content.get
+
+    30 = USER
+    30 {
+        // Simulates further long running rendering.
+        // In order to test that our ttl is calculated as expected.
+        userFunc = Wrm\EventsExample\UserFunc->sleep
+        userFunc {
+            sleep = 0
+        }
+    }
 }
 
 plugin.tx_events {

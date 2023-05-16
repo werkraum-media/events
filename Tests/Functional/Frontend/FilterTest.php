@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Wrm\Events\Tests\Functional\Frontend;
 
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Controller\DateController
  * @covers \Wrm\Events\Domain\Repository\DateRepository
  */
-class FilterTest extends AbstractFunctionalTestCase
+class FilterTest extends AbstractTestCase
 {
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',

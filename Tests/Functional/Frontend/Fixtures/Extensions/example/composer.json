@@ -5,6 +5,11 @@
     "require": {
         "wrm/events": "*"
     },
+    "autoload": {
+        "psr-4": {
+            "Wrm\\EventsExample\\": "Classes/"
+        }
+    },
     "extra": {
         "typo3/cms": {
             "extension-key": "example"
