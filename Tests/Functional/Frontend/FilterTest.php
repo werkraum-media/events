@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Functional\Frontend;
 
-use Codappix\Typo3PhpDatasets\TestingFramework;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Controller\DateController
  * @covers \Wrm\Events\Domain\Repository\DateRepository
  */
-class FilterTest extends FunctionalTestCase
+class FilterTest extends AbstractFunctionalTestCase
 {
-    use TestingFramework;
-
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];

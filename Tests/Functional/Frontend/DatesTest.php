@@ -23,18 +23,15 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Functional\Frontend;
 
-use Codappix\Typo3PhpDatasets\TestingFramework;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Wrm\Events\Frontend\Daest;
+use Wrm\Events\Frontend\Dates;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
- * @covers \Wrm\Events\Frontend\Daest
+ * @covers \Wrm\Events\Frontend\Dates
  */
-class DatesTest extends FunctionalTestCase
+class DatesTest extends AbstractFunctionalTestCase
 {
-    use TestingFramework;
-
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];

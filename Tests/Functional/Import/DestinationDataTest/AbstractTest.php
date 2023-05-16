@@ -2,7 +2,6 @@
 
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
-use Codappix\Typo3PhpDatasets\TestingFramework;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Console\Command\Command;
@@ -11,14 +10,12 @@ use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand;
 use Wrm\Events\Tests\ClientFactory;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-abstract class AbstractTest extends FunctionalTestCase
+abstract class AbstractTest extends AbstractFunctionalTestCase
 {
-    use TestingFramework;
-
     protected $coreExtensionsToLoad = [
         'filelist',
     ];
