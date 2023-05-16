@@ -2,20 +2,17 @@
 
 namespace Wrm\Events\Tests\Functional\Cleanup;
 
-use Codappix\Typo3PhpDatasets\TestingFramework;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wrm\Events\Command\RemovePastCommand;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @testdox Cleanup RemovePast
  */
-class RemovePastTest extends FunctionalTestCase
+class RemovePastTest extends AbstractFunctionalTestCase
 {
-    use TestingFramework;
-
     protected $testExtensionsToLoad = [
         'typo3conf/ext/events',
     ];

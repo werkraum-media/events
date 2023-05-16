@@ -29,12 +29,12 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Caching\PageCacheTimeout
  */
-class CacheTest extends FunctionalTestCase
+class CacheTest extends AbstractFunctionalTestCase
 {
     use TestingFramework;
 
