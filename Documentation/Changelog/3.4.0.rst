@@ -17,6 +17,13 @@ Features
 
   That allows visitors to always see the next dates.
 
+* Add ``upcoming`` setting for dates.
+
+  The option can be set to ``0`` (default) or ``1``.
+  ``0`` behaves the same way as in the past.
+  ``1`` turns off the option ``useMidnight``, ``start`` and ``end``.
+  Only dates with a start date in the future will be shown.
+
 Fixes
 -----
 
