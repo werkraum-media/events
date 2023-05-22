@@ -172,4 +172,34 @@ class DatesTest extends AbstractTestCase
         self::assertStringContainsString('Event 8', $html);
         self::assertStringContainsString('Event 9', $html);
     }
+
+    /**
+     * @test
+     */
+    public function returnsUpcomingDates(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsUpcomingDates.php');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withInstructions([
+            $this->getTypoScriptInstruction()
+                ->withTypoScript([
+                    'plugin.' => [
+                        'tx_events.' => [
+                            'settings.' => [
+                                'upcoming' => '1',
+                            ],
+                        ],
+                    ],
+                ])
+        ]);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string) $response->getBody();
+
+        self::assertStringNotContainsString('Event 1', $html);
+        self::assertStringContainsString('Event 2', $html);
+    }
 }

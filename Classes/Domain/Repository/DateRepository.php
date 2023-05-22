@@ -2,6 +2,8 @@
 
 namespace Wrm\Events\Domain\Repository;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -10,6 +12,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use UnexpectedValueException;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Service\CategoryService;
 
@@ -87,19 +90,7 @@ class DateRepository extends Repository
         }
 
         if ($demand->shouldShowFromNow() || $demand->shouldShowFromMidnight()) {
-            $now = $this->context->getPropertyFromAspect(
-                'date',
-                'full',
-                new \DateTimeImmutable()
-            );
-            if (!$now instanceof \DateTimeImmutable) {
-                throw new \UnexpectedValueException(
-                    'Could not retrieve now as DateTimeImmutable, got "' . gettype($now) . '".',
-                    1639382648
-                );
-            }
-
-            $now = $now->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+            $now = $this->getNow();
 
             if ($demand->shouldShowFromMidnight()) {
                 $now = $now->modify('midnight');
@@ -108,6 +99,16 @@ class DateRepository extends Repository
             $constraints['nowAndFuture'] = $query->logicalOr([
                 $query->greaterThanOrEqual('start', $now),
                 $query->greaterThanOrEqual('end', $now)
+            ]);
+        } elseif ($demand->shouldShowUpcoming()) {
+            $now = $this->getNow();
+
+            $constraints['future'] = $query->logicalAnd([
+                $query->greaterThan('start', $now),
+                $query->logicalOr([
+                    $query->equals('end', 0),
+                    $query->greaterThan('end', $now)
+                ])
             ]);
         }
 
@@ -282,5 +283,25 @@ class DateRepository extends Repository
             // Use sub property to trigger join and pulling in event table constraints (hidden)
             $query->logicalNot($query->equals('event.uid', null))
         );
+    }
+
+    private function getNow(): DateTimeImmutable
+    {
+        $now = $this->context->getPropertyFromAspect(
+            'date',
+            'full',
+            new DateTimeImmutable()
+        );
+
+        if (!$now instanceof DateTimeImmutable) {
+            throw new UnexpectedValueException(
+                'Could not retrieve now as DateTimeImmutable, got "' . gettype($now) . '".',
+                1639382648
+            );
+        }
+
+        $now = $now->setTimezone(new DateTimeZone(date_default_timezone_get()));
+
+        return $now;
     }
 }

@@ -77,9 +77,18 @@ class DateDemand
     protected $endObject = null;
 
     /**
+     * Use midnight as "start".
+     *
      * @var bool
      */
     protected $useMidnight = true;
+
+    /**
+     * Only show dates that have not started yet.
+     *
+     * @var bool
+     */
+    protected $upcoming = false;
 
     /**
      * @var string
@@ -361,13 +370,25 @@ class DateDemand
     public function setUseMidnight(bool $useMidnight): void
     {
         $this->useMidnight = $useMidnight;
+        $this->upcoming = false;
+    }
+
+    public function setUpcoming(bool $upcoming): void
+    {
+        $this->startObject = null;
+        $this->endObject = null;
+        $this->useMidnight = false;
+
+        $this->upcoming = $upcoming;
     }
 
     public function shouldShowFromNow(): bool
     {
         return $this->getStartObject() === null
             && $this->getEndObject() === null
-            && $this->useMidnight === false;
+            && $this->useMidnight === false
+            && $this->upcoming === false
+        ;
     }
 
     public function shouldShowFromMidnight(): bool
@@ -375,6 +396,11 @@ class DateDemand
         return $this->getStartObject() === null
             && $this->getEndObject() === null
             && $this->useMidnight === true;
+    }
+
+    public function shouldShowUpcoming(): bool
+    {
+        return $this->upcoming === true;
     }
 
     public function getConsiderDate(): bool
