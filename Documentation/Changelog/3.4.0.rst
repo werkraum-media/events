@@ -10,8 +10,15 @@ Features
 --------
 
 * Adjust TYPO3 page cache timeout based on rendered dates.
-  The end time of each rendered date will be used.
-  The lowest end date will be used to calculate the maximum time to life for the page cache.
+  Will use one of the following:
+
+  - end time of each rendered date
+
+  - start time of each rendered date (if upcoming is enabled)
+
+  - midnight (if midnight is configured)
+
+  The lowest date will be used to calculate the maximum time to life for the page cache.
   This is compared to the already calculated time to life.
   The lower value is then used by TYPO3.
 

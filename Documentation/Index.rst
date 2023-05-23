@@ -42,6 +42,7 @@ Table of Contents
 	:maxdepth: 3
 	:titlesonly:
 
+	Features
 	Commands
 	Settings
 	Changelog
