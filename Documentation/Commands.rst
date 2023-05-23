@@ -16,8 +16,11 @@ Access built in help:
    # Get detailed help of command
    ./vendor/bin/typo3 help events:destinationdataimport
 
-``events:destinationdataimport``
---------------------------------
+``events:destinationdataimportviaconfiguration``
+------------------------------------------------
+
+``events:destinationdataimportviaallconfigurations``
+----------------------------------------------------
 
 ``events:removeAll``
 --------------------------------
