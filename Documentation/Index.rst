@@ -4,29 +4,25 @@
 Events
 ======
 
-.. only:: html
+:Extension key:
+   events
 
-	:Classification:
-		events
+:Package name:
+   wrm/events
 
-	:Description:
-		Extension to manage events, that can be imported from Destination Data
+:Language:
+   en
 
-	:Author:
-		Dirk Koritnik
+:Author:
+   Daniel Siepmann
 
-	:Email:
-		koritnik@werkraum-media.de
+:License:
+   This document is published under the
+   `Creative Commons BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__
+   license.
 
-	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
-
-	:Rendered:
-		|today|
-
-	The content of this document is related to TYPO3,
-	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+:Rendered:
+   |today|
 
 A basic events extension.
 
@@ -39,11 +35,17 @@ Table of Contents
 =================
 
 .. toctree::
-	:maxdepth: 3
-	:titlesonly:
+   :maxdepth: 3
+   :titlesonly:
 
-	Features
-	Commands
-	Settings
-	Changelog
-	Maintenance
+   Features
+   Commands
+   Settings
+   Changelog
+   Maintenance
+
+.. toctree::
+   :hidden:
+
+   Sitemap
+   genindex
