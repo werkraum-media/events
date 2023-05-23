@@ -67,7 +67,7 @@ class CacheTest extends AbstractTestCase
     /**
      * @test
      */
-    public function setupReturnsSystemDefaults(): void
+    public function returnsSystemDefaults(): void
     {
         $response = $this->executeFrontendRequest($this->getRequestWithSleep());
 
@@ -79,7 +79,7 @@ class CacheTest extends AbstractTestCase
     /**
      * @test
      */
-    public function setupReturnsDefaultsIfEventsEndLater(): void
+    public function returnsDefaultsIfEventsEndLater(): void
     {
         (new PhpDataSet())->import([
             'tx_events_domain_model_event' => [
@@ -107,7 +107,7 @@ class CacheTest extends AbstractTestCase
     /**
      * @test
      */
-    public function setupReturnsEarlierIfEventsChangeBeforeSystemDefault(): void
+    public function returnsEarlierIfEventsEndEarlier(): void
     {
         $end = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')))->modify('+2 hours');
 
@@ -138,7 +138,46 @@ class CacheTest extends AbstractTestCase
     /**
      * @test
      */
-    public function setupReturnsMidnightIfConfigured(): void
+    public function returnsEarlierIfStartEndEalierAndIsUpcoming(): void
+    {
+        $end = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('+2 hours');
+
+        (new PhpDataSet())->import([
+            'tx_events_domain_model_event' => [
+                [
+                    'uid' => '1',
+                    'pid' => '2',
+                    'title' => 'Test Event 1',
+                ],
+            ],
+            'tx_events_domain_model_date' => [
+                [
+                    'pid' => '2',
+                    'event' => '1',
+                    'start' => $end->format('U'),
+                    'end' => '0',
+                ],
+            ],
+        ]);
+
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep([
+            'plugin.' => [
+                'tx_events.' => [
+                    'settings.' => [
+                        'upcoming' => 1,
+                    ],
+                ],
+            ],
+        ]));
+
+        self::assertSame(200, $response->getStatusCode());
+        self::assertCacheHeaders($end, $response);
+    }
+
+    /**
+     * @test
+     */
+    public function returnsMidnightIfConfigured(): void
     {
         $midnight = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')));
 
@@ -207,13 +246,13 @@ class CacheTest extends AbstractTestCase
         ];
     }
 
-    private function getRequestWithSleep(): InternalRequest
+    private function getRequestWithSleep(array $typoScript = []): InternalRequest
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withInstructions([
             $this->getTypoScriptInstruction()
-                ->withTypoScript([
+                ->withTypoScript(array_merge_recursive($typoScript, [
                     'page.' => [
                         '30.' => [
                             'userFunc.' => [
@@ -221,7 +260,7 @@ class CacheTest extends AbstractTestCase
                             ],
                         ],
                     ],
-                ])
+                ]))
         ]);
 
         return $request;
