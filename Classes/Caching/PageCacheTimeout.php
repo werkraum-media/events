@@ -120,7 +120,7 @@ class PageCacheTimeout implements SingletonInterface
             $newTimeout <= $now
             || (
                 $this->timeout instanceof DateTimeImmutable
-                && $this->timeout >= $newTimeout
+                && $this->timeout <= $newTimeout
             )
         ) {
             return;

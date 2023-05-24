@@ -177,6 +177,56 @@ class CacheTest extends AbstractTestCase
     /**
      * @test
      */
+    public function usesEarliestTimeout(): void
+    {
+        $end = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('+2 hours');
+
+        (new PhpDataSet())->import([
+            'tx_events_domain_model_event' => [
+                [
+                    'uid' => '1',
+                    'pid' => '2',
+                    'title' => 'Test Event 1',
+                ],
+                [
+                    'uid' => '2',
+                    'pid' => '2',
+                    'title' => 'Test Event 2',
+                ],
+            ],
+            'tx_events_domain_model_date' => [
+                [
+                    'pid' => '2',
+                    'event' => '1',
+                    'start' => $end->format('U'),
+                    'end' => '0',
+                ],
+                [
+                    'pid' => '2',
+                    'event' => '2',
+                    'start' => $end->modify('+2 hours')->format('U'),
+                    'end' => '0',
+                ],
+            ],
+        ]);
+
+        $response = $this->executeFrontendRequest($this->getRequestWithSleep([
+            'plugin.' => [
+                'tx_events.' => [
+                    'settings.' => [
+                        'upcoming' => 1,
+                    ],
+                ],
+            ],
+        ]));
+
+        self::assertSame(200, $response->getStatusCode());
+        self::assertCacheHeaders($end, $response);
+    }
+
+    /**
+     * @test
+     */
     public function returnsMidnightIfConfigured(): void
     {
         $midnight = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')));
