@@ -193,7 +193,7 @@ class DatesFactory
 
         foreach ($date['weekdays'] as $day) {
             $dateToUse = $start->modify($day);
-            $dateToUse = $dateToUse->setTime((int) $start->format('H'), (int) $start->format('i'));
+            $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
 
             $period = new \DatePeriod($dateToUse, new \DateInterval('P1W'), $until);
             foreach ($period as $day) {
@@ -220,8 +220,8 @@ class DatesFactory
         bool $canceled
     ): Date {
         return Date::createFromDestinationData(
-            $dateToUse->setTime((int) $start->format('H'), (int) $start->format('i')),
-            $dateToUse->setTime((int) $end->format('H'), (int) $end->format('i')),
+            $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i')),
+            $dateToUse->setTime((int)$end->format('H'), (int)$end->format('i')),
             $canceled
         );
     }

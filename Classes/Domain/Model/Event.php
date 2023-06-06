@@ -5,9 +5,7 @@ namespace Wrm\Events\Domain\Model;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Service\DataProcessingForModels;
 
 class Event extends AbstractEntity
@@ -93,17 +91,17 @@ class Event extends AbstractEntity
     /**
      * @var Location|null
      */
-    protected $location = null;
+    protected $location;
 
     /**
      * @var Organizer|null
      */
-    protected $organizer = null;
+    protected $organizer;
 
     /**
      * @var Region|null
      */
-    protected $region = null;
+    protected $region;
 
     /**
      * @var string
@@ -138,7 +136,7 @@ class Event extends AbstractEntity
     /**
      * @var DataProcessingForModels
      */
-    protected $dataProcessing = null;
+    protected $dataProcessing;
 
     public function __construct()
     {

@@ -10,7 +10,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use UnexpectedValueException;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
@@ -98,7 +97,7 @@ class DateRepository extends Repository
 
             $constraints['nowAndFuture'] = $query->logicalOr([
                 $query->greaterThanOrEqual('start', $now),
-                $query->greaterThanOrEqual('end', $now)
+                $query->greaterThanOrEqual('end', $now),
             ]);
         } elseif ($demand->shouldShowUpcoming()) {
             $now = $this->getNow();
@@ -107,13 +106,13 @@ class DateRepository extends Repository
                 $query->greaterThan('start', $now),
                 $query->logicalOr([
                     $query->equals('end', 0),
-                    $query->greaterThan('end', $now)
-                ])
+                    $query->greaterThan('end', $now),
+                ]),
             ]);
         }
 
         if ($demand->getLimit() !== '') {
-            $query->setLimit((int) $demand->getLimit());
+            $query->setLimit((int)$demand->getLimit());
         }
 
         $query->matching($query->logicalAnd($constraints));

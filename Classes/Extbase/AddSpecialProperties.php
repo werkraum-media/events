@@ -72,7 +72,7 @@ class AddSpecialProperties
                 return;
             }
 
-            $date->_setProperty('originalDate', $this->getOriginalDate((int) $localizedUid));
+            $date->_setProperty('originalDate', $this->getOriginalDate((int)$localizedUid));
         }
     }
 

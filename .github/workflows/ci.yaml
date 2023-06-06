@@ -65,21 +65,20 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - php-linting
-      - xml-linting
     steps:
       - uses: actions/checkout@v3
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.1"
           tools: composer:v2
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Coding Guideline
-        run: ./vendor/bin/ecs check --no-progress-bar --clear-cache
+        run: ./vendor/bin/php-cs-fixer fix
 
   code-quality:
     runs-on: ubuntu-latest

@@ -42,9 +42,9 @@ use Wrm\Events\Events\Controller\DateListVariables;
 class PageCacheTimeout implements SingletonInterface
 {
     /**
-     * @var null|DateTimeImmutable
+     * @var DateTimeImmutable|null
      */
-    private $timeout = null;
+    private $timeout;
 
     /**
      * @var FrontendInterface
@@ -136,7 +136,7 @@ class PageCacheTimeout implements SingletonInterface
             return null;
         }
 
-        return ((int) $this->timeout->format('U')) - ((int) $this->getExecution()->format('U'));
+        return ((int)$this->timeout->format('U')) - ((int)$this->getExecution()->format('U'));
     }
 
     private function getExecution(): DateTimeImmutable

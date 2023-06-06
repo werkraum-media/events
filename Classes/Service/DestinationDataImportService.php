@@ -3,28 +3,20 @@
 namespace Wrm\Events\Service;
 
 use Exception;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
-use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Model\Import;
 use Wrm\Events\Domain\Model\Organizer;
 use Wrm\Events\Domain\Model\Region;
-use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\EventRepository;
 use Wrm\Events\Domain\Repository\OrganizerRepository;
@@ -257,7 +249,7 @@ class DestinationDataImportService
             if ($event['timeIntervals'] ?? false) {
                 $this->setDates(
                     $event['timeIntervals'],
-                    (bool) $this->getAttributeValue($event, 'DETAILS_ABGESAGT')
+                    (bool)$this->getAttributeValue($event, 'DETAILS_ABGESAGT')
                 );
             }
 
@@ -329,7 +321,7 @@ class DestinationDataImportService
     private function setOrganizer(array $addresses): void
     {
         foreach ($addresses as $address) {
-            if ($address['rel'] == "organizer") {
+            if ($address['rel'] == 'organizer') {
                 $tmpOrganizer = $this->organizerRepository->findOneByName($address['name']);
                 if ($tmpOrganizer) {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
@@ -357,13 +349,13 @@ class DestinationDataImportService
     private function setSocial(array $media): void
     {
         foreach ($media as $link) {
-            if ($link['rel'] == "socialmedia" && $link['value'] == "Facebook") {
+            if ($link['rel'] == 'socialmedia' && $link['value'] == 'Facebook') {
                 $this->tmpCurrentEvent->setFacebook($link['url']);
             }
-            if ($link['rel'] == "socialmedia" && $link['value'] == "YouTube") {
+            if ($link['rel'] == 'socialmedia' && $link['value'] == 'YouTube') {
                 $this->tmpCurrentEvent->setYouTube($link['url']);
             }
-            if ($link['rel'] == "socialmedia" && $link['value'] == "Instagram") {
+            if ($link['rel'] == 'socialmedia' && $link['value'] == 'Instagram') {
                 $this->tmpCurrentEvent->setInstagram($link['url']);
             }
         }
@@ -422,13 +414,13 @@ class DestinationDataImportService
                 continue;
             }
 
-            if ($text['rel'] == "details" && $text['type'] == "text/plain") {
+            if ($text['rel'] == 'details' && $text['type'] == 'text/plain') {
                 $this->tmpCurrentEvent->setDetails(str_replace("\n\n", "\n", $text['value']));
             }
-            if ($text['rel'] == "teaser" && $text['type'] == "text/plain") {
+            if ($text['rel'] == 'teaser' && $text['type'] == 'text/plain') {
                 $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", $text['value']));
             }
-            if ($text['rel'] == "PRICE_INFO" && $text['type'] == "text/plain") {
+            if ($text['rel'] == 'PRICE_INFO' && $text['type'] == 'text/plain') {
                 $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", $text['value']));
             }
         }
@@ -461,7 +453,7 @@ class DestinationDataImportService
 
     private function setAssets(array $assets): void
     {
-        $this->logger->info("Set assets");
+        $this->logger->info('Set assets');
 
         $allowedMimeTypes = [
             'image/jpeg',
@@ -473,7 +465,7 @@ class DestinationDataImportService
 
         foreach ($assets as $media_object) {
             if (
-                $media_object['rel'] == "default"
+                $media_object['rel'] == 'default'
                 && in_array($media_object['type'], $allowedMimeTypes)
             ) {
                 $fileUrl = urldecode($media_object['url']);
@@ -523,7 +515,7 @@ class DestinationDataImportService
                             [
                                 'title' => $this->getShortenedString($media_object['value'], 100),
                                 'description' => $media_object['description'] ?? '',
-                                'alternative' => 'DD Import'
+                                'alternative' => 'DD Import',
                             ]
                         );
                         $this->createFileRelations(
@@ -576,23 +568,23 @@ class DestinationDataImportService
     ): bool {
         $newId = 'NEW1234';
 
-        $data = array();
-        $data['sys_file_reference'][$newId] = array(
+        $data = [];
+        $data['sys_file_reference'][$newId] = [
             'table_local' => 'sys_file',
             'uid_local' => $uid_local,
             'tablenames' => $tablenames,
             'uid_foreign' => $uid_foreign,
             'fieldname' => $fieldname,
-            'pid' => $storagePid
-        );
-
-        $data[$tablenames][$uid_foreign] = array(
             'pid' => $storagePid,
-            $fieldname => $newId
-        );
+        ];
+
+        $data[$tablenames][$uid_foreign] = [
+            'pid' => $storagePid,
+            $fieldname => $newId,
+        ];
 
         $dataHandler = $this->objectManager->get(DataHandler::class);
-        $dataHandler->start($data, array());
+        $dataHandler->start($data, []);
         $dataHandler->process_datamap();
 
         if (count($dataHandler->errorLog) === 0) {
@@ -633,7 +625,7 @@ class DestinationDataImportService
             return false;
         }
 
-        return (bool) $value;
+        return (bool)$value;
     }
 
     private function getShortenedString(string $string, int $lenght): string

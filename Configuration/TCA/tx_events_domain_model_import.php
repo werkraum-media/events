@@ -14,29 +14,29 @@ return [
             'disabled' => 'hidden',
         ],
         'searchFields' => 'title',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_import.svg'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_import.svg',
     ],
     'types' => [
         '1' => [
-            'showitem' => 'title, hidden, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3, --palette--;;typo3_storage, --palette--;;categories, --palette--;;features,--palette--;;relations, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest, rest_experience, rest_search_query'
+            'showitem' => 'title, hidden, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3, --palette--;;typo3_storage, --palette--;;categories, --palette--;;features,--palette--;;relations, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest, rest_experience, rest_search_query',
         ],
     ],
     'palettes' => [
         'typo3_storage' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.typo3_storage',
-            'showitem' => 'storage_pid, files_folder'
+            'showitem' => 'storage_pid, files_folder',
         ],
         'categories' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.categories',
-            'showitem' => 'category_parent, categories_pid'
+            'showitem' => 'category_parent, categories_pid',
         ],
         'features' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.features',
-            'showitem' => 'features_parent, features_pid, '
+            'showitem' => 'features_parent, features_pid, ',
         ],
         'relations' => [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.palette.relations',
-            'showitem' => 'region'
+            'showitem' => 'region',
         ],
     ],
     'columns' => [
@@ -50,8 +50,8 @@ return [
                     [
                         0 => '',
                         1 => '',
-                        'invertStateDisplay' => true
-                    ]
+                        'invertStateDisplay' => true,
+                    ],
                 ],
             ],
         ],

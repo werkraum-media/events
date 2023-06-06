@@ -23,7 +23,6 @@ namespace Wrm\Events\Service\Cleanup;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
 class Files
@@ -139,8 +138,8 @@ class Files
 
         $uidsToRemove = [];
         foreach ($filesToDelete as $fileToDelete) {
-            $this->deleteFromFal((int) $fileToDelete['storage'], (string) $fileToDelete['identifier']);
-            $uidsToRemove[] = (int) $fileToDelete['uid'];
+            $this->deleteFromFal((int)$fileToDelete['storage'], (string)$fileToDelete['identifier']);
+            $uidsToRemove[] = (int)$fileToDelete['uid'];
         }
 
         $this->deleteFromDb(...$uidsToRemove);

@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Unit\Domain\Model\Dto;
 
+use PHPUnit\Framework\TestCase;
 use Wrm\Events\Domain\Model\Dto\EventDemand;
 use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Wrm\Events\Domain\Model\Dto\EventDemandFactory

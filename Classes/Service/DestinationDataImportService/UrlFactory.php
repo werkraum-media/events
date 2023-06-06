@@ -40,13 +40,13 @@ class UrlFactory
             'mode' => $this->settings['restMode'] ?? '',
             'limit' => $this->settings['restLimit'] ?? '',
             'template' => $this->settings['restTemplate'] ?? '',
-            'q' => $import->getSearchQuery()
+            'q' => $import->getSearchQuery(),
         ];
 
         $parameter = array_filter($parameter);
 
         $url = new Uri($this->settings['restUrl']);
         $url = $url->withQuery(http_build_query($parameter));
-        return (string) $url;
+        return (string)$url;
     }
 }

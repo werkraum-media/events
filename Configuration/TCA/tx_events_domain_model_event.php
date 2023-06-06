@@ -24,7 +24,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'title,subtitle,global_id,teaser',
-        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.svg'
+        'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_event.svg',
     ],
     'types' => [
         '1' => [
@@ -64,7 +64,7 @@ return [
                     instagram,
                 --div--;' . $l10nPathFE . ':tabs.access,
                     starttime,
-                    endtime'
+                    endtime',
         ],
     ],
 
@@ -80,8 +80,8 @@ return [
                     [
                         $l10nPathGeneral . ':LGL.allLanguages',
                         -1,
-                        'flags-multiple'
-                    ]
+                        'flags-multiple',
+                    ],
                 ],
                 'default' => 0,
             ],
@@ -123,8 +123,8 @@ return [
                     [
                         0 => '',
                         1 => '',
-                        'invertStateDisplay' => true
-                    ]
+                        'invertStateDisplay' => true,
+                    ],
                 ],
             ],
         ],
@@ -137,8 +137,8 @@ return [
                 'eval' => 'datetime,int',
                 'default' => 0,
                 'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
+                    'allowLanguageSynchronization' => true,
+                ],
             ],
         ],
         'endtime' => [
@@ -150,11 +150,11 @@ return [
                 'eval' => 'datetime,int',
                 'default' => 0,
                 'range' => [
-                    'upper' => mktime(0, 0, 0, 1, 1, 2038)
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038),
                 ],
                 'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
+                    'allowLanguageSynchronization' => true,
+                ],
             ],
         ],
 
@@ -165,8 +165,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 2,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'subtitle' => [
             'exclude' => true,
@@ -175,8 +175,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 2,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'global_id' => [
             'exclude' => true,
@@ -184,7 +184,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'slug' => [
@@ -210,11 +210,11 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => $l10nPathLang . ':labels.enabled'
-                    ]
+                        '0' => $l10nPathLang . ':labels.enabled',
+                    ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'teaser' => [
             'exclude' => true,
@@ -223,8 +223,8 @@ return [
                 'type' => 'text',
                 'cols' => 30,
                 'rows' => 5,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'details' => [
             'exclude' => true,
@@ -250,8 +250,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'web' => [
             'exclude' => true,
@@ -259,7 +259,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'ticket' => [
@@ -280,7 +280,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'youtube' => [
@@ -289,7 +289,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'instagram' => [
@@ -298,7 +298,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'images' => [
@@ -323,35 +323,35 @@ return [
                         '0' => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
+                            --palette--;;filePalette',
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
+                            --palette--;;filePalette',
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
+                            --palette--;;filePalette',
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
+                            --palette--;;filePalette',
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
+                            --palette--;;filePalette',
                         ],
                         \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
                             'showitem' => '
                             --palette--;' . $l10nPathFE . ':sys_file_reference.imageoverlayPalette;imageoverlayPalette,
-                            --palette--;;filePalette'
-                        ]
+                            --palette--;;filePalette',
+                        ],
                     ],
-                    'maxitems' => 8
+                    'maxitems' => 8,
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
@@ -386,7 +386,7 @@ return [
                     'collapseAll' => 1,
                     'useSortable' => 0,
                     'expandSingle' => 1,
-                    'enabledControls' => array(
+                    'enabledControls' => [
                         'info' => false,
                         'new' => true,
                         'dragdrop' => true,
@@ -394,7 +394,7 @@ return [
                         'hide' => false,
                         'delete' => true,
                         'localize' => false,
-                    ),
+                    ],
                     'levelLinksPosition' => 'top',
                     'showPossibleLocalizationRecords' => false,
                     'showRemovedLocalizationRecords' => false,

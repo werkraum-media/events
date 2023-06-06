@@ -40,7 +40,7 @@ class Partner extends AbstractEntity
     /**
      * @var ObjectStorage<FileReference>
      */
-    protected $images = null;
+    protected $images;
 
     public function getTitle(): string
     {

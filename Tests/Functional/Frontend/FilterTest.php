@@ -36,7 +36,7 @@ class FilterTest extends AbstractTestCase
             'setup' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                 'EXT:events/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript'
+                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript',
             ],
         ]);
     }
@@ -53,7 +53,7 @@ class FilterTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringNotContainsString('Lotte in Weimar', $html);
         self::assertStringContainsString('Was hat das Universum mit mir zu tun?', $html);
@@ -71,7 +71,7 @@ class FilterTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringContainsString('Lotte in Weimar', $html);
         self::assertStringContainsString('Was hat das Universum mit mir zu tun?', $html);

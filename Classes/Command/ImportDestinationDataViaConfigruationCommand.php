@@ -49,7 +49,7 @@ class ImportDestinationDataViaConfigruationCommand extends Command
 
         $configurationUid = $input->getArgument('configurationUid');
         if (is_numeric($configurationUid)) {
-            $configurationUid = (int) $configurationUid;
+            $configurationUid = (int)$configurationUid;
         } else {
             throw new \Exception('No numeric uid for configuration provided.', 1643267138);
         }

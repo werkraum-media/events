@@ -42,7 +42,7 @@ class Date implements SluggerType
     {
         $start = new \DateTimeImmutable('@' . $record['start']);
 
-        $record['event-title'] = $this->getEventTitle((int) $record['event']);
+        $record['event-title'] = $this->getEventTitle((int)$record['event']);
         $record['start'] = $start->format('Y-m-d');
         $record['start-with-time'] = $start->format('Y-m-d\TH-i-s');
         return $record;

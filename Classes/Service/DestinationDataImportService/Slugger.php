@@ -90,7 +90,7 @@ class Slugger
     {
         $tableName = $sluggerType->getSupportedTableName();
         $record = $sluggerType->prepareRecordForSlugGeneration($record);
-        $slug = $this->getSlugHelper($sluggerType)->generate($record, (int) $record['pid']);
+        $slug = $this->getSlugHelper($sluggerType)->generate($record, (int)$record['pid']);
 
         $queryBuilder = $this->getQueryBuilder($tableName);
         $queryBuilder->update($tableName)

@@ -55,7 +55,7 @@ class DatesTest extends AbstractTestCase
             'setup' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                 'EXT:events/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript'
+                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript',
             ],
         ]);
     }
@@ -78,7 +78,7 @@ class DatesTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringNotContainsString('Event 1 hidden', $html);
         self::assertStringContainsString('Event 2 visible', $html);
@@ -99,7 +99,7 @@ class DatesTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringNotContainsString('Event 1', $html);
         self::assertStringNotContainsString('Event 2', $html);
@@ -127,7 +127,7 @@ class DatesTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringContainsString('Event 1', $html);
         self::assertStringContainsString('Event 2', $html);
@@ -160,7 +160,7 @@ class DatesTest extends AbstractTestCase
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringNotContainsString('Event 1', $html);
         self::assertStringNotContainsString('Event 2', $html);
@@ -192,12 +192,12 @@ class DatesTest extends AbstractTestCase
                             ],
                         ],
                     ],
-                ])
+                ]),
         ]);
         $response = $this->executeFrontendRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
-        $html = (string) $response->getBody();
+        $html = (string)$response->getBody();
 
         self::assertStringNotContainsString('Event 1', $html);
         self::assertStringContainsString('Event 2', $html);
