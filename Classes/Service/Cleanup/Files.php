@@ -68,6 +68,27 @@ class Files
                 $referencesQuery->createNamedParameter('tx_events_domain_model_%')
             )
         );
+        // Remove file relations removed via import
+        $referencesQuery->orWhere(
+            $referencesQuery->expr()->andX(
+                $referencesQuery->expr()->eq(
+                    'tablenames',
+                    $referencesQuery->createNamedParameter('')
+                ),
+                $referencesQuery->expr()->eq(
+                    'fieldname',
+                    $referencesQuery->createNamedParameter('')
+                ),
+                $referencesQuery->expr()->eq(
+                    'sorting_foreign',
+                    $referencesQuery->createNamedParameter('0')
+                ),
+                $referencesQuery->expr()->eq(
+                    'uid_foreign',
+                    $referencesQuery->createNamedParameter('0')
+                )
+            )
+        );
         $referencesQuery->orderBy('tablenames');
         $referencesQuery->addOrderBy('uid_foreign');
 
@@ -78,6 +99,11 @@ class Files
 
         while ($reference = $references->fetch()) {
             if (is_array($reference) === false) {
+                continue;
+            }
+
+            if ($reference['tablenames'] === '') {
+                $referenceUidsToMarkAsDeleted[] = $reference['uid'];
                 continue;
             }
 
@@ -124,6 +150,10 @@ class Files
             ->where($queryBuilder->expr()->like(
                 'reference.tablenames',
                 $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+            ))
+            ->orWhere($queryBuilder->expr()->eq(
+                'reference.tablenames',
+                $queryBuilder->createNamedParameter('')
             ))
             ->groupBy('file.uid')
             ->having(
@@ -179,10 +209,18 @@ class Files
         $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder
             ->delete('sys_file_reference')
-            ->where($queryBuilder->expr()->like(
-                'tablenames',
-                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
-            ))
+            ->where(
+                $queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->like(
+                        'tablenames',
+                        $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'tablenames',
+                        $queryBuilder->createNamedParameter('')
+                    )
+                )
+            )
             ->andWhere($queryBuilder->expr()->eq(
                 'deleted',
                 1

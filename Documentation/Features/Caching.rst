@@ -1,6 +1,5 @@
-.. _caching:
-
 .. index:: single: caching
+.. _caching:
 
 Caching
 =======

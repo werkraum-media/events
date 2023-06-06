@@ -3,11 +3,8 @@
 namespace Wrm\Events\Service;
 
 use Exception;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Resource\File;
-use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -24,6 +21,7 @@ use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use Wrm\Events\Service\DestinationDataImportService\FilesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
 use Wrm\Events\Service\DestinationDataImportService\Slugger;
 
@@ -60,11 +58,6 @@ class DestinationDataImportService
     private $dateRepository;
 
     /**
-     * @var MetaDataRepository
-     */
-    private $metaDataRepository;
-
-    /**
      * @var ConfigurationManager
      */
     private $configurationManager;
@@ -90,6 +83,11 @@ class DestinationDataImportService
     private $datesFactory;
 
     /**
+     * @var FilesAssignment
+     */
+    private $filesAssignment;
+
+    /**
      * @var CategoriesAssignment
      */
     private $categoriesAssignment;
@@ -109,11 +107,11 @@ class DestinationDataImportService
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
      * @param DateRepository $dateRepository
-     * @param MetaDataRepository $metaDataRepository
      * @param ConfigurationManager $configurationManager
      * @param PersistenceManager $persistenceManager
      * @param ObjectManager $objectManager
      * @param DataFetcher $dataFetcher
+     * @param FilesAssignment $filesAssignment
      * @param CategoriesAssignment $categoriesAssignment
      * @param LocationAssignment $locationAssignment
      * @param Slugger $slugger
@@ -122,12 +120,12 @@ class DestinationDataImportService
         EventRepository $eventRepository,
         OrganizerRepository $organizerRepository,
         DateRepository $dateRepository,
-        MetaDataRepository $metaDataRepository,
         ConfigurationManager $configurationManager,
         PersistenceManager $persistenceManager,
         ObjectManager $objectManager,
         DataFetcher $dataFetcher,
         DatesFactory $datesFactory,
+        FilesAssignment $filesAssignment,
         CategoriesAssignment $categoriesAssignment,
         LocationAssignment $locationAssignment,
         Slugger $slugger
@@ -135,12 +133,12 @@ class DestinationDataImportService
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
         $this->dateRepository = $dateRepository;
-        $this->metaDataRepository = $metaDataRepository;
         $this->configurationManager = $configurationManager;
         $this->persistenceManager = $persistenceManager;
         $this->objectManager = $objectManager;
         $this->dataFetcher = $dataFetcher;
         $this->datesFactory = $datesFactory;
+        $this->filesAssignment = $filesAssignment;
         $this->categoriesAssignment = $categoriesAssignment;
         $this->locationAssignment = $locationAssignment;
         $this->slugger = $slugger;
@@ -454,147 +452,12 @@ class DestinationDataImportService
     private function setAssets(array $assets): void
     {
         $this->logger->info('Set assets');
-
-        $allowedMimeTypes = [
-            'image/jpeg',
-            'image/png',
-        ];
-        $importFolder = $this->import->getFilesFolder();
-
-        $error = false;
-
-        foreach ($assets as $media_object) {
-            if (
-                $media_object['rel'] == 'default'
-                && in_array($media_object['type'], $allowedMimeTypes)
-            ) {
-                $fileUrl = urldecode($media_object['url']);
-                $orgFileNameSanitized = $importFolder->getStorage()->sanitizeFileName(
-                    basename(
-                        urldecode($media_object['url'])
-                    )
-                );
-
-                $this->logger->info('File attached:' . $fileUrl);
-                $this->logger->info('File attached sanitized:' . $orgFileNameSanitized);
-
-                if ($importFolder->hasFile($orgFileNameSanitized)) {
-                    $this->logger->info('File already exists');
-                } else {
-                    $this->logger->info("File don't exist " . $orgFileNameSanitized);
-                    // Load the file
-                    if ($filename = $this->loadFile($fileUrl)) {
-                        // Move file to defined folder
-                        $this->logger->info('Adding file ' . $filename);
-
-                        $importFolder->addFile($filename, basename($fileUrl));
-                    } else {
-                        $error = true;
-                    }
-                }
-
-                if ($error !== true) {
-                    if ($this->tmpCurrentEvent->getImages()->count() > 0) {
-                        $this->logger->info('Relation found');
-                    // TODO: How to delete file references?
-                    } else {
-                        $this->logger->info('No relation found');
-                        if ($importFolder->hasFile($orgFileNameSanitized) === false) {
-                            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
-                            continue;
-                        }
-
-                        $file = $importFolder->getStorage()->getFileInFolder($orgFileNameSanitized, $importFolder);
-                        if (!$file instanceof File) {
-                            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
-                            continue;
-                        }
-
-                        $this->metaDataRepository->update(
-                            $file->getUid(),
-                            [
-                                'title' => $this->getShortenedString($media_object['value'], 100),
-                                'description' => $media_object['description'] ?? '',
-                                'alternative' => 'DD Import',
-                            ]
-                        );
-                        $this->createFileRelations(
-                            $file->getUid(),
-                            'tx_events_domain_model_event',
-                            $this->tmpCurrentEvent->getUid(),
-                            'images',
-                            $this->import->getStoragePid()
-                        );
-                    }
-                }
-            }
-            $error = false;
-        }
-    }
-
-    private function loadFile(string $fileUrl): string
-    {
-        $this->logger->info('Getting file ' . $fileUrl);
-
-        $file = new \SplFileInfo($fileUrl);
-        $temporaryFilename = GeneralUtility::tempnam($file->getBasename());
-
-        try {
-            $response = $this->dataFetcher->fetchImage($fileUrl);
-        } catch (Exception $e) {
-            $this->logger->error('Cannot load file ' . $fileUrl);
-            return '';
-        }
-
-        $fileContent = $response->getBody()->__toString();
-        if ($response->getStatusCode() !== 200) {
-            $this->logger->error('Cannot load file ' . $fileUrl);
-        }
-
-        if (GeneralUtility::writeFile($temporaryFilename, $fileContent, true) === false) {
-            $this->logger->error('Could not write temporary file.');
-            return '';
-        }
-
-        return $temporaryFilename;
-    }
-
-    private function createFileRelations(
-        int $uid_local,
-        string $tablenames,
-        int $uid_foreign,
-        string $fieldname,
-        int $storagePid
-    ): bool {
-        $newId = 'NEW1234';
-
-        $data = [];
-        $data['sys_file_reference'][$newId] = [
-            'table_local' => 'sys_file',
-            'uid_local' => $uid_local,
-            'tablenames' => $tablenames,
-            'uid_foreign' => $uid_foreign,
-            'fieldname' => $fieldname,
-            'pid' => $storagePid,
-        ];
-
-        $data[$tablenames][$uid_foreign] = [
-            'pid' => $storagePid,
-            $fieldname => $newId,
-        ];
-
-        $dataHandler = $this->objectManager->get(DataHandler::class);
-        $dataHandler->start($data, []);
-        $dataHandler->process_datamap();
-
-        if (count($dataHandler->errorLog) === 0) {
-            return true;
-        }
-
-        foreach ($dataHandler->errorLog as $error) {
-            $this->logger->info($error);
-        }
-        return false;
+        $images = $this->filesAssignment->getImages(
+            $this->import,
+            $this->tmpCurrentEvent,
+            $assets
+        );
+        $this->tmpCurrentEvent->setImages($images);
     }
 
     /**
@@ -626,14 +489,5 @@ class DestinationDataImportService
         }
 
         return (bool)$value;
-    }
-
-    private function getShortenedString(string $string, int $lenght): string
-    {
-        if ($string === mb_substr($string, 0, $lenght)) {
-            return $string;
-        }
-
-        return mb_substr($string, 0, $lenght - 3) . ' …';
     }
 }
