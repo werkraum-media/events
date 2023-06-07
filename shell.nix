@@ -13,7 +13,7 @@ let
       memory_limit = 4G
     '';
   };
-  inherit(pkgs.php82Packages) composer;
+  inherit(php.packages) composer;
 
   projectInstall = pkgs.writeShellApplication {
     name = "project-install";
@@ -74,7 +74,7 @@ let
     ];
 
     text = ''
-      ./vendor/bin/ecs check --no-progress-bar --clear-cache
+      PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --dry-run --diff
     '';
   };
 
@@ -86,7 +86,7 @@ let
     ];
 
     text = ''
-      ./vendor/bin/ecs check --fix --no-progress-bar --clear-cache
+      PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix
     '';
   };
 

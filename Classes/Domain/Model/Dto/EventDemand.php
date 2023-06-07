@@ -2,8 +2,6 @@
 
 namespace Wrm\Events\Domain\Model\Dto;
 
-use Wrm\Events\Domain\Model\Region;
-
 class EventDemand
 {
     /**

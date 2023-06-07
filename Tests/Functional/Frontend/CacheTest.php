@@ -27,9 +27,7 @@ use Codappix\Typo3PhpDatasets\PhpDataSet;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\TypoScriptInstruction;
 
 /**
  * @covers \Wrm\Events\Caching\PageCacheTimeout
@@ -251,7 +249,7 @@ class CacheTest extends AbstractTestCase
 
         $this->setUpFrontendRootPage(1, array_merge_recursive($this->getTypoScriptFiles(), [
             'setup' => [
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/CachingMidnight.typoscript'
+                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/CachingMidnight.typoscript',
             ],
         ]));
 
@@ -277,7 +275,7 @@ class CacheTest extends AbstractTestCase
 
         // We might be seconds off due to our created offset within the rendering.
         $value = (int)$value;
-        $age = ((int) $end->format('U')) - time();
+        $age = ((int)$end->format('U')) - time();
         self::assertLessThanOrEqual($age + 3, $value, 'Max age of cached response is higher than expected.');
         self::assertGreaterThanOrEqual($age - 3, $value, 'Max age of cached response is less than expected.');
     }
@@ -291,7 +289,7 @@ class CacheTest extends AbstractTestCase
             'setup' => [
                 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                 'EXT:events/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript'
+                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript',
             ],
         ];
     }
@@ -310,7 +308,7 @@ class CacheTest extends AbstractTestCase
                             ],
                         ],
                     ],
-                ]))
+                ])),
         ]);
 
         return $request;

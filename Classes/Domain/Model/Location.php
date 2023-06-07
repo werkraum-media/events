@@ -146,7 +146,7 @@ class Location extends AbstractEntity
             || $this->district !== ''
             || $this->country !== ''
             || $this->phone !== ''
-            ;
+        ;
     }
 
     private function generateGlobalId(): string

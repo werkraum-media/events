@@ -40,7 +40,7 @@ class UserFunc
 
     public function sleep(string $content, array $configuration): string
     {
-        $sleep = (int) $this->cObj->stdWrapValue('sleep', $configuration['userFunc.'], 0);
+        $sleep = (int)$this->cObj->stdWrapValue('sleep', $configuration['userFunc.'], 0);
         sleep($sleep);
         return 'Sleep for ' . $sleep . ' seconds';
     }

@@ -64,7 +64,6 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
         );
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutCategoryIfNotProvided.csv');
 
-
         $importedFiles = GeneralUtility::getFilesInDir($fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
         self::assertSame(

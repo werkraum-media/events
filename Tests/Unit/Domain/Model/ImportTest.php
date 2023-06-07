@@ -2,10 +2,10 @@
 
 namespace Wrm\Events\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Resource\Folder;
 use Wrm\Events\Domain\Model\Category;
 use Wrm\Events\Domain\Model\Import;
-use PHPUnit\Framework\TestCase;
 use Wrm\Events\Domain\Model\Region;
 use Wrm\Events\Tests\ProphecyTrait;
 

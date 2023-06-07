@@ -59,7 +59,7 @@ class EventRepository extends Repository
         }
 
         if ($demand->getLimit() !== '') {
-            $query->setLimit((int) $demand->getLimit());
+            $query->setLimit((int)$demand->getLimit());
         }
 
         return $query;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Wrm\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;

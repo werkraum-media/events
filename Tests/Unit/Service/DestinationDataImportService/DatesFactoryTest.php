@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
-use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
-use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
@@ -116,7 +115,7 @@ class DatesFactoryTest extends TestCase
             'end' => '2023-01-06T15:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
-            'interval' => 1
+            'interval' => 1,
         ]], false);
 
         self::assertInstanceOf(\Generator::class, $result);

@@ -3,8 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest

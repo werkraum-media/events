@@ -3,7 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand;
 
 /**
  * @testdox DestinationData import

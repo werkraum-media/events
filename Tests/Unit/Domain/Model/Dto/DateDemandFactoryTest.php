@@ -27,7 +27,6 @@ use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
-use Wrm\Events\Tests\ProphecyTrait;
 
 /**
  * @covers \Wrm\Events\Domain\Model\Dto\DateDemandFactory

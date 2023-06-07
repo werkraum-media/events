@@ -10,7 +10,7 @@
             'fieldConfiguration' => [
                 'minitems' => 0,
                 'multiple' => true,
-            ]
+            ],
         ]
     );
 
@@ -23,7 +23,7 @@
             'fieldConfiguration' => [
                 'minitems' => 0,
                 'multiple' => true,
-            ]
+            ],
         ]
     );
 })('events', 'tx_events_domain_model_event');

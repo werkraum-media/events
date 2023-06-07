@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Wrm\Events\Events\Controller;
 
 use TYPO3\CMS\Core\Pagination\PaginationInterface;

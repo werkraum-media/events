@@ -67,14 +67,14 @@ class DateDemand
     protected $limit = '';
 
     /**
-     * @var null|\DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
-    protected $startObject = null;
+    protected $startObject;
 
     /**
-     * @var null|\DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
-    protected $endObject = null;
+    protected $endObject;
 
     /**
      * Use midnight as "start".

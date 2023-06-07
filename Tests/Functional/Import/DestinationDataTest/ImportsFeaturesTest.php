@@ -3,8 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand;
 
 /**
  * @testdox DestinationData import
@@ -25,7 +23,6 @@ class ImportsFeaturesTest extends AbstractTest
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithFeatures.json') ?: ''),
         ]);
         $tester = $this->executeCommand();
-
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFeaturesAddsNewFeatures.csv');
         self::assertFileEquals(

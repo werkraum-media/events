@@ -12,32 +12,32 @@ class Date extends AbstractEntity
     /**
      * @var \DateTime
      */
-    protected $start = null;
+    protected $start;
 
     /**
      * @var \DateTime
      */
-    protected $end = null;
+    protected $end;
 
     /**
      * @var string
      */
-    protected $canceled = "no";
+    protected $canceled = 'no';
 
     /**
-     * @var null|Date
+     * @var Date|null
      */
     protected $postponedDate;
 
     /**
-     * @var null|Date
+     * @var Date|null
      */
     protected $originalDate;
 
     /**
      * @var \Wrm\Events\Domain\Model\Event
      */
-    protected $event = null;
+    protected $event;
 
     /**
      * @var string

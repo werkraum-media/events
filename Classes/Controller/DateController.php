@@ -3,12 +3,9 @@
 namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use Wrm\Events\Domain\Model\Date;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
 use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
 use Wrm\Events\Domain\Repository\CategoryRepository;
 use Wrm\Events\Domain\Repository\DateRepository;
@@ -176,7 +173,7 @@ class DateController extends AbstractController
                 'parameter' => 't3://page?uid=current',
                 'additionalParams' => '&' . http_build_query([
                     $namespace => [
-                        'search' => array_filter($this->request->getArgument('search'))
+                        'search' => array_filter($this->request->getArgument('search')),
                     ],
                 ]),
             ]));
