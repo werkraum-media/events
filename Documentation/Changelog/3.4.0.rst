@@ -31,6 +31,10 @@ Features
   ``1`` turns off the option ``useMidnight``, ``start`` and ``end``.
   Only dates with a start date in the future will be shown.
 
+* Handle changes to images for events.
+  The import of destination data one only added new images but kept existing images untouched.
+  This was now improved. The import now will update, remove and re-sort images as well.
+
 Fixes
 -----
 
