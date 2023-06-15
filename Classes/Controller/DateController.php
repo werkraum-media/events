@@ -79,6 +79,8 @@ class DateController extends AbstractController
 
     protected function initializeAction(): void
     {
+        parent::initializeAction();
+
         $contentObject = $this->configurationManager->getContentObject();
         if ($contentObject !== null) {
             $this->demandFactory->setContentObjectRenderer($contentObject);

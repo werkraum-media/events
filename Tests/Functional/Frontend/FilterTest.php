@@ -5,40 +5,20 @@ declare(strict_types=1);
 namespace Wrm\Events\Tests\Functional\Frontend;
 
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Controller\DateController
  * @covers \Wrm\Events\Domain\Repository\DateRepository
  */
-class FilterTest extends AbstractTestCase
+class FilterTest extends AbstractFunctionalTestCase
 {
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/events',
-    ];
-
-    protected $coreExtensionsToLoad = [
-        'fluid_styled_content',
-    ];
-
-    protected $pathsToProvideInTestInstance = [
-        'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Sites/' => 'typo3conf/sites',
-    ];
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
-        $this->setUpFrontendRootPage(1, [
-            'constants' => [
-                'EXT:events/Configuration/TypoScript/constants.typoscript',
-            ],
-            'setup' => [
-                'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript',
-            ],
-        ]);
+        $this->setUpFrontendRendering();
     }
 
     /**

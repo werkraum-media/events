@@ -35,6 +35,11 @@ Features
   The import of destination data one only added new images but kept existing images untouched.
   This was now improved. The import now will update, remove and re-sort images as well.
 
+* Flushes page caches during import and edits.
+  Proper cache tags are now added to the pages whenever the controller is used.
+  That ensures that modifications during import or while editing records are flushing
+  corresponding pages.
+
 Fixes
 -----
 

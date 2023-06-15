@@ -37,6 +37,8 @@ class EventController extends AbstractController
 
     protected function initializeAction(): void
     {
+        parent::initializeAction();
+
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
     }
 
