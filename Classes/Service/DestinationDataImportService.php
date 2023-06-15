@@ -260,11 +260,10 @@ class DestinationDataImportService
             $this->logger->info('Persist database');
             $this->eventRepository->update($this->tmpCurrentEvent);
             $this->persistenceManager->persistAll();
+            $this->logger->info('Update slugs');
+            $this->slugger->update('tx_events_domain_model_event');
+            $this->slugger->update('tx_events_domain_model_date');
         }
-
-        $this->logger->info('Update slugs');
-        $this->slugger->update('tx_events_domain_model_event');
-        $this->slugger->update('tx_events_domain_model_date');
 
         $this->logger->info('Finished import');
         return 0;

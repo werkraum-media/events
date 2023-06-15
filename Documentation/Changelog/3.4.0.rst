@@ -43,6 +43,13 @@ Fixes
   It didn't check if a file that could be deleted because one event got deleted,
   was still in use by another event.
 
+* Generate slugs after each single event was imported.
+  This should prevent a situation where a large amount of events is imported without
+  having slugs.
+  Routing might break depending on configuration.
+  The time range where this can happen is now reduced as slugs for each event and
+  date is generated right after saving each of them.
+
 Tasks
 -----
 
