@@ -64,7 +64,7 @@ return [
             'file' => 1,
             'title' => 'Theater-Rudolstadt_Johannes-Geißer_photo-by-Lisa-Stern_web_.jpg',
             'description' => '',
-            'alternative' => 'DD Import',
+            'alternative' => '',
         ],
         [
             'uid' => 2,
@@ -72,7 +72,7 @@ return [
             'file' => 2,
             'title' => 'Tueftlerzeit©SFZ-Rudolstadt.jpg',
             'description' => 'Description of Tueftlerzeit',
-            'alternative' => 'DD Import',
+            'alternative' => 'Description of Tueftlerzeit',
         ],
     ],
     'tx_events_domain_model_event' => [

@@ -152,7 +152,9 @@ class FilesAssignment
         $this->metaDataRepository->update($file->getUid(), [
             'title' => $this->getShortenedString($mediaObject['value'], 100),
             'description' => $mediaObject['description'] ?? '',
-            'alternative' => 'DD Import',
+            'alternative' => $mediaObject['description'] ?? '',
+            'creator_tool' => 'destination.one',
+            'source' => $mediaObject['url'] ?? '',
         ]);
     }
 
