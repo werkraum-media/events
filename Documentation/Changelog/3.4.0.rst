@@ -34,6 +34,7 @@ Features
 * Handle changes to images for events.
   The import of destination data one only added new images but kept existing images untouched.
   This was now improved. The import now will update, remove and re-sort images as well.
+  Existing image files won't be downloaded again, only information and position are updated.
 
 Fixes
 -----

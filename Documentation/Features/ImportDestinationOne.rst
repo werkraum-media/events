@@ -21,6 +21,7 @@ The import will:
 * Flush all dates for updated events and re-create all dates.
 
 * Add and update all images for updated and added events.
+  Existing image files won't be downloaded again, only information and position are updated.
 
 The import will not:
 
