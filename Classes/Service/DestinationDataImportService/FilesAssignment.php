@@ -93,11 +93,7 @@ class FilesAssignment
 
             if ($importFolder->hasFile($orgFileNameSanitized)) {
                 $this->logger->info('File already exists.', [$orgFileNameSanitized]);
-            } else {
-                $this->logger->info('File does not exist.', [$orgFileNameSanitized]);
-            }
-
-            if ($filename = $this->loadFile($fileUrl)) {
+            } elseif ($filename = $this->loadFile($fileUrl)) {
                 $this->logger->info('Adding file to FAL.', [$filename]);
                 $importFolder->addFile($filename, basename($fileUrl), DuplicationBehavior::REPLACE);
             } else {
