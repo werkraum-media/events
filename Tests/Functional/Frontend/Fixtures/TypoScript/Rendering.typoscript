@@ -2,6 +2,7 @@ config {
     cache_period = 86400
     no_cache = 0
     sendCacheHeaders = 1
+    debug = 1
 }
 
 page = PAGE

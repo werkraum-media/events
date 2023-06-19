@@ -10,11 +10,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ImportHandlesImagesTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    private $fileImportPath = '';
-
     protected function setUp(): void
     {
         // Ensure proper type mapping within tests.
@@ -23,12 +18,7 @@ class ImportHandlesImagesTest extends AbstractTest
 
         parent::setUp();
 
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $this->fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($this->fileImportPath);
-
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
-
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',
@@ -37,13 +27,6 @@ class ImportHandlesImagesTest extends AbstractTest
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        GeneralUtility::rmdir($this->fileImportPath, true);
     }
 
     /**

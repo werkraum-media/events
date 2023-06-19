@@ -26,29 +26,23 @@ namespace Wrm\Events\Tests\Functional\Frontend;
 use Codappix\Typo3PhpDatasets\PhpDataSet;
 use DateTimeImmutable;
 use DateTimeZone;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
+use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @covers \Wrm\Events\Caching\PageCacheTimeout
  */
-class CacheTest extends AbstractTestCase
+class CacheTest extends AbstractFunctionalTestCase
 {
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/events',
-        'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
-    ];
-
-    protected $coreExtensionsToLoad = [
-        'fluid_styled_content',
-    ];
-
-    protected $pathsToProvideInTestInstance = [
-        'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Sites/' => 'typo3conf/sites',
-    ];
-
     protected function setUp(): void
     {
+        $this->testExtensionsToLoad = [
+            'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
+        ];
+
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
@@ -59,7 +53,7 @@ class CacheTest extends AbstractTestCase
             'list_type' => 'events_datelisttest',
             'header' => 'All Dates',
         ]]]);
-        $this->setUpFrontendRootPage(1, $this->getTypoScriptFiles());
+        $this->setUpFrontendRendering();
     }
 
     /**
@@ -260,6 +254,37 @@ class CacheTest extends AbstractTestCase
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
+    /**
+     * @test
+     */
+    public function cachesAreClearedByImport(): void
+    {
+        // Assert frontend is cached
+        $this->assertResponseIsNotCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+
+        // Import
+        $this->importPHPDataSet(__DIR__ . '/../Import/DestinationDataTest/Fixtures/Database/DefaultImportConfiguration.php');
+        $this->setUpConfiguration([
+            'restUrl = https://example.com/some-path/',
+            'license = example-license',
+            'restType = Event',
+            'restLimit = 3',
+            'restMode = next_months,12',
+            'restTemplate = ET2014A.json',
+        ]);
+        $this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/../Import/DestinationDataTest/Fixtures/ResponseWithSingleImageForSingleEvent.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/../Import/DestinationDataTest/Fixtures/ExampleImage.jpg') ?: ''),
+        ]);
+        $this->executeCommand();
+
+        // Assert frontend is not cached on first hit
+        $this->setUpFrontendRendering();
+        $this->assertResponseIsNotCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+    }
+
     private static function assertCacheHeaders(DateTimeImmutable $end, ResponseInterface $response): void
     {
         self::assertSame('public', $response->getHeaderLine('Pragma'));
@@ -280,18 +305,22 @@ class CacheTest extends AbstractTestCase
         self::assertGreaterThanOrEqual($age - 3, $value, 'Max age of cached response is less than expected.');
     }
 
-    private function getTypoScriptFiles(): array
+    private function assertResponseIsNotCached(ResponseInterface $response): void
     {
-        return [
-            'constants' => [
-                'EXT:events/Configuration/TypoScript/constants.typoscript',
-            ],
-            'setup' => [
-                'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Configuration/TypoScript/setup.typoscript',
-                'EXT:events/Tests/Functional/Frontend/Fixtures/TypoScript/Rendering.typoscript',
-            ],
-        ];
+        if ((new Typo3Version())->getMajorVersion() < 11) {
+            self::assertStringNotContainsString('Cached page', $response->getBody()->__toString());
+            return;
+        }
+        self::assertStringStartsNotWith('Cached page', $response->getHeaderLine('X-TYPO3-Debug-Cache'));
+    }
+
+    private function assertResponseIsCached(ResponseInterface $response): void
+    {
+        if ((new Typo3Version())->getMajorVersion() < 11) {
+            self::assertStringContainsString('Cached page', $response->getBody()->__toString());
+            return;
+        }
+        self::assertStringStartsWith('Cached page', $response->getHeaderLine('X-TYPO3-Debug-Cache'));
     }
 
     private function getRequestWithSleep(array $typoScript = []): InternalRequest

@@ -23,9 +23,34 @@ namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use Wrm\Events\Caching\CacheManager;
 
 class AbstractController extends ActionController
 {
+    /**
+     * @var CacheManager
+     */
+    protected $cacheManager;
+
+    public function injectCacheManager(CacheManager $cacheManager): void
+    {
+        $this->cacheManager = $cacheManager;
+    }
+
+    /**
+     * Extend to add cache tag to page.
+     * This allows to clear pages on modifications.
+     */
+    protected function initializeAction(): void
+    {
+        parent::initializeAction();
+
+        $cObject = $this->configurationManager->getContentObject();
+        if ($cObject instanceof ContentObjectRenderer) {
+            $this->cacheManager->addAllCacheTagsToPage($cObject);
+        }
+    }
+
     /**
      * Extend original to also add data from current cobject if available.
      */

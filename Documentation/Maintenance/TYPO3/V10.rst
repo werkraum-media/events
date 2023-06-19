@@ -1,0 +1,11 @@
+TYPO3 V10
+=========
+
+Changes that should happen once we drop TYPO3 v10.
+
+
+Remove fetching cached page stage from body from tests
+------------------------------------------------------
+
+We have different assertions based on TYPO3 version, due to how TYPO3 exposes the info.
+We can remove the condition with its content once we drop v10.

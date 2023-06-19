@@ -10,6 +10,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use Wrm\Events\Caching\CacheManager;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Model\Import;
 use Wrm\Events\Domain\Model\Organizer;
@@ -103,6 +104,11 @@ class DestinationDataImportService
     private $slugger;
 
     /**
+     * @var CacheManager
+     */
+    private $cacheManager;
+
+    /**
      * ImportService constructor.
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
@@ -115,6 +121,7 @@ class DestinationDataImportService
      * @param CategoriesAssignment $categoriesAssignment
      * @param LocationAssignment $locationAssignment
      * @param Slugger $slugger
+     * @param CacheManager $cacheManager
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -128,7 +135,8 @@ class DestinationDataImportService
         FilesAssignment $filesAssignment,
         CategoriesAssignment $categoriesAssignment,
         LocationAssignment $locationAssignment,
-        Slugger $slugger
+        Slugger $slugger,
+        CacheManager $cacheManager
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
@@ -142,6 +150,7 @@ class DestinationDataImportService
         $this->categoriesAssignment = $categoriesAssignment;
         $this->locationAssignment = $locationAssignment;
         $this->slugger = $slugger;
+        $this->cacheManager = $cacheManager;
     }
 
     public function import(
@@ -264,6 +273,9 @@ class DestinationDataImportService
             $this->slugger->update('tx_events_domain_model_event');
             $this->slugger->update('tx_events_domain_model_date');
         }
+
+        $this->logger->info('Flushing cache');
+        $this->cacheManager->clearAllCacheTags();
 
         $this->logger->info('Finished import');
         return 0;

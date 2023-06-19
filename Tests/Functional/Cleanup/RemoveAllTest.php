@@ -13,19 +13,13 @@ use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
  */
 class RemoveAllTest extends AbstractFunctionalTestCase
 {
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/events',
-    ];
-
-    protected $pathsToProvideInTestInstance = [
-        'typo3conf/ext/events/Tests/Functional/Cleanup/Fixtures/RemoveAllTestFileadmin/' => 'fileadmin/',
-    ];
-
     protected function setUp(): void
     {
-        parent::setUp();
+        $this->pathsToProvideInTestInstance = [
+            'typo3conf/ext/events/Tests/Functional/Cleanup/Fixtures/RemoveAllTestFileadmin/' => 'fileadmin/',
+        ];
 
-        $this->setUpBackendUserFromFixture(1);
+        parent::setUp();
     }
 
     /**
