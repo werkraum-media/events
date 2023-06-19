@@ -8,6 +8,10 @@ abstract class AbstractTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
     {
+        $this->coreExtensionsToLoad = [
+            'filemetadata',
+        ];
+
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/Structure.php');

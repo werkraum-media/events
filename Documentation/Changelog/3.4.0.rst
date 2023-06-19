@@ -41,6 +41,14 @@ Features
   That ensures that modifications during import or while editing records are flushing
   corresponding pages.
 
+* Improve handling of file meta data during import from destination.one.
+
+  * Set ``alternative`` to the ``description`` if available.
+
+  * Set ``creator_tool`` to the "destination.one".
+
+  * Set ``source`` to the URL of the fetched image.
+
 Fixes
 -----
 

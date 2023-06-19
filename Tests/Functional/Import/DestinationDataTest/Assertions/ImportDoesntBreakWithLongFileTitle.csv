@@ -17,7 +17,7 @@
 ,3,1,"tx_events_domain_model_event","categories",,,,,,,,,,,,,,,,,
 "sys_file_metadata",,,,,,,,,,,,,,,,,,,,,
 ,"uid","pid","title","description","alternative",,,,,,,,,,,,,,,,
-,1,0,"This title is longer then the supported 255 chars as limited by default by TYPO3 database. Also c …","This is a supported description","DD Import",,,,,,,,,,,,,,,,
+,1,0,"This title is longer then the supported 255 chars as limited by default by TYPO3 database. Also c …","This is a supported description","This is a supported description",,,,,,,,,,,,,,,,
 "sys_file_reference",,,,,,,,,,,,,,,,,,,,,
 ,"uid","uid_local","uid_foreign","tablenames","fieldname","title","description",,,,,,,,,,,,,,
 ,1,1,1,"tx_events_domain_model_event","images",,,,,,,,,,,,,,,,
