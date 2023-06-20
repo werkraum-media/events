@@ -46,6 +46,26 @@ parameters:
 			path: Classes/Service/Cleanup/Files.php
 
 		-
+			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Result\\|int supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Cannot call method fetchAllAssociativeIndexed\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:getPotentialFilesToDelete\\(\\) should return array\\<int, array\\{storage\\: int, identifier\\: string\\}\\> but returns array\\<int\\|string, array\\<string, mixed\\>\\>\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
 			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
@@ -64,6 +84,11 @@ parameters:
 			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
+
+		-
+			message: "#^Cannot call method fetchAllAssociativeIndexed\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
 
 		-
 			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Result\\|int supplied for foreach, only iterables are supported\\.$#"

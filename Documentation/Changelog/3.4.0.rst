@@ -64,6 +64,11 @@ Fixes
   The time range where this can happen is now reduced as slugs for each event and
   date is generated right after saving each of them.
 
+* Improve deletion of files and their relations.
+  The used database query didn't work as expected and could result in data loss.
+  There are now two database queries and the logic is moved to PHP.
+  Furthermore, the test cases were extended with another situation.
+
 Tasks
 -----
 

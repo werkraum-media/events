@@ -135,44 +135,13 @@ class Files
 
     private function deleteFilesWithoutProperReference(): void
     {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
-        $queryBuilder->getRestrictions()->removeAll();
-        $queryBuilder
-            ->select('file.identifier', 'file.storage', 'file.uid')
-            ->addSelectLiteral('SUM(' . $queryBuilder->expr()->eq('reference.deleted', 1) . ') AS deleted_sum')
-            ->from('sys_file', 'file')
-            ->leftJoin(
-                'file',
-                'sys_file_reference',
-                'reference',
-                'reference.uid_local = file.uid'
-            )
-            ->where($queryBuilder->expr()->like(
-                'reference.tablenames',
-                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
-            ))
-            ->orWhere($queryBuilder->expr()->eq(
-                'reference.tablenames',
-                $queryBuilder->createNamedParameter('')
-            ))
-            ->groupBy('file.uid')
-            ->having(
-                $queryBuilder->expr()->eq(
-                    'deleted_sum',
-                    $queryBuilder->expr()->count('*')
-                )
-            )
-        ;
-        /** @var array{int: array{storage: int, identifier: string, uid: int}} $filesToDelete */
-        $filesToDelete = $queryBuilder->execute()->fetchAll();
+        $filesToDelete = $this->filterPotentialFilesToDelete($this->getPotentialFilesToDelete());
 
-        $uidsToRemove = [];
-        foreach ($filesToDelete as $fileToDelete) {
-            $this->deleteFromFal((int)$fileToDelete['storage'], (string)$fileToDelete['identifier']);
-            $uidsToRemove[] = (int)$fileToDelete['uid'];
+        foreach ($filesToDelete as $file) {
+            $this->deleteFromFal((int)$file['storage'], (string)$file['identifier']);
         }
 
-        $this->deleteFromDb(...$uidsToRemove);
+        $this->deleteFromDb(...array_keys($filesToDelete));
     }
 
     private function deleteFromFal(int $storageUid, string $filePath): void
@@ -227,5 +196,80 @@ class Files
             ))
         ;
         $queryBuilder->execute();
+    }
+
+    /**
+     * @return array<int, array{storage: int, identifier: string}> Index is file uid.
+     */
+    private function getPotentialFilesToDelete(): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder
+            ->select('file.uid', 'file.storage', 'file.identifier')
+            ->from('sys_file', 'file')
+            ->leftJoin(
+                'file',
+                'sys_file_reference',
+                'reference',
+                'reference.uid_local = file.uid'
+            )
+            ->where($queryBuilder->expr()->like(
+                'reference.tablenames',
+                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+            ))
+            ->orWhere($queryBuilder->expr()->eq(
+                'reference.tablenames',
+                $queryBuilder->createNamedParameter('')
+            ))
+            ->groupBy('file.uid')
+        ;
+
+        return $queryBuilder->execute()->fetchAllAssociativeIndexed();
+    }
+
+    /**
+     * @param array<int, array{storage: int, identifier: string}> $files
+     * @return array<int, array{storage: int, identifier: string}> Index is file uid.
+     */
+    private function filterPotentialFilesToDelete(array $files): array
+    {
+        $filesToDelete = [];
+        $filesToKeep = [];
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder
+            ->select('*')
+            ->from('sys_file_reference', 'reference')
+            ->where($queryBuilder->expr()->in(
+                'uid_local',
+                $queryBuilder->createNamedParameter(array_keys($files), Connection::PARAM_INT_ARRAY)
+            ))
+        ;
+
+        foreach ($queryBuilder->execute() as $reference) {
+            $file = [];
+            $fileUid = (int) $reference['uid_local'];
+
+            if (
+                (
+                    str_starts_with($reference['tablenames'], 'tx_events_domain_model_')
+                    || $reference['tablenames'] === ''
+                ) && $reference['deleted'] == 1
+            ) {
+                $file = $files[$fileUid] ?? [];
+            } else {
+                $filesToKeep[$fileUid] = $fileUid;
+            }
+
+            if ($file === []) {
+                continue;
+            }
+
+            $filesToDelete[$fileUid] = $file;
+        }
+
+        return array_diff_key($filesToDelete, $filesToKeep);
     }
 }
