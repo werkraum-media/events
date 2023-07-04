@@ -75,7 +75,8 @@ class MigrateOldLocations implements UpgradeWizardInterface
 
     public function updateNecessary(): bool
     {
-        return $this->getQueryBuilder()
+        return $this->hasOldColumns()
+            && $this->getQueryBuilder()
             ->count('*')
             ->execute()
             ->fetchOne() > 0
@@ -219,17 +220,8 @@ class MigrateOldLocations implements UpgradeWizardInterface
 
     private function getQueryBuilder(): QueryBuilder
     {
-        $columns = [
-            'name',
-            'street',
-            'district',
-            'city',
-            'zip',
-            'country',
-            'phone',
-            'latitude',
-            'longitude',
-        ];
+        $columns = $this->columnsToFetch();
+
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_event');
         $qb->getRestrictions()->removeAll();
         $qb->select(...$columns);
@@ -254,6 +246,41 @@ class MigrateOldLocations implements UpgradeWizardInterface
     {
         return [
             DatabaseUpdatedPrerequisite::class,
+        ];
+    }
+
+    private function hasOldColumns(): bool
+    {
+        $schema = $this->connectionPool
+            ->getConnectionForTable('tx_events_domain_model_event')
+            ->getSchemaManager()
+            ->createSchema()
+            ->getTable('tx_events_domain_model_event');
+
+        foreach ($this->columnsToFetch() as $column) {
+            if ($schema->hasColumn($column) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function columnsToFetch(): array
+    {
+        return [
+            'name',
+            'street',
+            'district',
+            'city',
+            'zip',
+            'country',
+            'phone',
+            'latitude',
+            'longitude',
         ];
     }
 

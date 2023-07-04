@@ -69,6 +69,11 @@ Fixes
   There are now two database queries and the logic is moved to PHP.
   Furthermore, the test cases were extended with another situation.
 
+* Do not break update wizard due to missing columns.
+  The existing update wizard expects old columns to exist in order to migrate data.
+  Those might not exist in newer systems where migration is not necessary.
+  The wizard now properly checks for existence before querying the data.
+
 Tasks
 -----
 
