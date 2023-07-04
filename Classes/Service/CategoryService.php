@@ -29,6 +29,7 @@ class CategoryService
      *
      * @param string $idList list of category ids to start
      * @param int $counter
+     *
      * @return string comma separated list of category ids
      */
     public function getChildrenCategories($idList, int $counter = 0): string
@@ -49,6 +50,7 @@ class CategoryService
      *
      * @param string $idList list of category ids to start
      * @param int $counter
+     *
      * @return string comma separated list of category ids
      */
     protected function getChildrenCategoriesRecursive($idList, $counter = 0): string
@@ -96,6 +98,7 @@ class CategoryService
      * Fetch ids again from DB to avoid false positives
      *
      * @param string $idList
+     *
      * @return string
      */
     protected function getUidListFromRecords(string $idList): string

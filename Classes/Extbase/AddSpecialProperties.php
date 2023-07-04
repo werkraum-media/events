@@ -40,6 +40,7 @@ class AddSpecialProperties
 
     /**
      * Internal info to speed things up if we know there are none.
+     *
      * @var bool
      */
     private $doPostponedDatesExist = true;

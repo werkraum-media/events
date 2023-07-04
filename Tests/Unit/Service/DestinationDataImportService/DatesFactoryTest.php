@@ -46,6 +46,7 @@ class DatesFactoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider possibleUnkownInput
      */
     public function returnsNoResultOnUnkownInput(array $unkownInput): void

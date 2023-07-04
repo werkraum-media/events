@@ -230,6 +230,7 @@ class Files
 
     /**
      * @param array<int, array{storage: int, identifier: string}> $files
+     *
      * @return array<int, array{storage: int, identifier: string}> Index is file uid.
      */
     private function filterPotentialFilesToDelete(array $files): array
@@ -250,7 +251,7 @@ class Files
 
         foreach ($queryBuilder->execute() as $reference) {
             $file = [];
-            $fileUid = (int) $reference['uid_local'];
+            $fileUid = (int)$reference['uid_local'];
 
             if (
                 (

@@ -110,6 +110,7 @@ class DestinationDataImportService
 
     /**
      * ImportService constructor.
+     *
      * @param EventRepository $eventRepository
      * @param OrganizerRepository $organizerRepository
      * @param DateRepository $dateRepository
