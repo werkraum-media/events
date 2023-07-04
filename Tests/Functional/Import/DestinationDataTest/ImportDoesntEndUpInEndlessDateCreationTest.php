@@ -3,7 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
 {
@@ -12,10 +11,6 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
      */
     public function importsExampleAsExpected(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
-
         $this->setDateAspect(new \DateTimeImmutable('2022-07-01'), new \DateTimeZone('Europe/Berlin'));
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
@@ -38,10 +33,6 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
         self::assertSame(0, $tester->getStatusCode());
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportDoesntEndUpInEndlessDateCreationTest.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

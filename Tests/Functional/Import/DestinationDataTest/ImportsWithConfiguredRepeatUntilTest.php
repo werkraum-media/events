@@ -32,11 +32,7 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
         $this->executeCommand();
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsRecurringDatesWeeklyWithConfiguredRepeatUntil.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 
     /**
@@ -54,10 +50,6 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
         $this->executeCommand();
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsRecurringDatesDailyWithConfiguredRepeatUntil.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

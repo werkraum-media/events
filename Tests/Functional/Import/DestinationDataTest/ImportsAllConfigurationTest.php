@@ -18,10 +18,6 @@ class ImportsAllConfigurationTest extends AbstractTest
     {
         $this->setDateAspect(new \DateTimeImmutable('2021-07-13', new \DateTimeZone('Europe/Berlin')));
 
-        $fileImportPathConfiguration1 = 'staedte/beispielstadt/events/';
-        $fileImportPath1 = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration1;
-        GeneralUtility::mkdir_deep($fileImportPath1);
-
         $fileImportPathConfiguration2 = 'staedte/anderestadt/events/';
         $fileImportPath2 = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration2;
         GeneralUtility::mkdir_deep($fileImportPath2);
@@ -78,7 +74,7 @@ class ImportsAllConfigurationTest extends AbstractTest
         );
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsAllConfigurationTest.csv');
 
-        $importedFiles = GeneralUtility::getFilesInDir($fileImportPath1);
+        $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
         self::assertSame(
             [
@@ -102,10 +98,6 @@ class ImportsAllConfigurationTest extends AbstractTest
             'Got unexpected number of files'
         );
 
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

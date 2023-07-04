@@ -30,11 +30,7 @@ class ImportsFirstDateOfDatesTest extends AbstractTest
         $this->executeCommand();
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfSingleDate.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 
     /**
@@ -47,11 +43,7 @@ class ImportsFirstDateOfDatesTest extends AbstractTest
         $this->executeCommand();
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfRecurringDatesWeekly.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 
     /**
@@ -64,10 +56,6 @@ class ImportsFirstDateOfDatesTest extends AbstractTest
         $this->executeCommand();
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfRecurringDatesDaily.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

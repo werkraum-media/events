@@ -3,24 +3,17 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @testdox DestinationData import
  */
 class ImportsWithLocationsTest extends AbstractTest
 {
-    /**
-     * @test
-     */
-    public function importsWithLocations(): void
+    protected function setUp(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
+        parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
-
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
             'license = example-license',
@@ -29,7 +22,13 @@ class ImportsWithLocationsTest extends AbstractTest
             'restMode = next_months,12',
             'restTemplate = ET2014A.json',
         ]);
+    }
 
+    /**
+     * @test
+     */
+    public function importsWithLocations(): void
+    {
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithLocations.json') ?: ''),
         ]);
@@ -37,10 +36,6 @@ class ImportsWithLocationsTest extends AbstractTest
 
         self::assertSame(0, $tester->getStatusCode());
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithLocations.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

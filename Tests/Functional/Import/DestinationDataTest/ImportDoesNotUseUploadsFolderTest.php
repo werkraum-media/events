@@ -16,10 +16,6 @@ class ImportDoesNotUseUploadsFolderTest extends AbstractTest
      */
     public function doesNotUseUploadsFolder(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
-
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
@@ -46,7 +42,7 @@ class ImportDoesNotUseUploadsFolderTest extends AbstractTest
         self::assertSame('https://dam.destination.one/828118/f13bbf5602ffc406ebae2faa3527654dea84194666bce4925a1ca8bd3f50c5e9/tueftlerzeit-sfz-rudolstadt-jpg.jpg', (string)$requests[2]['request']->getUri());
         self::assertSame('https://dam.destination.one/853436/109ac1cf87913e21b5e2b0ef0cc63d223a14374364952a855746a8e7c3fcfc36/lutherkirche-jpg.jpg', (string)$requests[3]['request']->getUri());
 
-        $importedFiles = GeneralUtility::getFilesInDir($fileImportPath);
+        $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
         self::assertSame(
             [
@@ -60,10 +56,6 @@ class ImportDoesNotUseUploadsFolderTest extends AbstractTest
 
         self::assertFalse(file_exists(Environment::getPublicPath() . '/uploads/tx_events/'), 'Uploads folder exists.');
 
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

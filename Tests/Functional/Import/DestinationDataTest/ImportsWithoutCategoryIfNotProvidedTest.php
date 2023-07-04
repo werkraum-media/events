@@ -15,10 +15,6 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
      */
     public function importsWithoutCategoryIfNotProvided(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
-
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
         $this->setUpConfiguration([
@@ -64,7 +60,7 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
         );
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutCategoryIfNotProvided.csv');
 
-        $importedFiles = GeneralUtility::getFilesInDir($fileImportPath);
+        $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
         self::assertSame(
             [
@@ -76,10 +72,6 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
             'Got unexpected number of files'
         );
 
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }
