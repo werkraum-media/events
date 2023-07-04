@@ -3,7 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @testdox DestinationData import
@@ -17,10 +16,6 @@ class ImportsTicketsTest extends AbstractTest
      */
     public function importsExampleAsExpected(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
-
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
@@ -46,10 +41,6 @@ class ImportsTicketsTest extends AbstractTest
 
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsTickets.csv');
 
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

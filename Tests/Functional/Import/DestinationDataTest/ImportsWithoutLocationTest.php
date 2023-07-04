@@ -3,7 +3,6 @@
 namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @testdox DestinationData import
@@ -15,10 +14,6 @@ class ImportsWithoutLocationTest extends AbstractTest
      */
     public function importsWithoutLocationIfNotProvided(): void
     {
-        $fileImportPathConfiguration = 'staedte/beispielstadt/events/';
-        $fileImportPath = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration;
-        GeneralUtility::mkdir_deep($fileImportPath);
-
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithoutRegion.php');
         $this->setUpConfiguration([
             'restUrl = https://example.com/some-path/',
@@ -41,10 +36,6 @@ class ImportsWithoutLocationTest extends AbstractTest
             'Added unexpected location.'
         );
         $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutLocationIfNotProvided.csv');
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

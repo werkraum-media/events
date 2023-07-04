@@ -59,10 +59,6 @@ class ImportCleansTransientFilesTest extends AbstractTest
         self::assertIsArray($transientFiles, 'Failed to retrieve transient files from filesystem.');
         self::assertCount(0, $transientFiles, 'Got unexpected number of files');
 
-        self::assertFileEquals(
-            __DIR__ . '/Assertions/EmptyLogFile.txt',
-            $this->getInstancePath() . '/typo3temp/var/log/typo3_0493d91d8e.log',
-            'Logfile was not empty.'
-        );
+        $this->assertEmptyLog();
     }
 }

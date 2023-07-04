@@ -72,7 +72,7 @@ Fixes
 Tasks
 -----
 
-Nothing
+* De-duplicate code within functional tests.
 
 Deprecation
 -----------
