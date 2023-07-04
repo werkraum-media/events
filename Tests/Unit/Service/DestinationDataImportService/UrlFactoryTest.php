@@ -41,6 +41,7 @@ class UrlFactoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider possibleImports
      */
     public function createSearchResultUrl(

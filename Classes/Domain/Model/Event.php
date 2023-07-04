@@ -77,12 +77,14 @@ class Event extends AbstractEntity
 
     /**
      * @var ObjectStorage<FileReference>
+     *
      * @Extbase\ORM\Cascade remove
      */
     protected $images;
 
     /**
      * @var ObjectStorage<Date>
+     *
      * @Extbase\ORM\Cascade remove
      * @Extbase\ORM\Lazy
      */

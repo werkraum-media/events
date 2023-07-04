@@ -34,6 +34,7 @@ interface SluggerType
      * That way fields used by the generation can be populated.
      *
      * @param string[] $record
+     *
      * @return string[]
      */
     public function prepareRecordForSlugGeneration(array $record): array;

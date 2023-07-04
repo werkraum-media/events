@@ -321,6 +321,7 @@ class DateDemandFactoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider possibleEndAndStartNullCombinations
      */
     public function returnsEndsOnSameDayIfAnyIsNull(
@@ -412,6 +413,7 @@ class DateDemandFactoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider possibleSubmittedHighlights
      *
      * @param mixed $highlight
@@ -443,6 +445,7 @@ class DateDemandFactoryTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider possibleSubmittedFalsyHighlights
      *
      * @param mixed $highlight

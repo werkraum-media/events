@@ -59,6 +59,7 @@ class Date extends AbstractEntity
 
     /**
      * @param \DateTime $start
+     *
      * @return void
      */
     public function setStart(\DateTime $start)
@@ -81,6 +82,7 @@ class Date extends AbstractEntity
 
     /**
      * @param \DateTime $end
+     *
      * @return void
      */
     public function setEnd(\DateTime $end)
@@ -117,6 +119,7 @@ class Date extends AbstractEntity
 
     /**
      * @param int $languageUid
+     *
      * @return void
      */
     public function setLanguageUid($languageUid)
@@ -142,6 +145,7 @@ class Date extends AbstractEntity
 
     /**
      * @param  string  $canceled
+     *
      * @return void
      */
     public function setCanceled(string $canceled)
