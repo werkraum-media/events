@@ -75,8 +75,8 @@ class Location extends AbstractEntity
         $this->district = $district;
         $this->country = $country;
         $this->phone = $phone;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
+        $this->latitude = $this->normalizeGeocoordinate($latitude);
+        $this->longitude = $this->normalizeGeocoordinate($longitude);
         $this->_languageUid = $languageUid;
 
         $this->globalId = $this->generateGlobalId();
@@ -132,6 +132,14 @@ class Location extends AbstractEntity
         return $this->globalId;
     }
 
+    public function updateFromLocation(self $location): void
+    {
+        // Only updates values not being part of global id.
+        $this->phone = $location->getPhone();
+        $this->longitude = $location->getLongitude();
+        $this->latitude = $location->getLatitude();
+    }
+
     /**
      * Validates the location.
      *
@@ -158,8 +166,21 @@ class Location extends AbstractEntity
             $this->city,
             $this->district,
             $this->country,
-            $this->latitude,
-            $this->longitude,
         ]));
+    }
+
+    private function normalizeGeocoordinate(string $coordinate): string
+    {
+        $numberOfCommas = substr_count($coordinate, ',');
+        $numberOfPoints = substr_count($coordinate, '.');
+
+        if (
+            $numberOfCommas === 1
+            && $numberOfPoints === 0
+        ) {
+            $coordinate = str_replace(',', '.', $coordinate);
+        }
+
+        return number_format((float)$coordinate, 6, '.', '');
     }
 }

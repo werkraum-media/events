@@ -53,4 +53,5 @@ call_user_func(function () {
 
     \Wrm\Events\Caching\PageCacheTimeout::register();
     \Wrm\Events\Updates\MigrateOldLocations::register();
+    \Wrm\Events\Updates\MigrateDuplicateLocations::register();
 });

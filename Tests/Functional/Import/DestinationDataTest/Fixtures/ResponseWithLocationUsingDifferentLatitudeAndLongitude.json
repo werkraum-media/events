@@ -1,0 +1,341 @@
+{
+    "status": "OK",
+    "count": 2,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [
+                "Weihnachten"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.<br>Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)<br>Um Voranmeldung unter 03672-486470 oder&nbsp;<a data-cke-saved-href=\"mailto:schillerhaus@rudolstadt.de\" href=\"mailto:schillerhaus@rudolstadt.de\">schillerhaus@rudolstadt.de</a>&nbsp;wird gebeten. <br><strong>Es gilt die 2G-PLUS-Regel.</strong>&nbsp;<br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.\nEintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)\nUm Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+
+            "name": "Schillerhaus Rudolstadt",
+            "street": "Schillerstraße 25",
+            "zip": "07407",
+            "city": "Rudolstadt",
+            "district": "",
+            "country": "Deutschland",
+            "phone": "+ 49 3672 / 486470",
+            "geo": {
+                "main": {
+                    "latitude": 50.720971023258805,
+                    "longitude": 11.335229873657227
+                },
+                "entry": [],
+                "attributes": []
+            },
+
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+                {
+                    "rel": "venuewebsite",
+                    "url": "http://schillerhaus.rudolstadt.de/",
+                    "latitude": null,
+                    "longitude": null,
+                    "value": ""
+                }
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-19T15:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-19T16:30:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "1"
+                }
+            ],
+            "features": [
+                "vorhandenes Feature",
+                "Barrierefrei",
+                "Zielgruppe Jugendliche",
+                "Karten an der Abendkasse",
+                "Ausreichende Lüftung",
+                "Beachtung der Hygienehinweise"
+            ],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Schillerhaus Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schillerstraße 25",
+                    "phone": "+ 49 3672 / 486470",
+                    "fax": "+ 49 3672 / 486475",
+                    "web": "http://schillerhaus.rudolstadt.de",
+                    "email": "schillerhaus@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        },
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [
+                "Weihnachten"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.<br>Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)<br>Um Voranmeldung unter 03672-486470 oder&nbsp;<a data-cke-saved-href=\"mailto:schillerhaus@rudolstadt.de\" href=\"mailto:schillerhaus@rudolstadt.de\">schillerhaus@rudolstadt.de</a>&nbsp;wird gebeten. <br><strong>Es gilt die 2G-PLUS-Regel.</strong>&nbsp;<br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.\nEintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)\nUm Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+
+            "name": "Schillerhaus Rudolstadt",
+            "street": "Schillerstraße 25",
+            "zip": "07407",
+            "city": "Rudolstadt",
+            "district": "",
+            "country": "Deutschland",
+            "phone": "+ 49 3672 / 486470",
+            "geo": {
+                "main": {
+                    "latitude": "50,720971023258805",
+                    "longitude": "11,335229873657227"
+                },
+                "entry": [],
+                "attributes": []
+            },
+
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+                {
+                    "rel": "venuewebsite",
+                    "url": "http://schillerhaus.rudolstadt.de/",
+                    "latitude": null,
+                    "longitude": null,
+                    "value": ""
+                }
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100050775"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2099-12-19T15:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2099-12-19T16:30:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "1"
+                }
+            ],
+            "features": [
+                "vorhandenes Feature",
+                "Barrierefrei",
+                "Zielgruppe Jugendliche",
+                "Karten an der Abendkasse",
+                "Ausreichende Lüftung",
+                "Beachtung der Hygienehinweise"
+            ],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Schillerhaus Rudolstadt",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Schillerstraße 25",
+                    "phone": "+ 49 3672 / 486470",
+                    "fax": "+ 49 3672 / 486475",
+                    "web": "http://schillerhaus.rudolstadt.de",
+                    "email": "schillerhaus@rudolstadt.de",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        }
+    ]
+}

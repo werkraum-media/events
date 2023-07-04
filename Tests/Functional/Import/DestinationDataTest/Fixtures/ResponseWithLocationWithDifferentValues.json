@@ -1,0 +1,56 @@
+{
+    "status": "OK",
+    "count": 1,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [ ],
+            "name": "Schillerhaus Rudolstadt",
+            "street": "Schillerstraße 25",
+            "zip": "07407",
+            "city": "Rudolstadt",
+            "district": "",
+            "country": "Deutschland",
+            "phone": "+ 49 3672 / 486470",
+            "geo": {
+                "main": {
+                    "latitude": 50.720971023258805,
+                    "longitude": 11.335229873657227
+                }
+            },
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [ ],
+            "keywords": [],
+            "timeIntervals": [ ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "attributes": [ ],
+            "features": [ ],
+            "addresses": [ ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        }
+    ]
+}
