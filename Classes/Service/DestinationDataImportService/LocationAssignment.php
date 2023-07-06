@@ -39,6 +39,12 @@ class LocationAssignment
 
         $existingLocation = $this->repository->findOneByGlobalId($newLocation->getGlobalId());
 
-        return $existingLocation ?? $newLocation;
+        if ($existingLocation === null) {
+            return $newLocation;
+        }
+
+        $existingLocation->updateFromLocation($newLocation);
+
+        return $existingLocation;
     }
 }

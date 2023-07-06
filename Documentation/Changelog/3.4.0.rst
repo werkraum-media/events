@@ -1,6 +1,13 @@
 3.4.0
 =====
 
+Manual steps
+------------
+
+* Determining global_id of locations has changed.
+  An Update Wizard is provided in order to migrate existing data.
+  This is only necessary when using the import of locations from Destination One.
+
 Breaking
 --------
 
@@ -73,6 +80,10 @@ Fixes
   The existing update wizard expects old columns to exist in order to migrate data.
   Those might not exist in newer systems where migration is not necessary.
   The wizard now properly checks for existence before querying the data.
+
+* Prevent duplicate location entries from Destination One import.
+  They seem to differ in writing of latitude and longitude.
+  An update wizard is provided to clean up existing duplicates.
 
 Tasks
 -----
