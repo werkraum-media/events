@@ -44,7 +44,6 @@ class LocationAssignment
         }
 
         $existingLocation->updateFromLocation($newLocation);
-        $this->repository->update($existingLocation);
 
         return $existingLocation;
     }

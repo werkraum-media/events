@@ -73,14 +73,14 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
             }
 
             $uid = (int)$location['uid'];
-            $matchingLocations = $this->getMatchingLocations(
+            $matchingLocation = $this->getMatchingLocation(
                 $locationObject->getGlobalId(),
                 $uid
             );
 
             // Already have entries for the new id, this one is duplicate
-            if ($matchingLocations !== []) {
-                $duplicates[$uid] = $matchingLocations[0];
+            if ($matchingLocation > 0) {
+                $duplicates[$uid] = $matchingLocation;
                 continue;
             }
 
@@ -132,17 +132,23 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         }
     }
 
-    private function getMatchingLocations(
+    private function getMatchingLocation(
         string $globalId,
         int $uid
-    ): array {
+    ): int {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_location');
         $queryBuilder->select('uid');
         $queryBuilder->from('tx_events_domain_model_location');
         $queryBuilder->where($queryBuilder->expr()->eq('global_id', $queryBuilder->createNamedParameter($globalId)));
         $queryBuilder->andWhere($queryBuilder->expr()->neq('uid', $queryBuilder->createNamedParameter($uid)));
+        $queryBuilder->setMaxResults(1);
 
-        return $queryBuilder->execute()->fetchFirstColumn();
+        $uid = $queryBuilder->execute()->fetchOne();
+        if (is_numeric($uid) === false) {
+            return 0;
+        }
+
+        return (int) $uid;
     }
 
     private function buildObject(array $location): Location

@@ -6,7 +6,7 @@ Manual steps
 
 * Determining global_id of locations has changed.
   An Update Wizard is provided in order to migrate existing data.
-  This is only necessary when using the import of location from Destination One.
+  This is only necessary when using the import of locations from Destination One.
 
 Breaking
 --------
@@ -83,7 +83,7 @@ Fixes
 
 * Prevent duplicate location entries from Destination One import.
   They seem to differ in writing of latitude and longitude.
-  A update wizard is provided to clean up existing duplicates.
+  An update wizard is provided to clean up existing duplicates.
 
 Tasks
 -----
