@@ -28,8 +28,10 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
+use Wrm\Events\Updates\UserAuthentication\User;
 
 class MigrateOldLocations implements UpgradeWizardInterface
 {
@@ -159,6 +161,11 @@ class MigrateOldLocations implements UpgradeWizardInterface
         }
         $recordUid = 'NEW12121';
         $l10nParentUid = $this->uidsForTranslation[$event['l10n_parent'] . '-0'] ?? 0;
+
+        if (($GLOBALS['BE_USER'] ?? null) === null) {
+            $GLOBALS['BE_USER'] = GeneralUtility::makeInstance(User::class);
+            $GLOBALS['BE_USER']->authenticate();
+        }
         $dataHandler = clone $this->dataHandler;
 
         if ($event['sys_language_uid'] > 0 && $l10nParentUid > 0) {

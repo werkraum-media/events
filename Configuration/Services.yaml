@@ -6,6 +6,7 @@ services:
 
   Wrm\Events\:
     resource: '../Classes/*'
+    exclude: '../Classes/Updates/UserAuthentication*'
 
   Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand:
     tags:

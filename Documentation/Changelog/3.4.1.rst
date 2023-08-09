@@ -1,0 +1,32 @@
+3.4.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Do not break Upgrade Wizards in install tool.
+
+  TYPO3 does not provide a BE_USER within install tool.
+  That will break the Upgrade Wizards as they use DataHandler that relies on an existing backend user.
+  This was not an issue on command line where _cli_ user will be created and used by TYPO3.
+  The extension now adds an _events_ user as admin as well when necessary.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
