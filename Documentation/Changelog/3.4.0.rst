@@ -6,7 +6,7 @@ Manual steps
 
 * Determining global_id of locations has changed.
   An Update Wizard is provided in order to migrate existing data.
-  This is only necessary when using the import of locations from Destination One.
+  This is only necessary when using the import of locations from destination.one.
 
 Breaking
 --------
@@ -39,7 +39,7 @@ Features
   Only dates with a start date in the future will be shown.
 
 * Handle changes to images for events.
-  The import of destination data one only added new images but kept existing images untouched.
+  The import of destination.one only added new images but kept existing images untouched.
   This was now improved. The import now will update, remove and re-sort images as well.
   Existing image files won't be downloaded again, only information and position are updated.
 
@@ -81,7 +81,7 @@ Fixes
   Those might not exist in newer systems where migration is not necessary.
   The wizard now properly checks for existence before querying the data.
 
-* Prevent duplicate location entries from Destination One import.
+* Prevent duplicate location entries from destination.one import.
   They seem to differ in writing of latitude and longitude.
   An update wizard is provided to clean up existing duplicates.
 

@@ -31,7 +31,7 @@ Features
 
   * ``getEndsOnSameDay()``
 
-* Add destination data "Features" to events.
+* Add destination.one "Features" to events.
   Features are again TYPO3 categories with different parent as existing categories.
   New features are hidden by default but can be activated within TYPO3.
   That allows to fetch all within controller and provide them as filter.

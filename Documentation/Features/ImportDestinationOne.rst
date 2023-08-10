@@ -1,11 +1,11 @@
-.. index:: single: import; DestinationOne
-           single: DestinationOne
+.. index:: single: import; destination.one
+           single: destination.one
 .. _importDestinationOne:
 
-Import Destination One
+Import destination.one
 ======================
 
-The extension provides out of the box to import events from Destination Data One.
+The extension provides out of the box to import events from destination.one.
 
 The import can fetch events, dates, categories and images.
 Multiple imports can be defined, e.g. one per experience.

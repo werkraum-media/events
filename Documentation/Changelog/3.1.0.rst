@@ -37,7 +37,7 @@ Fixes
 
   Relates: #10253
 
-* Support import of png images from Destination One.
+* Support import of png images from destination.one.
 
 * Do not break TYPO3 v11.5 extension compatibility check.
   The ``addStaticFile()`` method has to be called from ``Configuration/TCA/Overrides/`` instead of ``ext_tables.php`` as this might break frontend.

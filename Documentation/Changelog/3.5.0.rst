@@ -9,7 +9,7 @@ Nothing
 Features
 --------
 
-* Add PSR-14 Events to Destination Data One import.
+* Add PSR-14 Events to destination.one import.
   They allow individual installation to alter the import.
 
   See :ref:`psr14` for an overview of PSR-14 Events.
@@ -19,7 +19,7 @@ Features
   * Allow to modify an event object before importing.
 
 * Add source to events.
-  Destination Data One provides the original source, either them self or an external.
+  destination.one provides the original source, either them self or an external.
   This is now saved in order to make it easier for editors and companies to contact
   the original source and ask to fix broken data.
 
@@ -35,7 +35,8 @@ Fixes
 Tasks
 -----
 
-Nothing
+* Renaming different Destination cases to destination.one throughout documentation and text.
+  Code is left untouched in order to not break things.
 
 Deprecation
 -----------
