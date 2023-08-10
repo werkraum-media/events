@@ -30,6 +30,9 @@
             <trans-unit id="tx_events_domain_model_event.tabs.social">
                 <source>Social Media</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.palette.source">
+                <source>Source</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.title">
                 <source>Title</source>
             </trans-unit>
@@ -38,6 +41,12 @@
             </trans-unit>
             <trans-unit id="tx_events_domain_model_event.global_id">
                 <source>Global UID</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.source_name">
+                <source>Source Name</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.source_url">
+                <source>Source URL</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_event.slug">
                 <source>Slug</source>

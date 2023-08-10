@@ -22,6 +22,8 @@ CREATE TABLE tx_events_domain_model_event (
     partner text,
     region int(11) unsigned DEFAULT '0',
     references_events text,
+    source_name varchar(255) DEFAULT '' NOT NULL,
+    source_url varchar(255) DEFAULT '' NOT NULL,
     KEY dataHandler (l10n_parent, t3ver_oid, deleted, t3ver_wsid, t3ver_state)
 );
 

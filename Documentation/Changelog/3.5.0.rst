@@ -18,6 +18,11 @@ Features
 
   * Allow to modify an event object before importing.
 
+* Add source to events.
+  Destination Data One provides the original source, either them self or an external.
+  This is now saved in order to make it easier for editors and companies to contact
+  the original source and ask to fix broken data.
+
 Fixes
 -----
 

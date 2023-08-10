@@ -277,6 +277,10 @@ class DestinationDataImportService
                 $this->setAssets($event['media_objects']);
             }
 
+            if ($event['source'] ?? false) {
+                $this->setSource($event['source']);
+            }
+
             $this->eventDispatcher->dispatch(new EventImportEvent(
                 $existingEvent,
                 $this->tmpCurrentEvent
@@ -486,6 +490,17 @@ class DestinationDataImportService
             $assets
         );
         $this->tmpCurrentEvent->setImages($images);
+    }
+
+    private function setSource(array $source): void
+    {
+        if (isset($source['value'])) {
+            $this->tmpCurrentEvent->setSourceName($source['value']);
+        }
+
+        if (isset($source['url'])) {
+            $this->tmpCurrentEvent->setSourceUrl($source['url']);
+        }
     }
 
     /**

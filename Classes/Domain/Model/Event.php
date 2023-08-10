@@ -140,6 +140,16 @@ class Event extends AbstractEntity
      */
     protected $dataProcessing;
 
+    /**
+     * @var string
+     */
+    protected $sourceName = '';
+
+    /**
+     * @var string
+     */
+    protected $sourceUrl = '';
+
     public function __construct()
     {
         $this->initStorageObjects();
@@ -468,5 +478,15 @@ class Event extends AbstractEntity
     public function getLocalizedUid(): int
     {
         return $this->_localizedUid;
+    }
+
+    public function setSourceName(string $name): void
+    {
+        $this->sourceName = $name;
+    }
+
+    public function setSourceUrl(string $url): void
+    {
+        $this->sourceUrl = $url;
     }
 }
