@@ -148,7 +148,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
             return 0;
         }
 
-        return (int) $uid;
+        return (int)$uid;
     }
 
     private function buildObject(array $location): Location

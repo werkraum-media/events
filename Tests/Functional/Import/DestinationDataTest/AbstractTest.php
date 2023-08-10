@@ -8,9 +8,7 @@ abstract class AbstractTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
     {
-        $this->coreExtensionsToLoad = [
-            'filemetadata',
-        ];
+        $this->coreExtensionsToLoad[] = 'filemetadata';
 
         parent::setUp();
 

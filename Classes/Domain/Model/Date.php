@@ -15,7 +15,7 @@ class Date extends AbstractEntity
     protected $start;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $end;
 
@@ -73,7 +73,7 @@ class Date extends AbstractEntity
     }
 
     /**
-     * @return \DateTime end
+     * @return \DateTime|null end
      */
     public function getEnd()
     {
@@ -81,23 +81,25 @@ class Date extends AbstractEntity
     }
 
     /**
-     * @param \DateTime $end
+     * @param \DateTime|null $end
      *
      * @return void
      */
-    public function setEnd(\DateTime $end)
+    public function setEnd($end)
     {
         $this->end = $end;
     }
 
     public function getHasUsefulEndTime(): bool
     {
-        return $this->getEnd()->format('H:i') !== '23:59';
+        $end = $this->getEnd();
+        return $end && $end->format('H:i') !== '23:59';
     }
 
     public function getEndsOnSameDay(): bool
     {
-        return $this->getStart()->format('Y-m-d') === $this->getEnd()->format('Y-m-d');
+        $end = $this->getEnd();
+        return $end && $this->getStart()->format('Y-m-d') === $end->format('Y-m-d');
     }
 
     /**

@@ -1,0 +1,94 @@
+{
+    "status": "OK",
+    "count": 1,
+    "overallcount": 1,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100350503",
+            "id": "100350503",
+            "title": "Event for modifying event",
+            "type": "Event",
+            "categories": [
+            ],
+            "features": [
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.&nbsp;&nbsp;Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.<br><br><strong>Es gilt die 2G-PLUS-Regel.</strong><br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.  Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.\n\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Caspar-Schulte-Straße",
+            "phone": "03672 - 48 96 13",
+            "author": "support@hubermedia.de",
+            "media_objects": [
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "start": "2099-11-02T11:00:00+01:00",
+                    "end": "2099-11-02T11:15:00+01:00",
+                    "repeatUntil": "2099-11-10T11:15:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "freq": "Weekly",
+                    "interval": 1
+                }
+            ],
+            "name": "Lutherkirche",
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Lutherkirche",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Caspar-Schulte-Straße",
+                    "phone": "03672 - 48 96 13",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2099-11-08T22:15:00+00:00",
+            "changed": "2099-12-14T08:38:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            }
+        }
+    ]
+}

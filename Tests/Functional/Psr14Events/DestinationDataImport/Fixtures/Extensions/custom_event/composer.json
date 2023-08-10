@@ -1,0 +1,19 @@
+{
+    "name": "werkraummedia/custom_event",
+    "description": "Integrates custom event specifics",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "werkraummedia/events": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WerkraumMedia\\CustomEvent\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "custom_event"
+        }
+    }
+}
