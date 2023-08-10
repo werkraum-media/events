@@ -4,10 +4,10 @@
 PSR-14 Events
 =============
 
-.. index:: single: PSR-14 Events; Destination Data One Import: Event Import
+.. index:: single: PSR-14 Events; destination.one Import: Event Import
 
-Destination Data One Import: ``EventImportEvent``
--------------------------------------------------
+destination.one Import: ``EventImportEvent``
+--------------------------------------------
 
-Executed during Destination Data One Import.
+Executed during destination.one Import.
 Allows to alter the event prior persistence.

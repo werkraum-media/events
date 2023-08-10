@@ -2,7 +2,11 @@
     "name": "wrm/events",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "description": "Extension to manage Destination Data managed events",
+    "description": "Extension to manage destination.one managed events",
+    "keywords": [
+        "events",
+        "destination.one"
+    ],
     "authors": [
         {
             "name": "Dirk Koritnik",
