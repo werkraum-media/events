@@ -10,6 +10,20 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ImportsExampleAsExpectedTest extends AbstractTest
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUpConfiguration([
+            'restUrl = https://example.com/some-path/',
+            'license = example-license',
+            'restType = Event',
+            'restLimit = 3',
+            'restMode = next_months,12',
+            'restTemplate = ET2014A.json',
+        ]);
+    }
+
     /**
      * @test
      */
@@ -20,14 +34,6 @@ class ImportsExampleAsExpectedTest extends AbstractTest
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithCategories.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-            'license = example-license',
-            'restType = Event',
-            'restLimit = 3',
-            'restMode = next_months,12',
-            'restTemplate = ET2014A.json',
-        ]);
 
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/Response.json') ?: ''),
@@ -70,6 +76,22 @@ class ImportsExampleAsExpectedTest extends AbstractTest
             'Got unexpected number of files'
         );
 
+        $this->assertEmptyLog();
+    }
+
+    /**
+     * @test
+     */
+    public function importsSource(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
+        $this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithSources.json') ?: ''),
+        ]);
+
+        $this->executeCommand();
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsSource.php');
         $this->assertEmptyLog();
     }
 }

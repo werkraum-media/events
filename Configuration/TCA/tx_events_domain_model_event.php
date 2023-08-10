@@ -28,7 +28,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => '--palette--;' . $l10nPathFE . ':palette.general;general,
+            'showitem' => '
                     sys_language_uid,
                     l10n_parent,
                     l10n_diffsource,
@@ -40,6 +40,7 @@ return [
                     slug,
                     ticket,
                     global_id,
+                    --palette--;;source,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.text,
                     details,
                     price_info,
@@ -67,7 +68,12 @@ return [
                     endtime',
         ],
     ],
-
+    'palettes' => [
+        'source' => [
+            'label' => $l10nPath . ':tx_events_domain_model_event.palette.source',
+            'showitem' => 'source_name, source_url',
+        ],
+    ],
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
@@ -185,6 +191,24 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+            ],
+        ],
+        'source_name' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.source_name',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+            ],
+        ],
+        'source_url' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.source_url',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputLink',
+                'softref' => 'typolink',
+                'readOnly' => true,
             ],
         ],
         'slug' => [

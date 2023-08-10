@@ -35,6 +35,10 @@
                 <source>Social Media</source>
                 <target>Social Media</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.palette.source">
+                <source>Source</source>
+                <target>Quelle</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event">
                 <source>Event</source>
                 <target>Veranstaltung</target>
@@ -50,6 +54,14 @@
             <trans-unit id="tx_events_domain_model_event.global_id">
                 <source>Global UID</source>
                 <target>Globale UID</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.source_name">
+                <source>Source Name</source>
+                <target>Name der Quelle</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.source_url">
+                <source>Source URL</source>
+                <target>URL der Quelle</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_event.slug">
                 <source>Slug</source>
