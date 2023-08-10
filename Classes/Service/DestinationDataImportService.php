@@ -3,6 +3,7 @@
 namespace Wrm\Events\Service;
 
 use Exception;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,6 +23,7 @@ use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
 use Wrm\Events\Service\DestinationDataImportService\FilesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
 use Wrm\Events\Service\DestinationDataImportService\Slugger;
@@ -109,6 +111,11 @@ class DestinationDataImportService
     private $cacheManager;
 
     /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
+
+    /**
      * ImportService constructor.
      *
      * @param EventRepository $eventRepository
@@ -123,6 +130,7 @@ class DestinationDataImportService
      * @param LocationAssignment $locationAssignment
      * @param Slugger $slugger
      * @param CacheManager $cacheManager
+     * @param EventDispatcher $eventDispatcher
      */
     public function __construct(
         EventRepository $eventRepository,
@@ -137,7 +145,8 @@ class DestinationDataImportService
         CategoriesAssignment $categoriesAssignment,
         LocationAssignment $locationAssignment,
         Slugger $slugger,
-        CacheManager $cacheManager
+        CacheManager $cacheManager,
+        EventDispatcher $eventDispatcher
     ) {
         $this->eventRepository = $eventRepository;
         $this->organizerRepository = $organizerRepository;
@@ -152,6 +161,7 @@ class DestinationDataImportService
         $this->locationAssignment = $locationAssignment;
         $this->slugger = $slugger;
         $this->cacheManager = $cacheManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function import(
@@ -198,6 +208,7 @@ class DestinationDataImportService
 
             // Event already exists? If not create one!
             $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
+            $existingEvent = clone $this->tmpCurrentEvent;
 
             // Set language UID
             $this->tmpCurrentEvent->setLanguageUid(-1);
@@ -265,6 +276,11 @@ class DestinationDataImportService
             if ($event['media_objects'] ?? false) {
                 $this->setAssets($event['media_objects']);
             }
+
+            $this->eventDispatcher->dispatch(new EventImportEvent(
+                $existingEvent,
+                $this->tmpCurrentEvent
+            ));
 
             // Update and persist
             $this->logger->info('Persist database');

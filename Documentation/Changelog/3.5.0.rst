@@ -1,0 +1,38 @@
+3.5.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Add PSR-14 Events to Destination Data One import.
+  They allow individual installation to alter the import.
+
+  See :ref:`psr14` for an overview of PSR-14 Events.
+
+  Added Events:
+
+  * Allow to modify an event object before importing.
+
+Fixes
+-----
+
+* Improve handling of dates with no end.
+  This was always technically possible. Still support from extension was missing.
+  This now got improved, the date object will not throw exceptions due to ``format()`` calls on none.
+  Furthermore the PHPDoc now reflects that there might be null instead of ``\DateTime``.
+  Also the setter was adjusted to allow ``null`` values.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
