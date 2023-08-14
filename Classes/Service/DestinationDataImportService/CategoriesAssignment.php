@@ -46,13 +46,12 @@ class CategoriesAssignment
             );
 
             if (!$category instanceof Category) {
-                $category = new Category();
-                $category->setParent($import->getParentCategory());
-                $category->setPid($import->getPid());
-                $category->setTitle($categoryTitle);
-                if ($import->getHideByDefault()) {
-                    $category->hide();
-                }
+                $category = new Category(
+                    $import->getParentCategory(),
+                    $import->getPid(),
+                    $categoryTitle,
+                    $import->getHideByDefault() ? true : false
+                );
                 $this->repository->add($category);
             }
 

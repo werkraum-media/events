@@ -17,7 +17,12 @@ class CategoryTest extends TestCase
      */
     public function canBeCreated(): void
     {
-        $subject = new Category();
+        $subject = new Category(
+            null,
+            10,
+            'Title',
+            false
+        );
 
         self::assertInstanceOf(
             Category::class,
@@ -30,7 +35,12 @@ class CategoryTest extends TestCase
      */
     public function returnsSorting(): void
     {
-        $subject = new Category();
+        $subject = new Category(
+            null,
+            10,
+            'Title',
+            false
+        );
         $subject->_setProperty('sorting', 10);
 
         self::assertSame(10, $subject->getSorting());
@@ -39,13 +49,30 @@ class CategoryTest extends TestCase
     /**
      * @test
      */
-    public function canHide(): void
+    public function canBeVisible(): void
     {
-        $subject = new Category();
+        $subject = new Category(
+            null,
+            10,
+            'Title',
+            false
+        );
 
         self::assertFalse($subject->_getProperty('hidden'));
+    }
 
-        $subject->hide();
+    /**
+     * @test
+     */
+    public function canHide(): void
+    {
+        $subject = new Category(
+            null,
+            10,
+            'Title',
+            true
+        );
+
         self::assertTrue($subject->_getProperty('hidden'));
     }
 }

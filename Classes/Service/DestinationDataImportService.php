@@ -23,6 +23,7 @@ use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use Wrm\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
 use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
 use Wrm\Events\Service\DestinationDataImportService\FilesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
@@ -310,7 +311,13 @@ class DestinationDataImportService
             $categories
         ));
 
-        $this->tmpCurrentEvent->setCategories($categories);
+        $event = new CategoriesAssignEvent(
+            $this->tmpCurrentEvent,
+            $categories
+        );
+        $this->eventDispatcher->dispatch($event);
+
+        $this->tmpCurrentEvent->setCategories($event->getCategories());
     }
 
     private function setFeatures(array $features): void

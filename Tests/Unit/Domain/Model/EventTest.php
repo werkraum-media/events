@@ -32,10 +32,10 @@ class EventTest extends TestCase
      */
     public function returnsSortedFeatures(): void
     {
-        $feature1 = new Category();
-        $feature1->_setProperty('sorting', 10);
-        $feature2 = new Category();
-        $feature2->_setProperty('sorting', 5);
+        $feature1 = $this->createStub(Category::class);
+        $feature1->method('getSorting')->willReturn(10);
+        $feature2 = $this->createStub(Category::class);
+        $feature2->method('getSorting')->willReturn(5);
 
         $storage = new ObjectStorage();
         $storage->attach($feature1);

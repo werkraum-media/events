@@ -4,7 +4,9 @@
 Breaking
 --------
 
-Nothing
+* We migrated away from Extbase Category model.
+  This is technically breaking, but we don't consider it breaking as this should be an internal detail.
+  Still this might break if you have type checks.
 
 Features
 --------
@@ -15,6 +17,8 @@ Features
   See :ref:`psr14` for an overview of PSR-14 Events.
 
   Added Events:
+
+  * Allow to modify TYPO3 ``sys_categories`` before adding them to an event during import.
 
   * Allow to modify an event object before importing.
 
@@ -37,6 +41,11 @@ Tasks
 
 * Renaming different Destination cases to destination.one throughout documentation and text.
   Code is left untouched in order to not break things.
+
+* Migrate away from Extbase Category to custom Category.
+  The extension already provided its own Category model.
+  TYPO3 deprecated and will remove the default Models.
+  We consider this none breaking as this is considered to be internal API.
 
 Deprecation
 -----------

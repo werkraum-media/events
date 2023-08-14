@@ -6,6 +6,11 @@ parameters:
 			path: Classes/Controller/DateController.php
 
 		-
+			message: "#^Instanceof between Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Category.php
+
+		-
 			message: "#^Parameter \\#1 \\$categories of method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php

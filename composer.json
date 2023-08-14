@@ -35,6 +35,7 @@
     "autoload-dev": {
         "psr-4": {
             "Wrm\\Events\\Tests\\": "Tests",
+            "WerkraumMedia\\CustomCategories\\": "Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_categories/Classes/",
             "WerkraumMedia\\CustomEvent\\": "Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_event/Classes/"
         }
     },
