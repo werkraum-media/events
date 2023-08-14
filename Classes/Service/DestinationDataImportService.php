@@ -284,7 +284,8 @@ class DestinationDataImportService
 
             $this->eventDispatcher->dispatch(new EventImportEvent(
                 $existingEvent,
-                $this->tmpCurrentEvent
+                $this->tmpCurrentEvent,
+                $event
             ));
 
             // Update and persist

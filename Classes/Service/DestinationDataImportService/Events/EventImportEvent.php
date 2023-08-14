@@ -37,21 +37,44 @@ final class EventImportEvent
      */
     private $eventToImport;
 
+    /**
+     * @var array
+     */
+    private $eventData;
+
     public function __construct(
         Event $existingEvent,
-        Event $eventToImport
+        Event $eventToImport,
+        array $eventData
     ) {
         $this->existingEvent = $existingEvent;
         $this->eventToImport = $eventToImport;
+        $this->eventData = $eventData;
     }
 
+    /**
+     * The existing event, or newly created, prior applying modifications.
+     * Can be used to compare existing data with new data for import.
+     */
     public function getBaseEvent(): Event
     {
         return clone $this->existingEvent;
     }
 
+    /**
+     * The object that will finally be imported.
+     * Modifications to this object will result in modifications of imported data.
+     */
     public function getEventToImport(): Event
     {
         return $this->eventToImport;
+    }
+
+    /**
+     * The original data as received from API.
+     */
+    public function getEventData(): array
+    {
+        return $this->eventData;
     }
 }
