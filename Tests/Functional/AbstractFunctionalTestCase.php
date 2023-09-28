@@ -69,6 +69,11 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         ]);
 
         ArrayUtility::mergeRecursiveWithOverrule($this->configurationToUseInTestInstance, [
+            'FE' => [
+                'cacheHash' => [
+                    'enforceValidation' => false,
+                ],
+            ],
             'GFX' => [
                 'processor_enabled' => true,
                 'processor_path' => '/usr/bin/',

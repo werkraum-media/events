@@ -21,8 +21,13 @@ namespace Wrm\Events\Controller;
  * 02110-1301, USA.
  */
 
+use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 use Wrm\Events\Caching\CacheManager;
 
 class AbstractController extends ActionController
@@ -65,5 +70,22 @@ class AbstractController extends ActionController
         }
 
         return $view;
+    }
+
+    protected function trigger404(string $message): void
+    {
+        $errorController = GeneralUtility::makeInstance(ErrorController::class);
+
+        if (class_exists(ImmediateResponseException::class)) {
+            throw new ImmediateResponseException(
+                $errorController->pageNotFoundAction($GLOBALS['TYPO3_REQUEST'], $message),
+                1695881164
+            );
+        }
+
+        throw new PropagateResponseException(
+            $errorController->pageNotFoundAction($this->request, $message),
+            1695881170
+        );
     }
 }

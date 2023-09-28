@@ -1,0 +1,31 @@
+3.5.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Properly trigger 404 if a date is requested where event is not available.
+  This might happen if an event is set to hidden.
+  The date record is still available and can be requested.
+  But the event is missing, which in turn should make dates also unavailable.
+  This situation is now properly handled and will result in a 404.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
