@@ -156,6 +156,23 @@ class DatesTest extends AbstractFunctionalTestCase
     /**
      * @test
      */
+    public function returns404IfEventIsHidden(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfEventIsHidden.csv');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameters([
+            'tx_events_dateshow[date]' => '1',
+        ]);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(404, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
     public function returnsUpcomingDates(): void
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsUpcomingDates.php');

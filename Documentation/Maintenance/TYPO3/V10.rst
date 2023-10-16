@@ -9,3 +9,9 @@ Remove fetching cached page stage from body from tests
 
 We have different assertions based on TYPO3 version, due to how TYPO3 exposes the info.
 We can remove the condition with its content once we drop v10.
+
+Remove condition for page not found handling
+--------------------------------------------
+
+The :php:`AbstractController->trigger404()` method has a condition to handle 404 differently for TYPO3 v10.
+The condition can be removed.

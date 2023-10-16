@@ -1,6 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Http\\\\PropagateResponseException not found\\.$#"
+			count: 1
+			path: Classes/Controller/AbstractController.php
+
+		-
+			message: "#^Parameter \\#1 \\$request of method TYPO3\\\\CMS\\\\Frontend\\\\Controller\\\\ErrorController\\:\\:pageNotFoundAction\\(\\) expects Psr\\\\Http\\\\Message\\\\ServerRequestInterface, TYPO3\\\\CMS\\\\Extbase\\\\Mvc\\\\Request given\\.$#"
+			count: 1
+			path: Classes/Controller/AbstractController.php
+
+		-
+			message: "#^Throwing object of an unknown class TYPO3\\\\CMS\\\\Core\\\\Http\\\\PropagateResponseException\\.$#"
+			count: 1
+			path: Classes/Controller/AbstractController.php
+
+		-
 			message: "#^Cannot call method typoLink_URL\\(\\) on TYPO3\\\\CMS\\\\Frontend\\\\ContentObject\\\\ContentObjectRenderer\\|null\\.$#"
 			count: 1
 			path: Classes/Controller/DateController.php

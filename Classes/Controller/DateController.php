@@ -5,6 +5,7 @@ namespace Wrm\Events\Controller;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
+use Throwable;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
 use Wrm\Events\Domain\Repository\CategoryRepository;
@@ -155,6 +156,12 @@ class DateController extends AbstractController
      */
     public function showAction(Date $date): void
     {
+        try {
+            $date->getEvent();
+        } catch (Throwable $e) {
+            $this->trigger404('No event found for requested date.');
+        }
+
         $this->view->assign('date', $date);
     }
 
