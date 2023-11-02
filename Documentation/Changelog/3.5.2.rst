@@ -1,0 +1,30 @@
+3.5.2
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Fix broken TCA for highlight property.
+  The highlight could not be saved.
+  An unexpected value (3) was submitted on selection.
+  We now migrated the property to look and act the same as hidden input.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

@@ -232,9 +232,12 @@ return [
             'label' => $l10nPath . ':tx_events_domain_model_event.highlight',
             'config' => [
                 'type' => 'check',
+                'renderType' => 'checkboxToggle',
                 'items' => [
-                    '1' => [
-                        '0' => $l10nPathLang . ':labels.enabled',
+                    [
+                        0 => '',
+                        1 => '',
+                        'invertStateDisplay' => false,
                     ],
                 ],
                 'default' => 0,
