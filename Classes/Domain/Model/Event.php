@@ -426,21 +426,7 @@ class Event extends AbstractEntity
      */
     public function getCategories(): array
     {
-        $categories = $this->categories->toArray();
-
-        usort($categories, function (Category $catA, Category $catB) {
-            return $catA->getSorting() <=> $catB->getSorting();
-        });
-
-        return $categories;
-    }
-
-    /**
-     * @param ObjectStorage<Category> $categories
-     */
-    public function setCategories(ObjectStorage $categories): void
-    {
-        $this->categories = $categories;
+        return $this->getSortedCategory($this->categories);
     }
 
     /**
@@ -448,21 +434,7 @@ class Event extends AbstractEntity
      */
     public function getFeatures(): array
     {
-        $features = $this->features->toArray();
-
-        usort($features, function (Category $catA, Category $catB) {
-            return $catA->getSorting() <=> $catB->getSorting();
-        });
-
-        return $features;
-    }
-
-    /**
-     * @param ObjectStorage<Category> $features
-     */
-    public function setFeatures(ObjectStorage $features): void
-    {
-        $this->features = $features;
+        return $this->getSortedCategory($this->features);
     }
 
     public function setLanguageUid(int $languageUid): void
@@ -488,5 +460,16 @@ class Event extends AbstractEntity
     public function setSourceUrl(string $url): void
     {
         $this->sourceUrl = $url;
+    }
+
+    private function getSortedCategory(ObjectStorage $categories): array
+    {
+        $categories = $categories->toArray();
+
+        usort($categories, function (Category $catA, Category $catB) {
+            return $catA->getSorting() <=> $catB->getSorting();
+        });
+
+        return $categories;
     }
 }
