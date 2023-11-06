@@ -42,7 +42,7 @@ return [
             'pid' => '3',
             'title' => 'vorhandenes Feature',
             'parent' => '4',
-            'hidden' => '0',
+            'hidden' => '1',
         ],
     ],
 ];

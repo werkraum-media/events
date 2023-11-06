@@ -19,6 +19,21 @@ Fixes
   An unexpected value (3) was submitted on selection.
   We now migrated the property to look and act the same as hidden input.
 
+* Fix broken assignment of features and categories.
+  The import contained a bug that lead to summing up relations between events and
+  categories and features.
+  The same relations would be added over and over again with every new import.
+  This leads to performance issues when editing or storing events through TYPO3
+  backend.
+  The import is adjusted to no longer use Extbase but DataHandler for this task.
+  This circumvents the issues introduced by Extbase.
+  This is the first step to migration of import to be fully using DataHandler +
+  doctrine DBAL in the future.
+  One drawback is the slowdown of the import.
+  But we don't expect people to run it that often.
+  Also a working import with proper logging (history, permissions, etc.) seems better
+  than a broken but fast import.
+
 Tasks
 -----
 

@@ -22,6 +22,8 @@ use Wrm\Events\Domain\Repository\OrganizerRepository;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
 use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
+use Wrm\Events\Service\DestinationDataImportService\DataHandler;
+use Wrm\Events\Service\DestinationDataImportService\DataHandler\Assignment;
 use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
 use Wrm\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
 use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
@@ -112,6 +114,11 @@ class DestinationDataImportService
     private $cacheManager;
 
     /**
+     * @var DataHandler
+     */
+    private $dataHandler;
+
+    /**
      * @var EventDispatcher
      */
     private $eventDispatcher;
@@ -131,6 +138,7 @@ class DestinationDataImportService
      * @param LocationAssignment $locationAssignment
      * @param Slugger $slugger
      * @param CacheManager $cacheManager
+     * @param DataHandler $dataHandler
      * @param EventDispatcher $eventDispatcher
      */
     public function __construct(
@@ -147,6 +155,7 @@ class DestinationDataImportService
         LocationAssignment $locationAssignment,
         Slugger $slugger,
         CacheManager $cacheManager,
+        DataHandler $dataHandler,
         EventDispatcher $eventDispatcher
     ) {
         $this->eventRepository = $eventRepository;
@@ -162,6 +171,7 @@ class DestinationDataImportService
         $this->locationAssignment = $locationAssignment;
         $this->slugger = $slugger;
         $this->cacheManager = $cacheManager;
+        $this->dataHandler = $dataHandler;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -236,16 +246,6 @@ class DestinationDataImportService
                 $this->locationAssignment->getLocation($event)
             );
 
-            // Set Categories
-            if ($event['categories'] ?? false) {
-                $this->setCategories($event['categories']);
-            }
-
-            // Set Features
-            if ($event['features']) {
-                $this->setFeatures($event['features']);
-            }
-
             // Set Organizer
             if ($event['addresses'] ?? false) {
                 $this->setOrganizer($event['addresses']);
@@ -291,6 +291,16 @@ class DestinationDataImportService
             $this->logger->info('Persist database');
             $this->eventRepository->update($this->tmpCurrentEvent);
             $this->persistenceManager->persistAll();
+
+            // Apply changes via DataHandler (The new way)
+            $this->logger->info('Apply changes via DataHandler');
+            if ($event['categories'] ?? false) {
+                $this->setCategories($event['categories']);
+            }
+            if ($event['features']) {
+                $this->setFeatures($event['features']);
+            }
+
             $this->logger->info('Update slugs');
             $this->slugger->update('tx_events_domain_model_event');
             $this->slugger->update('tx_events_domain_model_date');
@@ -317,7 +327,11 @@ class DestinationDataImportService
         );
         $this->eventDispatcher->dispatch($event);
 
-        $this->tmpCurrentEvent->setCategories($event->getCategories());
+        $this->dataHandler->storeAssignments(new Assignment(
+            $this->tmpCurrentEvent->getUid(),
+            'categories',
+            $event->getCategories()->toArray()
+        ));
     }
 
     private function setFeatures(array $features): void
@@ -329,7 +343,11 @@ class DestinationDataImportService
             true
         ));
 
-        $this->tmpCurrentEvent->setFeatures($features);
+        $this->dataHandler->storeAssignments(new Assignment(
+            $this->tmpCurrentEvent->getUid(),
+            'features',
+            $features->toArray()
+        ));
     }
 
     private function setDates(

@@ -2,6 +2,7 @@
 
 namespace Wrm\Events\Service\DestinationDataImportService;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Wrm\Events\Domain\Model\Category;
 use Wrm\Events\Domain\Repository\CategoryRepository;
@@ -20,10 +21,17 @@ class CategoriesAssignment
      */
     private $repository;
 
+    /**
+     * @var PersistenceManager
+     */
+    private $persistenceManager;
+
     public function __construct(
-        CategoryRepository $repository
+        CategoryRepository $repository,
+        PersistenceManager $persistenceManager
     ) {
         $this->repository = $repository;
+        $this->persistenceManager = $persistenceManager;
     }
 
     /**
@@ -57,6 +65,8 @@ class CategoriesAssignment
 
             $categories->attach($category);
         }
+
+        $this->persistenceManager->persistAll();
 
         return $categories;
     }

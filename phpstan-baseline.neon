@@ -91,6 +91,16 @@ parameters:
 			path: Classes/Service/Cleanup/Files.php
 
 		-
+			message: "#^Parameter \\#1 \\$uid of class Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects int, int\\|null given\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: "#^Parameter \\#3 \\$assignments of class Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects array\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\>, array\\<int, TEntity\\> given\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
 			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php

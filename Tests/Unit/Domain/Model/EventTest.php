@@ -42,7 +42,7 @@ class EventTest extends TestCase
         $storage->attach($feature2);
 
         $subject = new Event();
-        $subject->setFeatures($storage);
+        $subject->_setProperty('features', $storage);
 
         self::assertSame([
             $feature2,
@@ -56,7 +56,7 @@ class EventTest extends TestCase
     public function returnsEmptyFeaturesStorage(): void
     {
         $subject = new Event();
-        $subject->setFeatures(new ObjectStorage());
+        $subject->_setProperty('features', new ObjectStorage());
 
         self::assertSame([], $subject->getFeatures());
     }
