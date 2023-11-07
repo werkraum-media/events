@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Testing;
+namespace WerkraumMedia\Events\Testing;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\TypoScript\TemplateService;

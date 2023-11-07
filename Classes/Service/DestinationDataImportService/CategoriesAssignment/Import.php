@@ -1,8 +1,8 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment;
 
-use Wrm\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Category;
 
 class Import
 {

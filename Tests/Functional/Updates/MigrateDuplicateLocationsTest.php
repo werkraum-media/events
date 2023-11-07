@@ -21,10 +21,10 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Functional\Updates;
+namespace WerkraumMedia\Events\Tests\Functional\Updates;
 
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
-use Wrm\Events\Updates\MigrateDuplicateLocations;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
+use WerkraumMedia\Events\Updates\MigrateDuplicateLocations;
 
 /**
  * @testdox The update wizard to migrate duplicate locations

@@ -1,10 +1,10 @@
 <?php
 
-namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
+namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Command\ImportDestinationDataViaAllConfigruationsCommand;
+use WerkraumMedia\Events\Command\ImportDestinationDataViaAllConfigruationsCommand;
 
 /**
  * @testdox Import of configuration

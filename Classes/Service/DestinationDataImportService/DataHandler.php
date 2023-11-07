@@ -21,13 +21,13 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\DataHandling\DataHandler as Typo3DataHandler;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Service\DestinationDataImportService\DataHandler\Assignment;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler\Assignment;
 
 final class DataHandler
 {

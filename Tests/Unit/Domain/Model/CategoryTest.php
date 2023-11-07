@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Wrm\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Category;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Category
+ * @covers \WerkraumMedia\Events\Domain\Model\Category
  */
 class CategoryTest extends TestCase
 {

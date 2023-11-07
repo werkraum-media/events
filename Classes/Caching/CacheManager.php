@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Caching;
+namespace WerkraumMedia\Events\Caching;
 
 use TYPO3\CMS\Core\Cache\CacheManager as Typo3CacheManager;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;

@@ -21,10 +21,10 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Functional\Psr14Events\DestinationDataImport;
+namespace WerkraumMedia\Events\Tests\Functional\Psr14Events\DestinationDataImport;
 
 use GuzzleHttp\Psr7\Response;
-use Wrm\Events\Tests\Functional\Import\DestinationDataTest\AbstractTest;
+use WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest\AbstractTest;
 
 final class CategoriesAssignEventTest extends AbstractTest
 {

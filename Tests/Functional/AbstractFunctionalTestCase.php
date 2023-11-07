@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Functional;
+namespace WerkraumMedia\Events\Tests\Functional;
 
 use Codappix\Typo3PhpDatasets\TestingFramework;
 use DateTimeImmutable;
@@ -38,9 +38,9 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\TypoScriptInstruction;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand;
-use Wrm\Events\Testing\TypoScriptInstructionModifier;
-use Wrm\Events\Tests\ClientFactory;
+use WerkraumMedia\Events\Command\ImportDestinationDataViaConfigruationCommand;
+use WerkraumMedia\Events\Testing\TypoScriptInstructionModifier;
+use WerkraumMedia\Events\Tests\ClientFactory;
 
 abstract class AbstractFunctionalTestCase extends FunctionalTestCase
 {

@@ -4,47 +4,47 @@ services:
     autoconfigure: true
     public: false
 
-  Wrm\Events\:
+  WerkraumMedia\Events\:
     resource: '../Classes/*'
 
-  Wrm\Events\Command\ImportDestinationDataViaConfigruationCommand:
+  WerkraumMedia\Events\Command\ImportDestinationDataViaConfigruationCommand:
     tags:
       - name: 'console.command'
         command: 'events:destinationdataimportviaconfiguration'
         description: 'Import Destination Data Events'
 
-  Wrm\Events\Command\ImportDestinationDataViaAllConfigruationsCommand:
+  WerkraumMedia\Events\Command\ImportDestinationDataViaAllConfigruationsCommand:
     tags:
       - name: 'console.command'
         command: 'events:destinationdataimportviaallconfigurations'
         description: 'Import Destination Data Events from all configurations'
 
-  Wrm\Events\Command\RemoveAllCommand:
+  WerkraumMedia\Events\Command\RemoveAllCommand:
     tags:
       - name: 'console.command'
         command: 'events:removeAll'
         description: 'Remove all event data'
 
-  Wrm\Events\Command\RemovePastCommand:
+  WerkraumMedia\Events\Command\RemovePastCommand:
     tags:
       - name: 'console.command'
         command: 'events:removePast'
         description: 'Remove past events'
 
-  Wrm\Events\Extbase\AddSpecialProperties:
+  WerkraumMedia\Events\Extbase\AddSpecialProperties:
     tags:
       - name: event.listener
-        identifier: 'WrmEventsAddSpecialPropertiesToDate'
+        identifier: 'WerkraumMediaEventsAddSpecialPropertiesToDate'
         event: TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent
 
-  Wrm\Events\Updates\MigrateDuplicateLocations:
+  WerkraumMedia\Events\Updates\MigrateDuplicateLocations:
     public: true
 
-  Wrm\Events\Updates\MigrateOldLocations:
+  WerkraumMedia\Events\Updates\MigrateOldLocations:
     public: true
 
-  Wrm\Events\Caching\PageCacheTimeout:
+  WerkraumMedia\Events\Caching\PageCacheTimeout:
     tags:
       - name: event.listener
-        event: Wrm\Events\Events\Controller\DateListVariables
+        event: WerkraumMedia\Events\Events\Controller\DateListVariables
         method: 'trackDates'

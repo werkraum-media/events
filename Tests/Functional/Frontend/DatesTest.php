@@ -21,14 +21,14 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Functional\Frontend;
+namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use Wrm\Events\Frontend\Dates;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
+use WerkraumMedia\Events\Frontend\Dates;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
- * @covers \Wrm\Events\Frontend\Dates
+ * @covers \WerkraumMedia\Events\Frontend\Dates
  */
 class DatesTest extends AbstractFunctionalTestCase
 {

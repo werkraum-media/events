@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Tests\Unit\Events\Controller;
+namespace WerkraumMedia\Tests\Unit\Events\Controller;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Events\Controller\DateListVariables;
-use Wrm\Events\Tests\ProphecyTrait;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Events\Controller\DateListVariables;
+use WerkraumMedia\Events\Tests\ProphecyTrait;
 
 /**
- * @covers \Wrm\Events\Events\Controller\DateListVariables
+ * @covers \WerkraumMedia\Events\Events\Controller\DateListVariables
  */
 class DateListVariablesTest extends TestCase
 {

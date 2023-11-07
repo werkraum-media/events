@@ -1,11 +1,11 @@
 <?php
 
-namespace Wrm\Events\Events\Controller;
+namespace WerkraumMedia\Events\Events\Controller;
 
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Domain\Model\Region;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Domain\Model\Region;
 
 class DateSearchVariables
 {

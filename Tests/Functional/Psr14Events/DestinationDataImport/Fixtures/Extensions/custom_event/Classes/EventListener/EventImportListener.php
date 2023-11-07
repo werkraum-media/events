@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\CustomEvent\EventListener;
 
-use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\EventImportEvent;
 
 final class EventImportListener
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Model;
+namespace WerkraumMedia\Events\Domain\Model;
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>

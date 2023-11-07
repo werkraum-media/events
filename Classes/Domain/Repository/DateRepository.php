@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Repository;
+namespace WerkraumMedia\Events\Domain\Repository;
 
 use DateTimeImmutable;
 use DateTimeZone;
@@ -12,8 +12,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use UnexpectedValueException;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Service\CategoryService;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Service\CategoryService;
 
 class DateRepository extends Repository
 {

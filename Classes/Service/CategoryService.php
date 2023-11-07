@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Service;
+namespace WerkraumMedia\Events\Service;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;

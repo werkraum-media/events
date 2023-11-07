@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Extbase;
+namespace WerkraumMedia\Events\Extbase;
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>
@@ -24,7 +24,7 @@ namespace Wrm\Events\Extbase;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
-use Wrm\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Date;
 
 class AddSpecialProperties
 {

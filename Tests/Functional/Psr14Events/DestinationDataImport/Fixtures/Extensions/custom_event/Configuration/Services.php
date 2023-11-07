@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use WerkraumMedia\CustomEvent\EventListener\EventImportListener;
-use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\EventImportEvent;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services()

@@ -1,16 +1,16 @@
 <?php
 
-namespace Wrm\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Resource\Folder;
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Domain\Model\Import;
-use Wrm\Events\Domain\Model\Region;
-use Wrm\Events\Tests\ProphecyTrait;
+use WerkraumMedia\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Region;
+use WerkraumMedia\Events\Tests\ProphecyTrait;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Import
+ * @covers \WerkraumMedia\Events\Domain\Model\Import
  */
 class ImportTest extends TestCase
 {

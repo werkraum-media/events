@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Repository;
+namespace WerkraumMedia\Events\Domain\Repository;
 
 /*
  * This file is part of the TYPO3 CMS project.

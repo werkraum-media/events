@@ -6,28 +6,28 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Events',
         'DateSearch',
-        [\Wrm\Events\Controller\DateController::class => 'search'],
-        [\Wrm\Events\Controller\DateController::class => 'search']
+        [\WerkraumMedia\Events\Controller\DateController::class => 'search'],
+        [\WerkraumMedia\Events\Controller\DateController::class => 'search']
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Events',
         'DateList',
-        [\Wrm\Events\Controller\DateController::class => 'list'],
-        [\Wrm\Events\Controller\DateController::class => 'list']
+        [\WerkraumMedia\Events\Controller\DateController::class => 'list'],
+        [\WerkraumMedia\Events\Controller\DateController::class => 'list']
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Events',
         'DateShow',
-        [\Wrm\Events\Controller\DateController::class => 'show'],
-        [\Wrm\Events\Controller\DateController::class => 'show']
+        [\WerkraumMedia\Events\Controller\DateController::class => 'show'],
+        [\WerkraumMedia\Events\Controller\DateController::class => 'show']
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Events',
         'Selected',
-        [\Wrm\Events\Controller\EventController::class => 'list']
+        [\WerkraumMedia\Events\Controller\EventController::class => 'list']
     );
 
     if (
@@ -51,7 +51,7 @@ call_user_func(function () {
         ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
     );
 
-    \Wrm\Events\Caching\PageCacheTimeout::register();
-    \Wrm\Events\Updates\MigrateOldLocations::register();
-    \Wrm\Events\Updates\MigrateDuplicateLocations::register();
+    \WerkraumMedia\Events\Caching\PageCacheTimeout::register();
+    \WerkraumMedia\Events\Updates\MigrateOldLocations::register();
+    \WerkraumMedia\Events\Updates\MigrateDuplicateLocations::register();
 });

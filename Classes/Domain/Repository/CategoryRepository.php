@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Domain\Repository;
+namespace WerkraumMedia\Events\Domain\Repository;
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>
@@ -26,7 +26,7 @@ namespace Wrm\Events\Domain\Repository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Wrm\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Category;
 
 class CategoryRepository extends Repository
 {

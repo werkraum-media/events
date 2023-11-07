@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
-use Wrm\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Import;
 
 /**
  * Provides API to fetch data from remote.

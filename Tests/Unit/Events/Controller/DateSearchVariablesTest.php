@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Tests\Unit\Events\Controller;
+namespace WerkraumMedia\Events\Tests\Unit\Events\Controller;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Events\Controller\DateSearchVariables;
-use Wrm\Events\Tests\ProphecyTrait;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Events\Controller\DateSearchVariables;
+use WerkraumMedia\Events\Tests\ProphecyTrait;
 
 /**
- * @covers \Wrm\Events\Events\Controller\DateSearchVariables
+ * @covers \WerkraumMedia\Events\Events\Controller\DateSearchVariables
  */
 class DateSearchVariablesTest extends TestCase
 {

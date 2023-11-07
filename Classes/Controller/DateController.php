@@ -1,20 +1,20 @@
 <?php
 
-namespace Wrm\Events\Controller;
+namespace WerkraumMedia\Events\Controller;
 
+use Throwable;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
-use Throwable;
-use Wrm\Events\Domain\Model\Date;
-use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
-use Wrm\Events\Domain\Repository\CategoryRepository;
-use Wrm\Events\Domain\Repository\DateRepository;
-use Wrm\Events\Domain\Repository\RegionRepository;
-use Wrm\Events\Events\Controller\DateListVariables;
-use Wrm\Events\Events\Controller\DateSearchVariables;
-use Wrm\Events\Pagination\Factory;
-use Wrm\Events\Service\DataProcessingForModels;
+use WerkraumMedia\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory;
+use WerkraumMedia\Events\Domain\Repository\CategoryRepository;
+use WerkraumMedia\Events\Domain\Repository\DateRepository;
+use WerkraumMedia\Events\Domain\Repository\RegionRepository;
+use WerkraumMedia\Events\Events\Controller\DateListVariables;
+use WerkraumMedia\Events\Events\Controller\DateSearchVariables;
+use WerkraumMedia\Events\Pagination\Factory;
+use WerkraumMedia\Events\Service\DataProcessingForModels;
 
 class DateController extends AbstractController
 {

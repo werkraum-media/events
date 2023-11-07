@@ -1,0 +1,32 @@
+4.0.0
+=====
+
+Breaking
+--------
+
+* Change of vendor/namespace.
+  The vendor was renamed from `wrm` to `werkraummedia`.
+  And the namespace vendor was renamed from `Wrm` to `WerkraumMedia`.
+
+  That way all references to PHP classes as well as the package name itself need to
+  be adjusted.
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

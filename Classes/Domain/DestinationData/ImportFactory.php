@@ -1,13 +1,13 @@
 <?php
 
-namespace Wrm\Events\Domain\DestinationData;
+namespace WerkraumMedia\Events\Domain\DestinationData;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
-use Wrm\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Import;
 
 class ImportFactory
 {

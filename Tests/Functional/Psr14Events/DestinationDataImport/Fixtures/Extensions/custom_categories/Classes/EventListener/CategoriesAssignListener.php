@@ -23,8 +23,8 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\CustomCategories\EventListener;
 
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
+use WerkraumMedia\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
 
 final class CategoriesAssignListener
 {

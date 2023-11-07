@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events;
+namespace WerkraumMedia\Events;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Wrm\Events\Service\DestinationDataImportService\Slugger\Registry;
-use Wrm\Events\Service\DestinationDataImportService\Slugger\SluggerType;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\Registry;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\SluggerType;
 
 return static function (ContainerConfigurator $container, ContainerBuilder $containerBuilder) {
     $containerBuilder->registerForAutoconfiguration(SluggerType::class)->addTag('tx_events.slugger_type');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Service\Cleanup;
+namespace WerkraumMedia\Events\Service\Cleanup;
 
 /*
  * Copyright (C) 2019 Daniel Siepmann <coding@daniel-siepmann.de>

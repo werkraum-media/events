@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Model\Dto;
+namespace WerkraumMedia\Events\Domain\Model\Dto;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

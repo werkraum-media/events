@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Model;
+namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -35,7 +35,7 @@ class Date extends AbstractEntity
     protected $originalDate;
 
     /**
-     * @var \Wrm\Events\Domain\Model\Event
+     * @var \WerkraumMedia\Events\Domain\Model\Event
      */
     protected $event;
 

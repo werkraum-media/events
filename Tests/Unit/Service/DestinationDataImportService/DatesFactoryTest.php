@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
@@ -10,11 +10,11 @@ use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use Wrm\Events\Domain\Model\Date;
-use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
+use WerkraumMedia\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DatesFactory;
 
 /**
- * @covers \Wrm\Events\Service\DestinationDataImportService\DatesFactory
+ * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\DatesFactory
  */
 class DatesFactoryTest extends TestCase
 {

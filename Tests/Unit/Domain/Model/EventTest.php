@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Event;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Event
+ * @covers \WerkraumMedia\Events\Domain\Model\Event
  */
 class EventTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Wrm\Events\Service;
+namespace WerkraumMedia\Events\Service;
 
-use Wrm\Events\Service\Cleanup\Database;
-use Wrm\Events\Service\Cleanup\Files;
+use WerkraumMedia\Events\Service\Cleanup\Database;
+use WerkraumMedia\Events\Service\Cleanup\Files;
 
 class CleanupService
 {

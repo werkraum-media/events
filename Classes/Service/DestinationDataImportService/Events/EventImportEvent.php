@@ -21,9 +21,9 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService\Events;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService\Events;
 
-use Wrm\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Model\Event;
 
 final class EventImportEvent
 {

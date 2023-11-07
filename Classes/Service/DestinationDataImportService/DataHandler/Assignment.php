@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService\DataHandler;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler;
 
 use InvalidArgumentException;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;

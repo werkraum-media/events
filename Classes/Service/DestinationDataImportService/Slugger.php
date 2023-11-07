@@ -21,14 +21,14 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Service\DestinationDataImportService\Slugger\Registry;
-use Wrm\Events\Service\DestinationDataImportService\Slugger\SluggerType;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\Registry;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\SluggerType;
 
 class Slugger
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Tests;
+namespace WerkraumMedia\Events\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;

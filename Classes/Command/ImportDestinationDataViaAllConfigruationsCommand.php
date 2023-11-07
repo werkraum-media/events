@@ -1,13 +1,13 @@
 <?php
 
-namespace Wrm\Events\Command;
+namespace WerkraumMedia\Events\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use Wrm\Events\Domain\DestinationData\ImportFactory;
-use Wrm\Events\Service\DestinationDataImportService;
+use WerkraumMedia\Events\Domain\DestinationData\ImportFactory;
+use WerkraumMedia\Events\Service\DestinationDataImportService;
 
 class ImportDestinationDataViaAllConfigruationsCommand extends Command
 {
