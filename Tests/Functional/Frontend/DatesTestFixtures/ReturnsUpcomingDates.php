@@ -1,6 +1,6 @@
 <?php
 
-use DateTimeImmutable;
+declare(strict_types=1);
 
 return [
     'tt_content' => [

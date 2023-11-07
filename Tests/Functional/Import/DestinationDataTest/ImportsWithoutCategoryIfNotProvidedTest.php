@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsWithoutCategoryIfNotProvided(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
@@ -58,7 +58,7 @@ class ImportsWithoutCategoryIfNotProvidedTest extends AbstractTest
             $this->getAllRecords('sys_category'),
             'Added unexpected category.'
         );
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutCategoryIfNotProvided.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsWithoutCategoryIfNotProvided.php');
 
         $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');

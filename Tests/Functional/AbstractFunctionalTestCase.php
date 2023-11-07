@@ -30,16 +30,16 @@ use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\Container;
+use TypeError;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\TypoScriptInstruction;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use UnexpectedValueException;
 use WerkraumMedia\Events\Command\ImportDestinationDataViaConfigruationCommand;
-use WerkraumMedia\Events\Testing\TypoScriptInstructionModifier;
 use WerkraumMedia\Events\Tests\ClientFactory;
 
 abstract class AbstractFunctionalTestCase extends FunctionalTestCase
@@ -55,18 +55,21 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
 
     protected function setUp(): void
     {
-        $this->coreExtensionsToLoad = array_merge($this->coreExtensionsToLoad, [
+        $this->coreExtensionsToLoad = [
+            ...$this->coreExtensionsToLoad,
             'filelist',
             'fluid_styled_content',
-        ]);
+        ];
 
-        $this->testExtensionsToLoad = array_merge($this->testExtensionsToLoad, [
+        $this->testExtensionsToLoad = [
+            ...$this->testExtensionsToLoad,
             'typo3conf/ext/events',
-        ]);
+        ];
 
-        $this->pathsToProvideInTestInstance = array_merge($this->pathsToProvideInTestInstance, [
+        $this->pathsToLinkInTestInstance = [
+            ...$this->pathsToLinkInTestInstance,
             'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Sites/' => 'typo3conf/sites',
-        ]);
+        ];
 
         ArrayUtility::mergeRecursiveWithOverrule($this->configurationToUseInTestInstance, [
             'FE' => [
@@ -80,22 +83,16 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
                 'processor_path_lzw' => '/usr/bin/',
                 'processor' => 'ImageMagick',
             ],
-            'SC_OPTIONS' => [
-                'Core/TypoScript/TemplateService' => [
-                    'runThroughTemplatesPostProcessing' => [
-                        'FunctionalTest' => TypoScriptInstructionModifier::class . '->apply',
-                    ],
-                ],
-            ],
         ]);
 
         parent::setUp();
 
-        $this->setUpBackendUserFromFixture(1);
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/BeUsers.php');
+        $this->setUpBackendUser(1);
 
         $languageServiceFactory = $this->getContainer()->get(LanguageServiceFactory::class);
         if (!$languageServiceFactory instanceof LanguageServiceFactory) {
-            throw new \UnexpectedValueException('Did not retrieve LanguageServiceFactory.', 1637847250);
+            throw new UnexpectedValueException('Did not retrieve LanguageServiceFactory.', 1637847250);
         }
         $GLOBALS['LANG'] = $languageServiceFactory->create('default');
 
@@ -114,7 +111,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
 
     protected function getTypoScriptInstruction(): TypoScriptInstruction
     {
-        return new TypoScriptInstruction(TemplateService::class);
+        return new TypoScriptInstruction();
     }
 
     protected function setUpConfiguration(
@@ -152,7 +149,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         array $argumentsAndOptions = ['configurationUid' => '1'],
         string $command = ImportDestinationDataViaConfigruationCommand::class
     ): CommandTester {
-        $subject = $this->getContainer()->get($command);
+        $subject = $this->get($command);
         self::assertInstanceOf(Command::class, $subject);
 
         $tester = new CommandTester($subject);
@@ -192,7 +189,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
     {
         $context = $this->getContainer()->get(Context::class);
         if (!$context instanceof Context) {
-            throw new \TypeError('Retrieved context was of unexpected type.', 1638182021);
+            throw new TypeError('Retrieved context was of unexpected type.', 1638182021);
         }
 
         $aspect = new DateTimeAspect($dateTime);

@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsTicketsTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsTicketsTest extends AbstractTestCase
 {
     /**
-     * @test
-     *
      * @todo: Missing "ticket" example and combinations.
      *        Could not find any "ticket" real world example.
      */
+    #[Test]
     public function importsExampleAsExpected(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
@@ -40,7 +41,7 @@ class ImportsTicketsTest extends AbstractTest
         self::assertCount(1, $requests, 'Unexpected number of requests were made.');
         self::assertSame('https://example.com/some-path/?experience=beispielstadt&licensekey=example-license&type=Event&mode=next_months%2C12&limit=3&template=ET2014A.json', (string)$requests[0]['request']->getUri());
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsTickets.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsTickets.php');
 
         $this->assertEmptyLog();
     }

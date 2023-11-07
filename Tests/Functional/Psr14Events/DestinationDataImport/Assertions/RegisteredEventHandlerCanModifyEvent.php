@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tx_events_domain_model_event' => [
         [
@@ -15,14 +17,14 @@ return [
             'uid' => 1,
             'pid' => 2,
             'event' => 1,
-            'start' => 4097728800,
+            'start' => 4_097_728_800,
             'end' => null,
         ],
         [
             'uid' => 2,
             'pid' => 2,
             'event' => 1,
-            'start' => 4097815200,
+            'start' => 4_097_815_200,
             'end' => null,
         ],
     ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\Cleanup;
 
 /*
@@ -21,24 +23,20 @@ namespace WerkraumMedia\Events\Service\Cleanup;
  * 02110-1301, USA.
  */
 
+use DateTimeImmutable;
+use PDO;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-class Database
+final class Database
 {
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
     private const DATE_TABLE = 'tx_events_domain_model_date';
     private const EVENT_TABLE = 'tx_events_domain_model_event';
     private const ORGANIZER_TABLE = 'tx_events_domain_model_organizer';
 
     public function __construct(
-        ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool
     ) {
-        $this->connectionPool = $connectionPool;
     }
 
     public function truncateTables(): void
@@ -52,48 +50,46 @@ class Database
         foreach ($tableNames as $tableName) {
             $this->connectionPool
                 ->getConnectionForTable($tableName)
-                ->truncate($tableName);
+                ->truncate($tableName)
+            ;
         }
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category_record_mm');
-        $queryBuilder->delete('sys_category_record_mm')
-            ->where($queryBuilder->expr()->like(
-                'tablenames',
-                $queryBuilder->createNamedParameter('tx_events_domain_model_%')
-            ))
-            ->execute();
+        $queryBuilder->delete('sys_category_record_mm')->where($queryBuilder->expr()->like(
+            'tablenames',
+            $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+        ))->executeStatement();
     }
 
     public function deletePastDates(): void
     {
         $queryBuilder = $this->connectionPool
             ->getConnectionForTable(self::DATE_TABLE)
-            ->createQueryBuilder();
+            ->createQueryBuilder()
+        ;
 
         $queryBuilder->getRestrictions()->removeAll();
 
-        $midnightToday = new \DateTimeImmutable('midnight today');
-        $queryBuilder->delete(self::DATE_TABLE)
-            ->where($queryBuilder->expr()->lte(
-                'end',
-                $queryBuilder->createNamedParameter($midnightToday->format('U'))
-            ))
-            ->execute();
+        $midnightToday = new DateTimeImmutable('midnight today');
+        $queryBuilder->delete(self::DATE_TABLE)->where($queryBuilder->expr()->lte(
+            'end',
+            $queryBuilder->createNamedParameter($midnightToday->format('U'))
+        ))->executeStatement();
     }
 
     public function deleteEventsWithoutDates(): void
     {
         $queryBuilder = $this->connectionPool
             ->getConnectionForTable(self::EVENT_TABLE)
-            ->createQueryBuilder();
+            ->createQueryBuilder()
+        ;
 
         $queryBuilder->getRestrictions()->removeAll();
 
         $recordUids = $queryBuilder->select('event.uid')
             ->from(self::EVENT_TABLE, 'event')
-            ->leftJoin('event', self::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))
-            ->where($queryBuilder->expr()->isNull('date.uid'))
-            ->execute()
-            ->fetchAll(\PDO::FETCH_COLUMN);
+            ->leftJoin('event', self::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))->where($queryBuilder->expr()->isNull('date.uid'))->executeQuery()
+            ->fetchAll(PDO::FETCH_COLUMN)
+        ;
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);
         $queryBuilder->delete(self::EVENT_TABLE);
@@ -101,20 +97,15 @@ class Database
             'uid',
             $queryBuilder->createNamedParameter($recordUids, Connection::PARAM_INT_ARRAY)
         ));
-        $queryBuilder->execute();
+        $queryBuilder->executeStatement();
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category_record_mm');
-        $queryBuilder->delete('sys_category_record_mm')
-            ->where($queryBuilder->expr()->andX(
-                $queryBuilder->expr()->like(
-                    'tablenames',
-                    $queryBuilder->createNamedParameter('tx_events_domain_model_%')
-                ),
-                $queryBuilder->expr()->in(
-                    'uid_foreign',
-                    $queryBuilder->createNamedParameter($recordUids, Connection::PARAM_INT_ARRAY)
-                )
-            ))
-            ->execute();
+        $queryBuilder->delete('sys_category_record_mm')->where($queryBuilder->expr()->and($queryBuilder->expr()->like(
+            'tablenames',
+            $queryBuilder->createNamedParameter('tx_events_domain_model_%')
+        ), $queryBuilder->expr()->in(
+            'uid_foreign',
+            $queryBuilder->createNamedParameter($recordUids, Connection::PARAM_INT_ARRAY)
+        )))->executeStatement();
     }
 }

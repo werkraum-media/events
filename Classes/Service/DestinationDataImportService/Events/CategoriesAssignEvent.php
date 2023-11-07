@@ -30,23 +30,17 @@ use WerkraumMedia\Events\Domain\Model\Event;
 final class CategoriesAssignEvent
 {
     /**
-     * @var Event
-     */
-    private $event;
-
-    /**
      * @var ObjectStorage<Category>
      */
-    private $categories;
+    private ObjectStorage $categories;
 
     /**
      * @param ObjectStorage<Category> $categories
      */
     public function __construct(
-        Event $event,
+        private readonly Event $event,
         ObjectStorage $categories
     ) {
-        $this->event = $event;
         $this->setCategories($categories);
     }
 

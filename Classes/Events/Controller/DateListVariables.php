@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Events\Controller;
 
 use TYPO3\CMS\Core\Pagination\PaginationInterface;
@@ -9,41 +11,17 @@ use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 
 final class DateListVariables
 {
-    /**
-     * @var array
-     */
-    private $search;
-
-    /**
-     * @var DateDemand
-     */
-    private $demand;
-
-    /**
-     * @var QueryResult<Date>
-     */
-    private $dates;
-
-    /**
-     * @var PaginationInterface
-     */
-    private $pagination;
-
-    /**
-     * @var array
-     */
-    private $variables = [];
+    private array $variables = [];
 
     public function __construct(
-        array $search,
-        DateDemand $demand,
-        QueryResult $dates,
-        PaginationInterface $pagination
+        private readonly array $search,
+        private readonly DateDemand $demand,
+        /**
+         * @var QueryResult<Date>
+         */
+        private readonly QueryResult $dates,
+        private readonly PaginationInterface $pagination
     ) {
-        $this->search = $search;
-        $this->demand = $demand;
-        $this->dates = $dates;
-        $this->pagination = $pagination;
     }
 
     public function getSearch(): array
@@ -64,21 +42,19 @@ final class DateListVariables
         return $this->dates;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function addVariable(string $key, $value): void
+    public function addVariable(string $key, mixed $value): void
     {
         $this->variables[$key] = $value;
     }
 
     public function getVariablesForView(): array
     {
-        return array_merge([
+        return [
             'search' => $this->search,
             'demand' => $this->demand,
             'dates' => $this->dates,
             'pagination' => $this->pagination,
-        ], $this->variables);
+            ...$this->variables,
+        ];
     }
 }

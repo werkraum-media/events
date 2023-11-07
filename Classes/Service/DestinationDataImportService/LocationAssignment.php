@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use WerkraumMedia\Events\Domain\Model\Location;
 use WerkraumMedia\Events\Domain\Repository\LocationRepository;
 
-class LocationAssignment
+final class LocationAssignment
 {
-    /**
-     * @var LocationRepository
-     */
-    private $repository;
-
     public function __construct(
-        LocationRepository $repository
+        private readonly LocationRepository $repository
     ) {
-        $this->repository = $repository;
     }
 
     public function getLocation(array $event): ?Location
@@ -28,8 +24,8 @@ class LocationAssignment
             $event['district'] ?? '',
             $event['country'] ?? '',
             $event['phone'] ?? '',
-            $event['geo']['main']['latitude'] ?? '',
-            $event['geo']['main']['longitude'] ?? '',
+            (string)($event['geo']['main']['latitude'] ?? ''),
+            (string)($event['geo']['main']['longitude'] ?? ''),
             -1
         );
 

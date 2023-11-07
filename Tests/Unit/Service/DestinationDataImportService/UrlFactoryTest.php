@@ -1,36 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophecy\ObjectProphecy;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Import;
 use WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory;
-use WerkraumMedia\Events\Tests\ProphecyTrait;
 
-/**
- * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory
- */
 class UrlFactoryTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'Events',
-            'Pi1'
-        )->willReturn([]);
+        $configurationManager = $this->createStub(BackendConfigurationManager::class);
+        $configurationManager->method('getConfiguration')->willReturn([]);
 
         $subject = new UrlFactory(
-            $configurationManager->reveal()
+            $configurationManager
         );
 
         self::assertInstanceOf(
@@ -39,28 +30,21 @@ class UrlFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider possibleImports
-     */
+    #[DataProvider('possibleImports')]
+    #[Test]
     public function createSearchResultUrl(
-        ObjectProphecy $import,
+        Stub $import,
         array $settings,
         string $expectedResult
     ): void {
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'Events',
-            'Pi1'
-        )->willReturn(['destinationData' => $settings]);
+        $configurationManager = $this->createStub(BackendConfigurationManager::class);
+        $configurationManager->method('getConfiguration')->willReturn(['settings' => ['destinationData' => $settings]]);
 
         $subject = new UrlFactory(
-            $configurationManager->reveal()
+            $configurationManager
         );
 
-        $result = $subject->createSearchResultUrl($import->reveal());
+        $result = $subject->createSearchResultUrl($import);
 
         self::assertSame(
             $result,
@@ -68,14 +52,14 @@ class UrlFactoryTest extends TestCase
         );
     }
 
-    public function possibleImports(): array
+    public static function possibleImports(): array
     {
         return [
             'All provided' => [
                 'import' => (function () {
-                    $import = $this->prophesize(Import::class);
-                    $import->getRestExperience()->willReturn('experience');
-                    $import->getSearchQuery()->willReturn('');
+                    $import = self::createStub(Import::class);
+                    $import->method('getRestExperience')->willReturn('experience');
+                    $import->method('getSearchQuery')->willReturn('');
 
                     return $import;
                 })(),
@@ -91,9 +75,9 @@ class UrlFactoryTest extends TestCase
             ],
             'All missing' => [
                 'import' => (function () {
-                    $import = $this->prophesize(Import::class);
-                    $import->getRestExperience()->willReturn('');
-                    $import->getSearchQuery()->willReturn('');
+                    $import = self::createStub(Import::class);
+                    $import->method('getRestExperience')->willReturn('');
+                    $import->method('getSearchQuery')->willReturn('');
 
                     return $import;
                 })(),
@@ -104,9 +88,9 @@ class UrlFactoryTest extends TestCase
             ],
             'Some missing' => [
                 'import' => (function () {
-                    $import = $this->prophesize(Import::class);
-                    $import->getRestExperience()->willReturn('experience');
-                    $import->getSearchQuery()->willReturn('');
+                    $import = self::createStub(Import::class);
+                    $import->method('getRestExperience')->willReturn('experience');
+                    $import->method('getSearchQuery')->willReturn('');
 
                     return $import;
                 })(),
@@ -120,9 +104,9 @@ class UrlFactoryTest extends TestCase
             ],
             'With search query' => [
                 'import' => (function () {
-                    $import = $this->prophesize(Import::class);
-                    $import->getRestExperience()->willReturn('experience');
-                    $import->getSearchQuery()->willReturn('name:"Test Something"');
+                    $import = self::createStub(Import::class);
+                    $import->method('getRestExperience')->willReturn('experience');
+                    $import->method('getSearchQuery')->willReturn('name:"Test Something"');
 
                     return $import;
                 })(),

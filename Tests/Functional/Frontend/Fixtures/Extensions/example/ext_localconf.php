@@ -1,7 +1,12 @@
 <?php
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+declare(strict_types=1);
+
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use WerkraumMedia\Events\Controller\DateController;
+
+ExtensionUtility::configurePlugin(
     'Events',
     'DateListTest',
-    [\WerkraumMedia\Events\Controller\DateController::class => 'list']
+    [DateController::class => 'list']
 );

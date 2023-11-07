@@ -1,26 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service;
 
 use WerkraumMedia\Events\Service\Cleanup\Database;
 use WerkraumMedia\Events\Service\Cleanup\Files;
 
-class CleanupService
+final class CleanupService
 {
-    /**
-     * @var Database
-     */
-    private $database;
-
-    /**
-     * @var Files
-     */
-    private $files;
-
-    public function __construct(Database $database, Files $files)
-    {
-        $this->database = $database;
-        $this->files = $files;
+    public function __construct(
+        private readonly Database $database,
+        private readonly Files $files
+    ) {
     }
 
     public function deleteAllData(): void

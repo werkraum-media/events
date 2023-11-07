@@ -1,4 +1,5 @@
 Tests export-ignore
+Patches export-ignore
 .gitlab-ci.yml export-ignore
 shell.nix export-ignore
 

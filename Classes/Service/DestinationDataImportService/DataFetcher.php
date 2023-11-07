@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
+use Exception;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Log\Logger;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use WerkraumMedia\Events\Domain\Model\Import;
 
@@ -16,39 +19,17 @@ use WerkraumMedia\Events\Domain\Model\Import;
  * Only partially migrated from service to here.
  * Further calls need to be migrated.
  */
-class DataFetcher
+final class DataFetcher
 {
-    /**
-     * @var UrlFactory
-     */
-    private $urlFactory;
-
-    /**
-     * @var RequestFactoryInterface
-     */
-    private $requestFactory;
-
-    /**
-     * @var GuzzleClientInterface
-     */
-    private $client;
-
-    /**
-     * @var Logger
-     */
-    private $logger;
+    private readonly LoggerInterface $logger;
 
     public function __construct(
-        UrlFactory $urlFactory,
+        private readonly UrlFactory $urlFactory,
         LogManager $logManager,
-        RequestFactoryInterface $requestFactory,
-        GuzzleClientInterface $client
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly GuzzleClientInterface $client
     ) {
-        $this->urlFactory = $urlFactory;
-        $this->requestFactory = $requestFactory;
-        $this->client = $client;
-
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function fetchSearchResult(Import $import): array
@@ -76,9 +57,9 @@ class DataFetcher
 
         $jsonContent = $response->getBody()->__toString();
 
-        $jsonResponse = json_decode($jsonContent, true);
+        $jsonResponse = json_decode($jsonContent, true, 512, JSON_THROW_ON_ERROR);
         if (is_array($jsonResponse) === false) {
-            throw new \Exception('No valid JSON fetched, got: "' . $jsonContent . '".', 1639495835);
+            throw new Exception('No valid JSON fetched, got: "' . $jsonContent . '".', 1639495835);
         }
 
         $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');

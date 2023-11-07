@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'tx_events_domain_model_location' => [
         [
             'uid' => 1,
             'pid' => 2,
-            'cruser_id' => 0,
             'hidden' => 0,
             'starttime' => 0,
             'endtime' => 0,
@@ -28,7 +29,6 @@ return [
         [
             'uid' => 2,
             'pid' => 2,
-            'cruser_id' => 0,
             'hidden' => 0,
             'starttime' => 0,
             'endtime' => 0,

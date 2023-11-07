@@ -28,26 +28,13 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use WerkraumMedia\Events\Domain\Model\Category;
 
-class CategoryRepository extends Repository
+final class CategoryRepository extends Repository
 {
-    /**
-     * @var ConnectionPool
-     */
-    protected $connectionPool;
-
-    /**
-     * @var DataMapper
-     */
-    protected $dataMapper;
-
-    public function injectConnectionPool(ConnectionPool $connectionPool): void
-    {
-        $this->connectionPool = $connectionPool;
-    }
-
-    public function injectDataMapper(DataMapper $dataMapper): void
-    {
-        $this->dataMapper = $dataMapper;
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+        private readonly DataMapper $dataMapper,
+    ) {
+        parent::__construct();
     }
 
     /**
@@ -88,7 +75,7 @@ class CategoryRepository extends Repository
 
         return $this->dataMapper->map(
             Category::class,
-            $qb->execute()->fetchAll()
+            $qb->executeQuery()->fetchAll()
         );
     }
 
@@ -105,10 +92,10 @@ class CategoryRepository extends Repository
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
 
-        $query->matching($query->logicalAnd([
+        $query->matching($query->logicalAnd(
             $query->equals('parent', $parentCategory),
             $query->equals('title', $title),
-        ]));
+        ));
 
         $query->setLimit(1);
 

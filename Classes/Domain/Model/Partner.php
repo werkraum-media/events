@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
 /*
@@ -27,20 +29,14 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Partner extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $title = '';
+    protected string $title = '';
 
-    /**
-     * @var string
-     */
-    protected $link = '';
+    protected string $link = '';
 
     /**
      * @var ObjectStorage<FileReference>
      */
-    protected $images;
+    protected ObjectStorage $images;
 
     public function getTitle(): string
     {

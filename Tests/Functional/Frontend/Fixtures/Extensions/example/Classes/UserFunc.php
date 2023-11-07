@@ -26,12 +26,14 @@ namespace WerkraumMedia\EventsExample;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-class UserFunc
+final class UserFunc
 {
-    /**
-     * @var ContentObjectRenderer
-     */
-    public $cObj;
+    private ContentObjectRenderer $cObj;
+
+    public function setContentObjectRenderer(ContentObjectRenderer $cObj): void
+    {
+        $this->cObj = $cObj;
+    }
 
     public function accessTsfeTimeout(): string
     {

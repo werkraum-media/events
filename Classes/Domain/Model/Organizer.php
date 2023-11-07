@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
 /*
@@ -17,50 +19,21 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Organizer extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
+    protected string $name = '';
 
-    /**
-     * @var string
-     */
-    protected $street = '';
+    protected string $street = '';
 
-    /**
-     * @var string
-     */
-    protected $district = '';
+    protected string $district = '';
 
-    /**
-     * @var string
-     */
-    protected $city = '';
+    protected string $city = '';
 
-    /**
-     * @var string
-     */
-    protected $zip = '';
+    protected string $zip = '';
 
-    /**
-     * @var string
-     */
-    protected $phone = '';
+    protected string $phone = '';
 
-    /**
-     * @var string
-     */
-    protected $web = '';
+    protected string $web = '';
 
-    /**
-     * @var string
-     */
-    protected $email = '';
-
-    /**
-     * @var int
-     */
-    protected $_languageUid;
+    protected string $email = '';
 
     public function getName(): string
     {

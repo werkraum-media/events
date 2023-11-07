@@ -28,15 +28,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class CacheManager
 {
-    /**
-     * @var Typo3CacheManager
-     */
-    private $cacheManager;
-
-    /**
-     * @var array
-     */
-    private $tags = [
+    private array $tags = [
         'tx_events_domain_model_date',
         'tx_events_domain_model_event',
         'tx_events_domain_model_organizer',
@@ -45,9 +37,8 @@ class CacheManager
     ];
 
     public function __construct(
-        Typo3CacheManager $cacheManager
+        private readonly Typo3CacheManager $cacheManager
     ) {
-        $this->cacheManager = $cacheManager;
     }
 
     public function addAllCacheTagsToPage(ContentObjectRenderer $cObject): void

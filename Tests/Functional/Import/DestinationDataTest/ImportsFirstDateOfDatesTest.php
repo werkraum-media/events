@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsFirstDateOfDatesTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsFirstDateOfDatesTest extends AbstractTestCase
 {
     public function setUp(): void
     {
@@ -17,45 +21,39 @@ class ImportsFirstDateOfDatesTest extends AbstractTest
             'restUrl = https://example.com/some-path/',
         ]);
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FirstDateOfRecurringDatesImportConfiguration.php');
-        $this->setDateAspect(new \DateTimeImmutable('2022-07-13', new \DateTimeZone('UTC')));
+        $this->setDateAspect(new DateTimeImmutable('2022-07-13', new DateTimeZone('UTC')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function singelDate(): void
     {
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithSingleDate.json') ?: '')]);
 
         $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfSingleDate.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsFirstDateOfSingleDate.php');
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function recurringWeekly(): void
     {
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringWeekly.json') ?: '')]);
 
         $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfRecurringDatesWeekly.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsFirstDateOfRecurringDatesWeekly.php');
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function recurringDaily(): void
     {
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringDaily.json') ?: '')]);
 
         $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFirstDateOfRecurringDatesDaily.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsFirstDateOfRecurringDatesDaily.php');
         $this->assertEmptyLog();
     }
 }

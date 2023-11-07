@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Core\Resource\Folder;
@@ -11,83 +13,32 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
  */
 class Import extends AbstractDomainObject
 {
-    /**
-     * @var int
-     */
-    protected $storagePid;
+    protected ?int $categoriesPid;
 
-    /**
-     * @var Folder
-     */
-    protected $filesFolder;
-
-    /**
-     * @var int|null
-     */
-    protected $categoriesPid;
-
-    /**
-     * @var Category|null
-     */
-    protected $categoryParent;
-
-    /**
-     * @var int|null
-     */
-    protected $featuresPid;
-
-    /**
-     * @var Category|null
-     */
-    protected $featuresParent;
-
-    /**
-     * @var Region|null
-     */
-    protected $region;
-
-    /**
-     * @var string
-     */
-    protected $restExperience;
-
-    /**
-     * @var string
-     */
-    protected $restSearchQuery;
+    protected ?int $featuresPid;
 
     public function __construct(
-        Folder $filesFolder,
-        int $storagePid,
-        string $restExperience,
-        string $restSearchQuery = '',
+        protected Folder $filesFolder,
+        protected int $storagePid,
+        protected string $restExperience,
+        protected string $restSearchQuery = '',
         int $categoriesPid = 0,
-        ?Category $categoryParent = null,
+        protected ?Category $categoryParent = null,
         int $featuresPid = 0,
-        ?Category $featuresParent = null,
-        ?Region $region = null
+        protected ?Category $featuresParent = null,
+        protected ?Region $region = null
     ) {
-        $this->filesFolder = $filesFolder;
-        $this->storagePid = $storagePid;
-
         // Do not allow categories on pid 0
         if ($categoriesPid === 0) {
             $categoriesPid = null;
         }
         $this->categoriesPid = $categoriesPid;
-        $this->categoryParent = $categoryParent;
 
         // Do not allow features on pid 0
         if ($featuresPid === 0) {
             $featuresPid = null;
         }
         $this->featuresPid = $featuresPid;
-        $this->featuresParent = $featuresParent;
-
-        $this->restExperience = $restExperience;
-        $this->restSearchQuery = $restSearchQuery;
-
-        $this->region = $region;
     }
 
     public function getStoragePid(): int

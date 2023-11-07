@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -14,24 +16,12 @@ use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignme
  * Categories mean TYPO3 sys_category records.
  * Those are used for multiple records within destination data. E.g. categories or features.
  */
-class CategoriesAssignment
+final class CategoriesAssignment
 {
-    /**
-     * @var CategoryRepository
-     */
-    private $repository;
-
-    /**
-     * @var PersistenceManager
-     */
-    private $persistenceManager;
-
     public function __construct(
-        CategoryRepository $repository,
-        PersistenceManager $persistenceManager
+        private readonly CategoryRepository $repository,
+        private readonly PersistenceManager $persistenceManager
     ) {
-        $this->repository = $repository;
-        $this->persistenceManager = $persistenceManager;
     }
 
     /**

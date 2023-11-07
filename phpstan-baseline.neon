@@ -1,34 +1,9 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Http\\\\PropagateResponseException not found\\.$#"
-			count: 1
-			path: Classes/Controller/AbstractController.php
-
-		-
-			message: "#^Parameter \\#1 \\$request of method TYPO3\\\\CMS\\\\Frontend\\\\Controller\\\\ErrorController\\:\\:pageNotFoundAction\\(\\) expects Psr\\\\Http\\\\Message\\\\ServerRequestInterface, TYPO3\\\\CMS\\\\Extbase\\\\Mvc\\\\Request given\\.$#"
-			count: 1
-			path: Classes/Controller/AbstractController.php
-
-		-
-			message: "#^Throwing object of an unknown class TYPO3\\\\CMS\\\\Core\\\\Http\\\\PropagateResponseException\\.$#"
-			count: 1
-			path: Classes/Controller/AbstractController.php
-
-		-
 			message: "#^Cannot call method typoLink_URL\\(\\) on TYPO3\\\\CMS\\\\Frontend\\\\ContentObject\\\\ContentObjectRenderer\\|null\\.$#"
 			count: 1
 			path: Classes/Controller/DateController.php
-
-		-
-			message: "#^Instanceof between WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
-			count: 1
-			path: Classes/Domain/Model/Category.php
-
-		-
-			message: "#^Parameter \\#1 \\$categories of method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
-			count: 1
-			path: Classes/Service/DestinationDataImportService.php
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, 'strval' given\\.$#"
@@ -41,47 +16,82 @@ parameters:
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(TEntity, TEntity\\)\\: int, Closure\\(WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category, WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
-			count: 2
-			path: Classes/Domain/Model/Event.php
+			message: "#^Instanceof between WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Category.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getCategories\\(\\) should return array\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$pid \\(int\\<0, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Category.php
+
+		-
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Date\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Date.php
+
+		-
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Date.php
+
+		-
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getFeatures\\(\\) should return array\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getLocalizedUid\\(\\) should return int but returns int\\<0, max\\>\\|null\\.$#"
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Call to method deleteFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
+			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(mixed, mixed\\)\\: int, Closure\\(WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category, WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Event.php
+
+		-
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Event.php
+
+		-
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Location.php
+
+		-
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Organizer\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Organizer.php
+
+		-
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Organizer.php
+
+		-
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Region\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Region.php
+
+		-
+			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Region.php
+
+		-
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Repository\\\\LocationRepository\\:\\:findOneByGlobalId\\(\\) should return WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Location\\|null but returns \\(T of object\\)\\|null\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/LocationRepository.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Call to method getFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Call to method hasFile\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Resource\\\\Storage\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Result\\|int supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Cannot call method fetchAllAssociativeIndexed\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
@@ -91,29 +101,9 @@ parameters:
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Parameter \\#1 \\$uid of class WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects int, int\\|null given\\.$#"
-			count: 2
-			path: Classes/Service/DestinationDataImportService.php
-
-		-
-			message: "#^Parameter \\#3 \\$assignments of class WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects array\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\>, array\\<int, TEntity\\> given\\.$#"
-			count: 2
-			path: Classes/Service/DestinationDataImportService.php
-
-		-
 			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
-
-		-
-			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
-
-		-
-			message: "#^Cannot call method fetchAssociative\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
 
 		-
 			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
@@ -121,37 +111,6 @@ parameters:
 			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
 
 		-
-			message: "#^Cannot call method fetchAllAssociativeIndexed\\(\\) on Doctrine\\\\DBAL\\\\Driver\\\\ResultStatement\\|int\\.$#"
-			count: 1
-			path: Classes/Service/Cleanup/Files.php
-
-		-
-			message: "#^Argument of an invalid type Doctrine\\\\DBAL\\\\Result\\|int supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
-
-		-
-			message: "#^Cannot call method fetchAssociative\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
-
-		-
 			message: "#^Method WerkraumMedia\\\\Events\\\\Updates\\\\MigrateOldLocations\\:\\:getExitingLocationUid\\(\\) should return int but returns mixed\\.$#"
 			count: 1
 			path: Classes/Updates/MigrateOldLocations.php
-
-		-
-			message: "#^Offset 'sys_language_uid' does not exist on array\\{location\\: int\\}\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
-
-		-
-			message: "#^Offset 'uid' does not exist on array\\{location\\: int\\}\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
-
-
-		-
-			message: "#^Cannot call method getEnd\\(\\) on mixed\\.$#"
-			count: 1
-			path: Classes/Caching/PageCacheTimeout.php

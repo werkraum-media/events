@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\Cleanup;
 
 /*
@@ -21,28 +23,17 @@ namespace WerkraumMedia\Events\Service\Cleanup;
  * 02110-1301, USA.
  */
 
+use PDO;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 
-class Files
+final class Files
 {
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
-    /**
-     * @var StorageRepository
-     */
-    private $storageRepository;
-
     public function __construct(
-        ConnectionPool $connectionPool,
-        StorageRepository $storageRepository
+        private readonly ConnectionPool $connectionPool,
+        private readonly StorageRepository $storageRepository
     ) {
-        $this->connectionPool = $connectionPool;
-        $this->storageRepository = $storageRepository;
     }
 
     public function deleteDangling(): void
@@ -54,7 +45,8 @@ class Files
     private function markFileReferencesDeletedIfForeignRecordIsMissing(): void
     {
         $referencesQuery = $this->connectionPool
-            ->getQueryBuilderForTable('sys_file_reference');
+            ->getQueryBuilderForTable('sys_file_reference')
+        ;
         $referencesQuery->getRestrictions()->removeAll();
         $referencesQuery->select(
             'uid',
@@ -70,7 +62,7 @@ class Files
         );
         // Remove file relations removed via import
         $referencesQuery->orWhere(
-            $referencesQuery->expr()->andX(
+            $referencesQuery->expr()->and(
                 $referencesQuery->expr()->eq(
                     'tablenames',
                     $referencesQuery->createNamedParameter('')
@@ -92,7 +84,7 @@ class Files
         $referencesQuery->orderBy('tablenames');
         $referencesQuery->addOrderBy('uid_foreign');
 
-        $references = $referencesQuery->execute();
+        $references = $referencesQuery->executeQuery();
 
         $uidsPerTable = [];
         $referenceUidsToMarkAsDeleted = [];
@@ -116,10 +108,13 @@ class Files
             $queryBuilder->select('uid');
             $queryBuilder->from($tableName);
             $queryBuilder->where($queryBuilder->expr()->in('uid', $records));
-            $referenceUidsToMarkAsDeleted = array_merge(
-                $referenceUidsToMarkAsDeleted,
-                array_keys(array_diff($records, $queryBuilder->execute()->fetchAll(\PDO::FETCH_COLUMN)))
-            );
+            $referenceUidsToMarkAsDeleted = [
+                ...$referenceUidsToMarkAsDeleted,
+                ...array_keys(array_diff(
+                    $records,
+                    $queryBuilder->executeQuery()->fetchAll(PDO::FETCH_COLUMN)
+                )),
+            ];
         }
 
         if ($referenceUidsToMarkAsDeleted === []) {
@@ -130,7 +125,7 @@ class Files
         $updateQuery->update('sys_file_reference');
         $updateQuery->where($updateQuery->expr()->in('uid', $referenceUidsToMarkAsDeleted));
         $updateQuery->set('deleted', '1');
-        $updateQuery->execute();
+        $updateQuery->executeStatement();
     }
 
     private function deleteFilesWithoutProperReference(): void
@@ -160,14 +155,16 @@ class Files
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file');
         $queryBuilder->delete('sys_file')
             ->where('uid in (:uids)')
-            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
-            ->execute();
+            ->setParameter('uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->executeStatement()
+        ;
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
         $queryBuilder->delete('sys_file_metadata')
             ->where('file in (:uids)')
-            ->setParameter(':uids', $uids, Connection::PARAM_INT_ARRAY)
-            ->execute();
+            ->setParameter('uids', $uids, Connection::PARAM_INT_ARRAY)
+            ->executeStatement()
+        ;
 
         $this->deleteReferences();
     }
@@ -179,7 +176,7 @@ class Files
         $queryBuilder
             ->delete('sys_file_reference')
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->like(
                         'tablenames',
                         $queryBuilder->createNamedParameter('tx_events_domain_model_%')
@@ -195,7 +192,7 @@ class Files
                 1
             ))
         ;
-        $queryBuilder->execute();
+        $queryBuilder->executeStatement();
     }
 
     /**
@@ -225,7 +222,7 @@ class Files
             ->groupBy('file.uid')
         ;
 
-        return $queryBuilder->execute()->fetchAllAssociativeIndexed();
+        return $queryBuilder->executeQuery()->fetchAllAssociativeIndexed();
     }
 
     /**
@@ -249,13 +246,13 @@ class Files
             ))
         ;
 
-        foreach ($queryBuilder->execute() as $reference) {
+        foreach ($queryBuilder->executeQuery()->iterateAssociative() as $reference) {
             $file = [];
             $fileUid = (int)$reference['uid_local'];
 
             if (
                 (
-                    str_starts_with($reference['tablenames'], 'tx_events_domain_model_')
+                    str_starts_with((string)$reference['tablenames'], 'tx_events_domain_model_')
                     || $reference['tablenames'] === ''
                 ) && $reference['deleted'] == 1
             ) {

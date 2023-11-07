@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Command\ImportDestinationDataViaAllConfigruationsCommand;
 
-/**
- * @testdox Import of configuration
- */
-class ImportsAllConfigurationTest extends AbstractTest
+#[TestDox('Import of configuration')]
+class ImportsAllConfigurationTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsConfiguration(): void
     {
-        $this->setDateAspect(new \DateTimeImmutable('2021-07-13', new \DateTimeZone('Europe/Berlin')));
+        $this->setDateAspect(new DateTimeImmutable('2021-07-13', new DateTimeZone('Europe/Berlin')));
 
         $fileImportPathConfiguration2 = 'staedte/anderestadt/events/';
         $fileImportPath2 = $this->getInstancePath() . '/fileadmin/' . $fileImportPathConfiguration2;
@@ -72,7 +74,7 @@ class ImportsAllConfigurationTest extends AbstractTest
             $this->getAllRecords('tx_events_domain_model_region'),
             'Added or removed unexpected region.'
         );
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsAllConfigurationTest.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsAllConfiguration.php');
 
         $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');

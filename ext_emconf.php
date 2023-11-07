@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $EM_CONF['events'] = [
     'title' => 'Events',
     'description' => 'Extension to manage events',
@@ -7,12 +9,10 @@ $EM_CONF['events'] = [
     'author' => 'Dirk Koritnik, Daniel Siepmann',
     'author_email' => 'koritnik@werkraum-media.de, coding@daniel-siepmann.de',
     'state' => 'stable',
-    'createDirs' => '',
-    'clearCacheOnLoad' => 0,
     'version' => '4.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.00-11.5.99',
+            'typo3' => '',
         ],
         'conflicts' => [],
         'suggests' => [],

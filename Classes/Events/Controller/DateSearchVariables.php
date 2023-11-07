@@ -1,59 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Events\Controller;
 
-use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use WerkraumMedia\Events\Domain\Model\Category;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 use WerkraumMedia\Events\Domain\Model\Region;
 
-class DateSearchVariables
+final class DateSearchVariables
 {
-    /**
-     * @var array
-     */
-    private $search;
-
-    /**
-     * @var DateDemand
-     */
-    private $demand;
-
-    /**
-     * @var QueryResultInterface<Region>
-     */
-    private $regions;
-
-    /**
-     * @var array<Category>
-     */
-    private $categories;
-
-    /**
-     * @var array<Category>
-     */
-    private $features;
-
-    /**
-     * @var array
-     */
-    private $variables = [];
+    private array $variables = [];
 
     /**
      * @param QueryResultInterface<Region> $regions
+     * @param array<Category> $categories
+     * @param array<Category> $features
      */
     public function __construct(
-        array $search,
-        DateDemand $demand,
-        QueryResultInterface $regions,
-        array $categories,
-        array $features
+        private readonly array $search,
+        private readonly DateDemand $demand,
+        private readonly QueryResultInterface $regions,
+        private readonly array $categories,
+        private readonly array $features
     ) {
-        $this->search = $search;
-        $this->demand = $demand;
-        $this->regions = $regions;
-        $this->categories = $categories;
-        $this->features = $features;
     }
 
     public function getSearch(): array
@@ -84,22 +55,20 @@ class DateSearchVariables
         return $this->features;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function addVariable(string $key, $value): void
+    public function addVariable(string $key, mixed $value): void
     {
         $this->variables[$key] = $value;
     }
 
     public function getVariablesForView(): array
     {
-        return array_merge([
+        return [
             'search' => $this->search,
             'demand' => $this->demand,
             'regions' => $this->regions,
             'categories' => $this->categories,
             'features' => $this->features,
-        ], $this->variables);
+            ...$this->variables,
+        ];
     }
 }

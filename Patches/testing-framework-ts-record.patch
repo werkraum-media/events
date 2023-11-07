@@ -1,0 +1,18 @@
+Use "same" value for tstamp and crdate.
+Otherwise TYPO3 will have different cache identifier if multiple requests with same instruction are given.
+diff --git a/Resources/Core/Functional/Extensions/json_response/Classes/EventListener/AddTypoScriptFromInternalRequest.php b/Resources/Core/Functional/Extensions/json_response/Classes/EventListener/AddTypoScriptFromInternalRequest.php
+index 111a997..504a899 100644
+--- a/Resources/Core/Functional/Extensions/json_response/Classes/EventListener/AddTypoScriptFromInternalRequest.php
++++ b/Resources/Core/Functional/Extensions/json_response/Classes/EventListener/AddTypoScriptFromInternalRequest.php
+@@ -49,8 +49,8 @@ final class AddTypoScriptFromInternalRequest
+         $newTemplateRow = [
+             'uid' => PHP_INT_MAX,
+             'pid' => PHP_INT_MAX,
+-            'tstamp' => time(),
+-            'crdate' => time(),
++            'tstamp' => (new \DateTimeImmutable('midnight'))->format('U'),
++            'crdate' => (new \DateTimeImmutable('midnight'))->format('U'),
+             'deleted' => 0,
+             'starttime' => 0,
+             'endtime' => 0,
+

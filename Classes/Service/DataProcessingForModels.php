@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service;
 
 /*
@@ -67,49 +69,22 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  *
  * - Event->getPages()
  */
-class DataProcessingForModels implements SingletonInterface
+final class DataProcessingForModels implements SingletonInterface
 {
-    /**
-     * @var ContentObjectRenderer
-     */
-    private $cObject;
+    private readonly ContentObjectRenderer $cObject;
 
-    /**
-     * @var ContentDataProcessor
-     */
-    private $processorHandler;
+    private readonly Connection $connection;
 
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var DataMapFactory
-     */
-    private $dataMapFactory;
-
-    /**
-     * @var ConfigurationManagerInterface|null
-     */
-    private $configurationManager;
-
-    /**
-     * @var TypoScriptService
-     */
-    private $typoScriptService;
+    private ?ConfigurationManagerInterface $configurationManager = null;
 
     public function __construct(
-        ContentDataProcessor $processorHandler,
+        private readonly ContentDataProcessor $processorHandler,
         ConnectionPool $connectionPool,
-        DataMapFactory $dataMapFactory,
-        TypoScriptService $typoScriptService
+        private readonly DataMapFactory $dataMapFactory,
+        private readonly TypoScriptService $typoScriptService
     ) {
         $this->cObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-        $this->processorHandler = $processorHandler;
         $this->connection = $connectionPool->getConnectionByName('Default');
-        $this->dataMapFactory = $dataMapFactory;
-        $this->typoScriptService = $typoScriptService;
     }
 
     /**
@@ -148,7 +123,7 @@ class DataProcessingForModels implements SingletonInterface
 
     private function getTable(AbstractEntity $entity): string
     {
-        $dataMap = $this->dataMapFactory->buildDataMap(get_class($entity));
+        $dataMap = $this->dataMapFactory->buildDataMap($entity::class);
         return $dataMap->getTableName();
     }
 
@@ -158,7 +133,7 @@ class DataProcessingForModels implements SingletonInterface
             return [];
         }
 
-        $className = get_class($entity);
+        $className = $entity::class;
         $settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
         );

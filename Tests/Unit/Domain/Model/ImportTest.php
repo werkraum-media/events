@@ -1,30 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Resource\Folder;
 use WerkraumMedia\Events\Domain\Model\Category;
 use WerkraumMedia\Events\Domain\Model\Import;
 use WerkraumMedia\Events\Domain\Model\Region;
-use WerkraumMedia\Events\Tests\ProphecyTrait;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Import
- */
 class ImportTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             ''
         );
@@ -35,15 +30,13 @@ class ImportTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsRestExperience(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             'experience'
         );
@@ -54,15 +47,13 @@ class ImportTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsStoragePid(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             20,
             ''
         );
@@ -73,16 +64,14 @@ class ImportTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsRegion(): void
     {
-        $folder = $this->prophesize(Folder::class);
-        $region = $this->prophesize(Region::class);
+        $folder = $this->createStub(Folder::class);
+        $region = $this->createStub(Region::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             '',
@@ -90,43 +79,39 @@ class ImportTest extends TestCase
             null,
             0,
             null,
-            $region->reveal()
+            $region
         );
 
         self::assertSame(
-            $region->reveal(),
+            $region,
             $subject->getRegion()
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFilesFolder(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             ''
         );
 
         self::assertSame(
-            $folder->reveal(),
+            $folder,
             $subject->getFilesFolder()
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsCategoriesPid(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             '',
@@ -139,38 +124,34 @@ class ImportTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsCategoryParent(): void
     {
-        $category = $this->prophesize(Category::class);
-        $folder = $this->prophesize(Folder::class);
+        $category = $this->createStub(Category::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             '',
             0,
-            $category->reveal()
+            $category
         );
 
         self::assertSame(
-            $category->reveal(),
+            $category,
             $subject->getCategoryParent()
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFeaturesPid(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             '',
@@ -185,40 +166,36 @@ class ImportTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFeaturesParent(): void
     {
-        $feature = $this->prophesize(Category::class);
-        $folder = $this->prophesize(Folder::class);
+        $feature = $this->createStub(Category::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             '',
             0,
             null,
             0,
-            $feature->reveal()
+            $feature
         );
 
         self::assertSame(
-            $feature->reveal(),
+            $feature,
             $subject->getFeaturesParent()
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSearchQuery(): void
     {
-        $folder = $this->prophesize(Folder::class);
+        $folder = $this->createStub(Folder::class);
 
         $subject = new Import(
-            $folder->reveal(),
+            $folder,
             0,
             '',
             'name:"Test"'

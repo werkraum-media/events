@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsFeaturesTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsFeaturesTest extends AbstractTestCase
 {
-    /**
-     * @test
-     * Only 1 associated feature count as other features are new and hidden and not counted.
-     */
+    #[Test]
     public function addsNewFeatures(): void
     {
         $this->setUpConfiguration([
@@ -24,13 +23,11 @@ class ImportsFeaturesTest extends AbstractTest
         ]);
         $tester = $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFeaturesAddsNewFeatures.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsFeaturesAddsNewFeatures.php');
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsNewFeaturesToExistingOnes(): void
     {
         $this->setUpConfiguration([
@@ -43,7 +40,7 @@ class ImportsFeaturesTest extends AbstractTest
         ]);
         $tester = $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsFeaturesAddsNewFeatures.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsFeaturesAddsNewFeatures.php');
         $this->assertEmptyLog();
     }
 }

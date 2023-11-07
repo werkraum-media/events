@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $EM_CONF['example'] = [
     'title' => 'Events Test',
     'category' => 'plugin',

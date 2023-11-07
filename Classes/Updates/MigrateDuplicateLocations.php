@@ -26,20 +26,16 @@ namespace WerkraumMedia\Events\Updates;
 use Generator;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 use WerkraumMedia\Events\Domain\Model\Location;
 
+#[UpgradeWizard(MigrateDuplicateLocations::class)]
 final class MigrateDuplicateLocations implements UpgradeWizardInterface
 {
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
     public function __construct(
-        ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool
     ) {
-        $this->connectionPool = $connectionPool;
     }
 
     public function getIdentifier(): string
@@ -98,11 +94,6 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         return [];
     }
 
-    public static function register(): void
-    {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][self::class] = self::class;
-    }
-
     /**
      * @return Generator<array>
      */
@@ -125,7 +116,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         );
         $queryBuilder->from('tx_events_domain_model_location');
         $queryBuilder->orderBy('uid', 'asc');
-        $result = $queryBuilder->execute();
+        $result = $queryBuilder->executeQuery();
 
         foreach ($result->fetchAllAssociative() as $location) {
             yield $location;
@@ -143,7 +134,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         $queryBuilder->andWhere($queryBuilder->expr()->neq('uid', $queryBuilder->createNamedParameter($uid)));
         $queryBuilder->setMaxResults(1);
 
-        $uid = $queryBuilder->execute()->fetchOne();
+        $uid = $queryBuilder->executeQuery()->fetchOne();
         if (is_numeric($uid) === false) {
             return 0;
         }
@@ -175,7 +166,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         $queryBuilder->set('global_id', $location->getGlobalId());
         $queryBuilder->set('latitude', $location->getLatitude());
         $queryBuilder->set('longitude', $location->getLongitude());
-        $queryBuilder->execute();
+        $queryBuilder->executeStatement();
     }
 
     /**
@@ -186,7 +177,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_location');
         $queryBuilder->delete('tx_events_domain_model_location');
         $queryBuilder->where($queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($uids, Connection::PARAM_INT_ARRAY)));
-        $queryBuilder->execute();
+        $queryBuilder->executeStatement();
     }
 
     private function updateRelations(array $migration): void
@@ -198,7 +189,7 @@ final class MigrateDuplicateLocations implements UpgradeWizardInterface
             $finalBuilder = clone $queryBuilder;
             $finalBuilder->where($finalBuilder->expr()->eq('location', $finalBuilder->createNamedParameter($legacyLocationUid)));
             $finalBuilder->set('location', $newLocationUid);
-            $finalBuilder->execute();
+            $finalBuilder->executeStatement();
         }
     }
 }

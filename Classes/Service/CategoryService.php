@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
@@ -9,13 +11,11 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\TimeTracker\TimeTracker;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class CategoryService
+final class CategoryService
 {
-    /** @var TimeTracker */
-    protected $timeTracker;
+    private TimeTracker $timeTracker;
 
-    /** @var FrontendInterface */
-    protected $cache;
+    private FrontendInterface $cache;
 
     public function __construct()
     {
@@ -28,7 +28,6 @@ class CategoryService
      * and using the caching framework to save some queries
      *
      * @param string $idList list of category ids to start
-     * @param int $counter
      *
      * @return string comma separated list of category ids
      */
@@ -66,7 +65,8 @@ class CategoryService
         }
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('sys_category');
+            ->getQueryBuilderForTable('sys_category')
+        ;
         $res = $queryBuilder
             ->select('uid')
             ->from('sys_category')
@@ -74,7 +74,8 @@ class CategoryService
                 'parent',
                 $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY)
             ))
-            ->execute();
+            ->executeQuery()
+        ;
 
         while ($row = $res->fetch()) {
             if (is_array($row) === false) {
@@ -96,16 +97,13 @@ class CategoryService
 
     /**
      * Fetch ids again from DB to avoid false positives
-     *
-     * @param string $idList
-     *
-     * @return string
      */
     protected function getUidListFromRecords(string $idList): string
     {
         $list = [];
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('sys_category');
+            ->getQueryBuilderForTable('sys_category')
+        ;
         $rows = $queryBuilder
             ->select('uid')
             ->from('sys_category')
@@ -113,8 +111,9 @@ class CategoryService
                 'uid',
                 $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY)
             ))
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAll()
+        ;
         foreach ($rows as $row) {
             if (is_array($row) === false) {
                 continue;

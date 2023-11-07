@@ -23,19 +23,15 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Location;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Location
- */
 final class LocationTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @dataProvider possibleLatitudeAndLongitude
-     */
+    #[DataProvider('possibleLatitudeAndLongitude')]
+    #[Test]
     public function normalizesLatitudeAndLongitude(
         string $latitude,
         string $longitude

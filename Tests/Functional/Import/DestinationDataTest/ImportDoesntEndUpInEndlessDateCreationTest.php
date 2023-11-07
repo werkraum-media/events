@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
+use DateTimeImmutable;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
 
-class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
+class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsExampleAsExpected(): void
     {
-        $this->setDateAspect(new \DateTimeImmutable('2022-07-01'), new \DateTimeZone('Europe/Berlin'));
+        $this->setDateAspect(new DateTimeImmutable('2022-07-01'));
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
@@ -32,7 +34,7 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTest
 
         self::assertSame(0, $tester->getStatusCode());
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportDoesntEndUpInEndlessDateCreationTest.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportDoesntEndUpInEndlessDateCreation.php');
         $this->assertEmptyLog();
     }
 }

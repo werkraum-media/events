@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Import;
 
 /**
  * Factory to create URLs used during import of Destination Data.
  */
-class UrlFactory
+final class UrlFactory
 {
     /**
      * @var array
@@ -18,13 +19,12 @@ class UrlFactory
     private $settings = [];
 
     public function __construct(
-        ConfigurationManager $configurationManager
+        BackendConfigurationManager $configurationManager
     ) {
         $this->settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'Events',
             'Pi1'
-        )['destinationData'] ?? [];
+        )['settings']['destinationData'] ?? [];
     }
 
     /**

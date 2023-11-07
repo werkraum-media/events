@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Resource\File;
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -25,19 +28,7 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => 0,
-            ],
+            'config' => ['type' => 'language'],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -47,7 +38,7 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => 'tx_events_domain_model_partner',
                 'foreign_table_where' => 'AND {#tx_events_domain_model_partner}.{#pid}=###CURRENT_PID### AND {#tx_events_domain_model_partner}.{#sys_language_uid} IN (-1,0)',
@@ -74,8 +65,7 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -95,21 +85,15 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner.link',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputLink',
-                'eval' => 'trim',
-                'max' => 1024,
-                'size' => 50,
-                'softref' => 'typolink',
+                'type' => 'link',
             ],
         ],
         'images' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner.images',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig('images', [
-                'appearance' => [
-                    'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
-                ],
+            'config' => [
+                'type' => 'file',
+                'allowed' => 'common-image-types',
                 // custom configuration for displaying fields in the overlay/reference table
                 // to use the imageoverlayPalette instead of the basicoverlayPalette
                 'overrideChildTca' => [
@@ -119,14 +103,14 @@ return [
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
                         ],
-                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                        File::FILETYPE_IMAGE => [
                             'showitem' => '
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
                         ],
                     ],
                 ],
-            ], $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']),
+            ],
         ],
     ],
 ];

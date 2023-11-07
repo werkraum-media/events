@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsWithoutRegionIfNotProvidedTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsWithoutRegionIfNotProvided(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithoutRegion.php');
@@ -52,7 +52,7 @@ class ImportsWithoutRegionIfNotProvidedTest extends AbstractTest
             $this->getAllRecords('tx_events_domain_model_region'),
             'Added unexpected region.'
         );
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutRegionIfNotProvided.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsWithoutRegionIfNotProvided.php');
 
         $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
         self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');

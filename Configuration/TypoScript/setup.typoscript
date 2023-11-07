@@ -24,10 +24,6 @@ plugin.tx_events {
         recursive = 1
     }
 
-    features {
-        skipDefaultArguments = 1
-    }
-
     mvc {
         callDefaultActionIfActionCantBeResolved = 1
     }

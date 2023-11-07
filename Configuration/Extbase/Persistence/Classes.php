@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use WerkraumMedia\Events\Domain\Model\Category;
+
 return [
-    \WerkraumMedia\Events\Domain\Model\Category::class => [
+    Category::class => [
         'tableName' => 'sys_category',
     ],
 ];

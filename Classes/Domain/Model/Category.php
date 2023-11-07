@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 
@@ -13,41 +15,22 @@ use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
  */
 class Category extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $title = '';
-
-    /**
-     * @var int
-     */
-    protected $sorting = 0;
-
-    /**
-     * @var bool
-     */
-    protected $hidden = false;
+    protected int $sorting = 0;
 
     /**
      * @var Category|null
-     *
-     * @Extbase\ORM\Lazy
      */
+    #[Lazy]
     protected $parent;
 
-    /**
-     * @param Category|null $parent
-     */
     public function __construct(
-        $parent,
+        ?Category $parent,
         int $pid,
-        string $title,
-        bool $hidden
+        protected string $title,
+        protected bool $hidden
     ) {
         $this->parent = $parent;
         $this->pid = $pid;
-        $this->title = $title;
-        $this->hidden = $hidden;
     }
 
     public function getTitle(): string
@@ -60,10 +43,7 @@ class Category extends AbstractEntity
         return $this->sorting;
     }
 
-    /**
-     * @return Category|null
-     */
-    public function getParent()
+    public function getParent(): ?Category
     {
         if ($this->parent instanceof LazyLoadingProxy) {
             $this->parent->_loadRealInstance();

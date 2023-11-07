@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * @testdox DestinationData import
- */
-class ImportDoesNotUseUploadsFolderTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportDoesNotUseUploadsFolderTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotUseUploadsFolder(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');

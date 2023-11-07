@@ -4,6 +4,11 @@
 Breaking
 --------
 
+* Drop support of TYPO3 and PHP versions.
+  We drop support for any TYPO3 version below 12.
+  We drop support for PHP versions not supported by TYPO3 v12.
+  That eases the maintenance of the extension.
+
 * Change of vendor/namespace.
   The vendor was renamed from `wrm` to `werkraummedia`.
   And the namespace vendor was renamed from `Wrm` to `WerkraumMedia`.
@@ -11,10 +16,15 @@ Breaking
   That way all references to PHP classes as well as the package name itself need to
   be adjusted.
 
+* No longer allow records on standard pages.
+  Please use TCA Overrides in case you need this none default TYPO3 behaviour.
+
 Features
 --------
 
-Nothing
+* Support TYPO3 v12.
+
+* Support PHP 8.1, 8.2, 8.3.
 
 Fixes
 -----

@@ -42,7 +42,6 @@ Table of Contents
    Commands
    Settings
    Changelog
-   Maintenance
 
 .. toctree::
    :hidden:

@@ -1,33 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use WerkraumMedia\Events\Controller\DateController;
+use WerkraumMedia\Events\Controller\EventController;
+
 defined('TYPO3') || die('Access denied.');
 
 call_user_func(function () {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'Events',
         'DateSearch',
-        [\WerkraumMedia\Events\Controller\DateController::class => 'search'],
-        [\WerkraumMedia\Events\Controller\DateController::class => 'search']
+        [DateController::class => 'search'],
+        [DateController::class => 'search']
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'Events',
         'DateList',
-        [\WerkraumMedia\Events\Controller\DateController::class => 'list'],
-        [\WerkraumMedia\Events\Controller\DateController::class => 'list']
+        [DateController::class => 'list'],
+        [DateController::class => 'list']
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'Events',
         'DateShow',
-        [\WerkraumMedia\Events\Controller\DateController::class => 'show'],
-        [\WerkraumMedia\Events\Controller\DateController::class => 'show']
+        [DateController::class => 'show'],
+        [DateController::class => 'show']
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'Events',
         'Selected',
-        [\WerkraumMedia\Events\Controller\EventController::class => 'list']
+        [EventController::class => 'list']
     );
 
     if (
@@ -39,19 +48,15 @@ call_user_func(function () {
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^events_search';
 
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
     $iconRegistry->registerIcon(
         'events-plugin',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        SvgIconProvider::class,
         ['source' => 'EXT:events/Resources/Public/Icons/Extension.svg']
     );
     $iconRegistry->registerIcon(
         'pages-module-events',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        SvgIconProvider::class,
         ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
     );
-
-    \WerkraumMedia\Events\Caching\PageCacheTimeout::register();
-    \WerkraumMedia\Events\Updates\MigrateOldLocations::register();
-    \WerkraumMedia\Events\Updates\MigrateDuplicateLocations::register();
 });

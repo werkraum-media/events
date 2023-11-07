@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-abstract class AbstractTest extends AbstractFunctionalTestCase
+abstract class AbstractTestCase extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
     {

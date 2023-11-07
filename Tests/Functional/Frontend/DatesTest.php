@@ -23,13 +23,11 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use WerkraumMedia\Events\Frontend\Dates;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-/**
- * @covers \WerkraumMedia\Events\Frontend\Dates
- */
 class DatesTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
@@ -46,16 +44,15 @@ class DatesTest extends AbstractFunctionalTestCase
      * Dates don't make any sense without an event, as they not even have a name.
      *
      * They therefore should not be fetched from persistence.
-     *
-     * @test
      */
+    #[Test]
     public function returnsOnlyDatesWithAvailableEventByDemand(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsOnlyDatesWithAvailableEventByDemand.csv');
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsOnlyDatesWithAvailableEventByDemand.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
@@ -64,19 +61,17 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertStringContainsString('Event 2 visible', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsDateAfterStart(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'events_search[search][start]' => '2023-02-16',
         ]);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
@@ -92,19 +87,17 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertStringContainsString('Event 9', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsDateBeforeEnd(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'events_search[search][end]' => '2023-02-17',
         ]);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
@@ -124,12 +117,11 @@ class DatesTest extends AbstractFunctionalTestCase
      * Covers issue https://redmine.werkraum-media.de/issues/10350.
      * A date can span multiple dates.
      * The visitor might search a time frame within the spaned dates and expects the date to be shown.
-     *
-     * @test
      */
+    #[Test]
     public function returnsDateWithinTimeSpan(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.csv');
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
@@ -137,7 +129,7 @@ class DatesTest extends AbstractFunctionalTestCase
             'events_search[search][start]' => '2023-02-16',
             'events_search[search][end]' => '2023-02-17',
         ]);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
@@ -153,26 +145,22 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertStringContainsString('Event 9', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returns404IfEventIsHidden(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfEventIsHidden.csv');
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfEventIsHidden.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'tx_events_dateshow[date]' => '1',
         ]);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(404, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsUpcomingDates(): void
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsUpcomingDates.php');
@@ -191,7 +179,7 @@ class DatesTest extends AbstractFunctionalTestCase
                     ],
                 ]),
         ]);
-        $response = $this->executeFrontendRequest($request);
+        $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();

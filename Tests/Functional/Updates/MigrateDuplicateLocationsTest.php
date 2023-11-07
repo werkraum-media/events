@@ -23,17 +23,15 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Functional\Updates;
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 use WerkraumMedia\Events\Updates\MigrateDuplicateLocations;
 
-/**
- * @testdox The update wizard to migrate duplicate locations
- */
+#[TestDox('The update wizard to migrate duplicate locations')]
 final class MigrateDuplicateLocationsTest extends AbstractFunctionalTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = $this->get(MigrateDuplicateLocations::class);
@@ -41,20 +39,7 @@ final class MigrateDuplicateLocationsTest extends AbstractFunctionalTestCase
         self::assertInstanceOf(MigrateDuplicateLocations::class, $subject);
     }
 
-    /**
-     * @test
-     */
-    public function isRegistered(): void
-    {
-        self::assertArrayHasKey(
-            MigrateDuplicateLocations::class,
-            $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']
-        );
-    }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function keepsDataIfNothingToDo(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/MigrateDuplicateLocationsNoDuplicates.php');
@@ -67,9 +52,7 @@ final class MigrateDuplicateLocationsTest extends AbstractFunctionalTestCase
         $this->assertPHPDataSet(__DIR__ . '/Fixtures/MigrateDuplicateLocationsNoDuplicates.php');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function migratesDuplicateEntries(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/MigrateDuplicateLocations.php');

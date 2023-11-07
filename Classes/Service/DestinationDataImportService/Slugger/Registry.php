@@ -23,17 +23,19 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
-class Registry
+use Exception;
+
+final class Registry
 {
     /**
      * @var SluggerType[]
      */
-    private $sluggers = [];
+    private array $sluggers = [];
 
     public function get(string $tableName): SluggerType
     {
         if (!isset($this->sluggers[$tableName])) {
-            throw new \Exception(
+            throw new Exception(
                 sprintf(
                     'No slugger registered for table "%s", only for tables: "%s".',
                     $tableName,

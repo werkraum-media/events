@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Events\Domain\Model\Category;
 use WerkraumMedia\Events\Domain\Model\Event;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Event
- */
 class EventTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Event();
@@ -27,9 +23,7 @@ class EventTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSortedFeatures(): void
     {
         $feature1 = $this->createStub(Category::class);
@@ -50,9 +44,7 @@ class EventTest extends TestCase
         ], $subject->getFeatures());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEmptyFeaturesStorage(): void
     {
         $subject = new Event();

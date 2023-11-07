@@ -23,7 +23,7 @@ let
     ];
     text = ''
       rm -rf vendor/ composer.lock .Build/
-      composer update --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
+      composer update --prefer-dist --no-progress
     '';
   };
 
@@ -115,7 +115,7 @@ let
   };
 
 in pkgs.mkShell {
-  name = "TYPO3 Extension Watchlist";
+  name = "TYPO3 Extension Events";
   buildInputs = [
     projectInstall
     projectValidateComposer
@@ -130,8 +130,6 @@ in pkgs.mkShell {
   ];
 
   shellHook = ''
-    export PROJECT_ROOT="$(pwd)"
-
     export typo3DatabaseDriver=pdo_sqlite
   '';
 }

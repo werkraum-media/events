@@ -1,80 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Location extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $name = '';
-
-    /**
-     * @var string
-     */
-    protected $street = '';
-
-    /**
-     * @var string
-     */
-    protected $zip = '';
-
-    /**
-     * @var string
-     */
-    protected $city = '';
-
-    /**
-     * @var string
-     */
-    protected $district = '';
-
-    /**
-     * @var string
-     */
-    protected $country = '';
-
-    /**
-     * @var string
-     */
-    protected $phone = '';
-
-    /**
-     * @var string
-     */
-    protected $latitude = '';
-
-    /**
-     * @var string
-     */
-    protected $longitude = '';
-
-    /**
-     * @var string
-     */
-    protected $globalId = '';
+    protected string $globalId = '';
 
     public function __construct(
-        string $name,
-        string $street,
-        string $zip,
-        string $city,
-        string $district,
-        string $country,
-        string $phone,
-        string $latitude,
-        string $longitude,
+        protected string $name,
+        protected string $street,
+        protected string $zip,
+        protected string $city,
+        protected string $district,
+        protected string $country,
+        protected string $phone,
+        protected string $latitude,
+        protected string $longitude,
         int $languageUid
     ) {
-        $this->name = $name;
-        $this->street = $street;
-        $this->zip = $zip;
-        $this->city = $city;
-        $this->district = $district;
-        $this->country = $country;
-        $this->phone = $phone;
         $this->latitude = $this->normalizeGeocoordinate($latitude);
         $this->longitude = $this->normalizeGeocoordinate($longitude);
         $this->_languageUid = $languageUid;
@@ -153,8 +100,7 @@ class Location extends AbstractEntity
             || $this->city !== ''
             || $this->district !== ''
             || $this->country !== ''
-            || $this->phone !== ''
-        ;
+            || $this->phone !== '';
     }
 
     private function generateGlobalId(): string

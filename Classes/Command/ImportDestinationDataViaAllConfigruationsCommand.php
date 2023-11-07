@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -11,23 +13,11 @@ use WerkraumMedia\Events\Service\DestinationDataImportService;
 
 class ImportDestinationDataViaAllConfigruationsCommand extends Command
 {
-    /**
-     * @var DestinationDataImportService
-     */
-    private $destinationDataImportService;
-
-    /**
-     * @var ImportFactory
-     */
-    private $importFactory;
-
     public function __construct(
-        DestinationDataImportService $destinationDataImportService,
-        ImportFactory $importFactory
+        private readonly DestinationDataImportService $destinationDataImportService,
+        private readonly ImportFactory $importFactory
     ) {
         parent::__construct();
-        $this->destinationDataImportService = $destinationDataImportService;
-        $this->importFactory = $importFactory;
     }
 
     public function configure(): void
