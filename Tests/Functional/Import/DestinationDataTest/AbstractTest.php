@@ -1,8 +1,8 @@
 <?php
 
-namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
+namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 abstract class AbstractTest extends AbstractFunctionalTestCase
 {

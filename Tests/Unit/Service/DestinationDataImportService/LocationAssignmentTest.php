@@ -21,15 +21,15 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
 use PHPUnit\Framework\TestCase;
-use Wrm\Events\Domain\Model\Location;
-use Wrm\Events\Domain\Repository\LocationRepository;
-use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
+use WerkraumMedia\Events\Domain\Model\Location;
+use WerkraumMedia\Events\Domain\Repository\LocationRepository;
+use WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment;
 
 /**
- * @covers \Wrm\Events\Service\DestinationDataImportService\LocationAssignment
+ * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment
  */
 final class LocationAssignmentTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Tests;
+namespace WerkraumMedia\Events\Tests;
 
 // Remove once PHP Unit < 9 is dropped (when PHP version support is dropped)
 // Only needed to circumvent deprecation notice of not using ProphecyTrait in PHPUnit 9.

@@ -9,4 +9,4 @@ Remove ``SlidingWindowPagination`` backport.
 We backported https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/12.0/Feature-94625-IntroduceSlidingWindowPagination.html.
 That allowed us to use the new Code compatible with v12 onwards.
 
-We should remove the file ``Classes/Backports/V12/Pagination/SlidingWindowPagination.php`` and switch to TYPO3 native class within ``Wrm\Events\Pagination\Factory``.
+We should remove the file ``Classes/Backports/V12/Pagination/SlidingWindowPagination.php`` and switch to TYPO3 native class within ``WerkraumMedia\Events\Pagination\Factory``.

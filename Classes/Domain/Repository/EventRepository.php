@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Repository;
+namespace WerkraumMedia\Events\Domain\Repository;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -20,9 +20,9 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Wrm\Events\Domain\Model\Dto\EventDemand;
-use Wrm\Events\Domain\Model\Event;
-use Wrm\Events\Service\CategoryService;
+use WerkraumMedia\Events\Domain\Model\Dto\EventDemand;
+use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Service\CategoryService;
 
 class EventRepository extends Repository
 {

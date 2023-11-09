@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Controller;
+namespace WerkraumMedia\Events\Controller;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
-use Wrm\Events\Domain\Model\Event;
-use Wrm\Events\Domain\Repository\EventRepository;
-use Wrm\Events\Service\DataProcessingForModels;
+use WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory;
+use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Repository\EventRepository;
+use WerkraumMedia\Events\Service\DataProcessingForModels;
 
 class EventController extends AbstractController
 {

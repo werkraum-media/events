@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Service;
+namespace WerkraumMedia\Events\Service;
 
 use Exception;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
@@ -11,25 +11,25 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use Wrm\Events\Caching\CacheManager;
-use Wrm\Events\Domain\Model\Event;
-use Wrm\Events\Domain\Model\Import;
-use Wrm\Events\Domain\Model\Organizer;
-use Wrm\Events\Domain\Model\Region;
-use Wrm\Events\Domain\Repository\DateRepository;
-use Wrm\Events\Domain\Repository\EventRepository;
-use Wrm\Events\Domain\Repository\OrganizerRepository;
-use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment;
-use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
-use Wrm\Events\Service\DestinationDataImportService\DataFetcher;
-use Wrm\Events\Service\DestinationDataImportService\DataHandler;
-use Wrm\Events\Service\DestinationDataImportService\DataHandler\Assignment;
-use Wrm\Events\Service\DestinationDataImportService\DatesFactory;
-use Wrm\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
-use Wrm\Events\Service\DestinationDataImportService\Events\EventImportEvent;
-use Wrm\Events\Service\DestinationDataImportService\FilesAssignment;
-use Wrm\Events\Service\DestinationDataImportService\LocationAssignment;
-use Wrm\Events\Service\DestinationDataImportService\Slugger;
+use WerkraumMedia\Events\Caching\CacheManager;
+use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Organizer;
+use WerkraumMedia\Events\Domain\Model\Region;
+use WerkraumMedia\Events\Domain\Repository\DateRepository;
+use WerkraumMedia\Events\Domain\Repository\EventRepository;
+use WerkraumMedia\Events\Domain\Repository\OrganizerRepository;
+use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment;
+use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DataFetcher;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler\Assignment;
+use WerkraumMedia\Events\Service\DestinationDataImportService\DatesFactory;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\CategoriesAssignEvent;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\EventImportEvent;
+use WerkraumMedia\Events\Service\DestinationDataImportService\FilesAssignment;
+use WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
 class DestinationDataImportService
 {

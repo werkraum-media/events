@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Wrm\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Date;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Date
+ * @covers \WerkraumMedia\Events\Domain\Model\Date
  */
 class DateTest extends TestCase
 {

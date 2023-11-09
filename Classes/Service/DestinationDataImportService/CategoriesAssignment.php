@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Domain\Repository\CategoryRepository;
-use Wrm\Events\Service\DestinationDataImportService\CategoriesAssignment\Import;
+use WerkraumMedia\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Repository\CategoryRepository;
+use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment\Import;
 
 /**
  * Provides APIs to work with categories that will be assigned to events during import.

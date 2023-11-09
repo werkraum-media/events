@@ -1,5 +1,5 @@
 {
-    "name": "wrm/events",
+    "name": "werkraummedia/events",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
     "description": "Extension to manage destination.one managed events",
@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Wrm\\Events\\": "Classes"
+            "WerkraumMedia\\Events\\": "Classes"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Wrm\\Events\\Tests\\": "Tests",
+            "WerkraumMedia\\Events\\Tests\\": "Tests",
             "WerkraumMedia\\CustomCategories\\": "Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_categories/Classes/",
             "WerkraumMedia\\CustomEvent\\": "Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_event/Classes/"
         }

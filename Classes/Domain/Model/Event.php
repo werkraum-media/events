@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Domain\Model;
+namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Service\DataProcessingForModels;
+use WerkraumMedia\Events\Service\DataProcessingForModels;
 
 class Event extends AbstractEntity
 {

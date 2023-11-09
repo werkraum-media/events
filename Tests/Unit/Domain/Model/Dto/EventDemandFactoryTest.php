@@ -21,14 +21,14 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Unit\Domain\Model\Dto;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model\Dto;
 
 use PHPUnit\Framework\TestCase;
-use Wrm\Events\Domain\Model\Dto\EventDemand;
-use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
+use WerkraumMedia\Events\Domain\Model\Dto\EventDemand;
+use WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Dto\EventDemandFactory
+ * @covers \WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory
  */
 class EventDemandFactoryTest extends TestCase
 {

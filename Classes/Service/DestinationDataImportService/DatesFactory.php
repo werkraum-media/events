@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use Wrm\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Date;
 
 class DatesFactory
 {

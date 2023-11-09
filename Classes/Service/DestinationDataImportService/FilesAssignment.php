@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -33,8 +33,8 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Model\Event;
-use Wrm\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Model\Import;
 
 class FilesAssignment
 {

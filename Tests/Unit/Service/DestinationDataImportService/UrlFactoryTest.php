@@ -1,17 +1,17 @@
 <?php
 
-namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use Wrm\Events\Domain\Model\Import;
-use Wrm\Events\Service\DestinationDataImportService\UrlFactory;
-use Wrm\Events\Tests\ProphecyTrait;
+use WerkraumMedia\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory;
+use WerkraumMedia\Events\Tests\ProphecyTrait;
 
 /**
- * @covers \Wrm\Events\Service\DestinationDataImportService\UrlFactory
+ * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory
  */
 class UrlFactoryTest extends TestCase
 {

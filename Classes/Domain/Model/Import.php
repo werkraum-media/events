@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Domain\Model;
+namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;

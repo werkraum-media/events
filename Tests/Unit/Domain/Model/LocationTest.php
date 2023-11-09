@@ -21,13 +21,13 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Wrm\Events\Domain\Model\Location;
+use WerkraumMedia\Events\Domain\Model\Location;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Location
+ * @covers \WerkraumMedia\Events\Domain\Model\Location
  */
 final class LocationTest extends TestCase
 {

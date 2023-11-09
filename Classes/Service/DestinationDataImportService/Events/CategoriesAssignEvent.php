@@ -21,11 +21,11 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService\Events;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService\Events;
 
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Wrm\Events\Domain\Model\Category;
-use Wrm\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Domain\Model\Category;
+use WerkraumMedia\Events\Domain\Model\Event;
 
 final class CategoriesAssignEvent
 {

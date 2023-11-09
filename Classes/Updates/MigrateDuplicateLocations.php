@@ -21,13 +21,13 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Updates;
+namespace WerkraumMedia\Events\Updates;
 
 use Generator;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
-use Wrm\Events\Domain\Model\Location;
+use WerkraumMedia\Events\Domain\Model\Location;
 
 final class MigrateDuplicateLocations implements UpgradeWizardInterface
 {

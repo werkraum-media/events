@@ -21,7 +21,7 @@ The TTL of the extension is determined in the following way:
 
 #. End of each shown date as fallback.
 
-The corresponding code is ``Wrm\Events\Caching\PageCacheTimeout``.
+The corresponding code is ``WerkraumMedia\Events\Caching\PageCacheTimeout``.
 
 That way the TTL of each page is not longer than the valid period for shown events,
 leading to re-rendering of the page once an event might change.

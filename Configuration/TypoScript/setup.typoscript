@@ -58,7 +58,7 @@ plugin.tx_events {
         }
 
         dataProcessing {
-            Wrm\Events\Domain\Model\Event {
+            WerkraumMedia\Events\Domain\Model\Event {
                 10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
                 10 {
                     special = list

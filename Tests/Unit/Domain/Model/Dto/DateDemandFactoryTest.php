@@ -21,15 +21,15 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Unit\Domain\Model\Dto;
+namespace WerkraumMedia\Events\Tests\Unit\Domain\Model\Dto;
 
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
-use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory;
 
 /**
- * @covers \Wrm\Events\Domain\Model\Dto\DateDemandFactory
+ * @covers \WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory
  */
 class DateDemandFactoryTest extends TestCase
 {

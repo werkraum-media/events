@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wrm\Events\Backports\V12\Pagination;
+namespace WerkraumMedia\Events\Backports\V12\Pagination;
 
 // Original source: https://github.com/TYPO3/typo3/blob/b60cf59fbe7875aff5ee1ba4c56155301694d6b8/typo3/sysext/core/Classes/Pagination/SlidingWindowPagination.php
 // Remove once we have v12 as minimum version.

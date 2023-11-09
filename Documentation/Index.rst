@@ -8,7 +8,7 @@ Events
    events
 
 :Package name:
-   wrm/events
+   werkraummedia/events
 
 :Language:
    en

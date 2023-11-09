@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Caching;
+namespace WerkraumMedia\Events\Caching;
 
 use DateTime;
 use DateTimeImmutable;
@@ -30,8 +30,8 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
-use Wrm\Events\Domain\Model\Date;
-use Wrm\Events\Events\Controller\DateListVariables;
+use WerkraumMedia\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Events\Controller\DateListVariables;
 
 /**
  * Teaches TYPO3 to set proper timeout for page cache.

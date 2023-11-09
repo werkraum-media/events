@@ -21,12 +21,12 @@ parameters:
 			path: Classes/Controller/DateController.php
 
 		-
-			message: "#^Instanceof between Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
+			message: "#^Instanceof between WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
 			count: 1
 			path: Classes/Domain/Model/Category.php
 
 		-
-			message: "#^Parameter \\#1 \\$categories of method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
+			message: "#^Parameter \\#1 \\$categories of method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:setCategories\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\> given\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService.php
 
@@ -41,17 +41,17 @@ parameters:
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(TEntity, TEntity\\)\\: int, Closure\\(Wrm\\\\Events\\\\Domain\\\\Model\\\\Category, Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(TEntity, TEntity\\)\\: int, Closure\\(WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category, WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
 			count: 2
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getCategories\\(\\) should return array\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getCategories\\(\\) should return array\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getFeatures\\(\\) should return array\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getFeatures\\(\\) should return array\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns array\\<int, TEntity\\>\\.$#"
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
@@ -86,22 +86,22 @@ parameters:
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:getPotentialFilesToDelete\\(\\) should return array\\<int, array\\{storage\\: int, identifier\\: string\\}\\> but returns array\\<int\\|string, array\\<string, mixed\\>\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:getPotentialFilesToDelete\\(\\) should return array\\<int, array\\{storage\\: int, identifier\\: string\\}\\> but returns array\\<int\\|string, array\\<string, mixed\\>\\>\\.$#"
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Parameter \\#1 \\$uid of class Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects int, int\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$uid of class WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects int, int\\|null given\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService.php
 
 		-
-			message: "#^Parameter \\#3 \\$assignments of class Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects array\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\>, array\\<int, TEntity\\> given\\.$#"
+			message: "#^Parameter \\#3 \\$assignments of class WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects array\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\>, array\\<int, TEntity\\> given\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<Wrm\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
 
@@ -116,7 +116,7 @@ parameters:
 			path: Classes/Updates/MigrateOldLocations.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
 
@@ -136,7 +136,7 @@ parameters:
 			path: Classes/Updates/MigrateOldLocations.php
 
 		-
-			message: "#^Method Wrm\\\\Events\\\\Updates\\\\MigrateOldLocations\\:\\:getExitingLocationUid\\(\\) should return int but returns mixed\\.$#"
+			message: "#^Method WerkraumMedia\\\\Events\\\\Updates\\\\MigrateOldLocations\\:\\:getExitingLocationUid\\(\\) should return int but returns mixed\\.$#"
 			count: 1
 			path: Classes/Updates/MigrateOldLocations.php
 

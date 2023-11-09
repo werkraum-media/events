@@ -1,11 +1,11 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use Wrm\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Domain\Model\Import;
 
 /**
  * Factory to create URLs used during import of Destination Data.

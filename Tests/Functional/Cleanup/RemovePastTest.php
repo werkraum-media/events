@@ -1,12 +1,12 @@
 <?php
 
-namespace Wrm\Events\Tests\Functional\Cleanup;
+namespace WerkraumMedia\Events\Tests\Functional\Cleanup;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Wrm\Events\Command\RemovePastCommand;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
+use WerkraumMedia\Events\Command\RemovePastCommand;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
  * @testdox Cleanup RemovePast

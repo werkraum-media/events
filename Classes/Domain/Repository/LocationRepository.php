@@ -1,9 +1,9 @@
 <?php
 
-namespace Wrm\Events\Domain\Repository;
+namespace WerkraumMedia\Events\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Wrm\Events\Domain\Model\Location;
+use WerkraumMedia\Events\Domain\Model\Location;
 
 class LocationRepository extends Repository
 {

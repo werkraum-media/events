@@ -1,11 +1,11 @@
 <?php
 
-namespace Wrm\Events\Events\Controller;
+namespace WerkraumMedia\Events\Events\Controller;
 
 use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use Wrm\Events\Domain\Model\Date;
-use Wrm\Events\Domain\Model\Dto\DateDemand;
+use WerkraumMedia\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 
 final class DateListVariables
 {

@@ -1,13 +1,13 @@
 {
-    "name": "wrm/events-example",
+    "name": "werkraummedia/events-example",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
     "require": {
-        "wrm/events": "*"
+        "werkraummedia/events": "*"
     },
     "autoload": {
         "psr-4": {
-            "Wrm\\EventsExample\\": "Classes/"
+            "WerkraumMedia\\EventsExample\\": "Classes/"
         }
     },
     "extra": {

@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Tests\Functional\Frontend;
+namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
 use Codappix\Typo3PhpDatasets\PhpDataSet;
 use DateTimeImmutable;
@@ -30,10 +30,10 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use Wrm\Events\Tests\Functional\AbstractFunctionalTestCase;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
 /**
- * @covers \Wrm\Events\Caching\PageCacheTimeout
+ * @covers \WerkraumMedia\Events\Caching\PageCacheTimeout
  */
 class CacheTest extends AbstractFunctionalTestCase
 {

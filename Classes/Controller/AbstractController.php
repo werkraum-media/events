@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Controller;
+namespace WerkraumMedia\Events\Controller;
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>
@@ -21,14 +21,13 @@ namespace Wrm\Events\Controller;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
-use Wrm\Events\Caching\CacheManager;
+use WerkraumMedia\Events\Caching\CacheManager;
 
 class AbstractController extends ActionController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Service;
+namespace WerkraumMedia\Events\Service;
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>
@@ -46,7 +46,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  *     plugin.tx_events {
  *         settings {
  *             dataProcessing {
- *                 Wrm\Events\Domain\Model\Event {
+ *                 WerkraumMedia\Events\Domain\Model\Event {
  *                     10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
  *                     10 {
  *                         special = list

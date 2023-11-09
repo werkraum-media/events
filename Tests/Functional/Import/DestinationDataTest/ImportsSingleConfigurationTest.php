@@ -1,6 +1,6 @@
 <?php
 
-namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
+namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

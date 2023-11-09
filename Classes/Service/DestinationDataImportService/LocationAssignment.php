@@ -1,9 +1,9 @@
 <?php
 
-namespace Wrm\Events\Service\DestinationDataImportService;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
-use Wrm\Events\Domain\Model\Location;
-use Wrm\Events\Domain\Repository\LocationRepository;
+use WerkraumMedia\Events\Domain\Model\Location;
+use WerkraumMedia\Events\Domain\Repository\LocationRepository;
 
 class LocationAssignment
 {

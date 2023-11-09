@@ -21,7 +21,7 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace Wrm\Events\Service\DestinationDataImportService\Slugger;
+namespace WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
 class Registry
 {
