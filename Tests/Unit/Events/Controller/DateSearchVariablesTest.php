@@ -4,29 +4,22 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Events\Controller;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 use WerkraumMedia\Events\Events\Controller\DateSearchVariables;
-use WerkraumMedia\Events\Tests\ProphecyTrait;
 
-/**
- * @covers \WerkraumMedia\Events\Events\Controller\DateSearchVariables
- */
 class DateSearchVariablesTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new DateSearchVariables(
             [
             ],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal(),
+            $this->createStub(QueryResult::class),
             [],
             []
         );
@@ -37,9 +30,7 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitializeSearch(): void
     {
         $subject = new DateSearchVariables(
@@ -47,7 +38,7 @@ class DateSearchVariablesTest extends TestCase
                 'executed' => '1',
             ],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal(),
+            $this->createStub(QueryResult::class),
             [],
             []
         );
@@ -60,9 +51,7 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitializeDemand(): void
     {
         $demand = new DateDemand();
@@ -70,7 +59,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             $demand,
-            $this->prophesize(QueryResult::class)->reveal(),
+            $this->createStub(QueryResult::class),
             [],
             []
         );
@@ -81,12 +70,10 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitialRegions(): void
     {
-        $regions = $this->prophesize(QueryResult::class)->reveal();
+        $regions = $this->createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
             ],
@@ -102,16 +89,14 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitialCategories(): void
     {
         $subject = new DateSearchVariables(
             [
             ],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal(),
+            $this->createStub(QueryResult::class),
             [
                 ['example category'],
             ],
@@ -126,16 +111,14 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitialFeatures(): void
     {
         $subject = new DateSearchVariables(
             [
             ],
             new DateDemand(),
-            $this->prophesize(QueryResult::class)->reveal(),
+            $this->createStub(QueryResult::class),
             [
             ],
             [
@@ -151,13 +134,11 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsInitialVariablesForView(): void
     {
         $demand = new DateDemand();
-        $regions = $this->prophesize(QueryResult::class)->reveal();
+        $regions = $this->createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
                 'executed' => '1',
@@ -190,13 +171,11 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsVariablesForViewWithAddedVariables(): void
     {
         $demand = new DateDemand();
-        $regions = $this->prophesize(QueryResult::class)->reveal();
+        $regions = $this->createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
                 'executed' => '1',
@@ -234,13 +213,11 @@ class DateSearchVariablesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsVariablesForViewWithOverwrittenVariables(): void
     {
         $demand = new DateDemand();
-        $regions = $this->prophesize(QueryResult::class)->reveal();
+        $regions = $this->createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
                 'executed' => '1',

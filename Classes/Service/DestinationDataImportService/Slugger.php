@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
+use Generator;
+use PDO;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -30,24 +32,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\Registry;
 use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\SluggerType;
 
-class Slugger
+final class Slugger
 {
-    /**
-     * @var Registry
-     */
-    private $registry;
-
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
     public function __construct(
-        Registry $registry,
-        ConnectionPool $connectionPool
+        private readonly Registry $registry,
+        private readonly ConnectionPool $connectionPool
     ) {
-        $this->registry = $registry;
-        $this->connectionPool = $connectionPool;
     }
 
     public function update(string $tableName): void
@@ -59,9 +49,9 @@ class Slugger
     }
 
     /**
-     * @return \Generator<array>
+     * @return Generator<array>
      */
-    private function getRecords(SluggerType $sluggerType): \Generator
+    private function getRecords(SluggerType $sluggerType): Generator
     {
         $tableName = $sluggerType->getSupportedTableName();
         $slugColumn = $sluggerType->getSlugColumn();
@@ -70,12 +60,13 @@ class Slugger
         $statement = $queryBuilder->select('*')
             ->from($tableName)
             ->where(
-                $queryBuilder->expr()->orX(
-                    $queryBuilder->expr()->eq($slugColumn, $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)),
+                $queryBuilder->expr()->or(
+                    $queryBuilder->expr()->eq($slugColumn, $queryBuilder->createNamedParameter('', PDO::PARAM_STR)),
                     $queryBuilder->expr()->isNull($slugColumn)
                 )
             )
-            ->execute();
+            ->executeQuery()
+        ;
 
         while ($record = $statement->fetch()) {
             if (is_array($record) === false) {
@@ -97,11 +88,12 @@ class Slugger
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($record['uid'], \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($record['uid'], PDO::PARAM_INT)
                 )
             )
-            ->set($sluggerType->getSlugColumn(), $slug);
-        $queryBuilder->execute();
+            ->set($sluggerType->getSlugColumn(), $slug)
+        ;
+        $queryBuilder->executeStatement();
     }
 
     private function getSlugHelper(

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * @testdox DestinationData import
- */
-class ImportHandlesImagesTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportHandlesImagesTest extends AbstractTestCase
 {
     protected function setUp(): void
     {
@@ -29,9 +31,7 @@ class ImportHandlesImagesTest extends AbstractTest
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsNewImages(): void
     {
         $this->setUpResponses([
@@ -60,9 +60,7 @@ class ImportHandlesImagesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsMultipleImagesToSingleEvent(): void
     {
         $this->setUpResponses([
@@ -89,9 +87,7 @@ class ImportHandlesImagesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function removesNoLongerExistingImages(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ImportHandlesImagesExistingData.php');
@@ -121,9 +117,7 @@ class ImportHandlesImagesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatesExistingImage(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ImportHandlesImagesExistingData.php');
@@ -154,9 +148,7 @@ class ImportHandlesImagesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsNewImageToExistingImages(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ImportHandlesImagesExistingData.php');
@@ -189,9 +181,7 @@ class ImportHandlesImagesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatesSortingOfImages(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ImportHandlesImagesExistingData.php');

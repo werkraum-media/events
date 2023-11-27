@@ -28,31 +28,26 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 
 final class Assignment
 {
-    /**
-     * @var int
-     */
-    private $uid;
-
-    /**
-     * @var string
-     */
-    private $columnName;
+    private readonly int $uid;
 
     /**
      * @var int[]
      */
-    private $uids;
+    private readonly array $uids;
 
     /**
      * @param AbstractDomainObject[] $assignments
      */
     public function __construct(
-        int $uid,
-        string $columnName,
+        ?int $uid,
+        private readonly string $columnName,
         array $assignments
     ) {
+        if (is_int($uid) === false) {
+            throw new InvalidArgumentException('Only integer allowed as uid, need a persisted entity.', 1699352008);
+        }
+
         $this->uid = $uid;
-        $this->columnName = $columnName;
         $this->uids = array_map(static function (AbstractDomainObject $model): int {
             $uid = $model->getUid();
             if (is_int($uid) === false) {

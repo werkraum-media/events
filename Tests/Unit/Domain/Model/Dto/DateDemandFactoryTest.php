@@ -23,19 +23,18 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model\Dto;
 
+use DateTimeImmutable;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory
- */
 class DateDemandFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -50,9 +49,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fromSettingsDoesNotThrowUndefinedArrayKeyWarnings(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -69,9 +66,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function searchWordIsSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -93,9 +88,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function synonymsAreSetBySettings(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -134,9 +127,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function categoriesAreSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -163,9 +154,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function featuresAreSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -192,9 +181,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function regionIsSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -222,9 +209,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function regionsAreSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -255,9 +240,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function startIsSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -274,7 +257,7 @@ class DateDemandFactoryTest extends TestCase
         );
 
         self::assertInstanceOf(
-            \DateTimeImmutable::class,
+            DateTimeImmutable::class,
             $result->getStartObject()
         );
         self::assertSame(
@@ -287,9 +270,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function endIsSetByRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -306,7 +287,7 @@ class DateDemandFactoryTest extends TestCase
         );
 
         self::assertInstanceOf(
-            \DateTimeImmutable::class,
+            DateTimeImmutable::class,
             $result->getEndObject()
         );
         self::assertSame(
@@ -319,11 +300,8 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider possibleEndAndStartNullCombinations
-     */
+    #[DataProvider('possibleEndAndStartNullCombinations')]
+    #[Test]
     public function returnsEndsOnSameDayIfAnyIsNull(
         string $start,
         string $end
@@ -347,7 +325,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    public function possibleEndAndStartNullCombinations(): \Generator
+    public static function possibleEndAndStartNullCombinations(): Generator
     {
         yield 'Both are empty' => [
             'start' => '',
@@ -363,9 +341,7 @@ class DateDemandFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEndsOnSameDayIfBothAreOnSameDay(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -387,9 +363,7 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEndsOnSameDayIfBothAreOnDifferentDays(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -411,14 +385,9 @@ class DateDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider possibleSubmittedHighlights
-     *
-     * @param mixed $highlight
-     */
-    public function returnsHighlightIfSet($highlight): void
+    #[DataProvider('possibleSubmittedHighlights')]
+    #[Test]
+    public function returnsHighlightIfSet(mixed $highlight): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
 
@@ -436,21 +405,16 @@ class DateDemandFactoryTest extends TestCase
         self::assertTrue($result->getHighlight());
     }
 
-    public function possibleSubmittedHighlights(): \Generator
+    public static function possibleSubmittedHighlights(): Generator
     {
         yield 'true' => ['highlight' => true];
         yield '1 as integer' => ['highlight' => 1];
         yield '1 as string' => ['highlight' => '1'];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider possibleSubmittedFalsyHighlights
-     *
-     * @param mixed $highlight
-     */
-    public function returnsNoHighlightIfNotSet($highlight): void
+    #[DataProvider('possibleSubmittedFalsyHighlights')]
+    #[Test]
+    public function returnsNoHighlightIfNotSet(mixed $highlight): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
 
@@ -468,7 +432,7 @@ class DateDemandFactoryTest extends TestCase
         self::assertFalse($result->getHighlight());
     }
 
-    public function possibleSubmittedFalsyHighlights(): \Generator
+    public static function possibleSubmittedFalsyHighlights(): Generator
     {
         yield 'false' => ['highlight' => false];
         yield '0 as integer' => ['highlight' => 0];
@@ -476,9 +440,7 @@ class DateDemandFactoryTest extends TestCase
         yield 'empty string' => ['highlight' => ''];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsOrganizersFromSettings(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);
@@ -493,9 +455,7 @@ class DateDemandFactoryTest extends TestCase
         self::assertSame([10, 0, 2], $result->getOrganizers());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsOrganizersFromRequest(): void
     {
         $typoScriptService = $this->createStub(TypoScriptService::class);

@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
-class Event implements SluggerType
+final class Event implements SluggerType
 {
     public function prepareRecordForSlugGeneration(array $record): array
     {

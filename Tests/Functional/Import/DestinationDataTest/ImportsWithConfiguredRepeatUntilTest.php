@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsWithConfiguredRepeatUntilTest extends AbstractTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/MinimalImportConfiguration.php');
-        $this->setDateAspect(new \DateTimeImmutable('2022-07-13', new \DateTimeZone('UTC')));
+        $this->setDateAspect(new DateTimeImmutable('2022-07-13', new DateTimeZone('UTC')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function recurringWeekly(): void
     {
         $this->setUpConfiguration([
@@ -31,13 +33,11 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
 
         $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsRecurringDatesWeeklyWithConfiguredRepeatUntil.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsRecurringDatesWeeklyWithConfiguredRepeatUntil.php');
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function recurringDaily(): void
     {
         $this->setUpConfiguration([
@@ -49,7 +49,7 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTest
 
         $this->executeCommand();
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsRecurringDatesDailyWithConfiguredRepeatUntil.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsRecurringDatesDailyWithConfiguredRepeatUntil.php');
         $this->assertEmptyLog();
     }
 }

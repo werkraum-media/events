@@ -23,24 +23,19 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
+use DateTimeImmutable;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-class Date implements SluggerType
+final class Date implements SluggerType
 {
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
     public function __construct(
-        ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool
     ) {
-        $this->connectionPool = $connectionPool;
     }
 
     public function prepareRecordForSlugGeneration(array $record): array
     {
-        $start = new \DateTimeImmutable('@' . $record['start']);
+        $start = new DateTimeImmutable('@' . $record['start']);
 
         $record['event-title'] = $this->getEventTitle((int)$record['event']);
         $record['start'] = $start->format('Y-m-d');
@@ -64,7 +59,7 @@ class Date implements SluggerType
         $qb->select('title');
         $qb->from('tx_events_domain_model_event');
         $qb->where($qb->expr()->eq('uid', $eventUid));
-        $title = $qb->execute()->fetchOne();
+        $title = $qb->executeQuery()->fetchOne();
         if (is_string($title)) {
             return $title;
         }

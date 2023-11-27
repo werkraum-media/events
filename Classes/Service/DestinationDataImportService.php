@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service;
 
 use Exception;
@@ -9,7 +11,6 @@ use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use WerkraumMedia\Events\Caching\CacheManager;
 use WerkraumMedia\Events\Domain\Model\Event;
@@ -31,17 +32,11 @@ use WerkraumMedia\Events\Service\DestinationDataImportService\FilesAssignment;
 use WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment;
 use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
-class DestinationDataImportService
+final class DestinationDataImportService
 {
-    /**
-     * @var Import
-     */
-    private $import;
+    private Import $import;
 
-    /**
-     * @var Event
-     */
-    private $tmpCurrentEvent;
+    private Event $tmpCurrentEvent;
 
     /**
      * @var Logger
@@ -49,130 +44,24 @@ class DestinationDataImportService
     private $logger;
 
     /**
-     * @var EventRepository
-     */
-    private $eventRepository;
-
-    /**
-     * @var OrganizerRepository
-     */
-    private $organizerRepository;
-
-    /**
-     * @var DateRepository
-     */
-    private $dateRepository;
-
-    /**
-     * @var ConfigurationManager
-     */
-    private $configurationManager;
-
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var PersistenceManager
-     */
-    private $persistenceManager;
-
-    /**
-     * @var DataFetcher
-     */
-    private $dataFetcher;
-
-    /**
-     * @var DatesFactory
-     */
-    private $datesFactory;
-
-    /**
-     * @var FilesAssignment
-     */
-    private $filesAssignment;
-
-    /**
-     * @var CategoriesAssignment
-     */
-    private $categoriesAssignment;
-
-    /**
-     * @var LocationAssignment
-     */
-    private $locationAssignment;
-
-    /**
-     * @var Slugger
-     */
-    private $slugger;
-
-    /**
-     * @var CacheManager
-     */
-    private $cacheManager;
-
-    /**
-     * @var DataHandler
-     */
-    private $dataHandler;
-
-    /**
-     * @var EventDispatcher
-     */
-    private $eventDispatcher;
-
-    /**
      * ImportService constructor.
-     *
-     * @param EventRepository $eventRepository
-     * @param OrganizerRepository $organizerRepository
-     * @param DateRepository $dateRepository
-     * @param ConfigurationManager $configurationManager
-     * @param PersistenceManager $persistenceManager
-     * @param ObjectManager $objectManager
-     * @param DataFetcher $dataFetcher
-     * @param FilesAssignment $filesAssignment
-     * @param CategoriesAssignment $categoriesAssignment
-     * @param LocationAssignment $locationAssignment
-     * @param Slugger $slugger
-     * @param CacheManager $cacheManager
-     * @param DataHandler $dataHandler
-     * @param EventDispatcher $eventDispatcher
      */
     public function __construct(
-        EventRepository $eventRepository,
-        OrganizerRepository $organizerRepository,
-        DateRepository $dateRepository,
-        ConfigurationManager $configurationManager,
-        PersistenceManager $persistenceManager,
-        ObjectManager $objectManager,
-        DataFetcher $dataFetcher,
-        DatesFactory $datesFactory,
-        FilesAssignment $filesAssignment,
-        CategoriesAssignment $categoriesAssignment,
-        LocationAssignment $locationAssignment,
-        Slugger $slugger,
-        CacheManager $cacheManager,
-        DataHandler $dataHandler,
-        EventDispatcher $eventDispatcher
+        private readonly EventRepository $eventRepository,
+        private readonly OrganizerRepository $organizerRepository,
+        private readonly DateRepository $dateRepository,
+        private readonly ConfigurationManager $configurationManager,
+        private readonly PersistenceManager $persistenceManager,
+        private readonly DataFetcher $dataFetcher,
+        private readonly DatesFactory $datesFactory,
+        private readonly FilesAssignment $filesAssignment,
+        private readonly CategoriesAssignment $categoriesAssignment,
+        private readonly LocationAssignment $locationAssignment,
+        private readonly Slugger $slugger,
+        private readonly CacheManager $cacheManager,
+        private readonly DataHandler $dataHandler,
+        private readonly EventDispatcher $eventDispatcher
     ) {
-        $this->eventRepository = $eventRepository;
-        $this->organizerRepository = $organizerRepository;
-        $this->dateRepository = $dateRepository;
-        $this->configurationManager = $configurationManager;
-        $this->persistenceManager = $persistenceManager;
-        $this->objectManager = $objectManager;
-        $this->dataFetcher = $dataFetcher;
-        $this->datesFactory = $datesFactory;
-        $this->filesAssignment = $filesAssignment;
-        $this->categoriesAssignment = $categoriesAssignment;
-        $this->locationAssignment = $locationAssignment;
-        $this->slugger = $slugger;
-        $this->cacheManager = $cacheManager;
-        $this->dataHandler = $dataHandler;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function import(
@@ -194,12 +83,12 @@ class DestinationDataImportService
 
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(self::class);
         $this->logger->info('Starting Destination Data Import Service');
 
         try {
             $data = $this->dataFetcher->fetchSearchResult($import);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->logger->error('Could not receive data.');
             return 1;
         }
@@ -215,7 +104,7 @@ class DestinationDataImportService
         $selectedRegion = $this->import->getRegion();
 
         foreach ($data['items'] as $event) {
-            $this->logger->info('Processing event ' . substr($event['title'], 0, 20));
+            $this->logger->info('Processing event ' . substr((string)$event['title'], 0, 20));
 
             // Event already exists? If not create one!
             $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
@@ -230,7 +119,7 @@ class DestinationDataImportService
             }
 
             // Set Title
-            $this->tmpCurrentEvent->setTitle(substr($event['title'], 0, 254));
+            $this->tmpCurrentEvent->setTitle(substr((string)$event['title'], 0, 254));
 
             // Set Highlight (Is only set in rest if true)
             if ($event['highlight'] ?? false) {
@@ -382,7 +271,7 @@ class DestinationDataImportService
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
                     continue;
                 }
-                $tmpOrganizer = $this->objectManager->get(Organizer::class);
+                $tmpOrganizer = GeneralUtility::makeInstance(Organizer::class);
                 $tmpOrganizer->setLanguageUid(-1);
                 $tmpOrganizer->setName($address['name'] ?? '');
                 $tmpOrganizer->setCity($address['city'] ?? '');
@@ -398,9 +287,6 @@ class DestinationDataImportService
         }
     }
 
-    /**
-     * @param array $media
-     */
     private function setSocial(array $media): void
     {
         foreach ($media as $link) {
@@ -470,13 +356,13 @@ class DestinationDataImportService
             }
 
             if ($text['rel'] == 'details' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setDetails(str_replace("\n\n", "\n", $text['value']));
+                $this->tmpCurrentEvent->setDetails(str_replace("\n\n", "\n", (string)$text['value']));
             }
             if ($text['rel'] == 'teaser' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", $text['value']));
+                $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", (string)$text['value']));
             }
             if ($text['rel'] == 'PRICE_INFO' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", $text['value']));
+                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", (string)$text['value']));
             }
         }
     }
@@ -494,7 +380,7 @@ class DestinationDataImportService
 
         // New event is created
         $this->logger->info(substr($title, 0, 20) . ' does not exist');
-        $event = $this->objectManager->get(Event::class);
+        $event = GeneralUtility::makeInstance(Event::class);
         // Create event and persist
         $event->setGlobalId($globalId);
         $this->eventRepository->add($event);

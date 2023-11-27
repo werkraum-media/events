@@ -1,41 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment;
 
 use WerkraumMedia\Events\Domain\Model\Category;
 
-class Import
+final class Import
 {
-    /**
-     * @var Category|null
-     */
-    private $parentCategory;
-
-    /**
-     * @var int|null
-     */
-    private $pid;
-
-    /**
-     * @var array
-     */
-    private $categoryTitles;
-
-    /**
-     * @var bool
-     */
-    private $hideByDefault;
-
     public function __construct(
-        ?Category $parentCategory,
-        ?int $pid,
-        array $categoryTitles,
-        bool $hideByDefault = false
+        private readonly ?Category $parentCategory,
+        private readonly ?int $pid,
+        private readonly array $categoryTitles,
+        private readonly bool $hideByDefault = false
     ) {
-        $this->parentCategory = $parentCategory;
-        $this->pid = $pid;
-        $this->categoryTitles = $categoryTitles;
-        $this->hideByDefault = $hideByDefault;
     }
 
     public function getParentCategory(): ?Category

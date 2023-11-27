@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
+use DateTime;
+use DateTimeImmutable;
+use DateTimeZone;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -9,60 +14,26 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Date extends AbstractEntity
 {
-    /**
-     * @var \DateTime
-     */
-    protected $start;
+    protected DateTime $start;
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $end;
+    protected ?DateTime $end = null;
 
-    /**
-     * @var string
-     */
-    protected $canceled = 'no';
+    protected string $canceled = 'no';
 
-    /**
-     * @var Date|null
-     */
-    protected $postponedDate;
+    protected ?Date $postponedDate = null;
 
-    /**
-     * @var Date|null
-     */
-    protected $originalDate;
+    protected ?Date $originalDate = null;
 
-    /**
-     * @var \WerkraumMedia\Events\Domain\Model\Event
-     */
-    protected $event;
+    protected Event $event;
 
-    /**
-     * @var string
-     */
-    protected $canceledLink = '';
+    protected string $canceledLink = '';
 
-    /**
-     * @var int
-     */
-    protected $_languageUid;
-
-    /**
-     * @return \DateTime $start
-     */
-    public function getStart()
+    public function getStart(): DateTime
     {
         return $this->start;
     }
 
-    /**
-     * @param \DateTime $start
-     *
-     * @return void
-     */
-    public function setStart(\DateTime $start)
+    public function setStart(DateTime $start): void
     {
         $this->start = $start;
     }
@@ -72,20 +43,12 @@ class Date extends AbstractEntity
         return $this->getStart()->format('H:i') !== '00:00';
     }
 
-    /**
-     * @return \DateTime|null end
-     */
-    public function getEnd()
+    public function getEnd(): ?DateTime
     {
         return $this->end;
     }
 
-    /**
-     * @param \DateTime|null $end
-     *
-     * @return void
-     */
-    public function setEnd($end)
+    public function setEnd(?DateTime $end): void
     {
         $this->end = $end;
     }
@@ -102,55 +65,33 @@ class Date extends AbstractEntity
         return $end && $this->getStart()->format('Y-m-d') === $end->format('Y-m-d');
     }
 
-    /**
-     * @return Event
-     */
     public function getEvent(): Event
     {
         return $this->event;
     }
 
-    /**
-     * @param Event $event
-     */
     public function setEvent(Event $event): self
     {
         $this->event = $event;
         return $this;
     }
 
-    /**
-     * @param int $languageUid
-     *
-     * @return void
-     */
-    public function setLanguageUid($languageUid)
+    public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    /**
-     * @return int
-     */
-    public function getLanguageUid()
+    public function getLanguageUid(): int
     {
         return $this->_languageUid;
     }
 
-    /**
-     * @return  string
-     */
     public function getCanceled(): string
     {
         return $this->canceled;
     }
 
-    /**
-     * @param  string  $canceled
-     *
-     * @return void
-     */
-    public function setCanceled(string $canceled)
+    public function setCanceled(string $canceled): void
     {
         $this->canceled = $canceled;
     }
@@ -183,22 +124,22 @@ class Date extends AbstractEntity
         bool $canceled
     ): self {
         return self::createFromDestinationData(
-            new \DateTimeImmutable($date['start'], new \DateTimeZone($date['tz'])),
-            new \DateTimeImmutable($date['end'], new \DateTimeZone($date['tz'])),
+            new DateTimeImmutable($date['start'], new DateTimeZone($date['tz'])),
+            new DateTimeImmutable($date['end'], new DateTimeZone($date['tz'])),
             $canceled
         );
     }
 
     public static function createFromDestinationData(
-        \DateTimeImmutable $start,
-        \DateTimeImmutable $end,
+        DateTimeImmutable $start,
+        DateTimeImmutable $end,
         bool $canceled
     ): self {
         $date = new Date();
         $date->setLanguageUid(-1);
 
-        $date->setStart(new \DateTime($start->format(\DateTime::W3C), $start->getTimezone()));
-        $date->setEnd(new \DateTime($end->format(\DateTime::W3C), $end->getTimezone()));
+        $date->setStart(new DateTime($start->format(DateTime::W3C), $start->getTimezone()));
+        $date->setEnd(new DateTime($end->format(DateTime::W3C), $end->getTimezone()));
 
         if ($canceled) {
             $date->setCanceled('canceled');

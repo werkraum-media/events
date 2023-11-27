@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use WerkraumMedia\Events\Domain\Model\Location;
 
-class LocationRepository extends Repository
+final class LocationRepository extends Repository
 {
     public function findOneByGlobalId(string $globalId): ?Location
     {

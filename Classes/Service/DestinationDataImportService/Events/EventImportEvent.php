@@ -27,22 +27,10 @@ use WerkraumMedia\Events\Domain\Model\Event;
 
 final class EventImportEvent
 {
-    /**
-     * @var Event
-     */
-    private $existingEvent;
-
-    /**
-     * @var Event
-     */
-    private $eventToImport;
-
     public function __construct(
-        Event $existingEvent,
-        Event $eventToImport
+        private readonly Event $existingEvent,
+        private readonly Event $eventToImport
     ) {
-        $this->existingEvent = $existingEvent;
-        $this->eventToImport = $eventToImport;
     }
 
     public function getBaseEvent(): Event

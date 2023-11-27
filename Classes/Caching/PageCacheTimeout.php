@@ -30,6 +30,7 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Frontend\Event\ModifyCacheLifetimeForPageEvent;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Events\Controller\DateListVariables;
 
@@ -41,40 +42,30 @@ use WerkraumMedia\Events\Events\Controller\DateListVariables;
  */
 class PageCacheTimeout implements SingletonInterface
 {
-    /**
-     * @var DateTimeImmutable|null
-     */
-    private $timeout;
+    private ?DateTimeImmutable $timeout = null;
 
-    /**
-     * @var FrontendInterface
-     */
-    private $runtimeCache;
-
-    /**
-     * @var Context
-     */
-    private $context;
+    private FrontendInterface $runtimeCache;
 
     public function __construct(
         CacheManager $cacheManager,
-        Context $context
+        private readonly Context $context
     ) {
         $this->runtimeCache = $cacheManager->getCache('runtime');
-        $this->context = $context;
     }
 
-    public function calculateCacheTimout(
-        array $parameters
-    ): int {
-        $typo3Timeout = $parameters['cacheTimeout'];
+    public function modifyCacheLifetimeForPage(ModifyCacheLifetimeForPageEvent $event): void
+    {
         $ourTimeout = $this->getTimeout();
-
         if ($ourTimeout === null) {
-            return $typo3Timeout;
+            return;
         }
 
-        return min($typo3Timeout, $ourTimeout);
+        $event->setCacheLifetime(
+            min(
+                $event->getCacheLifetime(),
+                $ourTimeout
+            )
+        );
     }
 
     public function trackDates(DateListVariables $event): void
@@ -85,14 +76,10 @@ class PageCacheTimeout implements SingletonInterface
         }
 
         if ($event->getDemand()->shouldShowUpcoming()) {
-            $this->trackTimeoutByDate($event, static function (Date $date) {
-                return $date->getStart();
-            });
+            $this->trackTimeoutByDate($event, static fn (Date $date) => $date->getStart());
         }
 
-        $this->trackTimeoutByDate($event, static function (Date $date) {
-            return $date->getEnd();
-        });
+        $this->trackTimeoutByDate($event, static fn (Date $date) => $date->getEnd());
     }
 
     /**
@@ -126,7 +113,8 @@ class PageCacheTimeout implements SingletonInterface
             return;
         }
 
-        $this->runtimeCache->remove('core-tslib_fe-get_cache_timeout');
+        $id = $GLOBALS['TYPO3_REQUEST']->getAttribute('routing')->getPageId();
+        $this->runtimeCache->remove('cacheLifeTimeForPage_' . $id);
         $this->timeout = $newTimeout;
     }
 
@@ -148,10 +136,5 @@ class PageCacheTimeout implements SingletonInterface
         }
 
         return $execution;
-    }
-
-    public static function register(): void
-    {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['get_cache_timeout']['events'] = self::class . '->calculateCacheTimout';
     }
 }

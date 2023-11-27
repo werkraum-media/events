@@ -27,14 +27,14 @@ use Codappix\Typo3PhpDatasets\PhpDataSet;
 use DateTimeImmutable;
 use DateTimeZone;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-/**
- * @covers \WerkraumMedia\Events\Caching\PageCacheTimeout
- */
 class CacheTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
@@ -42,8 +42,27 @@ class CacheTest extends AbstractFunctionalTestCase
         $this->testExtensionsToLoad = [
             'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
         ];
+        $this->configurationToUseInTestInstance = [
+            'SYS' => [
+                // Combined with flushCaches.
+                // Ensures that we have expected TYPO3 caching within each test.
+                // But we don't keep caches from one test to the other.
+                'caching' => [
+                    'cacheConfigurations' => [
+                        'pages' => [
+                            'backend' => SimpleFileBackend::class,
+                            'options' => [
+                                'compression' => '__UNSET',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         parent::setUp();
+
+        $this->get(CacheManager::class)->flushCaches();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
         (new PhpDataSet())->import(['tt_content' => [[
@@ -56,21 +75,17 @@ class CacheTest extends AbstractFunctionalTestCase
         $this->setUpFrontendRendering();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSystemDefaults(): void
     {
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('max-age=86400', $response->getHeaderLine('Cache-Control'));
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsDefaultsIfEventsEndLater(): void
     {
         (new PhpDataSet())->import([
@@ -89,16 +104,14 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]);
 
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('max-age=86400', $response->getHeaderLine('Cache-Control'));
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEarlierIfEventsEndEarlier(): void
     {
         $end = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')))->modify('+2 hours');
@@ -121,15 +134,13 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]);
 
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertCacheHeaders($end, $response);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEarlierIfStartEndEalierAndIsUpcoming(): void
     {
         $end = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('+2 hours');
@@ -152,7 +163,7 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]);
 
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep([
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep([
             'plugin.' => [
                 'tx_events.' => [
                     'settings.' => [
@@ -166,9 +177,7 @@ class CacheTest extends AbstractFunctionalTestCase
         self::assertCacheHeaders($end, $response);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function usesEarliestTimeout(): void
     {
         $end = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('+2 hours');
@@ -202,7 +211,7 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]);
 
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep([
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep([
             'plugin.' => [
                 'tx_events.' => [
                     'settings.' => [
@@ -216,9 +225,7 @@ class CacheTest extends AbstractFunctionalTestCase
         self::assertCacheHeaders($end, $response);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsMidnightIfConfigured(): void
     {
         $midnight = (new DateTimeImmutable('tomorrow midnight', new DateTimeZone('UTC')));
@@ -247,21 +254,19 @@ class CacheTest extends AbstractFunctionalTestCase
             ],
         ]));
 
-        $response = $this->executeFrontendRequest($this->getRequestWithSleep());
+        $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
         self::assertCacheHeaders($midnight, $response);
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function cachesAreClearedByImport(): void
     {
         // Assert frontend is cached
-        $this->assertResponseIsNotCached($this->executeFrontendRequest($this->getRequestWithSleep()));
-        $this->assertResponseIsCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsNotCached($this->executeFrontendSubRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsCached($this->executeFrontendSubRequest($this->getRequestWithSleep()));
 
         // Import
         $this->importPHPDataSet(__DIR__ . '/../Import/DestinationDataTest/Fixtures/Database/DefaultImportConfiguration.php');
@@ -281,8 +286,8 @@ class CacheTest extends AbstractFunctionalTestCase
 
         // Assert frontend is not cached on first hit
         $this->setUpFrontendRendering();
-        $this->assertResponseIsNotCached($this->executeFrontendRequest($this->getRequestWithSleep()));
-        $this->assertResponseIsCached($this->executeFrontendRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsNotCached($this->executeFrontendSubRequest($this->getRequestWithSleep()));
+        $this->assertResponseIsCached($this->executeFrontendSubRequest($this->getRequestWithSleep()));
     }
 
     private static function assertCacheHeaders(DateTimeImmutable $end, ResponseInterface $response): void
@@ -316,10 +321,6 @@ class CacheTest extends AbstractFunctionalTestCase
 
     private function assertResponseIsCached(ResponseInterface $response): void
     {
-        if ((new Typo3Version())->getMajorVersion() < 11) {
-            self::assertStringContainsString('Cached page', $response->getBody()->__toString());
-            return;
-        }
         self::assertStringStartsWith('Cached page', $response->getHeaderLine('X-TYPO3-Debug-Cache'));
     }
 

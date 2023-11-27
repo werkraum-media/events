@@ -23,19 +23,23 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use DG\BypassFinals;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Location;
 use WerkraumMedia\Events\Domain\Repository\LocationRepository;
 use WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment;
 
-/**
- * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment
- */
 final class LocationAssignmentTest extends TestCase
 {
-    /**
-     * @test
-     */
+    protected function setUp(): void
+    {
+        BypassFinals::enable();
+        parent::setUp();
+    }
+
+    #[Test]
     public function canBeCreated(): void
     {
         $repository = $this->createStub(LocationRepository::class);
@@ -50,13 +54,11 @@ final class LocationAssignmentTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @dataProvider possibleLatitudeAndLongitude
-     *
      * @param string|float $latitude
      * @param string|float $longitude
      */
+    #[DataProvider('possibleLatitudeAndLongitude')]
+    #[Test]
     public function normalizesLatitudeAndLongitude(
         $latitude,
         $longitude

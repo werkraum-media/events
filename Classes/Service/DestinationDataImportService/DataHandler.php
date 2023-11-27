@@ -23,23 +23,20 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler as Typo3DataHandler;
-use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler\Assignment;
 
 final class DataHandler
 {
-    /**
-     * @var Logger
-     */
-    private $logger;
+    private readonly LoggerInterface $logger;
 
     public function __construct(
         LogManager $logManager
     ) {
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function storeAssignments(

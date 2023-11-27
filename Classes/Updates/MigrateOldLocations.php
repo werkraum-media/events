@@ -23,43 +23,28 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Updates;
 
+use Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
+#[UpgradeWizard(MigrateOldLocations::class)]
 class MigrateOldLocations implements UpgradeWizardInterface
 {
-    /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
+    private readonly Logger $logger;
 
-    /**
-     * @var DataHandler
-     */
-    private $dataHandler;
-
-    /**
-     * @var Logger
-     */
-    private $logger;
-
-    /**
-     * @var array
-     */
-    private $uidsForTranslation = [];
+    private array $uidsForTranslation = [];
 
     public function __construct(
-        ConnectionPool $connectionPool,
-        DataHandler $dataHandler,
+        private readonly ConnectionPool $connectionPool,
+        private readonly DataHandler $dataHandler,
         LogManager $logManager
     ) {
-        $this->connectionPool = $connectionPool;
-        $this->dataHandler = $dataHandler;
         $this->logger = $logManager->getLogger(self::class);
     }
 
@@ -76,16 +61,12 @@ class MigrateOldLocations implements UpgradeWizardInterface
     public function updateNecessary(): bool
     {
         return $this->hasOldColumns()
-            && $this->getQueryBuilder()
-            ->count('*')
-            ->execute()
-            ->fetchOne() > 0
-        ;
+            && $this->getQueryBuilder()->count('*')->executeQuery()->fetchOne() > 0;
     }
 
     public function executeUpdate(): bool
     {
-        $result = $this->getQueryBuilder()->execute();
+        $result = $this->getQueryBuilder()->executeQuery()->iterateAssociative();
         foreach ($result as $eventRecord) {
             $this->logger->info('Updating event record.', ['record' => $eventRecord]);
             $eventRecord['location'] = $this->getLocationUid($eventRecord);
@@ -127,7 +108,7 @@ class MigrateOldLocations implements UpgradeWizardInterface
             $qb->andWhere($qb->expr()->eq($column, $qb->createNamedParameter($event[$column])));
         }
 
-        $uids = $qb->execute()->fetchAssociative();
+        $uids = $qb->executeQuery()->fetchAssociative();
         if (is_bool($uids)) {
             return 0;
         }
@@ -203,7 +184,7 @@ class MigrateOldLocations implements UpgradeWizardInterface
             return $l10nParentUid;
         }
 
-        throw new \Exception('Could not create location: ' . implode(', ', $dataHandler->errorLog), 1672916613);
+        throw new Exception('Could not create location: ' . implode(', ', $dataHandler->errorLog), 1672916613);
     }
 
     private function updateEvent(array $event): void
@@ -255,7 +236,8 @@ class MigrateOldLocations implements UpgradeWizardInterface
             ->getConnectionForTable('tx_events_domain_model_event')
             ->getSchemaManager()
             ->createSchema()
-            ->getTable('tx_events_domain_model_event');
+            ->getTable('tx_events_domain_model_event')
+        ;
 
         foreach ($this->columnsToFetch() as $column) {
             if ($schema->hasColumn($column) === false) {
@@ -282,10 +264,5 @@ class MigrateOldLocations implements UpgradeWizardInterface
             'latitude',
             'longitude',
         ];
-    }
-
-    public static function register(): void
-    {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][self::class] = self::class;
     }
 }

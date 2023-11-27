@@ -25,6 +25,7 @@ namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use SplFileInfo;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File;
@@ -36,38 +37,17 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Events\Domain\Model\Event;
 use WerkraumMedia\Events\Domain\Model\Import;
 
-class FilesAssignment
+final class FilesAssignment
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var DataFetcher
-     */
-    private $dataFetcher;
-
-    /**
-     * @var ResourceFactory
-     */
-    private $resourceFactory;
-
-    /**
-     * @var MetaDataRepository
-     */
-    private $metaDataRepository;
+    private readonly LoggerInterface $logger;
 
     public function __construct(
         LogManager $logManager,
-        DataFetcher $dataFetcher,
-        ResourceFactory $resourceFactory,
-        MetaDataRepository $metaDataRepository
+        private readonly DataFetcher $dataFetcher,
+        private readonly ResourceFactory $resourceFactory,
+        private readonly MetaDataRepository $metaDataRepository
     ) {
         $this->logger = $logManager->getLogger(self::class);
-        $this->dataFetcher = $dataFetcher;
-        $this->resourceFactory = $resourceFactory;
-        $this->metaDataRepository = $metaDataRepository;
     }
 
     /**
@@ -86,7 +66,7 @@ class FilesAssignment
                 continue;
             }
 
-            $fileUrl = urldecode($mediaObject['url']);
+            $fileUrl = urldecode((string)$mediaObject['url']);
             $orgFileNameSanitized = $importFolder->getStorage()->sanitizeFileName(basename($fileUrl));
 
             $this->logger->info('File attached.', [$fileUrl, $orgFileNameSanitized]);
@@ -124,7 +104,7 @@ class FilesAssignment
 
         try {
             $response = $this->dataFetcher->fetchImage($fileUrl);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->logger->error('Cannot load file.', [$fileUrl]);
             return '';
         }
@@ -134,7 +114,7 @@ class FilesAssignment
             return '';
         }
 
-        $file = new \SplFileInfo($fileUrl);
+        $file = new SplFileInfo($fileUrl);
         $temporaryFilename = GeneralUtility::tempnam($file->getBasename());
         $writeResult = GeneralUtility::writeFile($temporaryFilename, $response->getBody()->__toString(), true);
         if ($writeResult === false) {
@@ -204,7 +184,6 @@ class FilesAssignment
         ];
 
         return ((string)$mediaObject['rel']) === 'default'
-            && in_array($mediaObject['type'], $allowedMimeTypes)
-        ;
+            && in_array($mediaObject['type'], $allowedMimeTypes);
     }
 }

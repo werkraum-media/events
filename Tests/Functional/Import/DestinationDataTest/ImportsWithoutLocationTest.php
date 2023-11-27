@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportsWithoutLocationTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportsWithoutLocationTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsWithoutLocationIfNotProvided(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithoutRegion.php');
@@ -35,7 +35,7 @@ class ImportsWithoutLocationTest extends AbstractTest
             $this->getAllRecords('tx_events_domain_model_location'),
             'Added unexpected location.'
         );
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportsWithoutLocationIfNotProvided.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsWithoutLocationIfNotProvided.php');
         $this->assertEmptyLog();
     }
 }

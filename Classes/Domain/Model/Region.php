@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
 /*
@@ -17,15 +19,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Region extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $title = '';
-
-    /**
-     * @var int
-     */
-    protected $_languageUid;
+    protected string $title = '';
 
     public function getTitle(): string
     {

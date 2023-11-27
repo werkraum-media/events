@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Extbase;
 
 /*
@@ -26,37 +28,22 @@ use TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use WerkraumMedia\Events\Domain\Model\Date;
 
-class AddSpecialProperties
+final class AddSpecialProperties
 {
     /**
-     * @var ConnectionPool
-     */
-    private $connectionPool;
-
-    /**
-     * @var DataMapper
-     */
-    private $dataMapper;
-
-    /**
      * Internal info to speed things up if we know there are none.
-     *
-     * @var bool
      */
-    private $doPostponedDatesExist = true;
+    private bool $doPostponedDatesExist = true;
 
     public function __construct(
-        ConnectionPool $connectionPool,
-        DataMapper $dataMapper
+        private readonly ConnectionPool $connectionPool,
+        private readonly DataMapper $dataMapper
     ) {
-        $this->connectionPool = $connectionPool;
-        $this->dataMapper = $dataMapper;
-
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_date');
         $qb->count('uid');
         $qb->from('tx_events_domain_model_date');
         $qb->where($qb->expr()->gt('postponed_date', $qb->createNamedParameter(0)));
-        $this->doPostponedDatesExist = $qb->execute()->fetchColumn() > 0;
+        $this->doPostponedDatesExist = $qb->executeQuery()->fetchOne() > 0;
     }
 
     public function __invoke(AfterObjectThawedEvent $event): void
@@ -85,7 +72,7 @@ class AddSpecialProperties
         $qb->where($qb->expr()->eq('postponed_date', $uidOfReferencedDate));
         $qb->setMaxResults(1);
 
-        $result = $qb->execute()->fetch();
+        $result = $qb->executeQuery()->fetch();
 
         if ($result === false) {
             return null;

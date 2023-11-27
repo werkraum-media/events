@@ -48,3 +48,6 @@ services:
       - name: event.listener
         event: WerkraumMedia\Events\Events\Controller\DateListVariables
         method: 'trackDates'
+      - name: event.listener
+        event: TYPO3\CMS\Frontend\Event\ModifyCacheLifetimeForPageEvent
+        method: 'modifyCacheLifetimeForPage'

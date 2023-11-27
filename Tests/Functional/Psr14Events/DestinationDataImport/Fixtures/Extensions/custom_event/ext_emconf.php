@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $EM_CONF['custom_event'] = [
     'title' => 'Custom Events',
     'description' => 'Integrates custom event specifics',
@@ -7,12 +9,10 @@ $EM_CONF['custom_event'] = [
     'author' => 'Daniel Siepmann',
     'author_email' => 'coding@daniel-siepmann.de',
     'state' => 'alpha',
-    'createDirs' => '',
-    'clearCacheOnLoad' => 0,
     'version' => '1.0.0',
     'constraints' => [
         'depends' => [
-            'event' => '',
+            'events' => '',
         ],
         'conflicts' => [],
         'suggests' => [],

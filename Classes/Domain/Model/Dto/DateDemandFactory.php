@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model\Dto;
 
 /*
@@ -27,20 +29,11 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class DateDemandFactory
 {
-    /**
-     * @var TypoScriptService
-     */
-    private $typoScriptService;
-
-    /**
-     * @var contentObjectRenderer
-     */
-    private $contentObjectRenderer;
+    private ?ContentObjectRenderer $contentObjectRenderer = null;
 
     public function __construct(
-        TypoScriptService $typoScriptService
+        private readonly TypoScriptService $typoScriptService
     ) {
-        $this->typoScriptService = $typoScriptService;
     }
 
     public function setContentObjectRenderer(

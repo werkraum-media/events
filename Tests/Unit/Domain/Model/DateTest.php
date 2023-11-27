@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
+use DateTime;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Date;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Date
- */
 class DateTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Date();
@@ -23,53 +22,43 @@ class DateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItHasUsefulStartTime(): void
     {
         $subject = new Date();
-        $subject->setStart(new \DateTime('2022-07-11T13:48:00'));
+        $subject->setStart(new DateTime('2022-07-11T13:48:00'));
 
         self::assertTrue($subject->getHasUsefulStartTime());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItDoesNotHaveUsefulStartTime(): void
     {
         $subject = new Date();
-        $subject->setStart(new \DateTime('2022-07-11T00:00:00'));
+        $subject->setStart(new DateTime('2022-07-11T00:00:00'));
 
         self::assertFalse($subject->getHasUsefulStartTime());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItHasUsefulEndTime(): void
     {
         $subject = new Date();
-        $subject->setEnd(new \DateTime('2022-07-11T00:00:00'));
+        $subject->setEnd(new DateTime('2022-07-11T00:00:00'));
 
         self::assertTrue($subject->getHasUsefulEndTime());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItDoesNotHaveUsefulEndTimeWithTime(): void
     {
         $subject = new Date();
-        $subject->setEnd(new \DateTime('2022-07-11T23:59:00'));
+        $subject->setEnd(new DateTime('2022-07-11T23:59:00'));
 
         self::assertFalse($subject->getHasUsefulEndTime());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItDoesNotHaveUsefulEndTimeWithNull(): void
     {
         $subject = new Date();
@@ -78,45 +67,37 @@ class DateTest extends TestCase
         self::assertFalse($subject->getHasUsefulEndTime());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItEndsOnSameDay(): void
     {
         $subject = new Date();
-        $subject->setStart(new \DateTime('2022-07-11T14:00:00'));
-        $subject->setEnd(new \DateTime('2022-07-11T22:00:00'));
+        $subject->setStart(new DateTime('2022-07-11T14:00:00'));
+        $subject->setEnd(new DateTime('2022-07-11T22:00:00'));
 
         self::assertTrue($subject->getEndsOnSameDay());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItDoesNotEndOnSameDayWithDifferentDates(): void
     {
         $subject = new Date();
-        $subject->setStart(new \DateTime('2022-07-11T14:00:00'));
-        $subject->setEnd(new \DateTime('2022-07-13T22:00:00'));
+        $subject->setStart(new DateTime('2022-07-11T14:00:00'));
+        $subject->setEnd(new DateTime('2022-07-13T22:00:00'));
 
         self::assertFalse($subject->getEndsOnSameDay());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsThatItDoesNotEndOnSameDayWithMissingEnd(): void
     {
         $subject = new Date();
-        $subject->setStart(new \DateTime('2022-07-11T14:00:00'));
+        $subject->setStart(new DateTime('2022-07-11T14:00:00'));
         $subject->setEnd(null);
 
         self::assertFalse($subject->getEndsOnSameDay());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNullAsEnd(): void
     {
         $subject = new Date();
@@ -125,12 +106,10 @@ class DateTest extends TestCase
         self::assertNull($subject->getEnd());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsEnd(): void
     {
-        $end = new \DateTime('2022-07-13T22:00:00');
+        $end = new DateTime('2022-07-13T22:00:00');
         $subject = new Date();
         $subject->setEnd($end);
 

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use DateTimeImmutable;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
@@ -13,9 +17,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Service\DestinationDataImportService\DatesFactory;
 
-/**
- * @covers \WerkraumMedia\Events\Service\DestinationDataImportService\DatesFactory
- */
 class DatesFactoryTest extends TestCase
 {
     private function createTestSubject(
@@ -26,14 +27,13 @@ class DatesFactoryTest extends TestCase
         $logManager->method('getLogger')->willReturn($logger);
 
         return new DatesFactory(
-            $this->createContext(new \DateTimeImmutable($contextDate)),
+            $this->createContext(new DateTimeImmutable($contextDate)),
             $this->createStub(ConfigurationManager::class),
             $logManager
         );
     }
-    /**
-     * @test
-     */
+
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = $this->createTestSubject('now');
@@ -44,22 +44,19 @@ class DatesFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider possibleUnkownInput
-     */
+    #[DataProvider('possibleUnkownInput')]
+    #[Test]
     public function returnsNoResultOnUnkownInput(array $unkownInput): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
         $result = $subject->createDates($unkownInput, false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         self::assertCount(0, iterator_to_array($result));
     }
 
-    public function possibleUnkownInput(): array
+    public static function possibleUnkownInput(): array
     {
         return [
             'Empty Intervals' => [
@@ -74,9 +71,7 @@ class DatesFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSingleNotCanceledDate(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
@@ -88,7 +83,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
 
         $firstEntry = $result->current();
 
@@ -100,9 +95,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('no', $firstEntry->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsWeeklyWithConfiguredRepeat(): void
     {
         $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
@@ -119,15 +112,13 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(16, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSingleCanceledDate(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
@@ -139,7 +130,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], true);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
 
         $firstEntry = $result->current();
 
@@ -151,9 +142,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('canceled', $firstEntry->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsCanceledDatesOnDailyBasis(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
@@ -167,7 +156,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], true);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(5, $result);
@@ -182,9 +171,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('canceled', $result[4]->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotCanceledDatesOnDailyBasis(): void
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
@@ -198,7 +185,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(5, $result);
@@ -213,9 +200,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('no', $result[4]->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
@@ -233,7 +218,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], true);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(4, $result);
@@ -256,9 +241,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('canceled', $result[3]->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotCanceledDatesOnWeeklyBasis(): void
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
@@ -276,7 +259,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(4, $result);
@@ -299,9 +282,7 @@ class DatesFactoryTest extends TestCase
         self::assertSame('no', $result[3]->getCanceled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
@@ -335,7 +316,7 @@ class DatesFactoryTest extends TestCase
             ],
         ], true);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(8, $result);
@@ -346,9 +327,7 @@ class DatesFactoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotCanceledDatesOnMixedIntervals(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
@@ -382,7 +361,7 @@ class DatesFactoryTest extends TestCase
             ],
         ], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(8, $result);
@@ -393,7 +372,7 @@ class DatesFactoryTest extends TestCase
         }
     }
 
-    private function createContext(\DateTimeImmutable $dateTime): Context
+    private function createContext(DateTimeImmutable $dateTime): Context
     {
         $context = new Context();
         $context->setAspect('date', new DateTimeAspect($dateTime));

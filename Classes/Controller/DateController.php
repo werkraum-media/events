@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Controller;
 
+use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use WerkraumMedia\Events\Domain\Model\Date;
@@ -16,73 +19,24 @@ use WerkraumMedia\Events\Events\Controller\DateSearchVariables;
 use WerkraumMedia\Events\Pagination\Factory;
 use WerkraumMedia\Events\Service\DataProcessingForModels;
 
-class DateController extends AbstractController
+final class DateController extends AbstractController
 {
-    /**
-     * @var DateDemandFactory
-     */
-    protected $demandFactory;
-
-    /**
-     * @var dateRepository
-     */
-    protected $dateRepository;
-
-    /**
-     * @var regionRepository
-     */
-    protected $regionRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
-     * @var Factory
-     */
-    protected $paginationFactory;
-
-    /**
-     * @var DataProcessingForModels
-     */
-    protected $dataProcessing;
-
-    /**
-     * @var EventDispatcher
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var ExtensionService
-     */
-    protected $extensionService;
-
     public function __construct(
-        DateDemandFactory $demandFactory,
-        DateRepository $dateRepository,
-        RegionRepository $regionRepository,
-        CategoryRepository $categoryRepository,
-        Factory $paginationFactory,
-        DataProcessingForModels $dataProcessing,
-        EventDispatcher $eventDispatcher,
-        ExtensionService $extensionService
+        private readonly DateDemandFactory $demandFactory,
+        private readonly DateRepository $dateRepository,
+        private readonly RegionRepository $regionRepository,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly Factory $paginationFactory,
+        private readonly DataProcessingForModels $dataProcessing,
+        private readonly ExtensionService $extensionService
     ) {
-        $this->demandFactory = $demandFactory;
-        $this->dateRepository = $dateRepository;
-        $this->regionRepository = $regionRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->paginationFactory = $paginationFactory;
-        $this->dataProcessing = $dataProcessing;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->extensionService = $extensionService;
     }
 
     protected function initializeAction(): void
     {
         parent::initializeAction();
 
-        $contentObject = $this->configurationManager->getContentObject();
+        $contentObject = $this->request->getAttribute('currentContentObject');
         if ($contentObject !== null) {
             $this->demandFactory->setContentObjectRenderer($contentObject);
         }
@@ -91,14 +45,10 @@ class DateController extends AbstractController
         $this->handlePostRequest();
     }
 
-    /**
-     * @param array $search
-     * @param int $currentPage
-     */
     public function listAction(
         array $search = [],
         int $currentPage = 1
-    ): void {
+    ): ResponseInterface {
         $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
             $demand = $this->demandFactory->createFromRequestValues($search, $this->settings);
@@ -117,15 +67,13 @@ class DateController extends AbstractController
             )
         ));
         if (!$event instanceof DateListVariables) {
-            throw new \Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . get_class($event), 1657542318);
+            throw new Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . $event::class, 1657542318);
         }
         $this->view->assignMultiple($event->getVariablesForView());
+        return $this->htmlResponse();
     }
 
-    /**
-     * @param array $search
-     */
-    public function searchAction(array $search = []): void
+    public function searchAction(array $search = []): ResponseInterface
     {
         $demand = $this->demandFactory->fromSettings($this->settings);
         if ($search !== []) {
@@ -136,33 +84,34 @@ class DateController extends AbstractController
             $search,
             $demand,
             $this->regionRepository->findAll(),
-            $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['categoriesParent'] ?? 0, 'categories'),
-            $this->categoryRepository->findAllCurrentlyAssigned($this->settings['uids']['featuresParent'] ?? 0, 'features')
+            $this->categoryRepository->findAllCurrentlyAssigned((int)($this->settings['uids']['categoriesParent'] ?? 0), 'categories'),
+            $this->categoryRepository->findAllCurrentlyAssigned((int)($this->settings['uids']['featuresParent'] ?? 0), 'features')
         ));
         if (!$event instanceof DateSearchVariables) {
-            throw new \Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . get_class($event), 1657542318);
+            throw new Exception('Did not retrieve DateSearchVariables from event dispatcher, got: ' . $event::class, 1657542318);
         }
         $this->view->assignMultiple($event->getVariablesForView());
+        return $this->htmlResponse();
     }
 
-    public function teaserAction(): void
+    public function teaserAction(): ResponseInterface
     {
         $dates = $this->dateRepository->findByUids($this->settings['eventUids']);
         $this->view->assign('dates', $dates);
+        return $this->htmlResponse();
     }
 
-    /**
-     * @Extbase\IgnoreValidation("date")
-     */
-    public function showAction(Date $date): void
+    #[Extbase\IgnoreValidation(['value' => 'date'])]
+    public function showAction(Date $date): ResponseInterface
     {
         try {
             $date->getEvent();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $this->trigger404('No event found for requested date.');
         }
 
         $this->view->assign('date', $date);
+        return $this->htmlResponse();
     }
 
     /**
@@ -178,7 +127,7 @@ class DateController extends AbstractController
             && is_array($this->request->getArgument('search'))
         ) {
             $namespace = $this->extensionService->getPluginNamespace(null, null);
-            $this->redirectToUri($this->configurationManager->getContentObject()->typoLink_URL([
+            $this->redirectToUri($this->request->getAttribute('currentContentObject')->typoLink_URL([
                 'parameter' => 't3://page?uid=current',
                 'additionalParams' => '&' . http_build_query([
                     $namespace => [

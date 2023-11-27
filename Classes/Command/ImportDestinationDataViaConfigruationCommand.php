@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Command;
 
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,23 +15,11 @@ use WerkraumMedia\Events\Service\DestinationDataImportService;
 
 class ImportDestinationDataViaConfigruationCommand extends Command
 {
-    /**
-     * @var DestinationDataImportService
-     */
-    private $destinationDataImportService;
-
-    /**
-     * @var ImportFactory
-     */
-    private $importFactory;
-
     public function __construct(
-        DestinationDataImportService $destinationDataImportService,
-        ImportFactory $importFactory
+        private readonly DestinationDataImportService $destinationDataImportService,
+        private readonly ImportFactory $importFactory
     ) {
         parent::__construct();
-        $this->destinationDataImportService = $destinationDataImportService;
-        $this->importFactory = $importFactory;
     }
 
     public function configure(): void
@@ -51,7 +42,7 @@ class ImportDestinationDataViaConfigruationCommand extends Command
         if (is_numeric($configurationUid)) {
             $configurationUid = (int)$configurationUid;
         } else {
-            throw new \Exception('No numeric uid for configuration provided.', 1643267138);
+            throw new Exception('No numeric uid for configuration provided.', 1643267138);
         }
 
         $import = $this->importFactory->createFromUid(

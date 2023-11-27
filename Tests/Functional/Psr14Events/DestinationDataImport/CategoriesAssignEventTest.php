@@ -24,9 +24,10 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Tests\Functional\Psr14Events\DestinationDataImport;
 
 use GuzzleHttp\Psr7\Response;
-use WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest\AbstractTest;
+use PHPUnit\Framework\Attributes\Test;
+use WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest\AbstractTestCase;
 
-final class CategoriesAssignEventTest extends AbstractTest
+final class CategoriesAssignEventTest extends AbstractTestCase
 {
     protected function setUp(): void
     {
@@ -44,9 +45,7 @@ final class CategoriesAssignEventTest extends AbstractTest
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function registeredEventHandlerCanKeepCustomCategoriesAssigned(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/RegisteredEventHandlerCanKeepCustomCategoriesAssigned.php');

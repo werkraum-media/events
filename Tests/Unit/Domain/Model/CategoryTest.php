@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Category;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Category
- */
 class CategoryTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Category(
@@ -30,9 +26,7 @@ class CategoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSorting(): void
     {
         $subject = new Category(
@@ -46,9 +40,7 @@ class CategoryTest extends TestCase
         self::assertSame(10, $subject->getSorting());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeVisible(): void
     {
         $subject = new Category(
@@ -61,9 +53,7 @@ class CategoryTest extends TestCase
         self::assertFalse($subject->_getProperty('hidden'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canHide(): void
     {
         $subject = new Category(

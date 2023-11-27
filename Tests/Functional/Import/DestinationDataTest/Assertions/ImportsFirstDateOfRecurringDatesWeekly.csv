@@ -1,8 +1,0 @@
-"tx_events_domain_model_event",,,,,
-,"uid","pid","title","global_id","dates"
-,"1","2","Tüftlerzeit","e_100354481",3
-"tx_events_domain_model_date",,,,,
-,"uid","pid","event","start","end"
-,"1","2",1,1657958400,1657980000
-,"2","2",1,1658563200,1658584800
-,"3","2",1,1659168000,1659189600

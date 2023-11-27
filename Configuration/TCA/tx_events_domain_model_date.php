@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date',
@@ -8,7 +10,6 @@ return [
         'label_alt_force' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -29,19 +30,7 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => 0,
-            ],
+            'config' => ['type' => 'language'],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -51,7 +40,7 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => 'tx_events_domain_model_date',
                 'foreign_table_where' => 'AND {#tx_events_domain_model_date}.{#pid}=###CURRENT_PID### AND {#tx_events_domain_model_date}.{#sys_language_uid} IN (-1,0)',
@@ -78,8 +67,7 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -89,10 +77,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
-                'default' => 0,
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
@@ -102,13 +88,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
-                'default' => 0,
-                'range' => [
-                    'upper' => mktime(0, 0, 0, 1, 1, 2038),
-                ],
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
@@ -119,11 +100,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.start',
             'config' => [
-                //'dbType' => 'datetime',
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'size' => 12,
-                'eval' => 'datetime',
                 'default' => null,
             ],
         ],
@@ -131,11 +110,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.end',
             'config' => [
-                //'dbType' => 'datetime',
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
+                'format' => 'datetime',
                 'size' => 12,
-                'eval' => 'datetime',
                 'default' => null,
             ],
         ],
@@ -148,16 +125,16 @@ return [
                 'default' => 'no',
                 'items' => [
                     '0' => [
-                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.no',
-                        '1' => 'no',
+                        'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.no',
+                        'value' => 'no',
                     ],
                     '1' => [
-                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.canceled',
-                        '1' => 'canceled',
+                        'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.canceled',
+                        'value' => 'canceled',
                     ],
                     '2' => [
-                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.postponed',
-                        '1' => 'postponed',
+                        'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled.options.postponed',
+                        'value' => 'postponed',
                     ],
                 ],
             ],
@@ -174,8 +151,8 @@ return [
                 'default' => '0',
                 'items' => [
                     '0' => [
-                        '0' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date.0',
-                        '1' => '0',
+                        'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.postponed_date.0',
+                        'value' => '0',
                     ],
                 ],
             ],
@@ -185,18 +162,7 @@ return [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_date.xlf:tx_events_domain_model_date.canceled_link',
             'displayCond' => 'FIELD:canceled:=:canceled',
             'config' => [
-                'type' => 'input',
-                'softref' => 'typolink',
-                'renderType' => 'inputLink',
-                'max' => 1024,
-                'eval' => 'trim',
-                'fieldControl' => [
-                    'linkPopup' => [
-                        'options' => [
-                            'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_link_formlabel',
-                        ],
-                    ],
-                ],
+                'type' => 'link',
             ],
         ],
         'slug' => [

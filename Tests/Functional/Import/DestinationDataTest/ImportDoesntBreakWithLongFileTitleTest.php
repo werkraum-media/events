@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
 
-class ImportDoesntBreakWithLongFileTitleTest extends AbstractTest
+class ImportDoesntBreakWithLongFileTitleTest extends AbstractTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function importsExampleAsExpected(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithCategories.php');
@@ -32,7 +33,7 @@ class ImportDoesntBreakWithLongFileTitleTest extends AbstractTest
 
         self::assertSame(0, $tester->getStatusCode());
 
-        $this->assertCSVDataSet('EXT:events/Tests/Functional/Import/DestinationDataTest/Assertions/ImportDoesntBreakWithLongFileTitle.csv');
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportDoesntBreakWithLongFileTitle.php');
         $this->assertEmptyLog();
     }
 }

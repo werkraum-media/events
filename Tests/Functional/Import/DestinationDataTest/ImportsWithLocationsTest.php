@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-final class ImportsWithLocationsTest extends AbstractTest
+#[TestDox('DestinationData import')]
+final class ImportsWithLocationsTest extends AbstractTestCase
 {
     protected function setUp(): void
     {
@@ -24,9 +26,7 @@ final class ImportsWithLocationsTest extends AbstractTest
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function importsWithLocations(): void
     {
         $this->setUpResponses([
@@ -42,9 +42,8 @@ final class ImportsWithLocationsTest extends AbstractTest
     /**
      * A single location might be available with different ways to write latitude an longitude ("," and ".").
      * This test ensures this situation is properly handled by streamlining the values.
-     *
-     * @test
      */
+    #[Test]
     public function importsWithSingleLocationOnDuplicates(): void
     {
         $this->setUpResponses([
@@ -57,9 +56,7 @@ final class ImportsWithLocationsTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatesExistingLocation(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ExistingLocation.php');

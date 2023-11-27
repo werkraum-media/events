@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+
 (function (string $extKey, string $table) {
-    \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($GLOBALS['TCA'][$table], [
+    ArrayUtility::mergeRecursiveWithOverrule($GLOBALS['TCA'][$table], [
         'columns' => [
             'sorting' => [
                 'config' => [

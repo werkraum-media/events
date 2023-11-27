@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import',
@@ -8,7 +10,6 @@ return [
         'label_alt_force' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -48,8 +49,7 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
+                        'label' => '',
                         'invertStateDisplay' => true,
                     ],
                 ],
@@ -72,7 +72,6 @@ return [
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.storage_pid.description',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'pages',
                 'size' => 1,
                 'maxitems' => 1,
@@ -84,7 +83,6 @@ return [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.region',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'tx_events_domain_model_region',
                 'size' => 1,
                 'maxitems' => 1,
@@ -97,7 +95,6 @@ return [
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.categories_pid.description',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'pages',
                 'size' => 1,
                 'maxitems' => 1,
@@ -110,7 +107,6 @@ return [
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.category_parent.description',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'sys_category',
                 'size' => 1,
                 'maxitems' => 1,
@@ -123,7 +119,6 @@ return [
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_pid.description',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'pages',
                 'size' => 1,
                 'maxitems' => 1,
@@ -136,7 +131,6 @@ return [
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.features_parent.description',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'sys_category',
                 'size' => 1,
                 'maxitems' => 1,
@@ -148,8 +142,7 @@ return [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.files_folder',
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.files_folder.description',
             'config' => [
-                'type' => 'group',
-                'internal_type' => 'folder',
+                'type' => 'folder',
                 'size' => 1,
                 'maxitems' => 1,
                 'minitems' => 1,

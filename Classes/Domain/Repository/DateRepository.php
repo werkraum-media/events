@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Repository;
 
 use DateTimeImmutable;
@@ -15,16 +17,12 @@ use UnexpectedValueException;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 use WerkraumMedia\Events\Service\CategoryService;
 
-class DateRepository extends Repository
+final class DateRepository extends Repository
 {
-    /**
-     * @var Context
-     */
-    protected $context;
-
-    public function injectContext(Context $context): void
-    {
-        $this->context = $context;
+    public function __construct(
+        private readonly Context $context
+    ) {
+        parent::__construct();
     }
 
     public function findByUids(string $uids): QueryResult
@@ -95,27 +93,27 @@ class DateRepository extends Repository
                 $now = $now->modify('midnight');
             }
 
-            $constraints['nowAndFuture'] = $query->logicalOr([
+            $constraints['nowAndFuture'] = $query->logicalOr(
                 $query->greaterThanOrEqual('start', $now),
                 $query->greaterThanOrEqual('end', $now),
-            ]);
+            );
         } elseif ($demand->shouldShowUpcoming()) {
             $now = $this->getNow();
 
-            $constraints['future'] = $query->logicalAnd([
+            $constraints['future'] = $query->logicalAnd(
                 $query->greaterThan('start', $now),
-                $query->logicalOr([
+                $query->logicalOr(
                     $query->equals('end', 0),
                     $query->greaterThan('end', $now),
-                ]),
-            ]);
+                ),
+            );
         }
 
         if ($demand->getLimit() !== '') {
             $query->setLimit((int)$demand->getLimit());
         }
 
-        $query->matching($query->logicalAnd($constraints));
+        $query->matching($query->logicalAnd(... $constraints));
 
         if ($demand->getSortBy() && $demand->getSortOrder()) {
             $query->setOrderings([$demand->getSortBy() => $demand->getSortOrder()]);
@@ -146,8 +144,9 @@ class DateRepository extends Repository
         $wordsToSearch[] = $demand->getSearchword();
         $constraints = [];
 
-        $queryBuilder = $this->objectManager->get(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_events_domain_model_date');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_events_domain_model_date')
+        ;
 
         foreach ($wordsToSearch as $word) {
             foreach ($fieldsToSearch as $field) {
@@ -155,7 +154,7 @@ class DateRepository extends Repository
             }
         }
 
-        return $query->logicalOr($constraints);
+        return $query->logicalOr(... $constraints);
     }
 
     protected function createCategoryConstraint(
@@ -170,7 +169,8 @@ class DateRepository extends Repository
 
         if ($demand->getIncludeSubCategories()) {
             $categories = GeneralUtility::makeInstance(CategoryService::class)
-                ->getChildrenCategories($categories);
+                ->getChildrenCategories($categories)
+            ;
         }
 
         $categories = GeneralUtility::intExplode(',', $categories, true);
@@ -183,10 +183,10 @@ class DateRepository extends Repository
         }
 
         if ($demand->getCategoryCombination() === 'or') {
-            return $query->logicalOr($constraints);
+            return $query->logicalOr(... $constraints);
         }
 
-        return $query->logicalAnd($constraints);
+        return $query->logicalAnd(... $constraints);
     }
 
     private function createTimingConstraint(
@@ -196,42 +196,42 @@ class DateRepository extends Repository
         // Dates might have end of 0 if only start exists.
 
         if ($demand->getStartObject() !== null && $demand->getEndObject() === null) {
-            return $query->logicalOr([
+            return $query->logicalOr(
                 $query->greaterThanOrEqual('start', $demand->getStartObject()),
                 $query->greaterThanOrEqual('end', $demand->getStartObject()),
-            ]);
+            );
         }
 
         if ($demand->getStartObject() === null && $demand->getEndObject() !== null) {
-            return $query->logicalOr([
-                $query->logicalAnd([
+            return $query->logicalOr(
+                $query->logicalAnd(
                     $query->lessThanOrEqual('end', $demand->getEndObject()),
                     $query->greaterThan('end', 0),
-                ]),
+                ),
                 $query->lessThanOrEqual('start', $demand->getEndObject()),
-            ]);
+            );
         }
 
         if ($demand->getStartObject() !== null && $demand->getEndObject() !== null) {
-            return $query->logicalOr([
-                $query->logicalAnd([
-                    $query->logicalOr([
+            return $query->logicalOr(
+                $query->logicalAnd(
+                    $query->logicalOr(
                         $query->greaterThanOrEqual('start', $demand->getStartObject()),
                         $query->greaterThanOrEqual('end', $demand->getStartObject()),
-                    ]),
-                    $query->logicalOr([
+                    ),
+                    $query->logicalOr(
                         $query->lessThanOrEqual('start', $demand->getEndObject()),
-                        $query->logicalAnd([
+                        $query->logicalAnd(
                             $query->lessThanOrEqual('end', $demand->getEndObject()),
                             $query->greaterThan('end', 0),
-                        ]),
-                    ]),
-                ]),
-                $query->logicalAnd([
+                        ),
+                    ),
+                ),
+                $query->logicalAnd(
                     $query->lessThanOrEqual('start', $demand->getStartObject()),
                     $query->greaterThanOrEqual('end', $demand->getEndObject()),
-                ]),
-            ]);
+                ),
+            );
         }
 
         return null;
@@ -247,13 +247,14 @@ class DateRepository extends Repository
             $constraints[] = $query->contains('event.features', $feature);
         }
 
-        return $query->logicalAnd($constraints);
+        return $query->logicalAnd(... $constraints);
     }
 
     public function findSearchWord(string $search): array
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_events_domain_model_date');
+            ->getConnectionForTable('tx_events_domain_model_date')
+        ;
 
         $queryBuilder = $connection->createQueryBuilder();
 
@@ -270,9 +271,10 @@ class DateRepository extends Repository
                 )
             )->where(
                 $queryBuilder->expr()->like('event.title', $queryBuilder->createNamedParameter('%' . $search . '%'))
-            )->orderBy('tx_events_domain_model_date.start');
+            )->orderBy('tx_events_domain_model_date.start')
+        ;
 
-        return $statement->execute()->fetchAll();
+        return $statement->executeQuery()->fetchAll();
     }
 
     private function createEventConstraint(

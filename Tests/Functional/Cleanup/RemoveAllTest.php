@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Tests\Functional\Cleanup;
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Command\RemoveAllCommand;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-/**
- * @testdox Cleanup RemoveAll
- */
+#[TestDox('Cleanup RemoveAll')]
 class RemoveAllTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
@@ -22,9 +24,7 @@ class RemoveAllTest extends AbstractFunctionalTestCase
         parent::setUp();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function removesAllData(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/RemoveAllTestDatabase.php');

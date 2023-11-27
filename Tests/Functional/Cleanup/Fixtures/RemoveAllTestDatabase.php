@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'pages' => [
         [
@@ -45,7 +47,6 @@ return [
             'pid' => '0',
             'tstamp' => '1423209858',
             'crdate' => '1370878372',
-            'cruser_id' => '0',
             'deleted' => '0',
             'name' => 'fileadmin/ (auto-created)',
             'description' => 'This is the local fileadmin/ directory. This storage mount has been created automatically by TYPO3.',
@@ -126,7 +127,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '1',
         ],
         [
@@ -134,7 +134,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '2',
         ],
     ],
@@ -144,7 +143,6 @@ return [
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -153,14 +151,12 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '2',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -169,7 +165,6 @@ return [
             'tablenames' => 'tx_events_domain_model_partner',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
     ],
     'tx_events_domain_model_region' => [

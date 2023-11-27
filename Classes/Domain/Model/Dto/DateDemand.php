@@ -1,118 +1,79 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model\Dto;
 
+use DateTimeImmutable;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DateDemand
 {
-    /**
-     * @var string
-     */
-    protected $sortBy = '';
+    protected string $sortBy = '';
 
-    /**
-     * @var string
-     */
-    protected $sortOrder = '';
+    protected string $sortOrder = '';
 
-    /**
-     * @var string
-     */
-    protected $categories = '';
+    protected string $categories = '';
 
     /**
      * @var int[]
      */
-    protected $userCategories = [];
+    protected array $userCategories = [];
 
     /**
      * @var int[]
      */
-    protected $features = [];
+    protected array $features = [];
 
-    /**
-     * @var bool
-     */
-    protected $includeSubCategories = false;
+    protected bool $includeSubCategories = false;
 
-    /**
-     * @var string
-     */
-    protected $categoryCombination = '';
+    protected string $categoryCombination = '';
 
     /**
      * @var int[]
      */
-    protected $regions = [];
+    protected array $regions = [];
 
     /**
      * @var int[]
      */
-    protected $locations = [];
+    protected array $locations = [];
 
     /**
      * @var int[]
      */
-    protected $organizers = [];
+    protected array $organizers = [];
 
-    /**
-     * @var bool
-     */
-    protected $highlight = false;
+    protected bool $highlight = false;
 
-    /**
-     * @var string
-     */
-    protected $limit = '';
+    protected string $limit = '';
 
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    protected $startObject;
+    protected ?DateTimeImmutable $startObject = null;
 
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    protected $endObject;
+    protected ?DateTimeImmutable $endObject = null;
 
     /**
      * Use midnight as "start".
-     *
-     * @var bool
      */
-    protected $useMidnight = true;
+    protected bool $useMidnight = true;
 
     /**
      * Only show dates that have not started yet.
-     *
-     * @var bool
      */
-    protected $upcoming = false;
+    protected bool $upcoming = false;
+
+    protected string $searchword = '';
 
     /**
-     * @var string
-     */
-    protected $searchword = '';
-
-    /**
-     * @var array
-     *
      * Synonym1 => ['word1', 'word2', …],
      * Synonym2 => ['word3', 'word4', …],
      * …
      */
-    protected $synonyms = [];
+    protected array$synonyms = [];
 
-    /**
-     * @var bool
-     */
-    protected $considerDate = false;
+    protected bool $considerDate = false;
 
-    /**
-     * @var string
-     */
-    protected $queryCallback = '';
+    protected string $queryCallback = '';
 
     public function getSortBy(): string
     {
@@ -165,7 +126,7 @@ class DateDemand
      */
     public function setFeatures(array $categories): void
     {
-        $this->features = array_map('intval', $categories);
+        $this->features = array_map('intval', array_filter($categories));
     }
 
     /**
@@ -303,7 +264,7 @@ class DateDemand
         return $this->synonyms[$searchWord] ?? [];
     }
 
-    public function getStartObject(): ?\DateTimeImmutable
+    public function getStartObject(): ?DateTimeImmutable
     {
         return $this->startObject;
     }
@@ -327,10 +288,10 @@ class DateDemand
         if ($start === null) {
             return;
         }
-        $this->startObject = new \DateTimeImmutable(date('Y-m-d H:i', $start));
+        $this->startObject = new DateTimeImmutable(date('Y-m-d H:i', $start));
     }
 
-    public function getEndObject(): ?\DateTimeImmutable
+    public function getEndObject(): ?DateTimeImmutable
     {
         return $this->endObject;
     }
@@ -364,7 +325,7 @@ class DateDemand
             return;
         }
 
-        $this->endObject = new \DateTimeImmutable(date('Y-m-d H:i', $end));
+        $this->endObject = new DateTimeImmutable(date('Y-m-d H:i', $end));
     }
 
     public function setUseMidnight(bool $useMidnight): void
@@ -387,8 +348,7 @@ class DateDemand
         return $this->getStartObject() === null
             && $this->getEndObject() === null
             && $this->useMidnight === false
-            && $this->upcoming === false
-        ;
+            && $this->upcoming === false;
     }
 
     public function shouldShowFromMidnight(): bool

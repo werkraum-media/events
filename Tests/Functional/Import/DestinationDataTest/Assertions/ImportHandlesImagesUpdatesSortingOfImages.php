@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Resource\File;
+
 return [
     'sys_file' => [
         [
@@ -7,7 +11,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE,
+            'type' => File::FILETYPE_IMAGE,
             'identifier' => '/staedte/beispielstadt/events/theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg',
             'extension' => 'jpg',
             'name' => 'theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg',
@@ -17,7 +21,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE,
+            'type' => File::FILETYPE_IMAGE,
             'identifier' => '/staedte/beispielstadt/events/tueftlerzeit-sfz-rudolstadt-jpg.jpg',
             'extension' => 'jpg',
             'name' => 'tueftlerzeit-sfz-rudolstadt-jpg.jpg',
@@ -32,7 +36,6 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => 2,
-            'table_local' => 'sys_file',
             'title' => null,
             'description' => null,
             'alternative' => null,
@@ -45,7 +48,6 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => 1,
-            'table_local' => 'sys_file',
             'title' => null,
             'description' => null,
             'alternative' => null,

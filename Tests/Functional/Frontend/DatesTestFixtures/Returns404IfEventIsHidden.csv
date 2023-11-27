@@ -1,9 +1,0 @@
-tt_content
-,uid,pid,CType,list_type,header
-,1,1,list,events_dateshow,Singleview
-tx_events_domain_model_event
-,uid,pid,title,hidden
-,1,2,"Event 1 starts before search, ends before search",1
-tx_events_domain_model_date
-,uid,pid,event,start,end
-,1,2,1,1676419200,1676484000

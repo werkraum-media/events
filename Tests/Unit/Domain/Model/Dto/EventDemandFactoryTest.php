@@ -23,18 +23,14 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Domain\Model\Dto;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Dto\EventDemand;
 use WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory;
 
-/**
- * @covers \WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory
- */
 class EventDemandFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new EventDemandFactory();
@@ -45,9 +41,7 @@ class EventDemandFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fromSettingsDoesNotThrowUndefinedArrayKeyWarnings(): void
     {
         $subject = new EventDemandFactory();

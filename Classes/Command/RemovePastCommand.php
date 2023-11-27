@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -10,16 +12,9 @@ use WerkraumMedia\Events\Service\CleanupService;
 
 class RemovePastCommand extends Command
 {
-    /**
-     * @var CleanupService
-     */
-    private $cleanupService;
-
     public function __construct(
-        CleanupService $cleanupService
+        private readonly CleanupService $cleanupService
     ) {
-        $this->cleanupService = $cleanupService;
-
         parent::__construct();
     }
 

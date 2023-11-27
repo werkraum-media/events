@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -10,154 +13,84 @@ use WerkraumMedia\Events\Service\DataProcessingForModels;
 
 class Event extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $title = '';
+    protected string $title = '';
 
-    /**
-     * @var string
-     */
-    protected $subtitle = '';
+    protected string $subtitle = '';
 
-    /**
-     * @var string
-     */
-    protected $globalId = '';
+    protected string $globalId = '';
 
-    /**
-     * @var string
-     */
-    protected $slug = '';
+    protected string $slug = '';
 
-    /**
-     * @var bool
-     */
-    protected $highlight = false;
+    protected bool $highlight = false;
 
-    /**
-     * @var string
-     */
-    protected $teaser = '';
+    protected string $teaser = '';
 
-    /**
-     * @var string
-     */
-    protected $details = '';
+    protected string $details = '';
 
-    /**
-     * @var string
-     */
-    protected $priceInfo = '';
+    protected string $priceInfo = '';
 
-    /**
-     * @var string
-     */
-    protected $web = '';
+    protected string $web = '';
 
-    /**
-     * @var string
-     */
-    protected $ticket = '';
+    protected string $ticket = '';
 
-    /**
-     * @var string
-     */
-    protected $facebook = '';
+    protected string $facebook = '';
 
-    /**
-     * @var string
-     */
-    protected $youtube = '';
+    protected string $youtube = '';
 
-    /**
-     * @var string
-     */
-    protected $instagram = '';
+    protected string $instagram = '';
 
     /**
      * @var ObjectStorage<FileReference>
-     *
-     * @Extbase\ORM\Cascade remove
      */
-    protected $images;
+    #[Cascade(['value' => 'remove'])]
+    protected ObjectStorage $images;
 
     /**
      * @var ObjectStorage<Date>
-     *
-     * @Extbase\ORM\Cascade remove
-     * @Extbase\ORM\Lazy
      */
-    protected $dates;
+    #[Cascade(['value' => 'remove'])]
+    #[Lazy]
+    protected ObjectStorage $dates;
 
-    /**
-     * @var Location|null
-     */
-    protected $location;
+    protected ?Location $location = null;
 
-    /**
-     * @var Organizer|null
-     */
-    protected $organizer;
+    protected ?Organizer $organizer = null;
 
-    /**
-     * @var Region|null
-     */
-    protected $region;
+    protected ?Region $region = null;
 
-    /**
-     * @var string
-     */
-    protected $pages = '';
+    protected string $pages = '';
 
     /**
      * @var ObjectStorage<Category>
      */
-    protected $categories;
+    protected ObjectStorage $categories;
 
     /**
      * @var ObjectStorage<Category>
      */
-    protected $features;
+    protected ObjectStorage $features;
 
     /**
      * @var ObjectStorage<Partner>
      */
-    protected $partner;
+    protected ObjectStorage $partner;
 
     /**
      * @var ObjectStorage<Event>
      */
-    protected $referencesEvents;
+    protected ObjectStorage $referencesEvents;
 
-    /**
-     * @var int
-     */
-    protected $_languageUid;
+    protected DataProcessingForModels $dataProcessing;
 
-    /**
-     * @var DataProcessingForModels
-     */
-    protected $dataProcessing;
+    protected string $sourceName = '';
 
-    /**
-     * @var string
-     */
-    protected $sourceName = '';
-
-    /**
-     * @var string
-     */
-    protected $sourceUrl = '';
+    protected string $sourceUrl = '';
 
     public function __construct()
     {
         $this->initStorageObjects();
     }
 
-    /**
-     * @param DataProcessingForModels $dataProcessing
-     */
     public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing): void
     {
         $this->dataProcessing = $dataProcessing;
@@ -289,7 +222,7 @@ class Event extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage<FileReference> $images
+     * @return ObjectStorage<FileReference>
      */
     public function getImages(): ObjectStorage
     {
@@ -466,9 +399,7 @@ class Event extends AbstractEntity
     {
         $categories = $categories->toArray();
 
-        usort($categories, function (Category $catA, Category $catB) {
-            return $catA->getSorting() <=> $catB->getSorting();
-        });
+        usort($categories, fn (Category $catA, Category $catB) => $catA->getSorting() <=> $catB->getSorting());
 
         return $categories;
     }

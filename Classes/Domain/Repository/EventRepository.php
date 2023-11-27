@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WerkraumMedia\Events\Domain\Repository;
 
 /*
@@ -24,7 +26,7 @@ use WerkraumMedia\Events\Domain\Model\Dto\EventDemand;
 use WerkraumMedia\Events\Domain\Model\Event;
 use WerkraumMedia\Events\Service\CategoryService;
 
-class EventRepository extends Repository
+final class EventRepository extends Repository
 {
     public function findByUids(string $uids): QueryResult
     {
@@ -55,7 +57,7 @@ class EventRepository extends Repository
 
         $constraints = $this->getConstraints($query, $demand);
         if (!empty($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
+            $query->matching($query->logicalAnd(... $constraints));
         }
 
         if ($demand->getLimit() !== '') {
@@ -148,9 +150,9 @@ class EventRepository extends Repository
         }
 
         if ($demand->getCategoryCombination() === 'or') {
-            return $query->logicalOr($constraints);
+            return $query->logicalOr(... $constraints);
         }
-        return $query->logicalAnd($constraints);
+        return $query->logicalAnd(... $constraints);
     }
 
     public function findSearchWord(string $search): QueryResult

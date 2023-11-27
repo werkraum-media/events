@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'pages' => [
         [
@@ -51,7 +53,6 @@ return [
             'pid' => '0',
             'tstamp' => '1423209858',
             'crdate' => '1370878372',
-            'cruser_id' => '0',
             'deleted' => '0',
             'name' => 'fileadmin/ (auto-created)',
             'description' => 'This is the local fileadmin/ directory. This storage mount has been created automatically by TYPO3.',
@@ -212,7 +213,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '1',
         ],
         [
@@ -220,7 +220,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '2',
         ],
         [
@@ -228,7 +227,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '3',
         ],
         [
@@ -236,7 +234,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '4',
         ],
         [
@@ -244,7 +241,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '5',
         ],
         [
@@ -252,7 +248,6 @@ return [
             'pid' => '0',
             'tstamp' => '1371467047',
             'crdate' => '1371467047',
-            'cruser_id' => '1',
             'file' => '6',
         ],
     ],
@@ -262,7 +257,6 @@ return [
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -271,14 +265,12 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '2',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -287,14 +279,12 @@ return [
             'tablenames' => 'tx_events_domain_model_partner',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '3',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -303,14 +293,12 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '4',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '1',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -319,14 +307,12 @@ return [
             'tablenames' => 'tt_content',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '5',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -335,14 +321,12 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => '1',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '6',
             'pid' => '2',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -351,14 +335,12 @@ return [
             'tablenames' => '',
             'fieldname' => '',
             'sorting_foreign' => '0',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '7',
             'pid' => '0',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -367,14 +349,12 @@ return [
             'tablenames' => 'pages',
             'fieldname' => 'media',
             'sorting_foreign' => '0',
-            'table_local' => 'sys_file',
         ],
         [
             'uid' => '8',
             'pid' => '0',
             'tstamp' => '1373537480',
             'crdate' => '1371484347',
-            'cruser_id' => '1',
             'deleted' => '0',
             'hidden' => '0',
             'sys_language_uid' => '0',
@@ -383,7 +363,6 @@ return [
             'tablenames' => 'tx_events_domain_model_event',
             'fieldname' => 'images',
             'sorting_foreign' => '2',
-            'table_local' => 'sys_file',
         ],
     ],
     'tx_events_domain_model_region' => [
