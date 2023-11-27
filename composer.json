@@ -49,8 +49,7 @@
         "composer-exit-on-patch-failure": true,
         "patches": {
             "typo3/testing-framework": {
-                "Fix TypoScript record creation": "Patches/testing-framework-ts-record.patch",
-                "Fix Request state": "Patches/testing-framework-request-state.patch"
+                "Fix TypoScript record creation": "Patches/testing-framework-ts-record.patch"
             }
         },
         "typo3/cms": {
