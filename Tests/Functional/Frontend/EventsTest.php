@@ -57,4 +57,20 @@ class EventsTest extends AbstractFunctionalTestCase
         self::assertStringContainsString('<meta name="description" content="Teaser of Event" />', $html);
         self::assertStringContainsString('<meta name="keywords" content="Gewölbe, Goethe, Horst Damm, Kästner, Theater" />', $html);
     }
+
+    #[Test]
+    public function altersPageTitle(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/EventsTestFixtures/EventPageTitle.php');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameter('tx_events_eventshow[event]', '1');
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<title>Title of Event</title>', $html);
+    }
 }

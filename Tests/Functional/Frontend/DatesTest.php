@@ -204,4 +204,20 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertStringContainsString('<meta name="description" content="Teaser of Event" />', $html);
         self::assertStringContainsString('<meta name="keywords" content="Gewölbe, Goethe, Horst Damm, Kästner, Theater" />', $html);
     }
+
+    #[Test]
+    public function altersPageTitle(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DatePageTitle.php');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<title>Title of Event 15.02.2023 00:00</title>', $html);
+    }
 }
