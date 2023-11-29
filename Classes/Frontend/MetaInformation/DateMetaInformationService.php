@@ -25,6 +25,7 @@ namespace Wrm\Events\Frontend\MetaInformation;
 
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use Wrm\Events\Domain\Model\Date;
+use Wrm\Events\Frontend\PageTitleProvider\DateTitleProviderInterface;
 
 /**
  * TYPO3 has many different APIs to set meta information like: Page Title, Meta Tags, OpenGraph Tags, etc.
@@ -38,16 +39,25 @@ final class DateMetaInformationService implements DateMetaInformationInterface
      */
     private $metaTagManagerRegistry;
 
+    /**
+     * @var DateTitleProviderInterface
+     */
+    private $titleProvider;
+
     public function __construct(
-        MetaTagManagerRegistry $metaTagManagerRegistry
+        MetaTagManagerRegistry $metaTagManagerRegistry,
+        DateTitleProviderInterface $titleProvider
     ) {
         $this->metaTagManagerRegistry = $metaTagManagerRegistry;
+        $this->titleProvider = $titleProvider;
     }
 
     public function setDate(Date $date): void
     {
         $this->setDescription($date);
         $this->setKeywords($date);
+
+        $this->titleProvider->setDate($date);
     }
 
     private function setDescription(Date $date): void

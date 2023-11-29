@@ -18,6 +18,8 @@ Backport of 4.0.0 features:
 * Import keywords for events from destination.one.
   That way keywords are available for usage in meta tags.
 
+* Add page title provider. That way it is possible to alter the TYPO3 page title when showing a date or event.
+
 Fixes
 -----
 
