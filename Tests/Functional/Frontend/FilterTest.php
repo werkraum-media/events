@@ -23,7 +23,7 @@ class FilterTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByASingleLocationViaFlexform.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $response = $this->executeFrontendSubRequest($request);
 
@@ -39,7 +39,7 @@ class FilterTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByTwoLocationsViaFlexform.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $response = $this->executeFrontendSubRequest($request);
 

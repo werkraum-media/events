@@ -326,7 +326,7 @@ class CacheTest extends AbstractFunctionalTestCase
 
     private function getRequestWithSleep(array $typoScript = []): InternalRequest
     {
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withInstructions([
             $this->getTypoScriptInstruction()

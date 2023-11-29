@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use TYPO3\CMS\Core\MetaTag\GenericMetaTagManager;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Frontend\PageTitleProvider\DateTitleProviderInterface;
@@ -36,41 +37,53 @@ final class DateMetaInformationService implements DateMetaInformationInterface
 {
     public function __construct(
         private readonly MetaTagManagerRegistry $metaTagManagerRegistry,
+        private readonly EventMetaInformationService $eventService,
         private readonly DateTitleProviderInterface $titleProvider
     ) {
     }
 
     public function setDate(Date $date): void
     {
-        $this->setDescription($date);
-        $this->setKeywords($date);
+        $event = $date->getEvent();
+        if ($event === null) {
+            return;
+        }
 
+        // A date mostly sets info based on event, re use existing features.
+        $this->eventService->setEvent($event);
+
+        // Now set date specifics.
         $this->titleProvider->setDate($date);
+
+        $this->updateTitles();
     }
 
-    private function setDescription(Date $date): void
+    private function updateTitles(): void
     {
-        $description = $date->getEvent()?->getTeaser() ?? '';
-        if ($description === '') {
+        $title = $this->titleProvider->getTitle();
+        if ($title === '') {
             return;
         }
 
-        $this->metaTagManagerRegistry
-            ->getManagerForProperty('description')
-            ->addProperty('description', $description)
-        ;
+        $this->updateOpenGraphTitle($title);
+        $this->updateTwitterTitle($title);
     }
 
-    private function setKeywords(Date $date): void
+    private function updateOpenGraphTitle(string $title): void
     {
-        $keywords = $date->getEvent()?->getKeywords() ?? '';
-        if ($keywords === '') {
+        $manager = $this->metaTagManagerRegistry->getManagerForProperty('og:title');
+        if ($manager instanceof GenericMetaTagManager) {
             return;
         }
 
-        $this->metaTagManagerRegistry
-            ->getManagerForProperty('keywords')
-            ->addProperty('keywords', $keywords)
-        ;
+        $manager->removeProperty('og:title');
+        $manager->addProperty('og:title', $title);
+    }
+
+    private function updateTwitterTitle(string $title): void
+    {
+        $manager = $this->metaTagManagerRegistry->getManagerForProperty('twitter:title');
+        $manager->removeProperty('twitter:title');
+        $manager->addProperty('twitter:title', $title);
     }
 }

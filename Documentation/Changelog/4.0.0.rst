@@ -36,6 +36,11 @@ Features
 * Add page title provider.
   That way it is possible to alter the TYPO3 page title when showing a date or event.
 
+* Add Social Media Tags by default.
+  https://ogp.me/ is used by some platforms, especially social media, to generate previews of shared links.
+  The extension now delivers default open-graph tags for better user experience.
+  Twitter uses its own way which is also supported.
+
 Fixes
 -----
 

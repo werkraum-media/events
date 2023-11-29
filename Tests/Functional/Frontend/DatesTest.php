@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use WerkraumMedia\Events\Frontend\Dates;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
@@ -32,6 +33,10 @@ class DatesTest extends AbstractFunctionalTestCase
 {
     protected function setUp(): void
     {
+        $this->coreExtensionsToLoad = [
+            'seo',
+        ];
+
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
@@ -50,7 +55,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsOnlyDatesWithAvailableEventByDemand.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $response = $this->executeFrontendSubRequest($request);
 
@@ -66,7 +71,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'events_search[search][start]' => '2023-02-16',
@@ -92,7 +97,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'events_search[search][end]' => '2023-02-17',
@@ -123,7 +128,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsDateWithinTimeSpan.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
             'events_search[search][start]' => '2023-02-16',
@@ -150,12 +155,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfEventIsHidden.php');
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $request = $request->withQueryParameters([
-            'tx_events_dateshow[date]' => '1',
-        ]);
-        $response = $this->executeFrontendSubRequest($request);
+        $response = $this->issueDetailRequest();
 
         self::assertSame(404, $response->getStatusCode());
     }
@@ -165,7 +165,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/ReturnsUpcomingDates.php');
 
-        $request = new InternalRequest();
+        $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withInstructions([
             $this->getTypoScriptInstruction()
@@ -193,10 +193,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DateMetaTags.php');
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
-        $response = $this->executeFrontendSubRequest($request);
+        $response = $this->issueDetailRequest();
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
@@ -206,18 +203,53 @@ class DatesTest extends AbstractFunctionalTestCase
     }
 
     #[Test]
+    public function addsOpenGraphTags(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DateOpenGraphTags.php');
+
+        $response = $this->issueDetailRequest();
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<meta property="og:title" content="Title of Event 15.02.2023 00:00" />', $html);
+        self::assertStringContainsString('<meta property="og:type" content="website" />', $html);
+        self::assertStringContainsString('<meta property="og:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+    }
+
+    #[Test]
+    public function addsSocialMediaTags(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DateSocialMediaTags.php');
+
+        $response = $this->issueDetailRequest();
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<meta name="twitter:card" content="summary" />', $html);
+        self::assertStringContainsString('<meta name="twitter:title" content="Title of Event 15.02.2023 00:00" />', $html);
+        self::assertStringContainsString('<meta name="twitter:description" content="Teaser of Event" />', $html);
+        self::assertStringContainsString('<meta name="twitter:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+    }
+
+    #[Test]
     public function altersPageTitle(): void
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DatePageTitle.php');
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
-        $response = $this->executeFrontendSubRequest($request);
+        $response = $this->issueDetailRequest();
 
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
         self::assertStringContainsString('<title>Title of Event 15.02.2023 00:00</title>', $html);
+    }
+
+    private function issueDetailRequest(): ResponseInterface
+    {
+        $request = new InternalRequest('https://example.com/');
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
+
+        return $this->executeFrontendSubRequest($request);
     }
 }
