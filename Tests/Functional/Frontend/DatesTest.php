@@ -187,4 +187,21 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertStringNotContainsString('Event 1', $html);
         self::assertStringContainsString('Event 2', $html);
     }
+
+    #[Test]
+    public function addsMetaTags(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DateMetaTags.php');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<meta name="description" content="Teaser of Event" />', $html);
+        self::assertStringContainsString('<meta name="keywords" content="Gewölbe, Goethe, Horst Damm, Kästner, Theater" />', $html);
+    }
 }

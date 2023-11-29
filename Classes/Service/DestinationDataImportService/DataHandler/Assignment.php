@@ -28,38 +28,10 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 
 final class Assignment
 {
-    private readonly int $uid;
-
-    /**
-     * @var int[]
-     */
-    private readonly array $uids;
-
-    /**
-     * @param AbstractDomainObject[] $assignments
-     */
     public function __construct(
-        ?int $uid,
         private readonly string $columnName,
-        array $assignments
+        private readonly string $value,
     ) {
-        if (is_int($uid) === false) {
-            throw new InvalidArgumentException('Only integer allowed as uid, need a persisted entity.', 1699352008);
-        }
-
-        $this->uid = $uid;
-        $this->uids = array_map(static function (AbstractDomainObject $model): int {
-            $uid = $model->getUid();
-            if (is_int($uid) === false) {
-                throw new InvalidArgumentException('Only object with uid supported.', 1698936965);
-            }
-            return $uid;
-        }, $assignments);
-    }
-
-    public function getUid(): int
-    {
-        return $this->uid;
     }
 
     public function getColumnName(): string
@@ -67,11 +39,29 @@ final class Assignment
         return $this->columnName;
     }
 
-    /**
-     * @return int[]
-     */
-    public function getUids(): array
+    public function getValue(): string
     {
-        return $this->uids;
+        return $this->value;
+    }
+
+    /**
+     * @param AbstractDomainObject[] $objects
+     */
+    public static function createFromDomainObjects(
+        string $columnName,
+        array $objects
+    ): self {
+        $uids = array_map(static function (AbstractDomainObject $model): int {
+            $uid = $model->getUid();
+            if (is_int($uid) === false) {
+                throw new InvalidArgumentException('Only object with uid supported.', 1698936965);
+            }
+            return $uid;
+        }, $objects);
+
+        return new self(
+            $columnName,
+            implode(',', $uids)
+        );
     }
 }

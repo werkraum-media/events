@@ -24,7 +24,13 @@ class Date extends AbstractEntity
 
     protected ?Date $originalDate = null;
 
-    protected Event $event;
+    /**
+     * Can not be null in theory.
+     * But editors might disable an event.
+     * The date might still be available by Extbase, but without event.
+     * This needs to be handled properly by consuming code for now.
+     */
+    protected ?Event $event;
 
     protected string $canceledLink = '';
 
@@ -65,7 +71,7 @@ class Date extends AbstractEntity
         return $end && $this->getStart()->format('Y-m-d') === $end->format('Y-m-d');
     }
 
-    public function getEvent(): Event
+    public function getEvent(): ?Event
     {
         return $this->event;
     }

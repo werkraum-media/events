@@ -1,0 +1,153 @@
+{
+    "status": "OK",
+    "count": 2,
+    "overallcount": 2,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.<br>Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)<br>Um Voranmeldung unter 03672-486470 oder&nbsp;<a data-cke-saved-href=\"mailto:schillerhaus@rudolstadt.de\" href=\"mailto:schillerhaus@rudolstadt.de\">schillerhaus@rudolstadt.de</a>&nbsp;wird gebeten. <br><strong>Es gilt die 2G-PLUS-Regel.</strong>&nbsp;<br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.\nEintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)\nUm Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schillerstraße 25",
+            "phone": "+ 49 3672 / 486470",
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "media_objects": [
+            ],
+            "keywords": [
+                "Gewölbe",
+                "Goethe",
+                "Horst Damm",
+                "Kästner",
+                "Theater",
+                "low_image_qualit"
+            ],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "name": "Schillerhaus Rudolstadt",
+            "features": [
+            ],
+            "addresses": [
+            ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        },
+        {
+            "global_id": "e_100347854",
+            "id": "100347854",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "categories": [
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.<br>Eintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)<br>Um Voranmeldung unter 03672-486470 oder&nbsp;<a data-cke-saved-href=\"mailto:schillerhaus@rudolstadt.de\" href=\"mailto:schillerhaus@rudolstadt.de\">schillerhaus@rudolstadt.de</a>&nbsp;wird gebeten. <br><strong>Es gilt die 2G-PLUS-Regel.</strong>&nbsp;<br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Die Lichter sind entzündet, die Plätzchen duften, man rückt endlich wieder näher zusammen und lauscht den Geschichten. Vier Schauspieler*innen unseres Theaters überraschen mit ihren weihnachtlichen Texten, die sie für uns ausgewählt haben. Dazu plaudern sie über persönliche Anekdoten und erinnern sich an ihre schönsten und verrücktesten Weihnachtsfeste. Und da der Genuss in der Vorweihnachtszeit nicht fehlen darf, wird an jedem Adventssonntag eine andere weihnachtliche Spezialität serviert.\nEintritt: 10 € (inkl. Gedeck mit weihnachtlicher Schillerlocke)\nUm Voranmeldung unter 03672-486470 oder schillerhaus@rudolstadt.de wird gebeten.\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/html"
+                },
+                {
+                    "rel": "teaser",
+                    "type": "text/plain"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Schillerstraße 25",
+            "phone": "+ 49 3672 / 486470",
+            "fax": "+ 49 3672 / 486475",
+            "web": "http://www.schillerhaus.rudolstadt.de/",
+            "email": "schillerhaus@rudolstadt.de",
+            "author": "support@hubermedia.de",
+            "media_objects": [
+            ],
+            "keywords": [
+            ],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "name": "Schillerhaus Rudolstadt",
+            "features": [
+            ],
+            "addresses": [
+            ],
+            "created": "2099-10-31T12:29:00+00:00",
+            "changed": "2099-12-14T08:29:00+00:00",
+            "source": {
+                "url": "https://example.com",
+                "value": "Foreign Example 1"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        }
+    ]
+}

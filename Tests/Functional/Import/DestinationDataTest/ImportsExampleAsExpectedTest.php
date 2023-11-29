@@ -94,4 +94,18 @@ class ImportsExampleAsExpectedTest extends AbstractTestCase
         $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsSource.php');
         $this->assertEmptyLog();
     }
+
+    #[Test]
+    public function importsKeywords(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
+        $this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithKeywords.json') ?: ''),
+        ]);
+
+        $this->executeCommand();
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsKeywords.php');
+        $this->assertEmptyLog();
+    }
 }

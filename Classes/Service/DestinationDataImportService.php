@@ -182,13 +182,20 @@ final class DestinationDataImportService
             $this->persistenceManager->persistAll();
 
             // Apply changes via DataHandler (The new way)
+            $eventUid = $this->tmpCurrentEvent->getUid();
+            if (is_int($eventUid) === false) {
+                throw new Exception('Could not persist and fetch uid of event.', 1701244570);
+            }
+
             $this->logger->info('Apply changes via DataHandler');
-            if ($event['categories'] ?? false) {
-                $this->setCategories($event['categories']);
-            }
-            if ($event['features']) {
-                $this->setFeatures($event['features']);
-            }
+            $this->dataHandler->updateEvent(
+                $eventUid,
+                [
+                    new Assignment('keywords', implode(', ', $event['keywords'] ?? [])),
+                    $this->getCategories($event['categories'] ?? []),
+                    $this->getFeatures($event['features'] ?? []),
+                ]
+            );
 
             $this->logger->info('Update slugs');
             $this->slugger->update('tx_events_domain_model_event');
@@ -202,7 +209,7 @@ final class DestinationDataImportService
         return 0;
     }
 
-    private function setCategories(array $categories): void
+    private function getCategories(array $categories): Assignment
     {
         $categories = $this->categoriesAssignment->getCategories(new CategoryImport(
             $this->import->getCategoryParent(),
@@ -216,14 +223,13 @@ final class DestinationDataImportService
         );
         $this->eventDispatcher->dispatch($event);
 
-        $this->dataHandler->storeAssignments(new Assignment(
-            $this->tmpCurrentEvent->getUid(),
+        return Assignment::createFromDomainObjects(
             'categories',
             $event->getCategories()->toArray()
-        ));
+        );
     }
 
-    private function setFeatures(array $features): void
+    private function getFeatures(array $features): Assignment
     {
         $features = $this->categoriesAssignment->getCategories(new CategoryImport(
             $this->import->getFeaturesParent(),
@@ -232,11 +238,10 @@ final class DestinationDataImportService
             true
         ));
 
-        $this->dataHandler->storeAssignments(new Assignment(
-            $this->tmpCurrentEvent->getUid(),
+        return Assignment::createFromDomainObjects(
             'features',
             $features->toArray()
-        ));
+        );
     }
 
     private function setDates(
