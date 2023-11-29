@@ -13,6 +13,7 @@ use Wrm\Events\Domain\Repository\DateRepository;
 use Wrm\Events\Domain\Repository\RegionRepository;
 use Wrm\Events\Events\Controller\DateListVariables;
 use Wrm\Events\Events\Controller\DateSearchVariables;
+use Wrm\Events\Frontend\MetaInformation\DateMetaInformationInterface;
 use Wrm\Events\Pagination\Factory;
 use Wrm\Events\Service\DataProcessingForModels;
 
@@ -58,6 +59,11 @@ class DateController extends AbstractController
      */
     protected $extensionService;
 
+    /**
+     * @var DateMetaInformationInterface
+     */
+    protected $metaInformationService;
+
     public function __construct(
         DateDemandFactory $demandFactory,
         DateRepository $dateRepository,
@@ -66,7 +72,8 @@ class DateController extends AbstractController
         Factory $paginationFactory,
         DataProcessingForModels $dataProcessing,
         EventDispatcher $eventDispatcher,
-        ExtensionService $extensionService
+        ExtensionService $extensionService,
+        DateMetaInformationInterface $metaInformationService
     ) {
         $this->demandFactory = $demandFactory;
         $this->dateRepository = $dateRepository;
@@ -76,6 +83,7 @@ class DateController extends AbstractController
         $this->dataProcessing = $dataProcessing;
         $this->eventDispatcher = $eventDispatcher;
         $this->extensionService = $extensionService;
+        $this->metaInformationService = $metaInformationService;
     }
 
     protected function initializeAction(): void
@@ -163,6 +171,7 @@ class DateController extends AbstractController
             $this->trigger404('No event found for requested date.');
         }
 
+        $this->metaInformationService->setDate($date);
         $this->view->assign('date', $date);
     }
 

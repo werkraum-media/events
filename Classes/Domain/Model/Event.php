@@ -121,6 +121,11 @@ class Event extends AbstractEntity
     protected $features;
 
     /**
+     * @var string
+     */
+    protected $keywords = '';
+
+    /**
      * @var ObjectStorage<Partner>
      */
     protected $partner;
@@ -435,6 +440,11 @@ class Event extends AbstractEntity
     public function getFeatures(): array
     {
         return $this->getSortedCategory($this->features);
+    }
+
+    public function getKeywords(): string
+    {
+        return $this->keywords;
     }
 
     public function setLanguageUid(int $languageUid): void

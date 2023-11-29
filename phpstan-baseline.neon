@@ -91,6 +91,11 @@ parameters:
 			path: Classes/Service/Cleanup/Files.php
 
 		-
+			message: "#^Parameter \\#2 \\$objects of static method Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment\\:\\:createFromDomainObjects\\(\\) expects array\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\>, array\\<int, TEntity\\> given\\.$#"
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
 			message: "#^Parameter \\#1 \\$uid of class Wrm\\\\Events\\\\Service\\\\DestinationDataImportService\\\\DataHandler\\\\Assignment constructor expects int, int\\|null given\\.$#"
 			count: 2
 			path: Classes/Service/DestinationDataImportService.php
