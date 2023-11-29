@@ -38,3 +38,16 @@ plugin.tx_events {
         start = 1660158000
     }
 }
+
+config {
+    pageTitleProviders {
+        date {
+            provider = Wrm\Events\Frontend\PageTitleProvider\DateTitleProvider
+            before = record
+        }
+        event {
+            provider = Wrm\Events\Frontend\PageTitleProvider\EventTitleProvider
+            before = record
+        }
+    }
+}

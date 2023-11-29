@@ -25,6 +25,7 @@ namespace Wrm\Events\Frontend\MetaInformation;
 
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use Wrm\Events\Domain\Model\Event;
+use Wrm\Events\Frontend\PageTitleProvider\EventTitleProviderInterface;
 
 /**
  * TYPO3 has many different APIs to set meta information like: Page Title, Meta Tags, OpenGraph Tags, etc.
@@ -38,16 +39,25 @@ final class EventMetaInformationService implements EventMetaInformationInterface
      */
     private $metaTagManagerRegistry;
 
+    /**
+     * @var EventTitleProviderInterface
+     */
+    private $titleProvider;
+
     public function __construct(
-        MetaTagManagerRegistry $metaTagManagerRegistry
+        MetaTagManagerRegistry $metaTagManagerRegistry,
+        EventTitleProviderInterface $titleProvider
     ) {
         $this->metaTagManagerRegistry = $metaTagManagerRegistry;
+        $this->titleProvider = $titleProvider;
     }
 
     public function setEvent(Event $event): void
     {
         $this->setDescription($event);
         $this->setKeywords($event);
+
+        $this->titleProvider->setEvent($event);
     }
 
     private function setDescription(Event $event): void
