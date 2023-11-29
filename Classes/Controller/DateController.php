@@ -16,6 +16,7 @@ use WerkraumMedia\Events\Domain\Repository\DateRepository;
 use WerkraumMedia\Events\Domain\Repository\RegionRepository;
 use WerkraumMedia\Events\Events\Controller\DateListVariables;
 use WerkraumMedia\Events\Events\Controller\DateSearchVariables;
+use WerkraumMedia\Events\Frontend\MetaInformation\DateMetaInformationInterface;
 use WerkraumMedia\Events\Pagination\Factory;
 use WerkraumMedia\Events\Service\DataProcessingForModels;
 
@@ -28,7 +29,8 @@ final class DateController extends AbstractController
         private readonly CategoryRepository $categoryRepository,
         private readonly Factory $paginationFactory,
         private readonly DataProcessingForModels $dataProcessing,
-        private readonly ExtensionService $extensionService
+        private readonly ExtensionService $extensionService,
+        private readonly DateMetaInformationInterface $metaInformationService
     ) {
     }
 
@@ -110,6 +112,7 @@ final class DateController extends AbstractController
             $this->trigger404('No event found for requested date.');
         }
 
+        $this->metaInformationService->setDate($date);
         $this->view->assign('date', $date);
         return $this->htmlResponse();
     }

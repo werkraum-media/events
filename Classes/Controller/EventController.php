@@ -9,6 +9,7 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 use WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory;
 use WerkraumMedia\Events\Domain\Model\Event;
 use WerkraumMedia\Events\Domain\Repository\EventRepository;
+use WerkraumMedia\Events\Frontend\MetaInformation\EventMetaInformationInterface;
 use WerkraumMedia\Events\Service\DataProcessingForModels;
 
 final class EventController extends AbstractController
@@ -16,7 +17,8 @@ final class EventController extends AbstractController
     public function __construct(
         private readonly EventRepository $eventRepository,
         private readonly DataProcessingForModels $dataProcessing,
-        private readonly EventDemandFactory $demandFactory
+        private readonly EventDemandFactory $demandFactory,
+        private readonly EventMetaInformationInterface $metaInformationService
     ) {
     }
 
@@ -38,6 +40,7 @@ final class EventController extends AbstractController
     #[Extbase\IgnoreValidation(['value' => 'event'])]
     public function showAction(Event $event): ResponseInterface
     {
+        $this->metaInformationService->setEvent($event);
         $this->view->assign('event', $event);
         return $this->htmlResponse();
     }

@@ -26,6 +26,13 @@ Features
 
 * Support PHP 8.1, 8.2, 8.3.
 
+* Add meta tags.
+  A new class is added which will add meta tags for dates and events.
+  The class has an interface which allows it to be replaced via DI to alter behaviour.
+
+* Import keywords for events from destination.one.
+  That way keywords are available for usage in meta tags.
+
 Fixes
 -----
 

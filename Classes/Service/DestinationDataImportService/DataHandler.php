@@ -39,25 +39,26 @@ final class DataHandler
         $this->logger = $logManager->getLogger(self::class);
     }
 
-    public function storeAssignments(
-        Assignment $assignment
+    /**
+     * @param Assignment[] $assignments
+     */
+    public function updateEvent(
+        int $eventUid,
+        array $assignments
     ): void {
-        $data = [
-            'tx_events_domain_model_event' => [
-                $assignment->getUid() => [
-                    $assignment->getColumnName() => implode(',', $assignment->getUids()),
-                ],
-            ],
-        ];
+        $data = ['tx_events_domain_model_event' => [$eventUid => []]];
+        foreach ($assignments as $assignment) {
+            $data['tx_events_domain_model_event'][$eventUid][$assignment->getColumnName()] = $assignment->getValue();
+        }
 
-        $this->logger->debug('Import assignment.', $data);
+        $this->logger->debug('Update event data.', $data);
         $dataHandler = GeneralUtility::makeInstance(Typo3DataHandler::class);
         $dataHandler->start($data, []);
         $dataHandler->process_datamap();
 
         if ($dataHandler->errorLog !== []) {
-            $this->logger->error('Error during import of assignments.', [
-                'assignment' => $assignment,
+            $this->logger->error('Error during update of event data.', [
+                'assignments' => $assignments,
                 'errors' => $dataHandler->errorLog,
             ]);
         }
