@@ -54,6 +54,7 @@ return [
                     partner,
                     categories,
                     features,
+                    keywords,
                     references_events,
                     pages,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.media,
@@ -399,6 +400,15 @@ return [
         ],
         'features' => [
             'exclude' => true,
+        ],
+        'keywords' => [
+            'exclude' => true,
+            'label' => 'Keywords',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 3,
+            ],
         ],
 
         'dates' => [

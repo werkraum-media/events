@@ -3,6 +3,7 @@
 namespace Wrm\Events\Controller;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use Wrm\Events\Frontend\MetaInformation\EventMetaInformationInterface;
 use Wrm\Events\Domain\Model\Dto\EventDemandFactory;
 use Wrm\Events\Domain\Model\Event;
 use Wrm\Events\Domain\Repository\EventRepository;
@@ -25,14 +26,21 @@ class EventController extends AbstractController
      */
     protected $demandFactory;
 
+    /**
+     * @var EventMetaInformationInterface
+     */
+    protected $metaInformationService;
+
     public function __construct(
         EventRepository $eventRepository,
         DataProcessingForModels $dataProcessing,
-        EventDemandFactory $demandFactory
+        EventDemandFactory $demandFactory,
+        EventMetaInformationInterface $metaInformationService
     ) {
         $this->eventRepository = $eventRepository;
         $this->dataProcessing = $dataProcessing;
         $this->demandFactory = $demandFactory;
+        $this->metaInformationService = $metaInformationService;
     }
 
     protected function initializeAction(): void
@@ -54,6 +62,7 @@ class EventController extends AbstractController
      */
     public function showAction(Event $event): void
     {
+        $this->metaInformationService->setEvent($event);
         $this->view->assign('event', $event);
     }
 
