@@ -70,7 +70,7 @@ class Event extends AbstractEntity
      */
     protected ObjectStorage $features;
 
-    protected string $keywords;
+    protected string $keywords = '';
 
     /**
      * @var ObjectStorage<Partner>

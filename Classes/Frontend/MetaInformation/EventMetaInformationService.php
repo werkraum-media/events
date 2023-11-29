@@ -25,6 +25,7 @@ namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Frontend\PageTitleProvider\EventTitleProviderInterface;
 
 /**
  * TYPO3 has many different APIs to set meta information like: Page Title, Meta Tags, OpenGraph Tags, etc.
@@ -34,7 +35,8 @@ use WerkraumMedia\Events\Domain\Model\Event;
 final class EventMetaInformationService implements EventMetaInformationInterface
 {
     public function __construct(
-        private readonly MetaTagManagerRegistry $metaTagManagerRegistry
+        private readonly MetaTagManagerRegistry $metaTagManagerRegistry,
+        private readonly EventTitleProviderInterface $titleProvider
     ) {
     }
 
@@ -42,6 +44,8 @@ final class EventMetaInformationService implements EventMetaInformationInterface
     {
         $this->setDescription($event);
         $this->setKeywords($event);
+
+        $this->titleProvider->setEvent($event);
     }
 
     private function setDescription(Event $event): void
