@@ -1,4 +1,4 @@
-base: '/'
+base: 'https://example.com/'
 languages:
   -
     title: English

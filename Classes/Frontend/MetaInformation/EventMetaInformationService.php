@@ -23,7 +23,9 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use TYPO3\CMS\Core\MetaTag\GenericMetaTagManager;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Domain\Model\Event;
 use WerkraumMedia\Events\Frontend\PageTitleProvider\EventTitleProviderInterface;
 
@@ -42,10 +44,12 @@ final class EventMetaInformationService implements EventMetaInformationInterface
 
     public function setEvent(Event $event): void
     {
+        $this->titleProvider->setEvent($event);
+
         $this->setDescription($event);
         $this->setKeywords($event);
-
-        $this->titleProvider->setEvent($event);
+        $this->setOpenGraphTags($event);
+        $this->setSocialMediaTags($event);
     }
 
     private function setDescription(Event $event): void
@@ -72,5 +76,52 @@ final class EventMetaInformationService implements EventMetaInformationInterface
             ->getManagerForProperty('keywords')
             ->addProperty('keywords', $keywords)
         ;
+    }
+
+    private function setOpenGraphTags(Event $event): void
+    {
+        $tags = array_filter([
+            'title' => $this->titleProvider->getTitle(),
+            'type' => 'website',
+            'image' => $this->getImageUrl($event),
+        ]);
+
+        foreach ($tags as $property => $value) {
+            $property = 'og:' . $property;
+            $manager = $this->metaTagManagerRegistry->getManagerForProperty($property);
+            if ($manager instanceof GenericMetaTagManager) {
+                continue;
+            }
+            $manager->addProperty($property, $value);
+        }
+    }
+
+    private function setSocialMediaTags(Event $event): void
+    {
+        $title = $this->titleProvider->getTitle();
+
+        $tags = array_filter([
+            'twitter:card' => 'summary',
+            'twitter:title' => $title,
+            'twitter:description' => $event->getTeaser(),
+            'twitter:image' => $this->getImageUrl($event),
+        ]);
+
+        foreach ($tags as $property => $value) {
+            $this->metaTagManagerRegistry
+                ->getManagerForProperty($property)
+                ->addProperty($property, $value)
+            ;
+        }
+    }
+
+    private function getImageUrl(Event $event): string
+    {
+        $imageUrl = $event->getImages()[0]?->getOriginalResource()->getPublicUrl() ?? '';
+        if ($imageUrl) {
+            $imageUrl = GeneralUtility::locationHeaderUrl($imageUrl);
+        }
+
+        return $imageUrl;
     }
 }

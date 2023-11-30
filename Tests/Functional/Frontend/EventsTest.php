@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
@@ -33,6 +34,9 @@ class EventsTest extends AbstractFunctionalTestCase
     {
         $this->testExtensionsToLoad = [
             'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
+        ];
+        $this->coreExtensionsToLoad = [
+            'seo',
         ];
 
         parent::setUp();
@@ -46,11 +50,7 @@ class EventsTest extends AbstractFunctionalTestCase
     {
         $this->importPHPDataSet(__DIR__ . '/EventsTestFixtures/EventMetaTags.php');
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_eventshow[event]', '1');
-        $response = $this->executeFrontendSubRequest($request);
-
+        $response = $this->issueDetailRequest();
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
@@ -59,18 +59,52 @@ class EventsTest extends AbstractFunctionalTestCase
     }
 
     #[Test]
+    public function addsOpenGraphTags(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/EventsTestFixtures/EventOpenGraphTags.php');
+
+        $response = $this->issueDetailRequest();
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<meta property="og:title" content="Title of Event" />', $html);
+        self::assertStringContainsString('<meta property="og:type" content="website" />', $html);
+        self::assertStringContainsString('<meta property="og:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+    }
+
+    #[Test]
+    public function addsSocialMediaTags(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/EventsTestFixtures/EventSocialMediaTags.php');
+
+        $response = $this->issueDetailRequest();
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<meta name="twitter:card" content="summary" />', $html);
+        self::assertStringContainsString('<meta name="twitter:title" content="Title of Event" />', $html);
+        self::assertStringContainsString('<meta name="twitter:description" content="Teaser of Event" />', $html);
+        self::assertStringContainsString('<meta name="twitter:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+    }
+
+    #[Test]
     public function altersPageTitle(): void
     {
         $this->importPHPDataSet(__DIR__ . '/EventsTestFixtures/EventPageTitle.php');
 
-        $request = new InternalRequest();
-        $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_eventshow[event]', '1');
-        $response = $this->executeFrontendSubRequest($request);
-
+        $response = $this->issueDetailRequest();
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
         self::assertStringContainsString('<title>Title of Event</title>', $html);
+    }
+
+    private function issueDetailRequest(): ResponseInterface
+    {
+        $request = new InternalRequest('https://example.com/');
+        $request = $request->withPageId(1);
+        $request = $request->withQueryParameter('tx_events_eventshow[event]', '1');
+
+        return $this->executeFrontendSubRequest($request);
     }
 }
