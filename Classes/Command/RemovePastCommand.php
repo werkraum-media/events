@@ -24,7 +24,7 @@ class RemovePastCommand extends Command
         $this->setHelp('Past dates are removed, together with events that do not have any left dates.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         Bootstrap::initializeBackendAuthentication();
 

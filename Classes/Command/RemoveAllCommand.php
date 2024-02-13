@@ -24,7 +24,7 @@ class RemoveAllCommand extends Command
         $this->setHelp('All events and associated data will be removed.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         Bootstrap::initializeBackendAuthentication();
         $this->cleanupService->deleteAllData();
