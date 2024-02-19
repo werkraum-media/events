@@ -26,7 +26,7 @@ class ImportDestinationDataViaAllConfigruationsCommand extends Command
         $this->setHelp('Destination Data Events are imported from all configuration records.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         Bootstrap::initializeBackendAuthentication();
 
