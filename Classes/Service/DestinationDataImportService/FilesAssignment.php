@@ -135,6 +135,7 @@ final class FilesAssignment
             'alternative' => $mediaObject['description'] ?? '',
             'creator_tool' => 'destination.one',
             'source' => $mediaObject['url'] ?? '',
+            'copyright' => $mediaObject['source'] ?? '',
         ]);
     }
 
