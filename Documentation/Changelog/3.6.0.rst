@@ -1,0 +1,27 @@
+3.6.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Import copyright from destination.one media object field source in file metadata field copyright.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
