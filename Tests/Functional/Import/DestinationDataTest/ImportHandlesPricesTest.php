@@ -4,7 +4,6 @@ namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
 
 use Codappix\Typo3PhpDatasets\PhpDataSet;
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @testdox DestinationData import
