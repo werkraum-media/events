@@ -1,15 +1,16 @@
 <?php
 
-namespace Wrm\Events\Tests\Functional\Import\DestinationDataTest;
+declare(strict_types=1);
+
+namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use Codappix\Typo3PhpDatasets\PhpDataSet;
 use GuzzleHttp\Psr7\Response;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
-/**
- * @testdox DestinationData import
- */
-class ImportHandlesPricesTest extends AbstractTest
+#[TestDox('DestinationData import')]
+class ImportHandlesPricesTest extends AbstractTestCase
 {
     protected function setUp(): void
     {
@@ -26,9 +27,7 @@ class ImportHandlesPricesTest extends AbstractTest
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsNewPriceFromPriceInfo(): void
     {
         $this->setUpResponses([
@@ -45,9 +44,7 @@ class ImportHandlesPricesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addsNewPriceFromPriceInfoExtra(): void
     {
         $this->setUpResponses([
@@ -64,9 +61,7 @@ class ImportHandlesPricesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function keepsNoLongerExistingPrice(): void
     {
         (new PhpDataSet())->import(['tx_events_domain_model_event' => [0 => [
@@ -90,9 +85,7 @@ class ImportHandlesPricesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatesExistingPriceFromPriceInfo(): void
     {
         (new PhpDataSet())->import(['tx_events_domain_model_event' => [0 => [
@@ -116,9 +109,7 @@ class ImportHandlesPricesTest extends AbstractTest
         $this->assertEmptyLog();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function updatesExistingPriceFromPriceInfoExtra(): void
     {
         (new PhpDataSet())->import(['tx_events_domain_model_event' => [0 => [
