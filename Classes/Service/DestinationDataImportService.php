@@ -355,6 +355,7 @@ final class DestinationDataImportService
 
     private function setTexts(array $texts): void
     {
+        $shouldSetPrice = true;
         foreach ($texts as $text) {
             if (isset($text['value']) === false) {
                 continue;
@@ -366,7 +367,11 @@ final class DestinationDataImportService
             if ($text['rel'] == 'teaser' && $text['type'] == 'text/plain') {
                 $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", (string)$text['value']));
             }
-            if ($text['rel'] == 'PRICE_INFO' && $text['type'] == 'text/plain') {
+            if ($shouldSetPrice && $text['rel'] == 'PRICE_INFO' && $text['type'] == 'text/plain') {
+                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", (string)$text['value']));
+            }
+            if ($shouldSetPrice && $text['rel'] == 'PRICE_INFO_EXTRA' && $text['type'] == 'text/plain') {
+                $shouldSetPrice = false;
                 $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", (string)$text['value']));
             }
         }

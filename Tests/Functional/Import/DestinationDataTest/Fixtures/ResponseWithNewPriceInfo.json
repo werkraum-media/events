@@ -1,0 +1,178 @@
+{
+    "status": "OK",
+    "count": 3,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100350503",
+            "id": "100350503",
+            "title": "Adventliche Orgelmusik (Orgel: KMD Frank Bettenhausen)",
+            "type": "Event",
+            "categories": [
+                "Konzerte, Festivals, Show & Tanz",
+                "Weihnachten"
+            ],
+            "texts": [
+                {
+                    "rel": "details",
+                    "type": "text/html",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.&nbsp;&nbsp;Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.<br><br><strong>Es gilt die 2G-PLUS-Regel.</strong><br>"
+                },
+                {
+                    "rel": "details",
+                    "type": "text/plain",
+                    "value": "Immer mittwochs in der Adventszeit spielt Frank Bettenhausen solo und zusammen mit anderen Musikern auf der Steinmeyerorgel aus dem Jahr 1906.  Bekannte Adventslieder, barocke und romantische Kompositionen stehen neben besinnlichen Texten von Pfarrer Johannes-Martin Weiss.\n\nEs gilt die 2G-PLUS-Regel."
+                },
+                {
+                    "rel": "PRICE_INFO",
+                    "type": "text/plain",
+                    "value": "Preis Info"
+                }
+            ],
+            "country": "Deutschland",
+            "areas": [
+                "Rudolstadt und Umgebung"
+            ],
+            "city": "Rudolstadt",
+            "zip": "07407",
+            "street": "Caspar-Schulte-Straße",
+            "phone": "03672 - 48 96 13",
+            "author": "support@hubermedia.de",
+            "geo": {
+                "main": {
+                    "latitude": 50.718688721182531,
+                    "longitude": 11.327333450317383
+                },
+                "entry": [],
+                "attributes": []
+            },
+            "ratings": [
+                {
+                    "type": "eT4",
+                    "value": 40.0
+                },
+                {
+                    "type": "order",
+                    "value": 99.0001
+                }
+            ],
+            "cuisine_types": [],
+            "payment": [],
+            "media_objects": [
+            ],
+            "keywords": [],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2022-12-01T19:00:00+01:00",
+                    "end": "2022-12-01T20:00:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                },
+                {
+                    "weekdays": [
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "start": "2022-11-02T11:00:00+01:00",
+                    "end": "2022-11-02T13:00:00+01:00",
+                    "repeatUntil": "2022-11-25T13:00:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "freq": "Weekly",
+                    "interval": 1
+                },
+                {
+                    "weekdays": [],
+                    "start": "2022-12-22T19:00:00+01:00",
+                    "end": "2022-12-22T20:00:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "kitchenTimeIntervals": [],
+            "deliveryTimeIntervals": [],
+            "numbers": [],
+            "name": "Lutherkirche",
+            "attributes": [
+                {
+                    "key": "VO_Id",
+                    "value": "100118350"
+                },
+                {
+                    "key": "VO_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "VA_Id",
+                    "value": "100118350"
+                },
+                {
+                    "key": "VA_CategoryName",
+                    "value": "POI"
+                },
+                {
+                    "key": "interval_first_match_start",
+                    "value": "2022-12-15T19:00:00+01"
+                },
+                {
+                    "key": "interval_first_match_end",
+                    "value": "2022-12-15T20:00:00+01"
+                },
+                {
+                    "key": "interval_match_count",
+                    "value": "2"
+                },
+                {
+                    "key": "interval_last_match_start",
+                    "value": "2022-12-22T19:00:00+01"
+                },
+                {
+                    "key": "interval_last_match_end",
+                    "value": "2022-12-22T20:00:00+01"
+                }
+            ],
+            "features": [],
+            "addresses": [
+                {
+                    "name": "Städtetourismus in Thüringen e.V.",
+                    "city": "Weimar",
+                    "zip": "99423",
+                    "street": "UNESCO-Platz 1",
+                    "phone": "+49 (3643) 745 314",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "author"
+                },
+                {
+                    "name": "Städtetourismus in Thüringen\" e.V.",
+                    "web": "http://www.thueringer-staedte.de",
+                    "email": "verein@thueringer-staedte.de",
+                    "rel": "organisation"
+                },
+                {
+                    "name": "Lutherkirche",
+                    "city": "Rudolstadt",
+                    "zip": "07407",
+                    "street": "Caspar-Schulte-Straße",
+                    "phone": "03672 - 48 96 13",
+                    "rel": "organizer"
+                }
+            ],
+            "created": "2022-11-08T22:15:00+00:00",
+            "changed": "2022-12-14T08:38:00+00:00",
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            },
+            "company": "",
+            "district": "",
+            "postoffice": "",
+            "phone2": "",
+            "seasons": [],
+            "subitems": [],
+            "hyperObjects": []
+        }
+    ]
+}

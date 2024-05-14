@@ -1,0 +1,27 @@
+3.7.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Support new ``PRICE_INFO_EXTRA`` field as price info. The existing field ``PRICE_INFO`` is kept as fallback.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
