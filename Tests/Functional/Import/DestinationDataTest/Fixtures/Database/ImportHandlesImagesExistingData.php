@@ -67,6 +67,7 @@ return [
             'title' => 'Theater-Rudolstadt_Johannes-Geißer_photo-by-Lisa-Stern_web_.jpg',
             'description' => '',
             'alternative' => '',
+            'copyright' => 'John Doe',
         ],
         [
             'uid' => 2,
@@ -75,6 +76,7 @@ return [
             'title' => 'Tueftlerzeit©SFZ-Rudolstadt.jpg',
             'description' => 'Description of Tueftlerzeit',
             'alternative' => 'Description of Tueftlerzeit',
+            'copyright' => 'Max Mustermann',
         ],
     ],
     'tx_events_domain_model_event' => [

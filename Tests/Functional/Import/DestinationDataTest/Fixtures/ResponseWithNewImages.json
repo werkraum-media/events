@@ -81,7 +81,8 @@
                     "longitude": null,
                     "width": 1920,
                     "height": 1080,
-                    "value": "Theater-Rudolstadt_Johannes-Geißer_photo-by-Lisa-Stern_web_.jpg"
+                    "value": "Theater-Rudolstadt_Johannes-Geißer_photo-by-Lisa-Stern_web_.jpg",
+                    "source": "Max Mustermann"
                 }
             ],
             "keywords": [],
