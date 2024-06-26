@@ -1,0 +1,28 @@
+4.0.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Add missing dependency to composer package `typo3/cms-install`.
+  As UpgradeWizards use API of the package.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
