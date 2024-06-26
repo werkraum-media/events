@@ -19,6 +19,9 @@ Fixes
 
 * Migrate deprecated PHPStan configuration options.
 
+* Adapt expected HTML output within functional tests.
+  As TYPO3 changed actual generated HTML.
+
 Tasks
 -----
 
