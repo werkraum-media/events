@@ -12,6 +12,11 @@ class DateSearchVariables
     /**
      * @var array
      */
+    private $settings;
+
+    /**
+     * @var array
+     */
     private $search;
 
     /**
@@ -43,17 +48,24 @@ class DateSearchVariables
      * @param QueryResultInterface<Region> $regions
      */
     public function __construct(
+        array $settings,
         array $search,
         DateDemand $demand,
         QueryResultInterface $regions,
         array $categories,
         array $features
     ) {
+        $this->settings = $settings;
         $this->search = $search;
         $this->demand = $demand;
         $this->regions = $regions;
         $this->categories = $categories;
         $this->features = $features;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
     }
 
     public function getSearch(): array

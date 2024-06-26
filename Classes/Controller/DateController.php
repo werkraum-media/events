@@ -133,6 +133,7 @@ class DateController extends AbstractController
         }
 
         $event = $this->eventDispatcher->dispatch(new DateSearchVariables(
+            $this->settings,
             $search,
             $demand,
             $this->regionRepository->findAll(),
