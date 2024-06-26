@@ -17,6 +17,8 @@ Fixes
 * Add missing dependency to composer package `typo3/cms-install`.
   As UpgradeWizards use API of the package.
 
+* Migrate deprecated PHPStan configuration options.
+
 Tasks
 -----
 
