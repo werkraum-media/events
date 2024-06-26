@@ -19,12 +19,18 @@ final class DateSearchVariables
      * @param array<Category> $features
      */
     public function __construct(
+        private readonly array $settings,
         private readonly array $search,
         private readonly DateDemand $demand,
         private readonly QueryResultInterface $regions,
         private readonly array $categories,
         private readonly array $features
     ) {
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
     }
 
     public function getSearch(): array
