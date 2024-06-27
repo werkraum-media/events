@@ -25,6 +25,8 @@ class DateSearchVariablesTest extends TestCase
         $subject = new DateSearchVariables(
             [
             ],
+            [
+            ],
             new DateDemand(),
             $this->prophesize(QueryResult::class)->reveal(),
             [],
@@ -40,9 +42,36 @@ class DateSearchVariablesTest extends TestCase
     /**
      * @test
      */
+    public function returnsInitializeSettings(): void
+    {
+        $subject = new DateSearchVariables(
+            [
+                'someCustomKey' => 'someCustomValue',
+            ],
+            [
+            ],
+            new DateDemand(),
+            $this->prophesize(QueryResult::class)->reveal(),
+            [],
+            []
+        );
+
+        self::assertSame(
+            [
+                'someCustomKey' => 'someCustomValue',
+            ],
+            $subject->getSettings()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function returnsInitializeSearch(): void
     {
         $subject = new DateSearchVariables(
+            [
+            ],
             [
                 'executed' => '1',
             ],
@@ -69,6 +98,8 @@ class DateSearchVariablesTest extends TestCase
         $subject = new DateSearchVariables(
             [
             ],
+            [
+            ],
             $demand,
             $this->prophesize(QueryResult::class)->reveal(),
             [],
@@ -90,6 +121,8 @@ class DateSearchVariablesTest extends TestCase
         $subject = new DateSearchVariables(
             [
             ],
+            [
+            ],
             new DateDemand(),
             $regions,
             [],
@@ -108,6 +141,8 @@ class DateSearchVariablesTest extends TestCase
     public function returnsInitialCategories(): void
     {
         $subject = new DateSearchVariables(
+            [
+            ],
             [
             ],
             new DateDemand(),
@@ -132,6 +167,8 @@ class DateSearchVariablesTest extends TestCase
     public function returnsInitialFeatures(): void
     {
         $subject = new DateSearchVariables(
+            [
+            ],
             [
             ],
             new DateDemand(),
@@ -159,6 +196,8 @@ class DateSearchVariablesTest extends TestCase
         $demand = new DateDemand();
         $regions = $this->prophesize(QueryResult::class)->reveal();
         $subject = new DateSearchVariables(
+            [
+            ],
             [
                 'executed' => '1',
             ],
@@ -198,6 +237,8 @@ class DateSearchVariablesTest extends TestCase
         $demand = new DateDemand();
         $regions = $this->prophesize(QueryResult::class)->reveal();
         $subject = new DateSearchVariables(
+            [
+            ],
             [
                 'executed' => '1',
             ],
@@ -242,6 +283,8 @@ class DateSearchVariablesTest extends TestCase
         $demand = new DateDemand();
         $regions = $this->prophesize(QueryResult::class)->reveal();
         $subject = new DateSearchVariables(
+            [
+            ],
             [
                 'executed' => '1',
             ],
