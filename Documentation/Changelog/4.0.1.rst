@@ -1,0 +1,33 @@
+4.0.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Add missing dependency to composer package `typo3/cms-install`.
+  As UpgradeWizards use API of the package.
+
+* Migrate deprecated PHPStan configuration options.
+
+* Adapt expected HTML output within functional tests.
+  As TYPO3 changed actual generated HTML.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

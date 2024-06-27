@@ -198,8 +198,8 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
-        self::assertStringContainsString('<meta name="description" content="Teaser of Event" />', $html);
-        self::assertStringContainsString('<meta name="keywords" content="Gewölbe, Goethe, Horst Damm, Kästner, Theater" />', $html);
+        self::assertStringContainsString('<meta name="description" content="Teaser of Event">', $html);
+        self::assertStringContainsString('<meta name="keywords" content="Gewölbe, Goethe, Horst Damm, Kästner, Theater">', $html);
     }
 
     #[Test]
@@ -211,9 +211,9 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
-        self::assertStringContainsString('<meta property="og:title" content="Title of Event 15.02.2023 00:00" />', $html);
-        self::assertStringContainsString('<meta property="og:type" content="website" />', $html);
-        self::assertStringContainsString('<meta property="og:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+        self::assertStringContainsString('<meta property="og:title" content="Title of Event 15.02.2023 00:00">', $html);
+        self::assertStringContainsString('<meta property="og:type" content="website">', $html);
+        self::assertStringContainsString('<meta property="og:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
     }
 
     #[Test]
@@ -225,10 +225,10 @@ class DatesTest extends AbstractFunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         $html = (string)$response->getBody();
 
-        self::assertStringContainsString('<meta name="twitter:card" content="summary" />', $html);
-        self::assertStringContainsString('<meta name="twitter:title" content="Title of Event 15.02.2023 00:00" />', $html);
-        self::assertStringContainsString('<meta name="twitter:description" content="Teaser of Event" />', $html);
-        self::assertStringContainsString('<meta name="twitter:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif" />', $html);
+        self::assertStringContainsString('<meta name="twitter:card" content="summary">', $html);
+        self::assertStringContainsString('<meta name="twitter:title" content="Title of Event 15.02.2023 00:00">', $html);
+        self::assertStringContainsString('<meta name="twitter:description" content="Teaser of Event">', $html);
+        self::assertStringContainsString('<meta name="twitter:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
     }
 
     #[Test]

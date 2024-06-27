@@ -27,7 +27,8 @@
         "typo3/cms-filelist": "^12.4",
         "typo3/cms-filemetadata": "^12.4",
         "typo3/cms-fluid": "^12.4",
-        "typo3/cms-frontend": "^12.4"
+        "typo3/cms-frontend": "^12.4",
+        "typo3/cms-install": "^12.4"
     },
     "autoload": {
         "psr-4": {
