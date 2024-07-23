@@ -129,6 +129,8 @@ in pkgs.mkShell {
     composer
   ];
 
+  GRAPHICSMAGICK_PATH = pkgs.lib.makeBinPath [ pkgs.graphicsmagick ] + "/";
+
   shellHook = ''
     export typo3DatabaseDriver=pdo_sqlite
   '';

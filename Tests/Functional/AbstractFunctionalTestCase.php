@@ -79,9 +79,9 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
             ],
             'GFX' => [
                 'processor_enabled' => true,
-                'processor_path' => '/usr/bin/',
-                'processor_path_lzw' => '/usr/bin/',
-                'processor' => 'ImageMagick',
+                'processor_path' => getenv('GRAPHICSMAGICK_PATH') ?: '/usr/bin/',
+                'processor_path_lzw' => getenv('GRAPHICSMAGICK_PATH') ?: '/usr/bin/',
+                'processor' => getenv('GRAPHICSMAGICK_PATH') ? 'GraphicsMagick' : 'ImageMagick',
             ],
         ]);
 

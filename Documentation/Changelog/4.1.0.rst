@@ -1,0 +1,27 @@
+4.1.9
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+* Add image handling support in nix shell.
+
+Deprecation
+-----------
+
+Nothing
