@@ -28,7 +28,7 @@ Nothing
 Tasks
 -----
 
-Nothing
+* Add image handling support in nix shell.
 
 Deprecation
 -----------
