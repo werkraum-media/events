@@ -1,4 +1,4 @@
-4.1.0
+3.9.0
 =====
 
 Breaking
@@ -9,8 +9,6 @@ Nothing
 Features
 --------
 
-Forward ported from 3.9.0:
-
 * Add grouping of locations.
   It is now possible to group locations.
   Each location can have arbitrary children.
@@ -19,6 +17,17 @@ Forward ported from 3.9.0:
   Filtering for a location will always find all dates where the location or one of the child locations is assigned.
 
   One use case can be to group imported locations and provide a grouped location for filtering in frontend.
+
+Backport of 4.0.0 features:
+
+* Add meta tags.
+  A new class is added which will add meta tags for dates and events.
+  The class has an interface which allows it to be replaced via DI to alter behaviour.
+
+* Import keywords for events from destination.one.
+  That way keywords are available for usage in meta tags.
+
+* Add page title provider. That way it is possible to alter the TYPO3 page title when showing a date or event.
 
 Fixes
 -----
