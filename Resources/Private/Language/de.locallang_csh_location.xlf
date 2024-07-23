@@ -7,6 +7,18 @@
                 <source>Location</source>
                 <target>Veranstaltungsort</target>
             </trans-unit>
+            <trans-unit id="tabs.grouping" xml:space="preserve">
+                <source>Grouping</source>
+                <target>Gruppierung</target>
+            </trans-unit>
+            <trans-unit id="tabs.tech" xml:space="preserve">
+                <source>Tech</source>
+                <target>Technik</target>
+            </trans-unit>
+            <trans-unit id="tabs.access" xml:space="preserve">
+                <source>Access</source>
+                <target>Zugriff</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_location.global_id" xml:space="preserve">
                 <source>Global UID</source>
                 <target>Globale UID</target>
@@ -15,9 +27,9 @@
                 <source>Auto generated from the values.</source>
                 <target>Wird automatisch aus den Werten generiert.</target>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_location.slug" xml:space="preserve">
-                <source>Slug</source>
-                <target>URL-Segment</target>
+            <trans-unit id="tx_events_domain_model_location.children" xml:space="preserve">
+                <source>Children</source>
+                <target>Kinder</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_location.name" xml:space="preserve">
                 <source>Name</source>

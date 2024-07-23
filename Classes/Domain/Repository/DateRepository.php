@@ -5,6 +5,7 @@ namespace Wrm\Events\Domain\Repository;
 use DateTimeImmutable;
 use DateTimeZone;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
@@ -22,9 +23,19 @@ class DateRepository extends Repository
      */
     protected $context;
 
+    /**
+     * @var ConnectionPool
+     */
+    protected $connectionPool;
+
     public function injectContext(Context $context): void
     {
         $this->context = $context;
+    }
+
+    public function injectConnectionPool(ConnectionPool $connectionPool): void
+    {
+        $this->connectionPool = $connectionPool;
     }
 
     public function findByUids(string $uids): QueryResult
@@ -60,7 +71,7 @@ class DateRepository extends Repository
         }
 
         if ($demand->getLocations() !== []) {
-            $constraints['locations'] = $query->in('event.location', $demand->getLocations());
+            $constraints['locations'] = $this->createLocationConstraint($query, $demand);
         }
 
         if ($demand->getOrganizers() !== []) {
@@ -146,8 +157,7 @@ class DateRepository extends Repository
         $wordsToSearch[] = $demand->getSearchword();
         $constraints = [];
 
-        $queryBuilder = $this->objectManager->get(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_events_domain_model_date');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_date');
 
         foreach ($wordsToSearch as $word) {
             foreach ($fieldsToSearch as $field) {
@@ -250,10 +260,41 @@ class DateRepository extends Repository
         return $query->logicalAnd($constraints);
     }
 
+    private function createLocationConstraint(
+        QueryInterface $query,
+        DateDemand $demand
+    ): ConstraintInterface {
+        $locations = $demand->getLocations();
+        $uidsToResolve = $locations;
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_location');
+        $queryBuilder->select('children');
+        $queryBuilder->from('tx_events_domain_model_location');
+
+        // Loop as resolved uids might have further children which need to be resolved as well.
+        do {
+            $concreteQueryBuilder = clone $queryBuilder;
+            $concreteQueryBuilder->where($concreteQueryBuilder->expr()->in(
+                'uid',
+                $concreteQueryBuilder->createNamedParameter($uidsToResolve, Connection::PARAM_INT_ARRAY)
+            ));
+
+            foreach ($concreteQueryBuilder->execute()->fetchFirstColumn() as $newUids) {
+                if (is_string($newUids) === false) {
+                    $newUids = '';
+                }
+                $newUids = GeneralUtility::intExplode(',', $newUids, true);
+                $uidsToResolve = array_diff($newUids, $locations);
+                $locations = array_merge($locations, $uidsToResolve);
+            }
+        } while ($uidsToResolve !== []);
+
+        return $query->in('event.location', $locations);
+    }
+
     public function findSearchWord(string $search): array
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_events_domain_model_date');
+        $connection = $this->connectionPool->getConnectionForTable('tx_events_domain_model_date');
 
         $queryBuilder = $connection->createQueryBuilder();
 
