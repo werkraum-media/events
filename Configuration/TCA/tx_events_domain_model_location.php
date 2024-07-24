@@ -21,6 +21,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
+        'default_sortby' => 'name',
         'searchFields' => 'name',
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_location.svg',
     ],
@@ -32,7 +33,6 @@ return [
                     l10n_diffsource,
                     hidden,
                     name,
-                    global_id,
 
                     street,
                     district,
@@ -42,6 +42,10 @@ return [
                     phone,
                     latitude,
                     longitude,
+                --div--;' . $l10nPath . ':tabs.grouping,
+                    children,
+                --div--;' . $l10nPath . ':tabs.tech,
+                    global_id,
                 --div--;' . $l10nPath . ':tabs.access,
                     starttime,
                     endtime',
@@ -125,6 +129,20 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+            ],
+        ],
+        'children' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_location.children',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_events_domain_model_location',
+                'fieldControl' => [
+                    'editPopup' => [
+                        'disabled' => false,
+                    ],
+                ],
             ],
         ],
         'name' => [
