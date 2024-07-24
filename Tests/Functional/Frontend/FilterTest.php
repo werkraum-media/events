@@ -24,7 +24,7 @@ class FilterTest extends AbstractFunctionalTestCase
     /**
      * @test
      */
-    public function canFilterByASingleLocationViaFlexform(): void
+    public function canFilterDatesByASingleLocationViaFlexform(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByASingleLocationViaFlexform.php');
 
@@ -42,9 +42,27 @@ class FilterTest extends AbstractFunctionalTestCase
     /**
      * @test
      */
-    public function canFilterByTwoLocationsViaFlexform(): void
+    public function canFilterDatesByTwoLocationsViaFlexform(): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterByTwoLocationsViaFlexform.php');
+
+        $request = new InternalRequest();
+        $request = $request->withPageId(1);
+        $response = $this->executeFrontendRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('Lotte in Weimar', $html);
+        self::assertStringContainsString('Was hat das Universum mit mir zu tun?', $html);
+    }
+
+    /**
+     * @test
+     */
+    public function canFilterDatesByParentLocationViaFlexform(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterDatesByParentLocationViaFlexform.php');
 
         $request = new InternalRequest();
         $request = $request->withPageId(1);

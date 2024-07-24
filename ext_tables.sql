@@ -98,6 +98,7 @@ CREATE TABLE tx_events_domain_model_location (
     phone varchar(255) DEFAULT '' NOT NULL,
     latitude varchar(255) DEFAULT '' NOT NULL,
     longitude varchar(255) DEFAULT '' NOT NULL,
+    children text,
 
     KEY global_id (global_id)
 );

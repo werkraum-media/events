@@ -9,6 +9,15 @@ Nothing
 Features
 --------
 
+* Add grouping of locations.
+  It is now possible to group locations.
+  Each location can have arbitrary children.
+
+  That can be used for editorial structuring.
+  Filtering for a location will always find all dates where the location or one of the child locations is assigned.
+
+  One use case can be to group imported locations and provide a grouped location for filtering in frontend.
+
 Backport of 4.0.0 features:
 
 * Add meta tags.
