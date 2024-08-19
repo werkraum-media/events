@@ -25,13 +25,14 @@ namespace WerkraumMedia\Events\Controller;
 
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
-use TYPO3Fluid\Fluid\View\ViewInterface;
+use TYPO3Fluid\Fluid\View\ViewInterface as FluidStandaloneViewInterface;
 use WerkraumMedia\Events\Caching\CacheManager;
 
-class AbstractController extends ActionController
+abstract class AbstractController extends ActionController
 {
     /**
      * @var CacheManager
@@ -60,17 +61,13 @@ class AbstractController extends ActionController
     /**
      * Extend original to also add data from current cobject if available.
      */
-    protected function resolveView(): ViewInterface
+    protected function initializeView(ViewInterface|FluidStandaloneViewInterface $view): void
     {
-        $view = parent::resolveView();
-
         $view->assign('data', []);
         $cObject = $this->request->getAttribute('currentContentObject');
         if ($cObject instanceof ContentObjectRenderer && is_array($cObject->data)) {
             $view->assign('data', $cObject->data);
         }
-
-        return $view;
     }
 
     protected function trigger404(string $message): void

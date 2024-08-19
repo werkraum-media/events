@@ -11,6 +11,7 @@ return [
             'storage_pid' => '2',
             'features_pid' => '3',
             'features_parent' => '4',
+            'files_folder' => '1:/staedte/beispielstadt/events/',
         ],
     ],
     'pages' => [

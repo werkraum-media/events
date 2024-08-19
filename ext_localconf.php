@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
-use TYPO3\CMS\Core\Imaging\IconRegistry;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use WerkraumMedia\Events\Controller\DateController;
 use WerkraumMedia\Events\Controller\EventController;
@@ -16,27 +13,32 @@ call_user_func(function () {
         'Events',
         'DateSearch',
         [DateController::class => 'search'],
-        [DateController::class => 'search']
+        [DateController::class => 'search'],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         'Events',
         'DateList',
         [DateController::class => 'list'],
-        [DateController::class => 'list']
+        [DateController::class => 'list'],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         'Events',
         'DateShow',
         [DateController::class => 'show'],
-        [DateController::class => 'show']
+        [DateController::class => 'show'],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         'Events',
         'Selected',
-        [EventController::class => 'list']
+        [EventController::class => 'list'],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     if (
@@ -47,16 +49,4 @@ call_user_func(function () {
     }
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^events_search';
-
-    $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'events-plugin',
-        SvgIconProvider::class,
-        ['source' => 'EXT:events/Resources/Public/Icons/Extension.svg']
-    );
-    $iconRegistry->registerIcon(
-        'pages-module-events',
-        SvgIconProvider::class,
-        ['source' => 'EXT:events/Resources/Public/Icons/Folder.svg']
-    );
 });

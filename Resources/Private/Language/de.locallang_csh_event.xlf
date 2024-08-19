@@ -123,13 +123,25 @@
                 <source>Location</source>
                 <target>Veranstaltungsort</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.location.0">
+                <source>None</source>
+                <target>Keine</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.organizer">
                 <source>Organizer</source>
                 <target>Organisator</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.organizer.0">
+                <source>None</source>
+                <target>Keiner</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.region">
                 <source>Region</source>
                 <target>Region</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.region.0">
+                <source>None</source>
+                <target>Keine</target>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_organizer">
                 <source>Organizer</source>

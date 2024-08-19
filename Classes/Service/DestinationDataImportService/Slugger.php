@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use Generator;
-use PDO;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
@@ -61,18 +60,14 @@ final class Slugger
             ->from($tableName)
             ->where(
                 $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->eq($slugColumn, $queryBuilder->createNamedParameter('', PDO::PARAM_STR)),
+                    $queryBuilder->expr()->eq($slugColumn, $queryBuilder->createNamedParameter('')),
                     $queryBuilder->expr()->isNull($slugColumn)
                 )
             )
             ->executeQuery()
         ;
 
-        while ($record = $statement->fetch()) {
-            if (is_array($record) === false) {
-                continue;
-            }
-
+        foreach ($statement->iterateAssociative() as $record) {
             yield $record;
         }
     }
@@ -88,7 +83,7 @@ final class Slugger
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($record['uid'], PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter((int)$record['uid'])
                 )
             )
             ->set($sluggerType->getSlugColumn(), $slug)
