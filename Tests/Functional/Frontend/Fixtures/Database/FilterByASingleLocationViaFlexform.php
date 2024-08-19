@@ -7,8 +7,7 @@ return [
         [
             'pid' => '1',
             'uid' => '1',
-            'CType' => 'list',
-            'list_type' => 'events_datelist',
+            'CType' => 'events_datelist',
             'header' => 'Kino Events',
             'pi_flexform' => '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
                 <T3FlexForms>

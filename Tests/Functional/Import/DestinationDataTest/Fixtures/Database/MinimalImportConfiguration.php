@@ -10,6 +10,7 @@ return [
             'title' => 'Example import configuration',
             'storage_pid' => '2',
             'rest_experience' => 'beispielstadt',
+            'files_folder' => '1:/staedte/beispielstadt/events/',
         ],
     ],
 ];

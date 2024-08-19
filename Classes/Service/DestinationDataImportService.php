@@ -38,14 +38,8 @@ final class DestinationDataImportService
 
     private Event $tmpCurrentEvent;
 
-    /**
-     * @var Logger
-     */
-    private $logger;
+    private readonly Logger $logger;
 
-    /**
-     * ImportService constructor.
-     */
     public function __construct(
         private readonly EventRepository $eventRepository,
         private readonly OrganizerRepository $organizerRepository,
@@ -60,8 +54,10 @@ final class DestinationDataImportService
         private readonly Slugger $slugger,
         private readonly CacheManager $cacheManager,
         private readonly DataHandler $dataHandler,
-        private readonly EventDispatcher $eventDispatcher
+        private readonly EventDispatcher $eventDispatcher,
+        LogManager $logManager,
     ) {
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function import(
@@ -83,7 +79,6 @@ final class DestinationDataImportService
 
         // Set Configuration
         $this->configurationManager->setConfiguration(array_merge($frameworkConfiguration, $persistenceConfiguration));
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(self::class);
         $this->logger->info('Starting Destination Data Import Service');
 
         try {
@@ -412,7 +407,7 @@ final class DestinationDataImportService
 
     private function getOrCreateEvent(string $globalId, string $title): Event
     {
-        $event = $this->eventRepository->findOneByGlobalId($globalId);
+        $event = $this->eventRepository->findOneBy(['globalId' => $globalId]);
 
         if ($event instanceof Event) {
             $this->logger->info(

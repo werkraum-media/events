@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Import;
 
 /**
@@ -13,18 +12,9 @@ use WerkraumMedia\Events\Domain\Model\Import;
  */
 final class UrlFactory
 {
-    /**
-     * @var array
-     */
-    private $settings = [];
-
     public function __construct(
-        BackendConfigurationManager $configurationManager
+        private readonly ConfigurationServiceInterface $configuration,
     ) {
-        $this->settings = $configurationManager->getConfiguration(
-            'Events',
-            'Pi1'
-        )['settings']['destinationData'] ?? [];
     }
 
     /**
@@ -35,17 +25,17 @@ final class UrlFactory
     ): string {
         $parameter = [
             'experience' => $import->getRestExperience(),
-            'licensekey' => $this->settings['license'] ?? '',
-            'type' => $this->settings['restType'] ?? '',
-            'mode' => $this->settings['restMode'] ?? '',
-            'limit' => $this->settings['restLimit'] ?? '',
-            'template' => $this->settings['restTemplate'] ?? '',
+            'licensekey' => $this->configuration->getLicenseKey(),
+            'type' => $this->configuration->getRestType(),
+            'mode' => $this->configuration->getRestMode(),
+            'limit' => $this->configuration->getRestLimit(),
+            'template' => $this->configuration->getRestTemplate(),
             'q' => $import->getSearchQuery(),
         ];
 
         $parameter = array_filter($parameter);
 
-        $url = new Uri($this->settings['restUrl']);
+        $url = new Uri($this->configuration->getRestUrl());
         $url = $url->withQuery(http_build_query($parameter));
         return (string)$url;
     }

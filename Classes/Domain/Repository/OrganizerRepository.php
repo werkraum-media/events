@@ -18,7 +18,18 @@ namespace WerkraumMedia\Events\Domain\Repository;
  */
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use WerkraumMedia\Events\Domain\Model\Organizer;
 
 final class OrganizerRepository extends Repository
 {
+    public function findOneByName(string $name): ?Organizer
+    {
+        $organizer = $this->findOneBy(['name' => $name]);
+
+        if ($organizer instanceof Organizer) {
+            return $organizer;
+        }
+
+        return null;
+    }
 }

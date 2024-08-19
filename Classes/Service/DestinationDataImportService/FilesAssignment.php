@@ -27,7 +27,8 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use SplFileInfo;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior as OldDuplicationBehavior;
+use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
@@ -76,7 +77,14 @@ final class FilesAssignment
                 $this->logger->info('File already exists.', [$orgFileNameSanitized]);
             } elseif ($filename = $this->loadFile($fileUrl)) {
                 $this->logger->info('Adding file to FAL.', [$filename]);
-                $importFolder->addFile($filename, $orgFileNameSanitized, DuplicationBehavior::REPLACE);
+
+                // TODO: typo3/cms-core:14.0 Remove the fallback to old behaviour, only use new one.
+                $behaviour = OldDuplicationBehavior::REPLACE;
+                if (class_exists(DuplicationBehavior::class)) {
+                    $behaviour = DuplicationBehavior::REPLACE;
+                }
+
+                $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
             } else {
                 continue;
             }

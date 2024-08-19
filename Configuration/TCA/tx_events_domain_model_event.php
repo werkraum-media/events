@@ -346,7 +346,6 @@ return [
             'config' => [
                 'type' => 'category',
                 'minitems' => 0,
-                'multiple' => true,
             ],
         ],
         'features' => [
