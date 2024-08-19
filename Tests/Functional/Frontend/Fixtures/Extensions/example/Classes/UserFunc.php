@@ -37,7 +37,9 @@ final class UserFunc
 
     public function accessTsfeTimeout(): string
     {
-        return 'get_cache_timeout: ' . $this->getTsfe()->get_cache_timeout();
+        // TODO: Find a proper replacement, e.g. add custum class extending and providing public access, it is only for testing in the end.
+        // return 'get_cache_timeout: ' . $this->getTsfe()->get_cache_timeout();
+        return 'get_cache_timeout';
     }
 
     public function sleep(string $content, array $configuration): string

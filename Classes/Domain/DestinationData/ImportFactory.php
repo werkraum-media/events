@@ -49,9 +49,9 @@ final class ImportFactory
         $qb = $this->connectionPool->getQueryBuilderForTable('tx_events_domain_model_import');
         $qb->select('*');
         $qb->from('tx_events_domain_model_import');
-        $qb->where($qb->expr()->eq('uid', $qb->createNamedParameter($uid, PDO::PARAM_INT)));
+        $qb->where($qb->expr()->eq('uid', $qb->createNamedParameter($uid)));
 
-        $result = $qb->executeQuery()->fetch();
+        $result = $qb->executeQuery()->fetchAssociative();
         if (is_array($result) === false) {
             throw new Exception('Could not fetch import record with uid "' . $uid . '".', 1643267492);
         }
@@ -67,7 +67,7 @@ final class ImportFactory
         $qb->select('*');
         $qb->from('tx_events_domain_model_import');
 
-        $result = $qb->executeQuery()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
         if (count($result) === 0) {
             throw new Exception('Could not fetch any import record.', 1643267492);
         }

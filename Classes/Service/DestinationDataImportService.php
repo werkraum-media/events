@@ -271,7 +271,7 @@ final class DestinationDataImportService
     {
         foreach ($addresses as $address) {
             if ($address['rel'] == 'organizer') {
-                $tmpOrganizer = $this->organizerRepository->findOneByName($address['name']);
+                $tmpOrganizer = $this->organizerRepository->findOneBy(['name' => $address['name']]);
                 if ($tmpOrganizer) {
                     $this->tmpCurrentEvent->setOrganizer($tmpOrganizer);
                     continue;
@@ -379,7 +379,7 @@ final class DestinationDataImportService
 
     private function getOrCreateEvent(string $globalId, string $title): Event
     {
-        $event = $this->eventRepository->findOneByGlobalId($globalId);
+        $event = $this->eventRepository->findOneBy(['globalId' => $globalId]);
 
         if ($event instanceof Event) {
             $this->logger->info(

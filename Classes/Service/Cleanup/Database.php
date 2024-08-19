@@ -88,7 +88,7 @@ final class Database
         $recordUids = $queryBuilder->select('event.uid')
             ->from(self::EVENT_TABLE, 'event')
             ->leftJoin('event', self::DATE_TABLE, 'date', $queryBuilder->expr()->eq('date.event', 'event.uid'))->where($queryBuilder->expr()->isNull('date.uid'))->executeQuery()
-            ->fetchAll(PDO::FETCH_COLUMN)
+            ->fetchFirstColumn()
         ;
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);

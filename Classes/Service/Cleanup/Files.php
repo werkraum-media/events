@@ -84,16 +84,12 @@ final class Files
         $referencesQuery->orderBy('tablenames');
         $referencesQuery->addOrderBy('uid_foreign');
 
-        $references = $referencesQuery->executeQuery();
+        $references = $referencesQuery->executeQuery()->fetchAllAssociative();
 
         $uidsPerTable = [];
         $referenceUidsToMarkAsDeleted = [];
 
-        while ($reference = $references->fetch()) {
-            if (is_array($reference) === false) {
-                continue;
-            }
-
+        foreach ($references as $reference) {
             if ($reference['tablenames'] === '') {
                 $referenceUidsToMarkAsDeleted[] = $reference['uid'];
                 continue;
@@ -112,7 +108,7 @@ final class Files
                 ...$referenceUidsToMarkAsDeleted,
                 ...array_keys(array_diff(
                     $records,
-                    $queryBuilder->executeQuery()->fetchAll(PDO::FETCH_COLUMN)
+                    $queryBuilder->executeQuery()->fetchFirstColumn()
                 )),
             ];
         }

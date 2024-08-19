@@ -75,7 +75,7 @@ final class CategoryRepository extends Repository
 
         return $this->dataMapper->map(
             Category::class,
-            $qb->executeQuery()->fetchAll()
+            $qb->executeQuery()->fetchAllAssociative()
         );
     }
 
