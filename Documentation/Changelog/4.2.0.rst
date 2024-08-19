@@ -1,0 +1,33 @@
+4.2.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Support HTML for detail text of events when importing data from destination.one.
+
+  This can be enabled within the import configuration. That way one can restrict the
+  HTML import to certain import configurations.
+
+  Ensure to adjust the templates when turning on the feature.
+  Either use `f:format.html` or `f:sanitize.html` as content might be unsafe.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

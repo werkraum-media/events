@@ -19,7 +19,20 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'title, hidden, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3, --palette--;;typo3_storage, --palette--;;categories, --palette--;;features,--palette--;;relations, --div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest, rest_experience, rest_search_query',
+            'showitem' => implode(',', [
+                'title',
+                'hidden',
+                '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.typo3',
+                '--palette--;;typo3_storage',
+                '--palette--;;categories',
+                '--palette--;;features',
+                '-palette--;;relations',
+                '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest',
+                'rest_experience',
+                'rest_search_query',
+                '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.import',
+                'import_features',
+            ]),
         ],
     ],
     'palettes' => [
@@ -167,6 +180,21 @@ return [
                 'type' => 'input',
                 'size' => 50,
                 'max' => 255,
+            ],
+        ],
+        'import_features' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.import_features',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.import_features.description',
+            'config' => [
+                'type' => 'check',
+                'cols' => 'inline',
+                'default' => '0',
+                'items' => [
+                    [
+                        'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.import_features.html_for_detail',
+                    ],
+                ],
             ],
         ],
     ],

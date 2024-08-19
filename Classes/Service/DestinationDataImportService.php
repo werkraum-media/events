@@ -356,25 +356,58 @@ final class DestinationDataImportService
     private function setTexts(array $texts): void
     {
         $shouldSetPrice = true;
+        $detailText = '';
+
         foreach ($texts as $text) {
-            if (isset($text['value']) === false) {
+            if (
+                isset($text['value']) === false
+                || is_string($text['value']) === false
+            ) {
                 continue;
             }
 
-            if ($text['rel'] == 'details' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setDetails(str_replace("\n\n", "\n", (string)$text['value']));
+            $value = str_replace("\n\n", "\n", $text['value']);
+
+            if (
+                $text['rel'] == 'details'
+                && $text['type'] == 'text/html'
+                && $this->import->getFeatures()->hasHtmlForDetailEnabled()
+                && $value
+            ) {
+                $detailText = $value;
+                continue;
             }
+
+            if (
+                $text['rel'] == 'details'
+                && $text['type'] == 'text/plain'
+                && (
+                    $this->import->getFeatures()->hasHtmlForDetailEnabled() === false
+                    || $detailText === ''
+                )
+            ) {
+                $detailText = $value;
+                continue;
+            }
+
             if ($text['rel'] == 'teaser' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setTeaser(str_replace("\n\n", "\n", (string)$text['value']));
+                $this->tmpCurrentEvent->setTeaser($value);
+                continue;
             }
+
             if ($shouldSetPrice && $text['rel'] == 'PRICE_INFO_EXTRA' && $text['type'] == 'text/plain') {
                 $shouldSetPrice = false;
-                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", (string)$text['value']));
+                $this->tmpCurrentEvent->setPriceInfo($value);
+                continue;
             }
+
             if ($shouldSetPrice && $text['rel'] == 'PRICE_INFO' && $text['type'] == 'text/plain') {
-                $this->tmpCurrentEvent->setPriceInfo(str_replace("\n\n", "\n", (string)$text['value']));
+                $this->tmpCurrentEvent->setPriceInfo($value);
+                continue;
             }
         }
+
+        $this->tmpCurrentEvent->setDetails($detailText);
     }
 
     private function getOrCreateEvent(string $globalId, string $title): Event

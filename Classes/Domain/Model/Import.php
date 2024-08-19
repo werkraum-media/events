@@ -6,6 +6,7 @@ namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
+use WerkraumMedia\Events\Domain\Model\Import\Features;
 
 /**
  * Actual request to import.
@@ -26,7 +27,8 @@ class Import extends AbstractDomainObject
         protected ?Category $categoryParent = null,
         int $featuresPid = 0,
         protected ?Category $featuresParent = null,
-        protected ?Region $region = null
+        protected ?Region $region = null,
+        protected int $importFeatures = 0,
     ) {
         // Do not allow categories on pid 0
         if ($categoriesPid === 0) {
@@ -84,5 +86,10 @@ class Import extends AbstractDomainObject
     public function getSearchQuery(): string
     {
         return $this->restSearchQuery;
+    }
+
+    public function getFeatures(): Features
+    {
+        return new Features($this->importFeatures);
     }
 }
