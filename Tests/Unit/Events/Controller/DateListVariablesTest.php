@@ -19,8 +19,8 @@ class DateListVariablesTest extends TestCase
         $subject = new DateListVariables(
             [],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
-            $this->createStub(PaginationInterface::class)
+            self::createStub(QueryResult::class),
+            self::createStub(PaginationInterface::class)
         );
 
         self::assertInstanceOf(
@@ -37,8 +37,8 @@ class DateListVariablesTest extends TestCase
                 'executed' => '1',
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
-            $this->createStub(PaginationInterface::class)
+            self::createStub(QueryResult::class),
+            self::createStub(PaginationInterface::class)
         );
 
         self::assertSame(
@@ -57,8 +57,8 @@ class DateListVariablesTest extends TestCase
             [
             ],
             $demand,
-            $this->createStub(QueryResult::class),
-            $this->createStub(PaginationInterface::class)
+            self::createStub(QueryResult::class),
+            self::createStub(PaginationInterface::class)
         );
 
         self::assertSame(
@@ -70,13 +70,13 @@ class DateListVariablesTest extends TestCase
     #[Test]
     public function returnsInitialDates(): void
     {
-        $dates = $this->createStub(QueryResult::class);
+        $dates = self::createStub(QueryResult::class);
         $subject = new DateListVariables(
             [
             ],
             new DateDemand(),
             $dates,
-            $this->createStub(PaginationInterface::class)
+            self::createStub(PaginationInterface::class)
         );
 
         self::assertSame(
@@ -89,8 +89,8 @@ class DateListVariablesTest extends TestCase
     public function returnsInitialVariablesForView(): void
     {
         $demand = new DateDemand();
-        $dates = $this->createStub(QueryResult::class);
-        $pagination = $this->createStub(PaginationInterface::class);
+        $dates = self::createStub(QueryResult::class);
+        $pagination = self::createStub(PaginationInterface::class);
         $subject = new DateListVariables(
             [
                 'executed' => '1',
@@ -117,8 +117,8 @@ class DateListVariablesTest extends TestCase
     public function returnsVariablesForViewWithAddedVariables(): void
     {
         $demand = new DateDemand();
-        $dates = $this->createStub(QueryResult::class);
-        $pagination = $this->createStub(PaginationInterface::class);
+        $dates = self::createStub(QueryResult::class);
+        $pagination = self::createStub(PaginationInterface::class);
         $subject = new DateListVariables(
             [
                 'executed' => '1',
@@ -150,8 +150,8 @@ class DateListVariablesTest extends TestCase
     public function returnsVariablesForViewWithOverwrittenVariables(): void
     {
         $demand = new DateDemand();
-        $dates = $this->createStub(QueryResult::class);
-        $pagination = $this->createStub(PaginationInterface::class);
+        $dates = self::createStub(QueryResult::class);
+        $pagination = self::createStub(PaginationInterface::class);
         $subject = new DateListVariables(
             [
                 'executed' => '1',

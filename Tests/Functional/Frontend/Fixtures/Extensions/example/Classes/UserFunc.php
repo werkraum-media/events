@@ -23,6 +23,10 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\EventsExample;
 
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Cache\CacheLifetimeCalculator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -35,9 +39,24 @@ final class UserFunc
         $this->cObj = $cObj;
     }
 
-    public function accessTsfeTimeout(): string
+    public function accessTsfeTimeout(string $content, array $configuration, ServerRequestInterface $request): string
     {
-        return 'get_cache_timeout: ' . $this->getTsfe()->get_cache_timeout();
+        // TODO: typo3/cms-core:14.0 Remove this code block as this won't work since v13.x anymore
+        if (is_callable([$this->getTsfe(), 'get_cache_timeout'])) {
+            return 'get_cache_timeout: ' . $this->getTsfe()->get_cache_timeout();
+        }
+
+        $pageInformation = $request->getAttribute('frontend.page.information');
+        $typoScriptConfigArray = $request->getAttribute('frontend.typoscript')->getConfigArray();
+        return 'get_cache_timeout: ' . GeneralUtility::makeInstance(CacheLifetimeCalculator::class)
+            ->calculateLifetimeForPage(
+                $pageInformation->getId(),
+                $pageInformation->getPageRecord(),
+                $typoScriptConfigArray,
+                0,
+                GeneralUtility::makeInstance(Context::class)
+            )
+        ;
     }
 
     public function sleep(string $content, array $configuration): string

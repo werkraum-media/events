@@ -346,7 +346,6 @@ return [
             'config' => [
                 'type' => 'category',
                 'minitems' => 0,
-                'multiple' => true,
             ],
         ],
         'features' => [
@@ -355,7 +354,6 @@ return [
             'config' => [
                 'type' => 'category',
                 'minitems' => 0,
-                'multiple' => true,
             ],
         ],
         'keywords' => [
@@ -409,6 +407,12 @@ return [
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'items' => [
+                    [
+                        'value' => '0',
+                        'label' => $l10nPath . ':tx_events_domain_model_event.location.0',
+                    ],
+                ],
             ],
         ],
         'organizer' => [
@@ -421,6 +425,12 @@ return [
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'items' => [
+                    [
+                        'value' => '0',
+                        'label' => $l10nPath . ':tx_events_domain_model_event.location.0',
+                    ],
+                ],
             ],
         ],
         'region' => [
@@ -433,6 +443,12 @@ return [
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'items' => [
+                    [
+                        'value' => '0',
+                        'label' => $l10nPath . ':tx_events_domain_model_event.location.0',
+                    ],
+                ],
             ],
         ],
 

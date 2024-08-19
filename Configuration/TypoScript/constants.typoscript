@@ -14,7 +14,7 @@ plugin.tx_events {
     }
     settings {
         # cat=plugin.tx_events//a; type=string; label=Default Image
-        defaultImagePath = typo3conf/ext/events/Resources/Public/Images/default.jpg
+        defaultImagePath = EXT:events/Resources/Public/Images/default.jpg
         destinationData {
             # cat=plugin.tx_events//a; type=string; label=Rest Url
             restUrl = http://meta.et4.de/rest.ashx/search/

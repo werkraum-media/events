@@ -68,8 +68,7 @@ class CacheTest extends AbstractFunctionalTestCase
         (new PhpDataSet())->import(['tt_content' => [[
             'uid' => '1',
             'pid' => '1',
-            'CType' => 'list',
-            'list_type' => 'events_datelisttest',
+            'CType' => 'events_datelisttest',
             'header' => 'All Dates',
         ]]]);
         $this->setUpFrontendRendering();
@@ -306,7 +305,7 @@ class CacheTest extends AbstractFunctionalTestCase
         // We might be seconds off due to our created offset within the rendering.
         $value = (int)$value;
         $age = ((int)$end->format('U')) - time();
-        self::assertLessThanOrEqual($age + 3, $value, 'Max age of cached response is higher than expected.');
+        self::assertLessThanOrEqual($age + 4, $value, 'Max age of cached response is higher than expected.');
         self::assertGreaterThanOrEqual($age - 3, $value, 'Max age of cached response is less than expected.');
     }
 

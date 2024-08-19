@@ -6,13 +6,8 @@ parameters:
 			path: Classes/Controller/DateController.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, 'strval' given\\.$#"
-			count: 1
-			path: Classes/Domain/DestinationData/ImportFactory.php
-
-		-
-			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
-			count: 1
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#"
+			count: 2
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-

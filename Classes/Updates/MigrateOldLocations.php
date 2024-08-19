@@ -234,9 +234,8 @@ class MigrateOldLocations implements UpgradeWizardInterface
     {
         $schema = $this->connectionPool
             ->getConnectionForTable('tx_events_domain_model_event')
-            ->getSchemaManager()
-            ->createSchema()
-            ->getTable('tx_events_domain_model_event')
+            ->getSchemaInformation()
+            ->introspectTable('tx_events_domain_model_event')
         ;
 
         foreach ($this->columnsToFetch() as $column) {

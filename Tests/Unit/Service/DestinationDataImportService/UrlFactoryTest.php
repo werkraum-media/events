@@ -8,8 +8,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Import;
+use WerkraumMedia\Events\Service\DestinationDataImportService\ArrayBasedConfigurationService;
 use WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory;
 
 class UrlFactoryTest extends TestCase
@@ -17,8 +17,7 @@ class UrlFactoryTest extends TestCase
     #[Test]
     public function canBeCreated(): void
     {
-        $configurationManager = $this->createStub(BackendConfigurationManager::class);
-        $configurationManager->method('getConfiguration')->willReturn([]);
+        $configurationManager = new ArrayBasedConfigurationService([]);
 
         $subject = new UrlFactory(
             $configurationManager
@@ -37,8 +36,7 @@ class UrlFactoryTest extends TestCase
         array $settings,
         string $expectedResult
     ): void {
-        $configurationManager = $this->createStub(BackendConfigurationManager::class);
-        $configurationManager->method('getConfiguration')->willReturn(['settings' => ['destinationData' => $settings]]);
+        $configurationManager = new ArrayBasedConfigurationService($settings);
 
         $subject = new UrlFactory(
             $configurationManager
