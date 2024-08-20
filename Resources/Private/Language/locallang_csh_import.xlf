@@ -12,6 +12,9 @@
             <trans-unit id="tx_events_domain_model_import.div.rest">
                 <source>REST</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.div.import">
+                <source>Import</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_import.palette.relations">
                 <source>Relations</source>
             </trans-unit>
@@ -80,6 +83,15 @@
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_search_query.description">
                 <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-q.html (todo check, was not loadable)</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.import_features">
+                <source>Import Features</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.import_features.description">
+                <source>Enable certain features related to the import.</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.import_features.html_for_detail">
+                <source>HTML for Event Details</source>
             </trans-unit>
         </body>
     </file>
