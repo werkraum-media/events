@@ -1,0 +1,39 @@
+4.3.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Make time zone for slugs configurable.
+
+  Slugs of dates are generated during import.
+  This might lead to confusion if the time zone differs from frontend.
+  Therefore the time zone is now configurable to allow adjustments for the actual
+  website.
+
+  A new interface `TimeZoneProviderInterface` is provided which can be re configured to a
+  different implementation.
+
+  The default implementation will use TYPO3s `SYS.phpTimeZone` setting, with fall
+  back to `date_default_timezone_get()` call.
+  That way it should be useful for most systems out of the box.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

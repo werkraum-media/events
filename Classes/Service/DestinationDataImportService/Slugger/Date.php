@@ -24,18 +24,22 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService\Slugger;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use WerkraumMedia\Events\Domain\TimeZone\TimeZoneProviderInterface;
 
 final class Date implements SluggerType
 {
     public function __construct(
-        private readonly ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool,
+        private readonly TimeZoneProviderInterface $timeZoneProvider,
     ) {
     }
 
     public function prepareRecordForSlugGeneration(array $record): array
     {
-        $start = new DateTimeImmutable('@' . $record['start']);
+        $start = new DateTimeImmutable('@' . $record['start'], new DateTimeZone('UTC'));
+        $start = $start->setTimezone($this->timeZoneProvider->getTimeZone());
 
         $record['event-title'] = $this->getEventTitle((int)$record['event']);
         $record['start'] = $start->format('Y-m-d');
