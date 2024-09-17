@@ -29,6 +29,7 @@ use SplFileInfo;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -67,7 +68,7 @@ final class FilesAssignment
             }
 
             $fileUrl = urldecode((string)$mediaObject['url']);
-            $orgFileNameSanitized = $importFolder->getStorage()->sanitizeFileName(basename($fileUrl));
+            $orgFileNameSanitized = $this->createFileName($fileUrl, $importFolder);
 
             $this->logger->info('File attached.', [$fileUrl, $orgFileNameSanitized]);
 
@@ -75,7 +76,7 @@ final class FilesAssignment
                 $this->logger->info('File already exists.', [$orgFileNameSanitized]);
             } elseif ($filename = $this->loadFile($fileUrl)) {
                 $this->logger->info('Adding file to FAL.', [$filename]);
-                $importFolder->addFile($filename, basename($fileUrl), DuplicationBehavior::REPLACE);
+                $importFolder->addFile($filename, $orgFileNameSanitized, DuplicationBehavior::REPLACE);
             } else {
                 continue;
             }
@@ -96,6 +97,18 @@ final class FilesAssignment
         }
 
         return $images;
+    }
+
+    private function createFileName(string $url, Folder $importFolder): string
+    {
+        $extension = pathinfo($url, PATHINFO_EXTENSION);
+
+        $fileName = basename($url);
+        if ($fileName === '.' . $extension) {
+            $fileName = hash('sha256', $url) . '.' . $extension;
+        }
+
+        return $importFolder->getStorage()->sanitizeFileName($fileName);
     }
 
     private function loadFile(string $fileUrl): string
