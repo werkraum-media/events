@@ -1,0 +1,32 @@
+3.9.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Handle destination.one files without file name.
+
+  It is possible to have files such as `https://dam.destination.one/2675868/3dc0a9dccd0dad46c73e669ece428c634ff8324ea3d01a4858a1c43169deed41/.jpg`.
+  Those were not handled correctly yet.
+  We now also handle those cases.
+  We will generate a hash from the URL as file name in order to still use those files.
+
+Tasks
+-----
+
+* Add image handling support in nix shell.
+
+Deprecation
+-----------
+
+Nothing
