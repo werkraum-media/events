@@ -63,6 +63,33 @@ class ImportHandlesImagesTest extends AbstractTest
     /**
      * @test
      */
+    public function addsNewImageWithoutFileName(): void
+    {
+        $this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithNewImageWithoutFileName.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+        ]);
+
+        $this->executeCommand();
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportHandlesImageWithoutFileName.php');
+
+        $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
+        self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
+        self::assertSame(
+            [
+                'bf126089c94f95031fa07bf9d7d9b10c3e58aafebdef31f0b60604da13019b8d.jpg',
+            ],
+            array_values($importedFiles),
+            'Got unexpected number of files'
+        );
+
+        $this->assertEmptyLog();
+    }
+
+    /**
+     * @test
+     */
     public function addsMultipleImagesToSingleEvent(): void
     {
         $this->setUpResponses([
