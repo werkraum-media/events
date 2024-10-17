@@ -23,7 +23,7 @@ namespace WerkraumMedia\Events\Service\Cleanup;
  * 02110-1301, USA.
  */
 
-use PDO;
+use RuntimeException;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\StorageRepository;
@@ -84,16 +84,12 @@ final class Files
         $referencesQuery->orderBy('tablenames');
         $referencesQuery->addOrderBy('uid_foreign');
 
-        $references = $referencesQuery->executeQuery();
+        $references = $referencesQuery->executeQuery()->fetchAllAssociative();
 
         $uidsPerTable = [];
         $referenceUidsToMarkAsDeleted = [];
 
-        while ($reference = $references->fetch()) {
-            if (is_array($reference) === false) {
-                continue;
-            }
-
+        foreach ($references as $reference) {
             if ($reference['tablenames'] === '') {
                 $referenceUidsToMarkAsDeleted[] = $reference['uid'];
                 continue;
@@ -112,7 +108,7 @@ final class Files
                 ...$referenceUidsToMarkAsDeleted,
                 ...array_keys(array_diff(
                     $records,
-                    $queryBuilder->executeQuery()->fetchAll(PDO::FETCH_COLUMN)
+                    $queryBuilder->executeQuery()->fetchFirstColumn()
                 )),
             ];
         }
@@ -249,11 +245,16 @@ final class Files
         foreach ($queryBuilder->executeQuery()->iterateAssociative() as $reference) {
             $file = [];
             $fileUid = (int)$reference['uid_local'];
+            $tableNames = $reference['tablenames'];
+
+            if (is_string($tableNames) === false) {
+                throw new RuntimeException('Fetched "tablenames" was not of type string. But it should be a string within the db.', 1728998600);
+            }
 
             if (
                 (
-                    str_starts_with((string)$reference['tablenames'], 'tx_events_domain_model_')
-                    || $reference['tablenames'] === ''
+                    str_starts_with($tableNames, 'tx_events_domain_model_')
+                    || $tableNames === ''
                 ) && $reference['deleted'] == 1
             ) {
                 $file = $files[$fileUid] ?? [];

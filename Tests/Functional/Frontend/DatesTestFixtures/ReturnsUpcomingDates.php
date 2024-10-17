@@ -7,8 +7,7 @@ return [
         [
             'uid' => 1,
             'pid' => 1,
-            'CType' => 'list',
-            'list_type' => 'events_datelist',
+            'CType' => 'events_datelist',
             'header' => 'Upcoming Dates',
         ],
     ],

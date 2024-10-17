@@ -43,6 +43,8 @@ Table of Contents
    Settings
    Changelog
 
+   Maintenance
+
 .. toctree::
    :hidden:
 

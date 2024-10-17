@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Service;
 
+use RuntimeException;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -13,9 +14,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 final class CategoryService
 {
-    private TimeTracker $timeTracker;
+    private readonly TimeTracker $timeTracker;
 
-    private FrontendInterface $cache;
+    private readonly FrontendInterface $cache;
 
     public function __construct()
     {
@@ -77,17 +78,18 @@ final class CategoryService
             ->executeQuery()
         ;
 
-        while ($row = $res->fetch()) {
-            if (is_array($row) === false) {
-                continue;
-            }
-
+        foreach ($res->fetchAllAssociative() as $row) {
             $counter++;
             if ($counter > 10000) {
                 $this->timeTracker->setTSlogMessage('EXT:dd_events: one or more recursive categories where found');
                 return implode(',', $result);
             }
-            $subcategories = $this->getChildrenCategoriesRecursive($row['uid'], $counter);
+            $uid = $row['uid'];
+            if (is_numeric($uid) === false) {
+                throw new RuntimeException('Given uid was not numeric, which we never expect as UID column within DB is numeric.', 1728998121);
+            }
+
+            $subcategories = $this->getChildrenCategoriesRecursive((string)$uid, $counter);
             $result[] = $row['uid'] . ($subcategories ? ',' . $subcategories : '');
         }
 
@@ -100,11 +102,10 @@ final class CategoryService
      */
     protected function getUidListFromRecords(string $idList): string
     {
-        $list = [];
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('sys_category')
         ;
-        $rows = $queryBuilder
+        $uids = $queryBuilder
             ->select('uid')
             ->from('sys_category')
             ->where($queryBuilder->expr()->in(
@@ -112,16 +113,9 @@ final class CategoryService
                 $queryBuilder->createNamedParameter(explode(',', $idList), Connection::PARAM_INT_ARRAY)
             ))
             ->executeQuery()
-            ->fetchAll()
+            ->fetchFirstColumn()
         ;
-        foreach ($rows as $row) {
-            if (is_array($row) === false) {
-                continue;
-            }
 
-            $list[] = $row['uid'];
-        }
-
-        return implode(',', $list);
+        return implode(',', $uids);
     }
 }

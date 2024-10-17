@@ -113,7 +113,14 @@ final class DataProcessingForModels implements SingletonInterface
 
     private function getData(AbstractEntity $entity): array
     {
-        $row = $this->connection->select(['*'], $this->getTable($entity), ['uid' => $entity->getUid()])->fetch();
+        $row = $this->connection
+            ->select(
+                ['*'],
+                $this->getTable($entity),
+                ['uid' => $entity->getUid()]
+            )
+            ->fetchAssociative()
+        ;
         if (is_array($row)) {
             return $row;
         }

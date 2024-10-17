@@ -26,7 +26,6 @@ namespace WerkraumMedia\Events\Caching;
 use DateTime;
 use DateTimeImmutable;
 use InvalidArgumentException;
-use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -44,13 +43,10 @@ class PageCacheTimeout implements SingletonInterface
 {
     private ?DateTimeImmutable $timeout = null;
 
-    private FrontendInterface $runtimeCache;
-
     public function __construct(
-        CacheManager $cacheManager,
-        private readonly Context $context
+        private readonly FrontendInterface $runtimeCache,
+        private readonly Context $context,
     ) {
-        $this->runtimeCache = $cacheManager->getCache('runtime');
     }
 
     public function modifyCacheLifetimeForPage(ModifyCacheLifetimeForPageEvent $event): void

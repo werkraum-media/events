@@ -304,7 +304,7 @@ final class DateRepository extends Repository
             )->orderBy('tx_events_domain_model_date.start')
         ;
 
-        return $statement->executeQuery()->fetchAll();
+        return $statement->executeQuery()->fetchAllAssociative();
     }
 
     private function createEventConstraint(

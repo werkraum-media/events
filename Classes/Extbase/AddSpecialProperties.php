@@ -72,7 +72,7 @@ final class AddSpecialProperties
         $qb->where($qb->expr()->eq('postponed_date', $uidOfReferencedDate));
         $qb->setMaxResults(1);
 
-        $result = $qb->executeQuery()->fetch();
+        $result = $qb->executeQuery()->fetchAssociative();
 
         if ($result === false) {
             return null;

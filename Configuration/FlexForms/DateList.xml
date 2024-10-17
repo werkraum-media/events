@@ -2,127 +2,108 @@
     <sheets>
         <sDEF>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>Options</sheetTitle>
-                </TCEforms>
+                <sheetTitle>Options</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.sortByDate>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Sort By</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items type="array">
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">Start</numIndex>
-                                        <numIndex index="1">start</numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">End</numIndex>
-                                        <numIndex index="1">end</numIndex>
-                                    </numIndex>
-                                </items>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Sort By</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="label">Start</numIndex>
+                                    <numIndex index="value">start</numIndex>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <numIndex index="label">End</numIndex>
+                                    <numIndex index="value">end</numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
                     </settings.sortByDate>
 
                     <settings.sortOrder>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Sort Order</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items type="array">
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">
-                                            Ascending
-                                        </numIndex>
-                                        <numIndex index="1">ASC</numIndex>
+                        <exclude>1</exclude>
+                        <label>Sort Order</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="label">
+                                        Ascending
                                     </numIndex>
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">
-                                            Descending
-                                        </numIndex>
-                                        <numIndex index="1">DESC</numIndex>
+                                    <numIndex index="value">ASC</numIndex>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <numIndex index="label">
+                                        Descending
                                     </numIndex>
-                                </items>
-                                <default>ASC</default>
-                            </config>
-                        </TCEforms>
+                                    <numIndex index="value">DESC</numIndex>
+                                </numIndex>
+                            </items>
+                            <default>ASC</default>
+                        </config>
                     </settings.sortOrder>
 
                     <settings.limit>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Max Items</label>
-                            <config>
-                                <type>input</type>
-                                <size>10</size>
-                                <max>30</max>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Max Items</label>
+                        <config>
+                            <type>input</type>
+                            <size>10</size>
+                            <max>30</max>
+                            <eval>trim</eval>
+                        </config>
                     </settings.limit>
 
                     <settings.highlight>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Highlights only</label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Highlights only</label>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
                     </settings.highlight>
 
                     <settings.todayOnly>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Today only</label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Today only</label>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
                     </settings.todayOnly>
 
                     <settings.pagination>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Show pagination</label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Show pagination</label>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
                     </settings.pagination>
 
                     <settings.showPID>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>Detail page</label>
-                            <config>
-                                <type>group</type>
-                                <internal_type>db</internal_type>
-                                <allowed>pages</allowed>
-                                <size>1</size>
-                                <maxitems>1</maxitems>
-                                <minitems>0</minitems>
-                                <show_thumbs>1</show_thumbs>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>Detail page</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                            <show_thumbs>1</show_thumbs>
+                        </config>
                     </settings.showPID>
                 </el>
             </ROOT>
         </sDEF>
         <sTemplate>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>Template</sheetTitle>
-                </TCEforms>
+                <sheetTitle>Template</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.template>
@@ -133,20 +114,20 @@
                             <renderType>selectSingle</renderType>
                             <items type="array">
                                 <numIndex index="0" type="array">
-                                    <numIndex index="0">Default</numIndex>
-                                    <numIndex index="1">default</numIndex>
+                                    <numIndex index="label">Default</numIndex>
+                                    <numIndex index="value">default</numIndex>
                                 </numIndex>
                                 <numIndex index="1" type="array">
-                                    <numIndex index="0">Costum</numIndex>
-                                    <numIndex index="1">costum</numIndex>
+                                    <numIndex index="label">Custom</numIndex>
+                                    <numIndex index="value">costum</numIndex>
                                 </numIndex>
                                 <numIndex index="2" type="array">
-                                    <numIndex index="0">Table</numIndex>
-                                    <numIndex index="1">table</numIndex>
+                                    <numIndex index="label">Table</numIndex>
+                                    <numIndex index="value">table</numIndex>
                                 </numIndex>
                                 <numIndex index="3" type="array">
-                                    <numIndex index="0">Grid</numIndex>
-                                    <numIndex index="1">grid</numIndex>
+                                    <numIndex index="label">Grid</numIndex>
+                                    <numIndex index="value">grid</numIndex>
                                 </numIndex>
                             </items>
                             <default>default</default>
@@ -157,34 +138,29 @@
         </sTemplate>
         <sConstrains>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>Regions &amp; Categories</sheetTitle>
-                </TCEforms>
+                <sheetTitle>Regions &amp; Categories</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.region>
-                        <TCEforms>
-                            <label>Region</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items type="array">
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">Alle</numIndex>
-                                        <numIndex index="1"></numIndex>
-                                    </numIndex>
-                                </items>
-                                <foreign_table>tx_events_domain_model_region</foreign_table>
-                                <foreign_table_where>AND tx_events_domain_model_region.deleted = 0 AND tx_events_domain_model_region.hidden = 0</foreign_table_where>
-                                <size>1</size>
-                                <minitems>0</minitems>
-                                <maxitems>1</maxitems>
-                            </config>
-                        </TCEforms>
+                        <label>Region</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="label">Alle</numIndex>
+                                    <numIndex index="value"></numIndex>
+                                </numIndex>
+                            </items>
+                            <foreign_table>tx_events_domain_model_region</foreign_table>
+                            <foreign_table_where>AND tx_events_domain_model_region.deleted = 0 AND tx_events_domain_model_region.hidden = 0</foreign_table_where>
+                            <size>1</size>
+                            <minitems>0</minitems>
+                            <maxitems>1</maxitems>
+                        </config>
                     </settings.region>
 
                     <settings.categoryCombination>
-                        <TCEforms>
                             <exclude>1</exclude>
                             <label>Combination</label>
                             <config>
@@ -192,54 +168,49 @@
                                 <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">And</numIndex>
-                                        <numIndex index="1">0</numIndex>
+                                        <numIndex index="label">And</numIndex>
+                                        <numIndex index="value">0</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
-                                        <numIndex index="0">Or</numIndex>
-                                        <numIndex index="1">1</numIndex>
+                                        <numIndex index="label">Or</numIndex>
+                                        <numIndex index="value">1</numIndex>
                                     </numIndex>
                                 </items>
                                 <default>0</default>
                             </config>
-                        </TCEforms>
                     </settings.categoryCombination>
 
                     <settings.categories>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>
-                                Category
-                            </label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectTree</renderType>
-                                <autoSizeMax>20</autoSizeMax>
-                                <foreign_table>sys_category</foreign_table>
-                                <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.title ASC</foreign_table_where>
-                                <maxitems>1</maxitems>
-                                <renderMode>tree</renderMode>
-                                <size>8</size>
-                                <treeConfig>
-                                    <appearance>
-                                        <expandAll>1</expandAll>
-                                        <showHeader>1</showHeader>
-                                    </appearance>
-                                    <parentField>parent</parentField>
-                                </treeConfig>
-                            </config>
-                        </TCEforms>
+                        <exclude>1</exclude>
+                        <label>
+                            Category
+                        </label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectTree</renderType>
+                            <autoSizeMax>20</autoSizeMax>
+                            <foreign_table>sys_category</foreign_table>
+                            <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.title ASC</foreign_table_where>
+                            <maxitems>1</maxitems>
+                            <renderMode>tree</renderMode>
+                            <size>8</size>
+                            <treeConfig>
+                                <appearance>
+                                    <expandAll>1</expandAll>
+                                    <showHeader>1</showHeader>
+                                </appearance>
+                                <parentField>parent</parentField>
+                            </treeConfig>
+                        </config>
                     </settings.categories>
 
                     <settings.includeSubcategories>
-                        <TCEforms>
                             <exclude>1</exclude>
                             <label>Include Subcategories</label>
                             <config>
                                 <type>check</type>
                                 <default>0</default>
                             </config>
-                        </TCEforms>
                     </settings.includeSubcategories>
                 </el>
             </ROOT>

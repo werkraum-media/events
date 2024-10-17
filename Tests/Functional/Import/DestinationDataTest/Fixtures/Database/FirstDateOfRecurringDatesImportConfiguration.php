@@ -9,6 +9,7 @@ return [
             'pid' => '2',
             'title' => 'Example for test',
             'storage_pid' => '2',
+            'files_folder' => '1:/staedte/beispielstadt/events/',
         ],
     ],
     'pages' => [

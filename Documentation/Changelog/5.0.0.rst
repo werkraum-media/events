@@ -1,0 +1,35 @@
+5.0.0
+=====
+
+Breaking
+--------
+
+* Only when being on 13.x or higher:
+
+  Content elements are no longer registered as `list` but with their own CType.
+  An upgrade wizard is provided that can be executed to migrate existing database
+  entries.
+
+  But custom TypoScript and modifications need to be adopted.
+  We recommend not to use the provided plugins but build your own tailored content
+  elements instead.
+
+Features
+--------
+
+* Add Support for TYPO3 v13.4 LTS.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

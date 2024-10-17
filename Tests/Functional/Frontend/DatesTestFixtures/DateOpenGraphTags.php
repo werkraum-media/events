@@ -7,8 +7,7 @@ return  [
         0 => [
             'uid' => '1',
             'pid' => '1',
-            'CType' => 'list',
-            'list_type' => 'events_dateshow',
+            'CType' => 'events_dateshow',
             'header' => 'Singleview',
         ],
     ],

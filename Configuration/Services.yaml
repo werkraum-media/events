@@ -43,7 +43,12 @@ services:
   WerkraumMedia\Events\Updates\MigrateOldLocations:
     public: true
 
+  WerkraumMedia\Events\Service\DestinationDataImportService\ConfigurationServiceInterface:
+    alias: 'WerkraumMedia\Events\Service\DestinationDataImportService\ExtbaseConfigurationService'
+
   WerkraumMedia\Events\Caching\PageCacheTimeout:
+    arguments:
+      '$runtimeCache': '@cache.runtime'
     tags:
       - name: event.listener
         event: WerkraumMedia\Events\Events\Controller\DateListVariables

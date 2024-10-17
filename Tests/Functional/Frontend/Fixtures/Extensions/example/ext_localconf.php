@@ -9,11 +9,15 @@ use WerkraumMedia\Events\Controller\EventController;
 ExtensionUtility::configurePlugin(
     'Events',
     'DateListTest',
-    [DateController::class => 'list']
+    [DateController::class => 'list'],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
 ExtensionUtility::configurePlugin(
     'Events',
     'EventShow',
-    [EventController::class => 'show']
+    [EventController::class => 'show'],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
