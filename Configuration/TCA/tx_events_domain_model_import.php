@@ -26,7 +26,7 @@ return [
                 '--palette--;;typo3_storage',
                 '--palette--;;categories',
                 '--palette--;;features',
-                '-palette--;;relations',
+                '--palette--;;relations',
                 '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest',
                 'rest_experience',
                 'rest_search_query',
