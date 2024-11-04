@@ -84,7 +84,7 @@ CREATE TABLE tx_events_domain_model_import (
     region int(11) unsigned DEFAULT '0' NOT NULL,
 
     rest_experience varchar(1024) DEFAULT '' NOT NULL,
-    rest_search_query varchar(1024) DEFAULT '' NOT NULL,
+    rest_search_query text,
 
     import_features tinyint(4) DEFAULT '0' NOT NULL,
 );
