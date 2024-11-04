@@ -28,9 +28,13 @@ return [
                 '--palette--;;features',
                 '--palette--;;relations',
                 '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.rest',
+                'rest_license_key',
                 'rest_experience',
+                'rest_mode',
+                'rest_limit',
                 'rest_search_query',
                 '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.import',
+                'import_repeat_until',
                 'import_features',
             ]),
         ],
@@ -162,14 +166,51 @@ return [
             ],
         ],
 
+        'rest_license_key' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_license_key',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_license_key.description',
+            'config' => [
+                'type' => 'input',
+                'size' => 50,
+            ],
+        ],
         'rest_experience' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_experience',
             'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_experience.description',
             'config' => [
                 'type' => 'input',
+                'required' => true,
                 'size' => 50,
                 'max' => 255,
+            ],
+        ],
+        'rest_mode' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_mode',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_mode.description',
+            'config' => [
+                'type' => 'input',
+                'default' => 'next_months,12',
+                'size' => 50,
+                'max' => 255,
+            ],
+        ],
+        'rest_limit' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_limit',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_limit.description',
+            'config' => [
+                'type' => 'number',
+                'format' => 'integer',
+                'default' => '500',
+                'size' => 50,
+                'required' => true,
+                'range' => [
+                    'lower' => 0,
+                    'upper' => 5000,
+                ],
             ],
         ],
         'rest_search_query' => [
@@ -179,6 +220,18 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 50,
+            ],
+        ],
+
+        'import_repeat_until' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.import_repeat_until',
+            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.import_repeat_until.description',
+            'config' => [
+                'type' => 'input',
+                'default' => '+60 days',
+                'size' => 50,
+                'max' => 255,
             ],
         ],
         'import_features' => [

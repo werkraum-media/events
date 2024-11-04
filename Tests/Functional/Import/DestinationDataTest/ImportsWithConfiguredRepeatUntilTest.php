@@ -24,11 +24,14 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTestCase
     #[Test]
     public function recurringWeekly(): void
     {
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-        ], [
-            'repeatUntil = +30 days',
-        ]);
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_events_domain_model_import')
+            ->update(
+                'tx_events_domain_model_import',
+                ['import_repeat_until' => '+30 days'],
+                ['uid' => '1']
+            )
+        ;
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringWeeklyWithoutRepeatUntil.json') ?: '')]);
 
         $this->executeCommand();
@@ -40,11 +43,14 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTestCase
     #[Test]
     public function recurringDaily(): void
     {
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-        ], [
-            'repeatUntil = +10 days',
-        ]);
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_events_domain_model_import')
+            ->update(
+                'tx_events_domain_model_import',
+                ['import_repeat_until' => '+10 days'],
+                ['uid' => '1']
+            )
+        ;
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringDailyWithoutRepeatUntil.json') ?: '')]);
 
         $this->executeCommand();

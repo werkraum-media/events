@@ -15,23 +15,5 @@ plugin.tx_events {
     settings {
         # cat=plugin.tx_events//a; type=string; label=Default Image
         defaultImagePath = EXT:events/Resources/Public/Images/default.jpg
-        destinationData {
-            # cat=plugin.tx_events//a; type=string; label=Rest Url
-            restUrl = http://meta.et4.de/rest.ashx/search/
-            # cat=plugin.tx_events//a; type=string; label=License
-            license =
-            # cat=plugin.tx_events//a; type=string; label=Data Type
-            restType = Event
-            # cat=plugin.tx_events//a; type=string; label=Data Limit
-            restLimit = 500
-            # cat=plugin.tx_events//a; type=string; label=Mode
-            restMode = next_months,12
-            # cat=plugin.tx_events//a; type=string; label=Data Template
-            restTemplate = ET2014A.json
-            # cat=plugin.tx_events//a; type=string; Label=Category Storage
-            categoriesPid = 54
-            # cat=plugin.tx_events//a; type=string; Label=Category Parent ID
-            categoryParentUid = 6
-        }
     }
 }

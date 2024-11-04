@@ -21,13 +21,17 @@ class Import extends AbstractDomainObject
     public function __construct(
         protected Folder $filesFolder,
         protected int $storagePid,
+        protected string $restLicenseKey,
         protected string $restExperience,
+        protected string $restMode = 'next_months,12',
+        protected int $restLimit = 500,
         protected string $restSearchQuery = '',
         int $categoriesPid = 0,
         protected ?Category $categoryParent = null,
         int $featuresPid = 0,
         protected ?Category $featuresParent = null,
         protected ?Region $region = null,
+        protected string $importRepeatUntil = '+60 days',
         protected int $importFeatures = 0,
     ) {
         // Do not allow categories on pid 0
@@ -78,18 +82,38 @@ class Import extends AbstractDomainObject
         return $this->region;
     }
 
+    public function getFeatures(): Features
+    {
+        return new Features($this->importFeatures);
+    }
+
+    public function getRepeatUntil(): string
+    {
+        return $this->importRepeatUntil;
+    }
+
+    public function getRestLicenseKey(): string
+    {
+        return $this->restLicenseKey;
+    }
+
     public function getRestExperience(): string
     {
         return $this->restExperience;
     }
 
-    public function getSearchQuery(): string
+    public function getRestMode(): string
     {
-        return $this->restSearchQuery;
+        return $this->restMode;
     }
 
-    public function getFeatures(): Features
+    public function getRestLimit(): int
     {
-        return new Features($this->importFeatures);
+        return (int)$this->restLimit;
+    }
+
+    public function getRestSearchQuery(): string
+    {
+        return $this->restSearchQuery;
     }
 }

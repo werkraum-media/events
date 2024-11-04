@@ -12,20 +12,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 #[TestDox('DestinationData import')]
 class ImportsTextsTest extends AbstractTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-            'license = example-license',
-            'restType = Event',
-            'restLimit = 3',
-            'restMode = next_months,12',
-            'restTemplate = ET2014A.json',
-        ]);
-    }
-
     protected function tearDown(): void
     {
         $this->assertEmptyLog();

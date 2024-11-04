@@ -14,12 +14,23 @@ Breaking
   We recommend not to use the provided plugins but build your own tailored content
   elements instead.
 
+* Remaining TypoScript constants for import were moved.
+
+  Those are now part of the import configuration record.
+  The previous default values will be inserted.
+  Make sure to update the existing records to include the necessary values.
+
+  Some value are now hard coded as we do not support other values anyway.
+
+  This also affects the `repeatUntil` TypoScript setting which is now moved to the import configuration.
+
 Features
 --------
 
 * Add Support for TYPO3 v13.4 LTS.
 
 * Support large rest search queries.
+
   The field no longer has a limitation.
   The field is now stored as text instead of varchar.
 

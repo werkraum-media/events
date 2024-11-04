@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Import;
-use WerkraumMedia\Events\Service\DestinationDataImportService\ArrayBasedConfigurationService;
 use WerkraumMedia\Events\Service\DestinationDataImportService\UrlFactory;
 
 class UrlFactoryTest extends TestCase
@@ -17,11 +16,7 @@ class UrlFactoryTest extends TestCase
     #[Test]
     public function canBeCreated(): void
     {
-        $configurationManager = new ArrayBasedConfigurationService([]);
-
-        $subject = new UrlFactory(
-            $configurationManager
-        );
+        $subject = new UrlFactory();
 
         self::assertInstanceOf(
             UrlFactory::class,
@@ -31,16 +26,14 @@ class UrlFactoryTest extends TestCase
 
     #[DataProvider('possibleImports')]
     #[Test]
+    /**
+     * @param Stub&Import $import
+     */
     public function createSearchResultUrl(
-        Stub $import,
-        array $settings,
+        Import $import,
         string $expectedResult
     ): void {
-        $configurationManager = new ArrayBasedConfigurationService($settings);
-
-        $subject = new UrlFactory(
-            $configurationManager
-        );
+        $subject = new UrlFactory();
 
         $result = $subject->createSearchResultUrl($import);
 
@@ -56,62 +49,42 @@ class UrlFactoryTest extends TestCase
             'All provided' => [
                 'import' => (function () {
                     $import = self::createStub(Import::class);
+                    $import->method('getRestLicenseKey')->willReturn('licenseKey');
                     $import->method('getRestExperience')->willReturn('experience');
-                    $import->method('getSearchQuery')->willReturn('');
+                    $import->method('getRestMode')->willReturn('restMode');
+                    $import->method('getRestLimit')->willReturn(500);
+                    $import->method('getRestSearchQuery')->willReturn('');
 
                     return $import;
                 })(),
-                'settings' => [
-                    'restUrl' => 'https://example.com/path',
-                    'license' => 'licenseKey',
-                    'restType' => 'restType',
-                    'restMode' => 'restMode',
-                    'restLimit' => 'restLimit',
-                    'restTemplate' => 'restTemplate',
-                ],
-                'expectedResult' => 'https://example.com/path?experience=experience&licensekey=licenseKey&type=restType&mode=restMode&limit=restLimit&template=restTemplate',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&mode=restMode&limit=500&template=ET2014A.json',
             ],
             'All missing' => [
                 'import' => (function () {
-                    $import = self::createStub(Import::class);
-                    $import->method('getRestExperience')->willReturn('');
-                    $import->method('getSearchQuery')->willReturn('');
-
-                    return $import;
+                    return self::createStub(Import::class);
                 })(),
-                'settings' => [
-                    'restUrl' => 'https://example.com/path',
-                ],
-                'expectedResult' => 'https://example.com/path',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?type=Event&template=ET2014A.json',
             ],
             'Some missing' => [
                 'import' => (function () {
                     $import = self::createStub(Import::class);
+                    $import->method('getRestLicenseKey')->willReturn('licenseKey');
                     $import->method('getRestExperience')->willReturn('experience');
-                    $import->method('getSearchQuery')->willReturn('');
+                    $import->method('getRestLimit')->willReturn(500);
 
                     return $import;
                 })(),
-                'settings' => [
-                    'restUrl' => 'https://example.com/path',
-                    'license' => 'licenseKey',
-                    'restLimit' => 'restLimit',
-                    'restTemplate' => 'restTemplate',
-                ],
-                'expectedResult' => 'https://example.com/path?experience=experience&licensekey=licenseKey&limit=restLimit&template=restTemplate',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&limit=500&template=ET2014A.json',
             ],
             'With search query' => [
                 'import' => (function () {
                     $import = self::createStub(Import::class);
                     $import->method('getRestExperience')->willReturn('experience');
-                    $import->method('getSearchQuery')->willReturn('name:"Test Something"');
+                    $import->method('getRestSearchQuery')->willReturn('name:"Test Something"');
 
                     return $import;
                 })(),
-                'settings' => [
-                    'restUrl' => 'https://example.com/path',
-                ],
-                'expectedResult' => 'https://example.com/path?experience=experience&q=name%3A%22Test+Something%22',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&type=Event&template=ET2014A.json&q=name%3A%22Test+Something%22',
             ],
         ];
     }

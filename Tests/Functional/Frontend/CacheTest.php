@@ -269,14 +269,6 @@ class CacheTest extends AbstractFunctionalTestCase
 
         // Import
         $this->importPHPDataSet(__DIR__ . '/../Import/DestinationDataTest/Fixtures/Database/DefaultImportConfiguration.php');
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-            'license = example-license',
-            'restType = Event',
-            'restLimit = 3',
-            'restMode = next_months,12',
-            'restTemplate = ET2014A.json',
-        ]);
         $this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/../Import/DestinationDataTest/Fixtures/ResponseWithSingleImageForSingleEvent.json') ?: ''),
             new Response(200, [], file_get_contents(__DIR__ . '/../Import/DestinationDataTest/Fixtures/ExampleImage.jpg') ?: ''),
