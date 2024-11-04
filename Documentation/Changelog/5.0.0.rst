@@ -32,4 +32,5 @@ Nothing
 Deprecation
 -----------
 
-Nothing
+* The existing content elements are deprecated.
+  We recommend to build your own dedicated content elements.
