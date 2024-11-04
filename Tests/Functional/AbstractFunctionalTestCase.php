@@ -114,22 +114,6 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         return new TypoScriptInstruction();
     }
 
-    protected function setUpConfiguration(
-        array $destinationDataSettings,
-        array $importSettings = []
-    ): void {
-        $this->setUpFrontendRootPage(1, [], [
-            'config' => implode(PHP_EOL, [
-                'module.tx_events_pi1.settings.destinationData {',
-                implode(PHP_EOL, $destinationDataSettings),
-                '}',
-                'module.tx_events_import.settings {',
-                implode(PHP_EOL, $importSettings),
-                '}',
-            ]),
-        ]);
-    }
-
     protected function &setUpResponses(array $responses): array
     {
         $requests = [];

@@ -12,8 +12,8 @@ use Generator;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use WerkraumMedia\Events\Domain\Model\Date;
+use WerkraumMedia\Events\Domain\Model\Import;
 
 final class DatesFactory
 {
@@ -21,7 +21,6 @@ final class DatesFactory
 
     public function __construct(
         private readonly Context $context,
-        private readonly ConfigurationManager $configurationManager,
         LogManager $logManager
     ) {
         $this->logger = $logManager->getLogger(self::class);
@@ -31,11 +30,12 @@ final class DatesFactory
      * @return Generator<Date>
      */
     public function createDates(
+        Import $import,
         array $timeIntervals,
         bool $canceled
     ): Generator {
         foreach ($timeIntervals as $date) {
-            $dates = $this->createDate($date, $canceled);
+            $dates = $this->createDate($import, $date, $canceled);
             if (!$dates instanceof Generator) {
                 return null;
             }
@@ -50,6 +50,7 @@ final class DatesFactory
      * @return Generator<Date>|null
      */
     private function createDate(
+        Import $import,
         array $date,
         bool $canceled
     ): ?Generator {
@@ -60,7 +61,7 @@ final class DatesFactory
 
         if ($this->isDateInterval($date)) {
             $this->logger->info('Is interval date', ['date' => $date]);
-            return $this->createDateFromInterval($date, $canceled);
+            return $this->createDateFromInterval($import, $date, $canceled);
         }
 
         return null;
@@ -106,10 +107,11 @@ final class DatesFactory
      * @return Generator<Date>|null
      */
     private function createDateFromInterval(
+        Import $import,
         array $date,
         bool $canceled
     ): ?Generator {
-        $date = $this->ensureRepeatUntil($date);
+        $date = $this->ensureRepeatUntil($import, $date);
 
         if ($date['freq'] == 'Daily') {
             return $this->createDailyDates($date, $canceled);
@@ -122,19 +124,15 @@ final class DatesFactory
         return null;
     }
 
-    private function ensureRepeatUntil(array $date): array
-    {
+    private function ensureRepeatUntil(
+        Import $import,
+        array $date
+    ): array {
         if (empty($date['repeatUntil']) === false) {
             return $date;
         }
 
-        $settings = $this->configurationManager->getConfiguration(
-            ConfigurationManager::CONFIGURATION_TYPE_SETTINGS,
-            'Events',
-            'Import'
-        );
-        $configuredModification = $settings['repeatUntil'] ?? '+60 days';
-        $date['repeatUntil'] = $this->getToday()->modify($configuredModification)->format('c');
+        $date['repeatUntil'] = $this->getToday()->modify($import->getRepeatUntil())->format('c');
         $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $date['repeatUntil']]);
 
         return $date;

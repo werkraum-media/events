@@ -42,17 +42,6 @@ plugin.tx_events {
             maximumNumberOfLinks = 10
         }
 
-        destinationData {
-            restUrl = {$plugin.tx_events.settings.destinationData.restUrl}
-            license = {$plugin.tx_events.settings.destinationData.license}
-            restType = {$plugin.tx_events.settings.destinationData.restType}
-            restLimit = {$plugin.tx_events.settings.destinationData.restLimit}
-            restMode = {$plugin.tx_events.settings.destinationData.restMode}
-            restTemplate = {$plugin.tx_events.settings.destinationData.restTemplate}
-            categoriesPid = {$plugin.tx_events.settings.destinationData.categoriesPid}
-            categoryParentUid = {$plugin.tx_events.settings.destinationData.categoryParentUid}
-        }
-
         dataProcessing {
             WerkraumMedia\Events\Domain\Model\Event {
                 10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor

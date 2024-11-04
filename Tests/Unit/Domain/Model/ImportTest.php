@@ -21,7 +21,8 @@ class ImportTest extends TestCase
         $subject = new Import(
             $folder,
             0,
-            ''
+            '',
+            '',
         );
 
         self::assertInstanceOf(
@@ -38,7 +39,8 @@ class ImportTest extends TestCase
         $subject = new Import(
             $folder,
             0,
-            'experience'
+            '',
+            'experience',
         );
 
         self::assertSame(
@@ -55,7 +57,8 @@ class ImportTest extends TestCase
         $subject = new Import(
             $folder,
             20,
-            ''
+            '',
+            '',
         );
 
         self::assertSame(
@@ -74,6 +77,9 @@ class ImportTest extends TestCase
             $folder,
             0,
             '',
+            '',
+            'next_months,12',
+            500,
             '',
             0,
             null,
@@ -96,7 +102,8 @@ class ImportTest extends TestCase
         $subject = new Import(
             $folder,
             0,
-            ''
+            '',
+            '',
         );
 
         self::assertSame(
@@ -114,6 +121,9 @@ class ImportTest extends TestCase
             $folder,
             0,
             '',
+            '',
+            'next_months,12',
+            500,
             '',
             10
         );
@@ -135,6 +145,9 @@ class ImportTest extends TestCase
             0,
             '',
             '',
+            'next_months,12',
+            500,
+            '',
             0,
             $category
         );
@@ -154,6 +167,9 @@ class ImportTest extends TestCase
             $folder,
             0,
             '',
+            '',
+            'next_months,12',
+            500,
             '',
             0,
             null,
@@ -177,6 +193,9 @@ class ImportTest extends TestCase
             0,
             '',
             '',
+            'next_months,12',
+            500,
+            '',
             0,
             null,
             0,
@@ -198,12 +217,15 @@ class ImportTest extends TestCase
             $folder,
             0,
             '',
+            '',
+            'next_months,12',
+            500,
             'name:"Test"'
         );
 
         self::assertSame(
             'name:"Test"',
-            $subject->getSearchQuery()
+            $subject->getRestSearchQuery()
         );
     }
 }

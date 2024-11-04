@@ -34,15 +34,6 @@ final class CategoriesAssignEventTest extends AbstractTestCase
         $this->testExtensionsToLoad[] = 'typo3conf/ext/events/Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_categories/';
 
         parent::setUp();
-
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-            'license = example-license',
-            'restType = Event',
-            'restLimit = 3',
-            'restMode = next_months,12',
-            'restTemplate = ET2014A.json',
-        ]);
     }
 
     #[Test]

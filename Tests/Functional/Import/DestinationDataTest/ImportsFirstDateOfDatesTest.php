@@ -17,9 +17,6 @@ class ImportsFirstDateOfDatesTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-        ]);
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FirstDateOfRecurringDatesImportConfiguration.php');
         $this->setDateAspect(new DateTimeImmutable('2022-07-13', new DateTimeZone('UTC')));
     }

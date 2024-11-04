@@ -72,17 +72,41 @@
             <trans-unit id="tx_events_domain_model_import.files_folder.description">
                 <source>TYPO3 folder to use for storing imported files.</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_license_key">
+                <source>License Key</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_license_key.description">
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-licensekey.html</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_experience">
                 <source>Experience</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_experience.description">
-                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-experience.html (todo check, was not loadable)</source>
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-experience.html</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_mode">
+                <source>Mode</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_mode.description">
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-mode.html</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_limit">
+                <source>Limit</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.rest_limit.description">
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-limit.html</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_search_query">
                 <source>Search Query</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_search_query.description">
-                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-q.html (todo check, was not loadable)</source>
+                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-q.html</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.import_repeat_until">
+                <source>Repeat events until</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_import.import_repeat_until.description">
+                <source>Some events will repeat. This will define how many dates will be created. See: https://www.php.net/manual/en/datetimeimmutable.modify.php</source>
             </trans-unit>
             <trans-unit id="tx_events_domain_model_import.import_features">
                 <source>Import Features</source>

@@ -11,6 +11,9 @@ return [
             'storage_pid' => '2',
             'files_folder' => '1:/staedte/beispielstadt/events/',
             'rest_experience' => 'beispielstadt',
+            'rest_license_key' => 'example-license',
+            'rest_limit' => '3',
+            'rest_mode' => 'next_months,12',
         ],
     ],
 ];
