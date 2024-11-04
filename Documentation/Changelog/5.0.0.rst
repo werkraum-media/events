@@ -19,6 +19,10 @@ Features
 
 * Add Support for TYPO3 v13.4 LTS.
 
+* Support large rest search queries.
+  The field no longer has a limitation.
+  The field is now stored as text instead of varchar.
+
 Fixes
 -----
 
