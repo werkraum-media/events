@@ -179,7 +179,6 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 50,
-                'max' => 255,
             ],
         ],
         'import_features' => [
