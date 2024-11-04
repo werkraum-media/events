@@ -11,7 +11,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
         'Events',
         'DateSearch',
         'Events: Date Search',
-        'EXT:events/Resources/Public/Icons/Extension.svg'
+        'events-plugin'
     );
     ExtensionManagementUtility::addToAllTCAtypes($table, 'pi_flexform', $pluginSignature, 'after:subheader');
     ExtensionManagementUtility::addPiFlexFormValue(
@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
         'Events',
         'DateList',
         'Events: Date List',
-        'EXT:events/Resources/Public/Icons/Extension.svg'
+        'events-plugin'
     );
     ExtensionManagementUtility::addToAllTCAtypes($table, 'pi_flexform', $pluginSignature, 'after:subheader');
     ExtensionManagementUtility::addPiFlexFormValue(
@@ -39,7 +39,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
         'Events',
         'DateShow',
         'Events: Date Show',
-        'EXT:events/Resources/Public/Icons/Extension.svg'
+        'events-plugin'
     );
     ExtensionManagementUtility::addToAllTCAtypes($table, 'pi_flexform', $pluginSignature, 'after:subheader');
     ExtensionManagementUtility::addPiFlexFormValue(
@@ -53,7 +53,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
         'Events',
         'Selected',
         'Events: Show selected',
-        'EXT:events/Resources/Public/Icons/Extension.svg'
+        'events-plugin'
     );
     ExtensionManagementUtility::addToAllTCAtypes($table, 'pi_flexform', $pluginSignature, 'after:subheader');
     ExtensionManagementUtility::addPiFlexFormValue(
