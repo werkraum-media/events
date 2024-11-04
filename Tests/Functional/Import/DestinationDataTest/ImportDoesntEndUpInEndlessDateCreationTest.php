@@ -17,14 +17,6 @@ class ImportDoesntEndUpInEndlessDateCreationTest extends AbstractTestCase
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
-        $this->setUpConfiguration([
-            'restUrl = https://example.com/some-path/',
-            'license = example-license',
-            'restType = Event',
-            'restLimit = 3',
-            'restMode = next_months,12',
-            'restTemplate = ET2014A.json',
-        ]);
 
         $requests = &$this->setUpResponses([
             new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithPotentiellyEndlessDateCreation.json') ?: ''),

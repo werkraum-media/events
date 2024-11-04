@@ -254,7 +254,7 @@ final class DestinationDataImportService
             $this->dateRepository->remove($currentDate);
         }
 
-        $dates = $this->datesFactory->createDates($timeIntervals, $canceled);
+        $dates = $this->datesFactory->createDates($this->import, $timeIntervals, $canceled);
         foreach ($dates as $date) {
             $this->tmpCurrentEvent->addDate($date);
         }

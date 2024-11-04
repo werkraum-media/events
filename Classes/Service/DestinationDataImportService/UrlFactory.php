@@ -12,11 +12,6 @@ use WerkraumMedia\Events\Domain\Model\Import;
  */
 final class UrlFactory
 {
-    public function __construct(
-        private readonly ConfigurationServiceInterface $configuration,
-    ) {
-    }
-
     /**
      * URL used to fetch initial set of data.
      */
@@ -25,17 +20,17 @@ final class UrlFactory
     ): string {
         $parameter = [
             'experience' => $import->getRestExperience(),
-            'licensekey' => $this->configuration->getLicenseKey(),
-            'type' => $this->configuration->getRestType(),
-            'mode' => $this->configuration->getRestMode(),
-            'limit' => $this->configuration->getRestLimit(),
-            'template' => $this->configuration->getRestTemplate(),
-            'q' => $import->getSearchQuery(),
+            'licensekey' => $import->getRestLicenseKey(),
+            'type' => 'Event',
+            'mode' => $import->getRestMode(),
+            'limit' => $import->getRestLimit(),
+            'template' => 'ET2014A.json',
+            'q' => $import->getRestSearchQuery(),
         ];
 
         $parameter = array_filter($parameter);
 
-        $url = new Uri($this->configuration->getRestUrl());
+        $url = new Uri('http://meta.et4.de/rest.ashx/search/');
         $url = $url->withQuery(http_build_query($parameter));
         return (string)$url;
     }
