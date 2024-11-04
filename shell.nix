@@ -4,7 +4,7 @@
 }:
 
 let
-  php = phps.packages.x86_64-linux.php82.buildEnv {
+  php = phps.packages.x86_64-linux.php83.buildEnv {
     extensions = { enabled, all }: enabled ++ (with all; [
       xdebug
     ]);
@@ -114,7 +114,7 @@ let
     '';
   };
 
-in pkgs.mkShell {
+in pkgs.mkShellNoCC {
   name = "TYPO3 Extension Events";
   buildInputs = [
     projectInstall
