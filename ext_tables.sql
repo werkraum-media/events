@@ -90,7 +90,7 @@ CREATE TABLE tx_events_domain_model_import (
     rest_search_query text,
 
     import_features tinyint(4) DEFAULT '0' NOT NULL,
-    import_repeat_until varchar(255) DEFAULT '' NOT NULL,
+    import_repeat_until varchar(255) DEFAULT '+60 days' NOT NULL,
 );
 
 CREATE TABLE tx_events_domain_model_location (
