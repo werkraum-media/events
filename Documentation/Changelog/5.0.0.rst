@@ -4,15 +4,10 @@
 Breaking
 --------
 
-* Only when being on 13.x or higher:
+* Removed all content elements.
 
-  Content elements are no longer registered as `list` but with their own CType.
-  An upgrade wizard is provided that can be executed to migrate existing database
-  entries.
-
-  But custom TypoScript and modifications need to be adopted.
-  We recommend not to use the provided plugins but build your own tailored content
-  elements instead.
+  Content elements are no longer provided.
+  We recommend to build your own tailored content elements instead.
 
 * Remaining TypoScript constants for import were moved.
 
@@ -24,6 +19,10 @@ Breaking
 
   This also affects the `repeatUntil` TypoScript setting which is now moved to the import configuration.
 
+* Removed old update wizards.
+
+  Update to 4.x beforehand if you still need to execute them.
+
 Features
 --------
 
@@ -32,7 +31,7 @@ Features
 * Support large rest search queries.
 
   The field no longer has a limitation.
-  The field is now stored as text instead of varchar.
+  The field is now stored as `text` instead of `varchar`.
 
 Fixes
 -----
@@ -47,5 +46,4 @@ Nothing
 Deprecation
 -----------
 
-* The existing content elements are deprecated.
-  We recommend to build your own dedicated content elements.
+Nothing

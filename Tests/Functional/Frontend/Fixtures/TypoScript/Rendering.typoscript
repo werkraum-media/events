@@ -32,6 +32,18 @@ plugin.tx_events {
         storagePid = 2
     }
 
+    view {
+        templateRootPaths {
+            0 = EXT:example/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:example/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:example/Resources/Private/Layouts/
+        }
+    }
+
     settings {
         sortByDate = start
         sortOrder = ASC

@@ -1,47 +1,10 @@
 plugin.tx_events {
-    view {
-        templateRootPaths {
-            0 = EXT:events/Resources/Private/Templates/
-            1 = {$plugin.tx_events.view.templateRootPath}
-        }
-        partialRootPaths {
-            0 = EXT:events/Resources/Private/Partials/
-            1 = {$plugin.tx_events.view.partialRootPath}
-        }
-        layoutRootPaths {
-            0 = EXT:events/Resources/Private/Layouts/
-            1 = {$plugin.tx_events.view.layoutRootPath}
-        }
-        widget {
-            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
-                templateRootPath = {$plugin.tx_events.view.templateRootPath}
-            }
-        }
-    }
-
     persistence {
         storagePid = {$plugin.tx_events.persistence.storagePid}
         recursive = 1
     }
 
-    mvc {
-        callDefaultActionIfActionCantBeResolved = 1
-    }
-
     settings {
-
-        defaulDetailEventsPid =
-        defaultDetailDatesPid =
-        defaultImagePath = {$plugin.tx_events.settings.defaultImagePath}
-
-        paginate {
-            # can be overriden by plugin
-            itemsPerPage = 10
-            insertAbove = 0
-            insertBelow = 1
-            maximumNumberOfLinks = 10
-        }
-
         dataProcessing {
             WerkraumMedia\Events\Domain\Model\Event {
                 10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
@@ -57,17 +20,5 @@ plugin.tx_events {
                 }
             }
         }
-
-    }
-}
-
-plugin.tx_events_datelist.view.pluginNamespace = events_search
-plugin.tx_events_datesearch.view.pluginNamespace = events_search
-
-module.tx_events < plugin.tx_events
-
-module.tx_events_import {
-    settings {
-        repeatUntil = +60 days
     }
 }

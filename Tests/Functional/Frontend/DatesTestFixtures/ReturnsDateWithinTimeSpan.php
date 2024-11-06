@@ -7,7 +7,7 @@ return  [
         0 => [
             'uid' => '1',
             'pid' => '1',
-            'CType' => 'events_datelist',
+            'CType' => 'events_datelisttest',
             'header' => 'All Dates',
         ],
     ],

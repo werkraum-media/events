@@ -133,7 +133,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         array $argumentsAndOptions = ['configurationUid' => '1'],
         string $command = ImportDestinationDataViaConfigruationCommand::class
     ): CommandTester {
-        GeneralUtility::setContainer($this->getcontainer());
+        GeneralUtility::setContainer($this->getContainer());
         $subject = $this->get($command);
         self::assertInstanceOf(Command::class, $subject);
 

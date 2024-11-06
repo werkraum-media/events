@@ -1,0 +1,35 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+    <div class="row">
+        <f:for each="{dates}" as="date">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="menu-tile">
+                    <f:if condition="{date.event.images.0}">
+                        <f:link.action pageUid="{settings.showPID}" action="show" controller="Date" arguments="{date: date}">
+                            <f:image image="{date.event.images.0}" alt="{date.event.title}" title="{date.event.title}" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                        </f:link.action>
+                    </f:if>
+                </div>
+                <div class="caption">
+                    <div class="caption-text mt-3">
+                        {date.event.region.title} |
+                        <f:if condition="{f:format.date(format: 'H:i', date: '{date.start}')} == '00:00'">
+                            <f:then>
+                                <f:format.date format="d. m. Y">{date.start}</f:format.date>
+                            </f:then>
+                            <f:else>
+                                <f:format.date format="d. m. Y - H:i">{date.start}</f:format.date>
+                            </f:else>
+                        </f:if>
+                        <h4>{date.event.title}</h4>
+                        <p>{date.event.teaser}</p>
+                    </div>
+                </div>
+            </div>
+        </f:for>
+    </div>
+
+</html>

@@ -27,22 +27,9 @@ use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use WerkraumMedia\Events\Frontend\Dates;
-use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-class DatesTest extends AbstractFunctionalTestCase
+final class DatesTest extends AbstractFrontendTestCase
 {
-    protected function setUp(): void
-    {
-        $this->coreExtensionsToLoad = [
-            'seo',
-        ];
-
-        parent::setUp();
-
-        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
-        $this->setUpFrontendRendering();
-    }
-
     /**
      * Covers issue https://redmine.werkraum-media.de/issues/10075.
      * Editors can disable events. Dates will still be available.
@@ -74,7 +61,7 @@ class DatesTest extends AbstractFunctionalTestCase
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
-            'events_search[search][start]' => '2023-02-16',
+            'tx_events_datelisttest[search][start]' => '2023-02-16',
         ]);
         $response = $this->executeFrontendSubRequest($request);
 
@@ -100,7 +87,7 @@ class DatesTest extends AbstractFunctionalTestCase
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
-            'events_search[search][end]' => '2023-02-17',
+            'tx_events_datelisttest[search][end]' => '2023-02-17',
         ]);
         $response = $this->executeFrontendSubRequest($request);
 
@@ -131,8 +118,8 @@ class DatesTest extends AbstractFunctionalTestCase
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
         $request = $request->withQueryParameters([
-            'events_search[search][start]' => '2023-02-16',
-            'events_search[search][end]' => '2023-02-17',
+            'tx_events_datelisttest[search][start]' => '2023-02-16',
+            'tx_events_datelisttest[search][end]' => '2023-02-17',
         ]);
         $response = $this->executeFrontendSubRequest($request);
 
@@ -248,7 +235,7 @@ class DatesTest extends AbstractFunctionalTestCase
     {
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_dateshow[date]', '1');
+        $request = $request->withQueryParameter('tx_events_dateshowtest[date]', '1');
 
         return $this->executeFrontendSubRequest($request);
     }

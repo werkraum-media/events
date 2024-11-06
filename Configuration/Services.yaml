@@ -37,12 +37,6 @@ services:
         identifier: 'WerkraumMediaEventsAddSpecialPropertiesToDate'
         event: TYPO3\CMS\Extbase\Event\Persistence\AfterObjectThawedEvent
 
-  WerkraumMedia\Events\Updates\MigrateDuplicateLocations:
-    public: true
-
-  WerkraumMedia\Events\Updates\MigrateOldLocations:
-    public: true
-
   WerkraumMedia\Events\Caching\PageCacheTimeout:
     arguments:
       '$runtimeCache': '@cache.runtime'

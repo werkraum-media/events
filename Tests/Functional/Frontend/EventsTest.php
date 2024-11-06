@@ -26,25 +26,9 @@ namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-class EventsTest extends AbstractFunctionalTestCase
+final class EventsTest extends AbstractFrontendTestCase
 {
-    protected function setUp(): void
-    {
-        $this->testExtensionsToLoad = [
-            'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
-        ];
-        $this->coreExtensionsToLoad = [
-            'seo',
-        ];
-
-        parent::setUp();
-
-        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
-        $this->setUpFrontendRendering();
-    }
-
     #[Test]
     public function addsMetaTags(): void
     {
@@ -103,7 +87,7 @@ class EventsTest extends AbstractFunctionalTestCase
     {
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
-        $request = $request->withQueryParameter('tx_events_eventshow[event]', '1');
+        $request = $request->withQueryParameter('tx_events_eventshowtest[event]', '1');
 
         return $this->executeFrontendSubRequest($request);
     }
