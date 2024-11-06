@@ -1,0 +1,73 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+    <div class="row">
+        <div class="col-12 mb-3 mb-md-0 col-md-6">
+            <f:if condition="{date.event.images.0}">
+                <f:then>
+                    <f:image image="{date.event.images.0}" alt="" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                </f:then>
+                <f:else>
+                    <img src="{settings.defaultImagePath}" alt="Dummy" width="480c" height="320c" class="img-fluid img-thumbnail"/>
+                </f:else>
+            </f:if>
+        </div>
+        <div class="col-12 col-md-6">
+            <f:if condition="{date.canceled} == 'canceled'">
+                <h4 class="bg-secondary text-white p-2">
+                    <f:translate key="LLL:EXT:events/Resources/Private/Language/locallang.xlf:tx_events.date.canceled" />
+                </h4>
+            </f:if>
+            <h4>
+                <f:format.date format="%a">{date.start}</f:format.date>
+                <f:format.date format="d.m.">{date.start}</f:format.date>
+                <f:format.date format="H.i">{date.start}</f:format.date> Uhr
+            </h4>
+            <h2>{date.event.title}</h2>
+            <h3>{date.event.teaser}</h3>
+            <f:format.html>{date.event.details}</f:format.html>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-3 mb-3">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <p><b>Preis:</b><br>
+                <f:if condition="{date.event.priceInfo}">
+                    <f:then>
+                        <f:format.nl2br>{date.event.priceInfo}</f:format.nl2br>
+                    </f:then>
+                    <f:else>
+                        Keine Information
+                    </f:else>
+                </f:if>
+            </p>
+
+            <f:if condition="{date.event.web}">
+                <p><b>Weitere Informationen:</b><br>
+                    <a href="{date.event.web}" target="_blank">Website</a>
+                </p>
+            </f:if>
+        </div>
+        <div class="col-12 col-md-4">
+            <p><b>Veranstaltungsort:</b><br>
+                {date.event.location.name}<br>
+                {date.event.location.street}<br>
+                {date.event.location.zip} {date.event.location.city}<br>
+                {date.event.location.phone}<br>
+            </p>
+        </div>
+        <div class="col-12 col-md-4">
+            <p><b>Veranstalter:</b><br>
+                {date.event.organizer.name}<br>
+                {date.event.organizer.street}<br>
+                {date.event.organizer.zip} {date.event.organizer.city}<br>
+                {date.event.organizer.phone}<br>
+                <a href="{date.event.organizer.web}" target="_blank">Website</a>
+            </p>
+        </div>
+    </div>
+
+</html>

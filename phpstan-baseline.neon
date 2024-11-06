@@ -104,8 +104,3 @@ parameters:
 			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
 			count: 1
 			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
-
-		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Updates\\\\MigrateOldLocations\\:\\:getExitingLocationUid\\(\\) should return int but returns mixed\\.$#"
-			count: 1
-			path: Classes/Updates/MigrateOldLocations.php
