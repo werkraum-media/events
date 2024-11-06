@@ -16,7 +16,15 @@ ExtensionUtility::configurePlugin(
 
 ExtensionUtility::configurePlugin(
     'Events',
-    'EventShow',
+    'DateShowTest',
+    [DateController::class => 'show'],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Events',
+    'EventShowTest',
     [EventController::class => 'show'],
     [],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,

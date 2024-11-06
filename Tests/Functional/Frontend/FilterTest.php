@@ -6,18 +6,9 @@ namespace WerkraumMedia\Events\Tests\Functional\Frontend;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-class FilterTest extends AbstractFunctionalTestCase
+final class FilterTest extends AbstractFrontendTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
-        $this->setUpFrontendRendering();
-    }
-
     #[Test]
     public function canFilterByASingleLocationViaFlexform(): void
     {

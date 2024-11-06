@@ -33,15 +33,11 @@ use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-class CacheTest extends AbstractFunctionalTestCase
+final class CacheTest extends AbstractFrontendTestCase
 {
     protected function setUp(): void
     {
-        $this->testExtensionsToLoad = [
-            'typo3conf/ext/events/Tests/Functional/Frontend/Fixtures/Extensions/example',
-        ];
         $this->configurationToUseInTestInstance = [
             'SYS' => [
                 // Combined with flushCaches.
@@ -64,14 +60,12 @@ class CacheTest extends AbstractFunctionalTestCase
 
         $this->get(CacheManager::class)->flushCaches();
 
-        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SiteStructure.php');
         (new PhpDataSet())->import(['tt_content' => [[
             'uid' => '1',
             'pid' => '1',
             'CType' => 'events_datelisttest',
             'header' => 'All Dates',
         ]]]);
-        $this->setUpFrontendRendering();
     }
 
     #[Test]
