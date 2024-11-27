@@ -70,6 +70,11 @@ abstract class AbstractController extends ActionController
         }
     }
 
+    /**
+     * Will throw exception to trigger 404.
+     *
+     * @return never
+     */
     protected function trigger404(string $message): void
     {
         throw new PropagateResponseException(
