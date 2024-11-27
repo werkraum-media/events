@@ -138,6 +138,19 @@ final class DatesTest extends AbstractFrontendTestCase
     }
 
     #[Test]
+    public function returns404IfNoDateIsGiven(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfNoDateIsGiven.php');
+
+        $request = new InternalRequest('https://example.com/');
+        $request = $request->withPageId(1);
+
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(404, $response->getStatusCode());
+    }
+
+    #[Test]
     public function returns404IfEventIsHidden(): void
     {
         $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/Returns404IfEventIsHidden.php');

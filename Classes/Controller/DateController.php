@@ -105,8 +105,12 @@ final class DateController extends AbstractController
     }
 
     #[Extbase\IgnoreValidation(['value' => 'date'])]
-    public function showAction(Date $date): ResponseInterface
+    public function showAction(?Date $date = null): ResponseInterface
     {
+        if ($date === null) {
+            $this->trigger404('No date given.');
+        }
+
         try {
             $date->getEvent();
         } catch (Throwable) {

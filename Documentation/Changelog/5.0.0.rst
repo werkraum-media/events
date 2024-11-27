@@ -33,6 +33,11 @@ Features
   The field no longer has a limitation.
   The field is now stored as `text` instead of `varchar`.
 
+* Deliver 404 on date show action without a given date.
+
+  This previously triggered an TYPO3 Exception.
+  We now handle the situation and trigger a TYPO3 404.
+
 Fixes
 -----
 
