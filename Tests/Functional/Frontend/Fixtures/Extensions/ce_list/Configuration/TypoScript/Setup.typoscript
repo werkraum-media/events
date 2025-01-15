@@ -1,0 +1,15 @@
+tt_content.celist_list.20 {
+    view {
+        pluginNamespace = events
+    }
+
+    persistence {
+        storagePid = 2
+    }
+
+    settings {
+        sortByDate = start
+        sortOrder = ASC
+        itemsPerPage = 1
+    }
+}

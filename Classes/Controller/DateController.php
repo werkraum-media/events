@@ -7,6 +7,7 @@ namespace WerkraumMedia\Events\Controller;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
 use WerkraumMedia\Events\Domain\Model\Date;
@@ -38,13 +39,13 @@ final class DateController extends AbstractController
     {
         parent::initializeAction();
 
+        $this->handlePostRequests();
+
         $contentObject = $this->request->getAttribute('currentContentObject');
         if ($contentObject !== null) {
             $this->demandFactory->setContentObjectRenderer($contentObject);
         }
         $this->dataProcessing->setConfigurationManager($this->configurationManager);
-
-        $this->handlePostRequest();
     }
 
     public function listAction(
@@ -127,22 +128,34 @@ final class DateController extends AbstractController
      *
      * @see: https://en.wikipedia.org/wiki/Post/Redirect/Get
      */
-    private function handlePostRequest(): void
+    private function handlePostRequests(): void
     {
-        if (
-            $this->request->getMethod() === 'POST'
-            && $this->request->hasArgument('search')
-            && is_array($this->request->getArgument('search'))
-        ) {
-            $namespace = $this->extensionService->getPluginNamespace(null, null);
+        if ($this->request->getMethod() !== 'POST') {
+            return;
+        }
+
+        $searchArguments = [];
+        if ($this->request->hasArgument('search')) {
+            $searchArguments = $this->request->getArgument('search');
+        }
+        if (is_array($searchArguments) === false) {
+            $searchArguments = [];
+        }
+        $searchArguments = array_filter($searchArguments);
+
+        $parameter = [];
+        if ($searchArguments !== []) {
+            $parameter['search'] = $searchArguments;
+        }
+
+        $namespace = $this->extensionService->getPluginNamespace(null, null);
+
+        throw new PropagateResponseException(
             $this->redirectToUri($this->request->getAttribute('currentContentObject')->typoLink_URL([
                 'parameter' => 't3://page?uid=current',
-                'additionalParams' => '&' . http_build_query([
-                    $namespace => [
-                        'search' => array_filter($this->request->getArgument('search')),
-                    ],
-                ]),
-            ]));
-        }
+                'additionalParams' => '&' . http_build_query([$namespace => $parameter]),
+            ])),
+            303
+        );
     }
 }

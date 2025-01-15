@@ -17,7 +17,9 @@ routeEnhancers:
   EventsPagination:
     type: Plugin
     namespace: events
-    routePath: '/{localizedPage}-{currentPage}'
+    routePath: '/{localizedPage}-{currentPage}/{controller}'
+    defaults:
+      controller: 'Date'
     aspects:
       localizedPage:
         type: LocaleModifier

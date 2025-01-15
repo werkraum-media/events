@@ -1,0 +1,94 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+    <nav role="navigation" aria-label="Pagination Navigation">
+        <ul class="pagination">
+            <f:if condition="{pagination.previousPageNumber}">
+                <li class="page-item">
+                    <f:if condition="{pagination.previousPageNumber} > 1">
+                        <f:then>
+                            <a class="page-link"
+                                href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.previousPageNumber})}"
+                            >
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </f:then>
+                        <f:else>
+                            <a class="page-link" href="{f:uri.action(addQueryString: 1)}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </f:else>
+                    </f:if>
+                </li>
+            </f:if>
+
+            <f:if condition="{pagination.displayRangeStart} > 1">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{f:uri.action(addQueryString: 1)}"
+                        aria-label="Goto Page 1"
+                    >
+                        1
+                    </a>
+                </li>
+            </f:if>
+
+            <f:if condition="{pagination.hasLessPages}">
+                <li class="page-item">
+                    <span class="page-link">…</span>
+                </li>
+            </f:if>
+
+            <f:for each="{pagination.allPageNumbers}" as="page">
+                <f:if condition="{page} == {pagination.paginator.currentPageNumber}">
+                    <f:then>
+                        <li class="page-item active">
+                            <span class="page-link"
+                                aria-label="Current Page {page}"
+                                aria-current="true"
+                            >{page}</span>
+                        </li>
+                    </f:then>
+                    <f:else>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="{f:uri.action(addQueryString: 1, arguments: {currentPage: page})}"
+                                aria-label="Goto Page {page}"
+                            >
+                                {page}
+                            </a>
+                        </li>
+                    </f:else>
+                </f:if>
+            </f:for>
+
+            <f:if condition="{pagination.hasMorePages}">
+                <li class="page-item">
+                    <span class="page-link">…</span>
+                </li>
+            </f:if>
+
+            <f:if condition="{pagination.displayRangeEnd} < {pagination.lastPageNumber}">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.lastPageNumber})}"
+                        aria-label="Goto Page {pagination.lastPageNumber}"
+                    >
+                        {pagination.lastPageNumber}
+                    </a>
+                </li>
+            </f:if>
+
+            <f:if condition="{pagination.nextPageNumber}">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{f:uri.action(addQueryString: 1, arguments: {currentPage: pagination.nextPageNumber})}"
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </f:if>
+        </ul>
+    </nav>
+
+</html>
