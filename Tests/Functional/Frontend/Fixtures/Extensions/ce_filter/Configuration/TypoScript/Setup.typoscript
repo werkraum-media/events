@@ -1,0 +1,9 @@
+tt_content.cefilter_filter.20 {
+    view {
+        pluginNamespace = events
+    }
+
+    persistence {
+        storagePid = 2
+    }
+}
