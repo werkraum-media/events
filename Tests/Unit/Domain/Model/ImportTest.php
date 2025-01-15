@@ -16,7 +16,7 @@ class ImportTest extends TestCase
     #[Test]
     public function canBeCreated(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -34,7 +34,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsRestExperience(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -52,7 +52,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsStoragePid(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -70,8 +70,8 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsRegion(): void
     {
-        $folder = $this->createStub(Folder::class);
-        $region = $this->createStub(Region::class);
+        $folder = self::createStub(Folder::class);
+        $region = self::createStub(Region::class);
 
         $subject = new Import(
             $folder,
@@ -97,7 +97,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsFilesFolder(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -115,7 +115,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsCategoriesPid(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -137,8 +137,8 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsCategoryParent(): void
     {
-        $category = $this->createStub(Category::class);
-        $folder = $this->createStub(Folder::class);
+        $category = self::createStub(Category::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -161,7 +161,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsFeaturesPid(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -185,8 +185,8 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsFeaturesParent(): void
     {
-        $feature = $this->createStub(Category::class);
-        $folder = $this->createStub(Folder::class);
+        $feature = self::createStub(Category::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,
@@ -211,7 +211,7 @@ class ImportTest extends TestCase
     #[Test]
     public function returnsSearchQuery(): void
     {
-        $folder = $this->createStub(Folder::class);
+        $folder = self::createStub(Folder::class);
 
         $subject = new Import(
             $folder,

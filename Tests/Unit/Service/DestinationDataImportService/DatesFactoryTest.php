@@ -22,8 +22,8 @@ class DatesFactoryTest extends TestCase
     private function createTestSubject(
         string $contextDate
     ): DatesFactory {
-        $logger = $this->createStub(Logger::class);
-        $logManager = $this->createStub(LogManager::class);
+        $logger = self::createStub(Logger::class);
+        $logManager = self::createStub(LogManager::class);
         $logManager->method('getLogger')->willReturn($logger);
 
         return new DatesFactory(
@@ -49,7 +49,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), $unkownInput, false);
+        $result = $subject->createDates(self::createStub(Import::class), $unkownInput, false);
 
         self::assertInstanceOf(Generator::class, $result);
         self::assertCount(0, iterator_to_array($result));
@@ -75,7 +75,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'start' => '2022-04-01T16:00:00+02:00',
             'end' => '2022-04-01T17:00:00+02:00',
             'tz' => 'Europe/Berlin',
@@ -97,7 +97,7 @@ class DatesFactoryTest extends TestCase
     #[Test]
     public function returnsWeeklyWithConfiguredRepeat(): void
     {
-        $import = $this->createStub(Import::class);
+        $import = self::createStub(Import::class);
         $import->method('getRepeatUntil')->willReturn('+60 days');
         $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
 
@@ -124,7 +124,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'start' => '2022-04-01T16:00:00+02:00',
             'end' => '2022-04-01T17:00:00+02:00',
             'tz' => 'Europe/Berlin',
@@ -148,7 +148,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
             'repeatUntil' => '2022-11-02T17:00:00+01:00',
@@ -177,7 +177,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
             'repeatUntil' => '2022-11-02T17:00:00+01:00',
@@ -206,7 +206,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'weekdays' => [
                 'Saturday',
                 'Sunday',
@@ -247,7 +247,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [[
+        $result = $subject->createDates(self::createStub(Import::class), [[
             'weekdays' => [
                 'Saturday',
                 'Sunday',
@@ -288,7 +288,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [
+        $result = $subject->createDates(self::createStub(Import::class), [
             [
                 'start' => '2022-06-21T16:00:00+02:00',
                 'end' => '2022-06-21T22:00:00+02:00',
@@ -333,7 +333,7 @@ class DatesFactoryTest extends TestCase
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
 
-        $result = $subject->createDates($this->createStub(Import::class), [
+        $result = $subject->createDates(self::createStub(Import::class), [
             [
                 'start' => '2022-06-21T16:00:00+02:00',
                 'end' => '2022-06-21T22:00:00+02:00',
