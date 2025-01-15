@@ -14,3 +14,6 @@ languages:
     flag: us
     websiteTitle: ''
 rootPageId: 1
+imports:
+  -
+    resource: 'EXT:events/Configuration/CeRouting.yaml'

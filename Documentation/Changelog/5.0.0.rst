@@ -44,6 +44,9 @@ Fixes
 * Ensure pagination settings are provided in expected type (int).
   TypoScript settings will always be strings, so we fix this with a proper type cast.
 
+* Fix broken pagination routing in combination with active search for TYPO3 12.4 and onwards.
+  See: :ref:`searchPagination`.
+
 Tasks
 -----
 

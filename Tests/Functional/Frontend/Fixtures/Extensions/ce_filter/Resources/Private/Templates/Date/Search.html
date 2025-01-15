@@ -1,0 +1,53 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <f:form method="post" name="search" object="{demand}">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="searchword">Searchword</label>
+                                    <f:form.textfield type="text" class="form-control" id="searchword" property="searchword" value="{searchword}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col col-md-6">
+                                <div class="form-group">
+                                    <label for="start">From:</label>
+                                    <f:form.textfield type="date" class="form-control" id="start" property="start" />
+                                </div>
+                            </div>
+                            <div class="col col-md-6">
+                                <div class="form-group">
+                                    <label for="end">To:</label>
+                                    <f:form.textfield type="date" class="form-control" id="end" property="end" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <f:if condition="{categories}">
+                            <div class="row mb-3">
+                                <f:for each="{categories}" as="category">
+                                    <div class="col-md-4 d-none d-lg-block">
+                                        <div class="form-check">
+                                            <f:form.checkbox class="form-check-input" property="userCategories" value="{category.uid}" id="check_{category.uid}"/>
+                                            <label class="form-check-label" for="check_{category.uid}">{category.title} {category.amountOfEvents}</label>
+                                        </div>
+                                    </div>
+                                </f:for>
+                            </div>
+                        </f:if>
+
+                        <div class="form-group mb-3">
+                            <f:form.submit value="Search" class="btn btn-primary" />
+                        </div>
+                    </f:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>

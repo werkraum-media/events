@@ -1,0 +1,16 @@
+{
+    "name": "werkraummedia/ce-events-filter",
+    "type": "typo3-cms-extension",
+    "description": "Content element: EXT:events filter",
+    "license": "GPL-2.0-or-later",
+    "version": "v1.0.0",
+    "require": {
+        "typo3/cms-core": "*",
+        "typo3/cms-extbase": "*"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "ce_filter"
+        }
+    }
+}
