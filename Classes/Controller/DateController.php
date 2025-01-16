@@ -63,8 +63,8 @@ final class DateController extends AbstractController
             $dates,
             $this->paginationFactory->create(
                 $currentPage,
-                $this->settings['itemsPerPage'] ?? 25,
-                $this->settings['maximumLinks'] ?? 5,
+                (int)($this->settings['itemsPerPage'] ?? 25),
+                (int)($this->settings['maximumLinks'] ?? 5),
                 $dates
             )
         ));
