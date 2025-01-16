@@ -41,7 +41,8 @@ Features
 Fixes
 -----
 
-Nothing
+* Ensure pagination settings are provided in expected type (int).
+  TypoScript settings will always be strings, so we fix this with a proper type cast.
 
 Tasks
 -----
