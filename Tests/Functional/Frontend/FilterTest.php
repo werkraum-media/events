@@ -56,4 +56,22 @@ final class FilterTest extends AbstractFrontendTestCase
         self::assertStringContainsString('Lotte in Weimar', $html);
         self::assertStringContainsString('Was hat das Universum mit mir zu tun?', $html);
     }
+
+    #[Test]
+    public function canFilterDatesByCategoriesRecusively(): void
+    {
+        $start = hrtime(true);
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterDatesByCategoriesRecusively.php');
+
+        $request = new InternalRequest('https://example.com/');
+        $request = $request->withPageId(1);
+        $response = $this->executeFrontendSubRequest($request);
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('Lotte in Weimar', $html);
+        self::assertStringContainsString('Was hat das Universum mit mir zu tun?', $html);
+        self::assertLessThanOrEqual(300000000, hrtime(true) - $start, 'The test run for too long.');
+    }
 }
