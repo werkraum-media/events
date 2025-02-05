@@ -70,4 +70,12 @@
         </div>
     </div>
 
+    <f:if condition="{date.event.pages.menu}">
+        <ul>
+            <f:for each="{date.event.pages.menu}" as="page">
+                <li><a href="{page.link}">{page.title}</a></li>
+            </f:for>
+        </ul>
+    </f:if>
+
 </html>

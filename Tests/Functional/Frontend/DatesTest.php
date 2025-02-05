@@ -244,6 +244,19 @@ final class DatesTest extends AbstractFrontendTestCase
         self::assertStringContainsString('<title>Title of Event 15.02.2023 00:00</title>', $html);
     }
 
+    #[Test]
+    public function appliedDataProcessingForPagesAssociatedToEvent(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/DatesTestFixtures/DateWithAssociatedPageViaEvent.php');
+
+        $response = $this->issueDetailRequest();
+
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string)$response->getBody();
+
+        self::assertStringContainsString('<li><a href="/referenced">Page 3 Referenced from event</a></li>', $html);
+    }
+
     private function issueDetailRequest(): ResponseInterface
     {
         $request = new InternalRequest('https://example.com/');

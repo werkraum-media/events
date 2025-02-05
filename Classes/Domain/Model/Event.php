@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Domain\Model;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -60,6 +61,8 @@ class Event extends AbstractEntity
 
     protected string $pages = '';
 
+    protected array $resolvedPages = [];
+
     /**
      * @var ObjectStorage<Category>
      */
@@ -91,16 +94,18 @@ class Event extends AbstractEntity
     public function __construct()
     {
         $this->initStorageObjects();
-    }
-
-    public function injectDataProcessingForModels(DataProcessingForModels $dataProcessing): void
-    {
-        $this->dataProcessing = $dataProcessing;
+        $this->initializeDataProcessing();
     }
 
     public function initializeObject(): void
     {
         $this->initStorageObjects();
+        $this->initializeDataProcessing();
+    }
+
+    private function initializeDataProcessing(): void
+    {
+        $this->dataProcessing = GeneralUtility::makeInstance(DataProcessingForModels::class);
     }
 
     protected function initStorageObjects(): void
@@ -341,14 +346,13 @@ class Event extends AbstractEntity
 
     public function getPages(): array
     {
-        static $pages = null;
-        if (is_array($pages)) {
-            return $pages;
+        if ($this->resolvedPages !== []) {
+            return $this->resolvedPages;
         }
 
-        $pages = $this->dataProcessing->process($this);
+        $this->resolvedPages = $this->dataProcessing->process($this);
 
-        return $pages;
+        return $this->resolvedPages;
     }
 
     public function addCategory(Category $category): void

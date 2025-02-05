@@ -1,0 +1,38 @@
+5.0.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Fix broken data processing within model in newer TYPO3 version.
+
+  TYPO3 changed how models are instantiated and prepared.
+  We now adopt the code to still initialize the data processing.
+  Furthermore, the feature is now covered with a test.
+
+* Fix broken data processing caching within model.
+
+  Each model might have different pages.
+  The previous caching implementation would share the result between multiple
+  instances.
+  This is now solved via an internal property instead of static variable.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
