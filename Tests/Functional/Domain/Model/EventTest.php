@@ -2,27 +2,16 @@
 
 declare(strict_types=1);
 
-namespace WerkraumMedia\Events\Tests\Unit\Domain\Model;
+namespace WerkraumMedia\Events\Tests\Functional\Domain\Model;
 
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Events\Domain\Model\Category;
 use WerkraumMedia\Events\Domain\Model\Event;
+use WerkraumMedia\Events\Tests\Functional\AbstractFunctionalTestCase;
 
-class EventTest extends TestCase
+class EventTest extends AbstractFunctionalTestCase
 {
-    #[Test]
-    public function canBeCreated(): void
-    {
-        $subject = new Event();
-
-        self::assertInstanceOf(
-            Event::class,
-            $subject
-        );
-    }
-
     #[Test]
     public function returnsSortedFeatures(): void
     {
