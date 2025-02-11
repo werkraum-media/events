@@ -7,11 +7,11 @@ namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 use DateInterval;
 use DatePeriod;
 use DateTimeImmutable;
-use DateTimeZone;
 use Generator;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Log\LogManager;
+use WerkraumMedia\Events\Domain\DestinationData\Date as DestinationDataDate;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Domain\Model\Import;
 
@@ -54,12 +54,14 @@ final class DatesFactory
         array $date,
         bool $canceled
     ): ?Generator {
-        if ($this->isDateSingleDate($date)) {
+        $date = new DestinationDataDate($date);
+
+        if ($date->isSingle()) {
             $this->logger->info('Is single date', ['date' => $date]);
             return $this->createSingleDate($date, $canceled);
         }
 
-        if ($this->isDateInterval($date)) {
+        if ($date->isInterval()) {
             $this->logger->info('Is interval date', ['date' => $date]);
             return $this->createDateFromInterval($import, $date, $canceled);
         }
@@ -67,38 +69,14 @@ final class DatesFactory
         return null;
     }
 
-    private function isDateSingleDate(array $date): bool
-    {
-        $frequency = $date['freq'] ?? '';
-        $start = $date['start'] ?? '';
-
-        return $frequency === ''
-            && $start !== '';
-    }
-
-    private function isDateInterval(array $date): bool
-    {
-        $frequency = $date['freq'] ?? '';
-
-        if ($frequency == 'Daily' && empty($date['weekdays'])) {
-            return true;
-        }
-
-        if ($frequency == 'Weekly' && !empty($date['weekdays'])) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * @return Generator<Date>
      */
     private function createSingleDate(
-        array $date,
+        DestinationDataDate $date,
         bool $canceled
     ): Generator {
-        if (new DateTimeImmutable($date['start']) > $this->getToday()) {
+        if ($date->isAfter($this->getToday())) {
             yield Date::createFromDestinationDataDate($date, $canceled);
         }
     }
@@ -108,16 +86,16 @@ final class DatesFactory
      */
     private function createDateFromInterval(
         Import $import,
-        array $date,
+        DestinationDataDate $date,
         bool $canceled
     ): ?Generator {
         $date = $this->ensureRepeatUntil($import, $date);
 
-        if ($date['freq'] == 'Daily') {
+        if ($date->isDaily()) {
             return $this->createDailyDates($date, $canceled);
         }
 
-        if ($date['freq'] == 'Weekly') {
+        if ($date->isWeekly()) {
             return $this->createWeeklyDates($date, $canceled);
         }
 
@@ -126,35 +104,31 @@ final class DatesFactory
 
     private function ensureRepeatUntil(
         Import $import,
-        array $date
-    ): array {
-        if (empty($date['repeatUntil']) === false) {
-            return $date;
-        }
-        if (empty($date['repeatCount']) === false) {
+        DestinationDataDate $date
+    ): DestinationDataDate {
+        if ($date->hasKnownRepeat()) {
             return $date;
         }
 
-        $date['repeatUntil'] = $this->getToday()->modify($import->getRepeatUntil())->format('c');
-        $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $date['repeatUntil']]);
+        $repeatUntil = $this->getToday()->modify($import->getRepeatUntil())->format('c');
+        $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $repeatUntil]);
 
-        return $date;
+        return $date->withRepeatUntil($repeatUntil);
     }
 
     /**
      * @return Generator<Date>
      */
     private function createDailyDates(
-        array $date,
+        DestinationDataDate $date,
         bool $canceled
     ): Generator {
         $today = $this->getToday();
-        $timeZone = new DateTimeZone($date['tz']);
-        $start = new DateTimeImmutable($date['start'], $timeZone);
-        $end = new DateTimeImmutable($date['end'], $timeZone);
-        $until = $this->createUntil($start, $date, 'days');
+        $timeZone = $date->getTimeZone();
+        $start = $date->getStart();
+        $end = $date->getEnd();
 
-        $period = new DatePeriod($start, new DateInterval('P1D'), $until);
+        $period = new DatePeriod($start, new DateInterval('P1D'), $date->getRepeatUntil());
         foreach ($period as $day) {
             $day = $day->setTimezone($timeZone);
             if ($day < $today) {
@@ -175,16 +149,16 @@ final class DatesFactory
      * @return Generator<Date>
      */
     private function createWeeklyDates(
-        array $date,
+        DestinationDataDate $date,
         bool $canceled
     ): Generator {
         $today = $this->getToday();
-        $timeZone = new DateTimeZone($date['tz']);
-        $start = new DateTimeImmutable($date['start'], $timeZone);
-        $end = new DateTimeImmutable($date['end'], $timeZone);
-        $until = $this->createUntil($start, $date, 'weeks');
+        $timeZone = $date->getTimeZone();
+        $start = $date->getStart();
+        $end = $date->getEnd();
+        $until = $date->getRepeatUntil();
 
-        foreach ($date['weekdays'] as $day) {
+        foreach ($date->getWeekdays() as $day) {
             $dateToUse = $start->modify($day);
             $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
 
@@ -217,21 +191,6 @@ final class DatesFactory
             $dateToUse->setTime((int)$end->format('H'), (int)$end->format('i')),
             $canceled
         );
-    }
-
-    /**
-     * @param string $repeatCountUnit E.g. weeks or days
-     */
-    private function createUntil(
-        DateTimeImmutable $start,
-        array $date,
-        string $repeatCountUnit,
-    ): DateTimeImmutable {
-        if (array_key_exists('repeatUntil', $date)) {
-            return new DateTimeImmutable($date['repeatUntil'], $start->getTimezone());
-        }
-
-        return $start->modify('+' . ((int)$date['repeatCount']) . ' ' . $repeatCountUnit);
     }
 
     private function getToday(): DateTimeImmutable
