@@ -6,8 +6,8 @@ namespace WerkraumMedia\Events\Domain\Model;
 
 use DateTime;
 use DateTimeImmutable;
-use DateTimeZone;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use WerkraumMedia\Events\Domain\DestinationData\Date as DestinationDataDate;
 
 /**
  * Date
@@ -126,12 +126,12 @@ class Date extends AbstractEntity
     }
 
     public static function createFromDestinationDataDate(
-        array $date,
+        DestinationDataDate $date,
         bool $canceled
     ): self {
         return self::createFromDestinationData(
-            new DateTimeImmutable($date['start'], new DateTimeZone($date['tz'])),
-            new DateTimeImmutable($date['end'], new DateTimeZone($date['tz'])),
+            $date->getStart(),
+            $date->getEnd(),
             $canceled
         );
     }
