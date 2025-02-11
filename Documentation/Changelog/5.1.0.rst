@@ -9,7 +9,10 @@ Nothing
 Features
 --------
 
-Nothing
+* Support destination.one `repeatCount` property.
+
+  This provides info on how often a repeatable event should be repeated.
+  E.g. `1` = exactly once, so no actual repeat.
 
 Fixes
 -----

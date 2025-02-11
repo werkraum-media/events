@@ -131,6 +131,9 @@ final class DatesFactory
         if (empty($date['repeatUntil']) === false) {
             return $date;
         }
+        if (empty($date['repeatCount']) === false) {
+            return $date;
+        }
 
         $date['repeatUntil'] = $this->getToday()->modify($import->getRepeatUntil())->format('c');
         $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $date['repeatUntil']]);
@@ -149,7 +152,7 @@ final class DatesFactory
         $timeZone = new DateTimeZone($date['tz']);
         $start = new DateTimeImmutable($date['start'], $timeZone);
         $end = new DateTimeImmutable($date['end'], $timeZone);
-        $until = new DateTimeImmutable($date['repeatUntil'], $timeZone);
+        $until = $this->createUntil($start, $date, 'days');
 
         $period = new DatePeriod($start, new DateInterval('P1D'), $until);
         foreach ($period as $day) {
@@ -179,7 +182,7 @@ final class DatesFactory
         $timeZone = new DateTimeZone($date['tz']);
         $start = new DateTimeImmutable($date['start'], $timeZone);
         $end = new DateTimeImmutable($date['end'], $timeZone);
-        $until = new DateTimeImmutable($date['repeatUntil'], $timeZone);
+        $until = $this->createUntil($start, $date, 'weeks');
 
         foreach ($date['weekdays'] as $day) {
             $dateToUse = $start->modify($day);
@@ -214,6 +217,21 @@ final class DatesFactory
             $dateToUse->setTime((int)$end->format('H'), (int)$end->format('i')),
             $canceled
         );
+    }
+
+    /**
+     * @param string $repeatCountUnit E.g. weeks or days
+     */
+    private function createUntil(
+        DateTimeImmutable $start,
+        array $date,
+        string $repeatCountUnit,
+    ): DateTimeImmutable {
+        if (array_key_exists('repeatUntil', $date)) {
+            return new DateTimeImmutable($date['repeatUntil'], $start->getTimezone());
+        }
+
+        return $start->modify('+' . ((int)$date['repeatCount']) . ' ' . $repeatCountUnit);
     }
 
     private function getToday(): DateTimeImmutable

@@ -95,7 +95,7 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
-    public function returnsWeeklyWithConfiguredRepeat(): void
+    public function returnsWeeklyWithConfiguredRepeatEndless(): void
     {
         $import = self::createStub(Import::class);
         $import->method('getRepeatUntil')->willReturn('+60 days');
@@ -117,6 +117,78 @@ class DatesFactoryTest extends TestCase
         $result = iterator_to_array($result);
 
         self::assertCount(16, $result);
+    }
+
+    #[Test]
+    public function returnsWeeklyWithConfiguredRepeatCountOfOne(): void
+    {
+        $import = self::createStub(Import::class);
+        $import->method('getRepeatUntil')->willReturn('+60 days');
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'weekdays' => [
+                'Monday',
+            ],
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1,
+            'repeatCount' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(1, $result);
+    }
+
+    #[Test]
+    public function returnsWeeklyWithConfiguredRepeatCountOfThree(): void
+    {
+        $import = self::createStub(Import::class);
+        $import->method('getRepeatUntil')->willReturn('+60 days');
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'weekdays' => [
+                'Monday',
+            ],
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1,
+            'repeatCount' => 3,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(3, $result);
+    }
+
+    #[Test]
+    public function returnsDailyWithConfiguredRepeatCount(): void
+    {
+        $import = self::createStub(Import::class);
+        $import->method('getRepeatUntil')->willReturn('+60 days');
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Daily',
+            'interval' => 1,
+            'repeatCount' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(1, $result);
     }
 
     #[Test]
