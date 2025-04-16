@@ -27,17 +27,27 @@ final class Date
     public function isInterval(): bool
     {
         return $this->isDaily()
-            || $this->isWeekly();
+            || $this->isWeekly()
+            || $this->isMonthly();
     }
 
     public function isDaily(): bool
     {
-        return $this->getFrequency() == 'Daily' && empty($this->data['weekdays']);
+        return $this->getFrequency() == 'Daily'
+            && empty($this->getWeekdays());
     }
 
     public function isWeekly(): bool
     {
-        return $this->getFrequency() == 'Weekly' && !empty($this->data['weekdays']);
+        return $this->getFrequency() == 'Weekly'
+            && !empty($this->getWeekdays());
+    }
+
+    public function isMonthly(): bool
+    {
+        return $this->getFrequency() == 'Monthly'
+            && !empty($this->getWeekday())
+            && $this->getDayOrdinal() > 0;
     }
 
     public function isAfter(DateTimeImmutable $comparison): bool
@@ -85,7 +95,17 @@ final class Date
      */
     public function getWeekdays(): array
     {
-        return $this->data['weekdays'];
+        return $this->data['weekdays'] ?? [];
+    }
+
+    public function getWeekday(): string
+    {
+        return $this->data['weekday'] ?? '';
+    }
+
+    public function getDayOrdinal(): int
+    {
+        return $this->data['dayOrdinal'] ?? 0;
     }
 
     public function getRepeatUntil(): DateTimeImmutable

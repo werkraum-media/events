@@ -99,6 +99,10 @@ final class DatesFactory
             return $this->createWeeklyDates($date, $canceled);
         }
 
+        if ($date->isMonthly()) {
+            return $this->createMonthlyDates($date, $canceled);
+        }
+
         return null;
     }
 
@@ -177,6 +181,42 @@ final class DatesFactory
                     $canceled
                 );
             }
+        }
+    }
+
+    /**
+     * @return Generator<Date>
+     */
+    private function createMonthlyDates(
+        DestinationDataDate $date,
+        bool $canceled
+    ): Generator {
+        $today = $this->getToday();
+        $timeZone = $date->getTimeZone();
+        $start = $date->getStart();
+        $end = $date->getEnd();
+        $until = $date->getRepeatUntil();
+
+        $dateToUse = $start->modify($date->getWeekday());
+        $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
+
+        $period = new DatePeriod($dateToUse, new DateInterval('P1M'), $until);
+        foreach ($period as $day) {
+            $day = $day->setTimezone($timeZone);
+            $day = $day->modify('first day of');
+            $day = $day->modify($date->getDayOrdinal() . ' ' . $date->getWeekday());
+            $formatted = $day->format('l');
+            if ($day < $today) {
+                $this->logger->debug('Date was in the past.', ['day' => $day]);
+                continue;
+            }
+
+            yield $this->createDateFromStartAndEnd(
+                $day,
+                $start,
+                $end,
+                $canceled
+            );
         }
     }
 
