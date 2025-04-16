@@ -1,0 +1,30 @@
+5.2.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Support destination.one `freq` property with `Monthly` value.
+
+  This states that the event should be repeated monthly.
+  This was not implemented yet, we only supported single, daily and weekly events.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
