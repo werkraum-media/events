@@ -22,6 +22,44 @@ class ImportsWithConfiguredRepeatUntilTest extends AbstractTestCase
     }
 
     #[Test]
+    public function recurringMonthlyFirstWeekday(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_events_domain_model_import')
+            ->update(
+                'tx_events_domain_model_import',
+                ['import_repeat_until' => '+90 days'],
+                ['uid' => '1']
+            )
+        ;
+        $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringMonthlyWithoutRepeatUntil.json') ?: '')]);
+
+        $this->executeCommand();
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsRecurringDatesMonthlyWithConfiguredRepeatUntil.php');
+        $this->assertEmptyLog();
+    }
+
+    #[Test]
+    public function recurringMonthlySecondWeekday(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_events_domain_model_import')
+            ->update(
+                'tx_events_domain_model_import',
+                ['import_repeat_until' => '+100 days'],
+                ['uid' => '1']
+            )
+        ;
+        $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithRecurringMonthlySecondWeekdayWithoutRepeatUntil.json') ?: '')]);
+
+        $this->executeCommand();
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsRecurringDatesMonthlySecondWeekdayWithConfiguredRepeatUntil.php');
+        $this->assertEmptyLog();
+    }
+
+    #[Test]
     public function recurringWeekly(): void
     {
         $this->getConnectionPool()

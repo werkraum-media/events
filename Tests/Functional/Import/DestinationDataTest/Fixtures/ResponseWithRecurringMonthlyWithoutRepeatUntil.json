@@ -1,0 +1,26 @@
+{
+    "status": "OK",
+    "count": 3,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100354481",
+            "id": "100354481",
+            "title": "Tüftlerzeit",
+            "timeIntervals": [
+                {
+                    "end": "2022-08-06T16:00:00+02:00",
+                    "freq": "Monthly",
+                    "interval": 1,
+                    "dayOrdinal": 1,
+                    "start": "2022-08-06T10:00:00+02:00",
+                    "tz": "Europe/Berlin",
+                    "weekday": "Saturday",
+                    "weekdays": []
+                }
+            ]
+        }
+    ]
+}
