@@ -192,6 +192,30 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
+    public function returnsMonthlyWithConfiguredRepeatCount(): void
+    {
+        $import = self::createStub(Import::class);
+        $import->method('getRepeatUntil')->willReturn('+60 days');
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Monthly',
+            'weekday' => 'Sunday',
+            'dayOrdinal' => 1,
+            'interval' => 1,
+            'repeatCount' => 52,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(52, $result);
+    }
+
+    #[Test]
     public function returnsSingleCanceledDate(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
