@@ -119,6 +119,8 @@ final class Date
             $repeatCountUnit = 'days';
         } elseif ($this->isWeekly()) {
             $repeatCountUnit = 'weeks';
+        } elseif ($this->isMonthly()) {
+            $repeatCountUnit = 'months';
         }
 
         if ($repeatCountUnit === '') {

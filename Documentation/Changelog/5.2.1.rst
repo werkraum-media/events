@@ -1,0 +1,28 @@
+5.2.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Add missing support of `repeatCount` property in combination with `Monthly` value
+  for `freq`.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
