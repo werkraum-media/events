@@ -62,55 +62,64 @@ final class FilesAssignment
         array $assets
     ): ObjectStorage {
         $images = new ObjectStorage();
-        $importFolder = $import->getFilesFolder();
 
         foreach ($assets as $mediaObject) {
             if ($this->isImage($mediaObject) === false) {
                 continue;
             }
 
-            $fileUrl = urldecode((string)$mediaObject['url']);
-            $orgFileNameSanitized = $this->createFileName($fileUrl, $importFolder);
-
-            $this->logger->info('File attached.', [$fileUrl, $orgFileNameSanitized]);
-
-            if ($importFolder->hasFile($orgFileNameSanitized)) {
-                $this->logger->info('File already exists.', [$orgFileNameSanitized]);
-            } elseif ($filename = $this->loadFile($fileUrl)) {
-                $this->logger->info('Adding file to FAL.', [$filename]);
-
-                // TODO: typo3/cms-core:14.0 Remove the fallback to old behaviour, only use new one.
-                $behaviour = OldDuplicationBehavior::REPLACE;
-                if (class_exists(DuplicationBehavior::class)) {
-                    $behaviour = DuplicationBehavior::REPLACE;
-                }
-
-                try {
-                    $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
-                } catch (ResultException $e) {
-                    $this->logger->warning('File for import had errors.', [$e]);
-                    continue;
-                }
-            } else {
-                continue;
+            $file = $this->importMediaObjectAsImage($import, $mediaObject);
+            if ($file instanceof File) {
+                $images->attach($this->getFileReference($event, $file, $mediaObject));
             }
-
-            if ($importFolder->hasFile($orgFileNameSanitized) === false) {
-                $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
-                continue;
-            }
-
-            $file = $importFolder->getStorage()->getFileInFolder($orgFileNameSanitized, $importFolder);
-            if (!$file instanceof File) {
-                $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
-                continue;
-            }
-
-            $this->updateMetadata($file, $mediaObject);
-            $images->attach($this->getFileReference($event, $file, $mediaObject));
         }
 
         return $images;
+    }
+
+    private function importMediaObjectAsImage(Import $import, array $mediaObject): ?File
+    {
+        $importFolder = $import->getFilesFolder();
+
+        $fileUrl = urldecode((string)$mediaObject['url']);
+        $orgFileNameSanitized = $this->createFileName($fileUrl, $importFolder);
+
+        $this->logger->info('File attached.', [$fileUrl, $orgFileNameSanitized]);
+
+        if ($importFolder->hasFile($orgFileNameSanitized)) {
+            $this->logger->info('File already exists.', [$orgFileNameSanitized]);
+        } elseif ($filename = $this->loadFile($fileUrl)) {
+            $this->logger->info('Adding file to FAL.', [$filename]);
+
+            // TODO: typo3/cms-core:14.0 Remove the fallback to old behaviour, only use new one.
+            $behaviour = OldDuplicationBehavior::REPLACE;
+            if (class_exists(DuplicationBehavior::class)) {
+                $behaviour = DuplicationBehavior::REPLACE;
+            }
+
+            try {
+                $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
+            } catch (ResultException $e) {
+                $this->logger->warning('File for import had errors.', [$e]);
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+        if ($importFolder->hasFile($orgFileNameSanitized) === false) {
+            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
+            return null;
+        }
+
+        $file = $importFolder->getStorage()->getFileInFolder($orgFileNameSanitized, $importFolder);
+        if (!$file instanceof File) {
+            $this->logger->warning('Could not find file.', [$orgFileNameSanitized]);
+            return null;
+        }
+
+        $this->updateMetadata($file, $mediaObject);
+        return $file;
     }
 
     private function createFileName(string $url, Folder $importFolder): string
