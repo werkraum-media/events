@@ -26,6 +26,7 @@ namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 use Exception;
 use Psr\Log\LoggerInterface;
 use SplFileInfo;
+use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior as OldDuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
@@ -33,6 +34,7 @@ use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Type\File\FileInfo;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Validation\ResultException;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -48,7 +50,8 @@ final class FilesAssignment
         LogManager $logManager,
         private readonly DataFetcher $dataFetcher,
         private readonly ResourceFactory $resourceFactory,
-        private readonly MetaDataRepository $metaDataRepository
+        private readonly MetaDataRepository $metaDataRepository,
+        private readonly ConfigurationManager $typo3ConfigurationManager,
     ) {
         $this->logger = $logManager->getLogger(self::class);
     }
@@ -95,6 +98,12 @@ final class FilesAssignment
             $behaviour = OldDuplicationBehavior::REPLACE;
             if (class_exists(DuplicationBehavior::class)) {
                 $behaviour = DuplicationBehavior::REPLACE;
+            }
+
+            $orgFileNameSanitized = $this->ensureFileNameOfImageMatchesMimeType($filename, $orgFileNameSanitized);
+            if ($orgFileNameSanitized === '') {
+                $this->logger->warning('Could not fix filename based on mime type.', [$orgFileNameSanitized]);
+                return null;
             }
 
             try {
@@ -222,5 +231,35 @@ final class FilesAssignment
 
         return ((string)$mediaObject['rel']) === 'default'
             && in_array($mediaObject['type'], $allowedMimeTypes);
+    }
+
+    private function ensureFileNameOfImageMatchesMimeType(string $filePath, string $fileName): string
+    {
+        $imageFileExtensions = $this->typo3ConfigurationManager->getConfigurationValueByPath('GFX/imagefile_ext');
+        if (is_string($imageFileExtensions) === false) {
+            return '';
+        }
+
+        $fileNameParts = pathinfo($fileName);
+        $imageFileExtensions = GeneralUtility::trimExplode(',', $imageFileExtensions);
+        $actualExtensions = (new FileInfo($filePath))->getMimeExtensions();
+
+        if (
+            array_key_exists('extension', $fileNameParts)
+            && in_array($fileNameParts['extension'], $imageFileExtensions, true)
+            && in_array($fileNameParts['extension'], $actualExtensions, true)
+        ) {
+            return $fileName;
+        }
+
+        foreach ($actualExtensions as $possibleExtension) {
+            if (in_array($possibleExtension, $imageFileExtensions, true) === false) {
+                continue;
+            }
+
+            return $fileNameParts['filename'] . '.' . $possibleExtension;
+        }
+
+        return '';
     }
 }
