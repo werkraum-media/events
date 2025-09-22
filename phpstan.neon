@@ -12,3 +12,6 @@ parameters:
       identifier: missingType.generics
     -
       identifier: missingType.iterableValue
+    -
+      identifier: catch.neverThrown
+      reportUnmatched: false

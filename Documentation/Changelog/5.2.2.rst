@@ -1,0 +1,32 @@
+5.2.2
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Skip import of events with file inconsistency.
+
+  Those would previously lead to a broken import, as TYPO3 would throw an unhandled
+  exception.
+
+  This is now catched, and converted to a warning log entry instead.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

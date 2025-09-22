@@ -95,6 +95,31 @@ final class ImportTest extends AbstractTestCase
         $this->assertEmptyLog();
     }
 
+    /**
+     * The file has a different file extension than mime type.
+     * This will throw an Exception within TYPO3.
+     *
+     * We expect the event to be imported, just the file should be missing.
+     */
+    #[Test]
+    public function importDoesntBreakDueToResourceConsistencyCheck(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
+
+        $requests = &$this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithBrokenResourceConsistencyCheck.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResourceConsistencyFailingImage.jpg') ?: ''),
+        ]);
+
+        $tester = $this->executeCommand();
+
+        self::assertSame(0, $tester->getStatusCode());
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportDoesntBreakWithBrokenImageFileName.php');
+        $this->assertMessageInLog('component="WerkraumMedia.Events.Service.DestinationDataImportService.FilesAssignment": File for import had errors.');
+        $this->assertMessageInLog('Mime-type \"image/png\" not allowed for file extension \"jpg\" (expected: image/jpeg).');
+    }
+
     #[Test]
     public function importDoesntBreakWithLongFileTitle(): void
     {
