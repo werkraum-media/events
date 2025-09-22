@@ -1,0 +1,52 @@
+{
+    "status": "OK",
+    "count": 1,
+    "overallcount": 50,
+    "channels": [],
+    "facetGroups": [],
+    "items": [
+        {
+            "global_id": "e_100347853",
+            "id": "100347853",
+            "title": "Allerlei Weihnachtliches (Heute mit Johannes Geißer)",
+            "type": "Event",
+            "media_objects": [
+                {
+                    "rel": "venuewebsite",
+                    "url": "http://schillerhaus.rudolstadt.de/",
+                    "latitude": null,
+                    "longitude": null,
+                    "value": ""
+                },
+                {
+                    "rel": "default",
+                    "url": "https://dam.destination.one/2946103/54efa355d16cf6fc9efe74c5891f5e9ce8d0996c20755db29c01d3533b09cb2e/.jpg",
+                    "type": "image/jpeg",
+                    "latitude": null,
+                    "longitude": null,
+                    "prio": 1,
+                    "width": 720,
+                    "height": 480,
+                    "id": "m_2946103",
+                    "value": ""
+                }
+            ],
+            "timeIntervals": [
+                {
+                    "weekdays": [],
+                    "start": "2099-12-19T15:00:00+01:00",
+                    "end": "2099-12-19T16:30:00+01:00",
+                    "tz": "Europe/Berlin",
+                    "interval": 1
+                }
+            ],
+            "numbers": [],
+            "name": "Schillerhaus Rudolstadt",
+            "features": [],
+            "source": {
+                "url": "http://destination.one/",
+                "value": "destination.one"
+            }
+        }
+    ]
+}

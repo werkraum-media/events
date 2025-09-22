@@ -34,6 +34,7 @@ use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Validation\ResultException;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Events\Domain\Model\Event;
@@ -84,7 +85,12 @@ final class FilesAssignment
                     $behaviour = DuplicationBehavior::REPLACE;
                 }
 
-                $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
+                try {
+                    $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
+                } catch (ResultException $e) {
+                    $this->logger->warning('File for import had errors.', [$e]);
+                    continue;
+                }
             } else {
                 continue;
             }
