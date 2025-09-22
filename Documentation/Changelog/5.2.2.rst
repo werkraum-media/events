@@ -14,12 +14,13 @@ Nothing
 Fixes
 -----
 
-* Skip import of events with file inconsistency.
+* Fix import of events with file inconsistency if possible.
 
   Those would previously lead to a broken import, as TYPO3 would throw an unhandled
   exception.
 
-  This is now catched, and converted to a warning log entry instead.
+  We now adjust the file extension to match mime type, for images only.
+  The exception, if still exists, is now catched, and converted to a warning log entry instead.
 
 Tasks
 -----

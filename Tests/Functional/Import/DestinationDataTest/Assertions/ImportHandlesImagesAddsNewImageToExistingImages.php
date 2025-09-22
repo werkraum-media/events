@@ -43,7 +43,7 @@ return [
             'name' => 'lutherkirche-jpg.jpg',
             'identifier_hash' => '8eca2f20c1226c3b1d2ec64418f10cb69926a7c0',
             'folder_hash' => 'dcb2fdd85835a5ae315fdd7ef5cb2b859d9ec437',
-            'sha1' => 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
+            'sha1' => '25d48546c2e250462a734197fbdf830614d5e3b7',
         ],
     ],
     'sys_file_reference' => [

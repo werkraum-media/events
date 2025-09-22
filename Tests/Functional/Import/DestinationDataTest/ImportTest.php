@@ -96,8 +96,30 @@ final class ImportTest extends AbstractTestCase
     }
 
     /**
-     * The file has a different file extension than mime type.
-     * This will throw an Exception within TYPO3.
+     * Files with different file extension than mime type will trigger a TYPO3 exception.
+     *
+     * We therefore try to fix the file extension to still import the file.
+     */
+    #[Test]
+    public function importFixesFileExtensionToMatchMimeType(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/DefaultImportConfiguration.php');
+
+        $requests = &$this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ResponseWithBrokenResourceConsistencyCheck.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/PngWithJpgFileExtension.jpg') ?: ''),
+        ]);
+
+        $tester = $this->executeCommand();
+
+        self::assertSame(0, $tester->getStatusCode());
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportFixesFileExtensionToMatchMimeType.php');
+        $this->assertEmptyLog();
+    }
+
+    /**
+     * The file has a different file extension than mime type and matching extension is not supported image extension.
      *
      * We expect the event to be imported, just the file should be missing.
      */
@@ -116,8 +138,7 @@ final class ImportTest extends AbstractTestCase
         self::assertSame(0, $tester->getStatusCode());
 
         $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportDoesntBreakWithBrokenImageFileName.php');
-        $this->assertMessageInLog('component="WerkraumMedia.Events.Service.DestinationDataImportService.FilesAssignment": File for import had errors.');
-        $this->assertMessageInLog('Mime-type \"image/png\" not allowed for file extension \"jpg\" (expected: image/jpeg).');
+        $this->assertMessageInLog('component="WerkraumMedia.Events.Service.DestinationDataImportService.FilesAssignment": Could not fix filename based on mime type.');
     }
 
     #[Test]
