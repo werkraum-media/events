@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use WerkraumMedia\Events\Domain\Model\Location;
-use WerkraumMedia\Events\Domain\Repository\LocationRepository;
+use WerkraumMedia\Events\Domain\Repository\LocationRepositoryInterface;
 
 final class LocationAssignment
 {
     public function __construct(
-        private readonly LocationRepository $repository
+        private readonly LocationRepositoryInterface $repository
     ) {
     }
 

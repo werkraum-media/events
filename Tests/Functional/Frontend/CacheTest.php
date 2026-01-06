@@ -36,6 +36,8 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 final class CacheTest extends AbstractFrontendTestCase
 {
+    const HTTP_DATE_FORMAT_RFC7231 = 'D, d M Y H:i:s \\G\\M\\T';
+
     protected function setUp(): void
     {
         $this->configurationToUseInTestInstance = [
@@ -281,7 +283,7 @@ final class CacheTest extends AbstractFrontendTestCase
 
         $expectedExpires = $end
             ->setTimezone(new DateTimeZone('GMT'))
-            ->format(DateTimeImmutable::RFC7231)
+            ->format(self::HTTP_DATE_FORMAT_RFC7231)
         ;
         self::assertSame($expectedExpires, $response->getHeaderLine('Expires'));
 
