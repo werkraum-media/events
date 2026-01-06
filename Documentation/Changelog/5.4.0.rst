@@ -1,0 +1,28 @@
+5.4.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+* Keep working dev state by updating `codappix/typo3-php-datasets` to new major version.
+  We still need 1.4 for older TYPO3/PHP versions.
+
+Deprecation
+-----------
+
+Nothing

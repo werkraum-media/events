@@ -62,7 +62,7 @@
         }
     },
     "require-dev": {
-        "codappix/typo3-php-datasets": "^1.4",
+        "codappix/typo3-php-datasets": "^1.4 || ^2.0",
         "cweagans/composer-patches": "^1.7",
         "dg/bypass-finals": "^1.5",
         "friendsofphp/php-cs-fixer": "^3.38",
