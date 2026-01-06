@@ -23,26 +23,19 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Tests\Unit\Service\DestinationDataImportService;
 
-use DG\BypassFinals;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Events\Domain\Model\Location;
-use WerkraumMedia\Events\Domain\Repository\LocationRepository;
+use WerkraumMedia\Events\Domain\Repository\LocationRepositoryInterface;
 use WerkraumMedia\Events\Service\DestinationDataImportService\LocationAssignment;
 
 final class LocationAssignmentTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        BypassFinals::enable();
-        parent::setUp();
-    }
-
     #[Test]
     public function canBeCreated(): void
     {
-        $repository = self::createStub(LocationRepository::class);
+        $repository = self::createStub(LocationRepositoryInterface::class);
         $subject = new LocationAssignment(
             $repository
         );
@@ -63,7 +56,7 @@ final class LocationAssignmentTest extends TestCase
         $latitude,
         $longitude
     ): void {
-        $repository = self::createStub(LocationRepository::class);
+        $repository = self::createStub(LocationRepositoryInterface::class);
         $repository->method('findOneByGlobalId')->willReturn(null);
 
         $subject = new LocationAssignment(

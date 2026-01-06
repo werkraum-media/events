@@ -9,7 +9,7 @@ Nothing
 Features
 --------
 
-Nothing
+* Add support for PHP 8.5.
 
 Fixes
 -----
@@ -21,6 +21,9 @@ Tasks
 
 * Keep working dev state by updating `codappix/typo3-php-datasets` to new major version.
   We still need 1.4 for older TYPO3/PHP versions.
+
+* Get rid of `dg/bypass-finals` for development, as this leads to issues and more maintenance, see: https://github.com/sebastianbergmann/phpunit/issues/5736#issuecomment-2097701770
+  We now use better architecture, e.g. interfaces for stubbing instead.
 
 Deprecation
 -----------
