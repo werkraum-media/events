@@ -15,6 +15,9 @@ Features
   Those will be logged, and no longer break the whole import.
   The import will continue with next event.
 
+* Support paging of destination.one API. That way we remove the rest_limit
+  configuration option and always import all available events.
+
 Fixes
 -----
 

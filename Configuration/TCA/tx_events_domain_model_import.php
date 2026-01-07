@@ -31,7 +31,6 @@ return [
                 'rest_license_key',
                 'rest_experience',
                 'rest_mode',
-                'rest_limit',
                 'rest_search_query',
                 '--div--;LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.div.import',
                 'import_repeat_until',
@@ -195,22 +194,6 @@ return [
                 'default' => 'next_months,12',
                 'size' => 50,
                 'max' => 255,
-            ],
-        ],
-        'rest_limit' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_limit',
-            'description' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.rest_limit.description',
-            'config' => [
-                'type' => 'number',
-                'format' => 'integer',
-                'default' => '500',
-                'size' => 50,
-                'required' => true,
-                'range' => [
-                    'lower' => 0,
-                    'upper' => 5000,
-                ],
             ],
         ],
         'rest_search_query' => [

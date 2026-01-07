@@ -90,12 +90,6 @@
             <trans-unit id="tx_events_domain_model_import.rest_mode.description">
                 <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-mode.html</source>
             </trans-unit>
-            <trans-unit id="tx_events_domain_model_import.rest_limit">
-                <source>Limit</source>
-            </trans-unit>
-            <trans-unit id="tx_events_domain_model_import.rest_limit.description">
-                <source>See: https://developer.et4.de/reference/current/#eT4META-search-param-limit.html</source>
-            </trans-unit>
             <trans-unit id="tx_events_domain_model_import.rest_search_query">
                 <source>Search Query</source>
             </trans-unit>
