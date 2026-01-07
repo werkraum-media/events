@@ -79,7 +79,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             '',
             0,
             null,
@@ -123,7 +122,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             '',
             10
         );
@@ -146,7 +144,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             '',
             0,
             $category
@@ -169,7 +166,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             '',
             0,
             null,
@@ -194,7 +190,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             '',
             0,
             null,
@@ -219,7 +214,6 @@ class ImportTest extends TestCase
             '',
             '',
             'next_months,12',
-            500,
             'name:"Test"'
         );
 

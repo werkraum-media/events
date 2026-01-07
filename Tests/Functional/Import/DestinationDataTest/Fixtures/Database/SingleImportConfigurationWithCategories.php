@@ -15,7 +15,6 @@ return [
             'region' => '1',
             'rest_experience' => 'beispielstadt',
             'rest_license_key' => 'example-license',
-            'rest_limit' => '3',
             'rest_mode' => 'next_months,12',
         ],
     ],

@@ -83,24 +83,24 @@ final class DestinationDataImportService
         $this->logger->info('Starting Destination Data Import Service');
 
         try {
-            $data = $this->dataFetcher->fetchSearchResult($import);
+            $events = $this->dataFetcher->fetchSearchResult($import);
         } catch (Exception) {
             $this->logger->error('Could not receive data.');
             return 1;
         }
 
-        return $this->processData($data);
+        return $this->processData($events);
     }
 
-    public function processData(array $data): int
+    public function processData(iterable $events): int
     {
-        $this->logger->info('Processing json ' . count($data['items']));
+        $this->logger->info('Processing events.');
 
         // Get selected region
         $selectedRegion = $this->import->getRegion();
         $statusCode = 0;
 
-        foreach ($data['items'] as $event) {
+        foreach ($events as $event) {
             try {
                 $this->importSingleEvent($event, $selectedRegion);
             } catch (Throwable $e) {

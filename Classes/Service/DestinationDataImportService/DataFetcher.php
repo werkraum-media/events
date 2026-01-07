@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use Exception;
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Log\LogManager;
-use WerkraumMedia\Events\Domain\Model\Import;
+use TYPO3\CMS\Core\Utility\MathUtility;
+use WerkraumMedia\Events\Domain\DestinationData\ImportInterface;
 
 /**
  * Provides API to fetch data from remote.
@@ -27,33 +28,32 @@ final class DataFetcher
         private readonly UrlFactory $urlFactory,
         LogManager $logManager,
         private readonly RequestFactoryInterface $requestFactory,
-        private readonly GuzzleClientInterface $client
+        private readonly ClientInterface $client
     ) {
         $this->logger = $logManager->getLogger(self::class);
     }
 
-    public function fetchSearchResult(Import $import): array
+    public function fetchSearchResult(ImportInterface $import): iterable
     {
-        $url = $this->urlFactory->createSearchResultUrl($import);
+        return $this->paginate(
+            $this->urlFactory->createSearchResultUrl($import)
+        );
+    }
 
+    public function fetchImage(string $url): ResponseInterface
+    {
+        return $this->client->sendRequest(
+            $this->requestFactory->createRequest('GET', $url)
+        );
+    }
+
+    private function fetchItems(string $url): array
+    {
         $this->logger->info('Try to get data from ' . $url);
 
-        if ($this->client instanceof ClientInterface) {
-            // Keep after TYPO3 10 was dropped
-            $response = $this->client->sendRequest(
-                $this->requestFactory->createRequest(
-                    'GET',
-                    $url
-                )
-            );
-        } else {
-            // Drop once TYPO3 10 support was dropped
-            $response = $this->client->request(
-                'GET',
-                $url,
-                []
-            );
-        }
+        $response = $this->client->sendRequest(
+            $this->requestFactory->createRequest('GET', $url)
+        );
 
         $jsonContent = $response->getBody()->__toString();
 
@@ -62,28 +62,55 @@ final class DataFetcher
             throw new Exception('No valid JSON fetched, got: "' . $jsonContent . '".', 1639495835);
         }
 
-        $this->logger->info('Received data with ' . count($jsonResponse['items']) . ' items');
-
         return $jsonResponse;
     }
 
-    public function fetchImage(string $url): ResponseInterface
+    private function paginate(string $url, ?int $remainingCount = null, int $offset = 0): iterable
     {
-        // Keep after TYPO3 10 was dropped
-        if ($this->client instanceof ClientInterface) {
-            return $this->client->sendRequest(
-                $this->requestFactory->createRequest(
-                    'GET',
-                    $url
-                )
-            );
+        if ($remainingCount !== null) {
+            $url = $this->adjustToOffset($url, $offset);
         }
 
-        // Drop once TYPO3 10 support was dropped
-        return $this->client->request(
-            'GET',
-            $url,
-            []
-        );
+        $jsonResponse = $this->fetchItems($url);
+
+        if ($remainingCount === null) {
+            $overallCount = MathUtility::forceIntegerInRange($jsonResponse['overallcount'], 0);
+            $this->logger->info('Received data with ' . $overallCount . ' items in total');
+            if ($overallCount === 0) {
+                return;
+            }
+
+            $remainingCount = $overallCount;
+        }
+
+        $currentCount = count($jsonResponse['items']);
+        $this->logger->info('Received data with ' . $currentCount . ' items');
+        yield from $jsonResponse['items'];
+
+        if ($currentCount === 0) {
+            return;
+        }
+
+        $remainingCount -= $currentCount;
+        if ($remainingCount <= 0) {
+            return;
+        }
+
+        $this->logger->info('Received data with ' . $remainingCount . ' items left');
+        yield from $this->paginate($url, $remainingCount, $offset + $currentCount);
+    }
+
+    private function adjustToOffset(string $url, int $offset): string
+    {
+        if ($offset === 0) {
+            return $url;
+        }
+
+        $tempUrl = new Uri($url);
+        $queryParams = [];
+        parse_str($tempUrl->getQuery(), $queryParams);
+        $queryParams['offset'] = $offset;
+
+        return $tempUrl->withQuery(http_build_query($queryParams))->__toString();
     }
 }

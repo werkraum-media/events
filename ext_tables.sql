@@ -86,7 +86,6 @@ CREATE TABLE tx_events_domain_model_import (
     rest_license_key text,
     rest_experience varchar(1024) DEFAULT '' NOT NULL,
     rest_mode varchar(1024) DEFAULT 'next_months,12' NOT NULL,
-    rest_limit int(11) unsigned DEFAULT '500' NOT NULL,
     rest_search_query text,
 
     import_features tinyint(4) DEFAULT '0' NOT NULL,

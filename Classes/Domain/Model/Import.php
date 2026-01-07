@@ -6,13 +6,14 @@ namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
+use WerkraumMedia\Events\Domain\DestinationData\ImportInterface;
 use WerkraumMedia\Events\Domain\Model\Import\Features;
 
 /**
  * Actual request to import.
  * Includes all configuration specific to a concrete import.
  */
-class Import extends AbstractDomainObject
+class Import extends AbstractDomainObject implements ImportInterface
 {
     protected ?int $categoriesPid;
 
@@ -24,7 +25,6 @@ class Import extends AbstractDomainObject
         protected string $restLicenseKey,
         protected string $restExperience,
         protected string $restMode = 'next_months,12',
-        protected int $restLimit = 500,
         protected string $restSearchQuery = '',
         int $categoriesPid = 0,
         protected ?Category $categoryParent = null,
@@ -105,11 +105,6 @@ class Import extends AbstractDomainObject
     public function getRestMode(): string
     {
         return $this->restMode;
-    }
-
-    public function getRestLimit(): int
-    {
-        return (int)$this->restLimit;
     }
 
     public function getRestSearchQuery(): string

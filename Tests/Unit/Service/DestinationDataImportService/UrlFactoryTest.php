@@ -52,29 +52,27 @@ class UrlFactoryTest extends TestCase
                     $import->method('getRestLicenseKey')->willReturn('licenseKey');
                     $import->method('getRestExperience')->willReturn('experience');
                     $import->method('getRestMode')->willReturn('restMode');
-                    $import->method('getRestLimit')->willReturn(500);
                     $import->method('getRestSearchQuery')->willReturn('');
 
                     return $import;
                 })(),
-                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&mode=restMode&limit=500&template=ET2014A.json',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&mode=restMode&template=ET2014A.json&limit=500&sort=globalid+asc%2C+title+asc',
             ],
             'All missing' => [
                 'import' => (function () {
                     return self::createStub(Import::class);
                 })(),
-                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?type=Event&template=ET2014A.json',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?type=Event&template=ET2014A.json&limit=500&sort=globalid+asc%2C+title+asc',
             ],
             'Some missing' => [
                 'import' => (function () {
                     $import = self::createStub(Import::class);
                     $import->method('getRestLicenseKey')->willReturn('licenseKey');
                     $import->method('getRestExperience')->willReturn('experience');
-                    $import->method('getRestLimit')->willReturn(500);
 
                     return $import;
                 })(),
-                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&limit=500&template=ET2014A.json',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&licensekey=licenseKey&type=Event&template=ET2014A.json&limit=500&sort=globalid+asc%2C+title+asc',
             ],
             'With search query' => [
                 'import' => (function () {
@@ -84,7 +82,7 @@ class UrlFactoryTest extends TestCase
 
                     return $import;
                 })(),
-                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&type=Event&template=ET2014A.json&q=name%3A%22Test+Something%22',
+                'expectedResult' => 'http://meta.et4.de/rest.ashx/search/?experience=experience&type=Event&template=ET2014A.json&q=name%3A%22Test+Something%22&limit=500&sort=globalid+asc%2C+title+asc',
             ],
         ];
     }
