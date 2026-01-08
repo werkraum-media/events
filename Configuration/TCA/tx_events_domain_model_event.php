@@ -75,7 +75,7 @@ return [
     'palettes' => [
         'source' => [
             'label' => $l10nPath . ':tx_events_domain_model_event.palette.source',
-            'showitem' => 'source_name, source_url',
+            'showitem' => 'source_name, source_url, import_configuration',
         ],
     ],
     'columns' => [
@@ -190,6 +190,22 @@ return [
             'label' => $l10nPath . ':tx_events_domain_model_event.source_url',
             'config' => [
                 'type' => 'link',
+                'readOnly' => true,
+            ],
+        ],
+        'import_configuration' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.import_configuration',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_events_domain_model_import',
+                'items' => [
+                    [
+                        'value' => '0',
+                        'label' => $l10nPath . ':tx_events_domain_model_event.import_configuration.none',
+                    ],
+                ],
                 'readOnly' => true,
             ],
         ],

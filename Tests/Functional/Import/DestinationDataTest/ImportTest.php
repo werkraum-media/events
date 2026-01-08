@@ -595,4 +595,28 @@ final class ImportTest extends AbstractTestCase
             'Error happened while importing event "Adventliche Orgelmusik (Orgel: KMD Frank Bettenhausen)" with global id: e_100350503, got error: Exception from event handler within event.',
         );
     }
+
+    #[Test]
+    public function importsAssociatesEventWithImport(): void
+    {
+        $this->setDateAspect(new DateTimeImmutable('2021-07-13', new DateTimeZone('Europe/Berlin')));
+
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfiguration.php');
+
+        $requests = &$this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/Response.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+        ]);
+        $tester = $this->executeCommand();
+
+        self::assertSame(0, $tester->getStatusCode());
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/ImportsAssociatesEventWithImport.php');
+
+        $this->assertEmptyLog();
+    }
 }
