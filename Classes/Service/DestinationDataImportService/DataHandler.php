@@ -63,4 +63,24 @@ final class DataHandler
             ]);
         }
     }
+
+    public function removeEvents(int ... $uidsOfEventsToDelete): void
+    {
+        $commands = [
+            'tx_events_domain_model_event' => array_fill_keys($uidsOfEventsToDelete, [
+                'delete' => '1',
+            ]),
+        ];
+
+        $this->logger->debug('Remove events.', $commands);
+        $dataHandler = GeneralUtility::makeInstance(Typo3DataHandler::class);
+        $dataHandler->start([], $commands);
+        $dataHandler->process_cmdmap();
+
+        if ($dataHandler->errorLog !== []) {
+            $this->logger->error('Error during removing of events.', [
+                'errors' => $dataHandler->errorLog,
+            ]);
+        }
+    }
 }

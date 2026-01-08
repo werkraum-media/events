@@ -23,6 +23,11 @@ Features
   This adds some debugging info for editors and admins, and paves the way for future
   features.
 
+* Cleanup no longer existing events during import.
+  Those are deleted via TYPO3 API (soft deleted).
+  Files are therefore kept until those records are finally removed and files are
+  clean up by separate cleanup job.
+
 Fixes
 -----
 

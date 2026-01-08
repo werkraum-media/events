@@ -619,4 +619,46 @@ final class ImportTest extends AbstractTestCase
 
         $this->assertEmptyLog();
     }
+
+    #[Test]
+    public function removesMissingEvents(): void
+    {
+        $this->setDateAspect(new DateTimeImmutable('2021-07-13', new DateTimeZone('Europe/Berlin')));
+
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfiguration.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/ExistingEventsForRemovesMissingEvents.php');
+
+        copy(__DIR__ . '/Fixtures/ExampleImage.jpg', $this->fileImportPath . '/theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg');
+        copy(__DIR__ . '/Fixtures/ExampleImage.jpg', $this->fileImportPath . '/tueftlerzeit-sfz-rudolstadt-jpg.jpg');
+        copy(__DIR__ . '/Fixtures/ExampleImage.jpg', $this->fileImportPath . '/for-removal.jpg');
+
+        $requests = &$this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/Response.json') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/ExampleImage.jpg') ?: ''),
+        ]);
+        $tester = $this->executeCommand();
+
+        self::assertSame(0, $tester->getStatusCode());
+
+        $this->assertPHPDataSet(__DIR__ . '/Assertions/RemovesMissingEvents.php');
+
+        $importedFiles = GeneralUtility::getFilesInDir($this->fileImportPath);
+        self::assertIsArray($importedFiles, 'Failed to retrieve imported files from filesystem.');
+        self::assertSame(
+            [
+                'for-removal.jpg', // Kept as we only soft delete records
+                'lutherkirche-jpg.jpg',
+                'theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg',
+                'tueftlerzeit-sfz-rudolstadt-jpg.jpg',
+            ],
+            array_values($importedFiles),
+            'Got unexpected number of files'
+        );
+
+        $this->assertEmptyLog();
+    }
 }

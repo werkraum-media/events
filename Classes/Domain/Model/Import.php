@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Domain\Model;
 
+use Exception;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 use WerkraumMedia\Events\Domain\DestinationData\ImportInterface;
@@ -45,6 +46,15 @@ class Import extends AbstractDomainObject implements ImportInterface
             $featuresPid = null;
         }
         $this->featuresPid = $featuresPid;
+    }
+
+    public function getUid(): int
+    {
+        if ($this->uid > 0) {
+            return $this->uid;
+        }
+
+        throw new Exception('Should never happen, the UID is not a positive number, but we only fetch stored imports.', 1768225182);
     }
 
     public function getStoragePid(): int
