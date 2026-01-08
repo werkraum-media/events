@@ -225,6 +225,7 @@ final class DestinationDataImportService
         $this->dataHandler->updateEvent(
             $eventUid,
             [
+                new Assignment('import_configuration', (string)$this->import->getUid()),
                 new Assignment('keywords', implode(', ', $event['keywords'] ?? [])),
                 $this->getCategories($event['categories'] ?? []),
                 $this->getFeatures($event['features'] ?? []),

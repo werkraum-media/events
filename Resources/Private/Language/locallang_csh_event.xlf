@@ -48,6 +48,12 @@
             <trans-unit id="tx_events_domain_model_event.source_url">
                 <source>Source URL</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.import_configuration">
+                <source>Import Configuration</source>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.import_configuration.none">
+                <source>None</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.slug">
                 <source>Slug</source>
             </trans-unit>

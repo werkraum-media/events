@@ -63,6 +63,14 @@
                 <source>Source URL</source>
                 <target>URL der Quelle</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.import_configuration">
+                <source>Import Configuration</source>
+                <target>Import Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.import_configuration.none">
+                <source>None</source>
+                <target>Keine</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.slug">
                 <source>Slug</source>
                 <target>URL-Segment</target>

@@ -18,6 +18,11 @@ Features
 * Support paging of destination.one API. That way we remove the rest_limit
   configuration option and always import all available events.
 
+* Associate imported events with the corresponding import configuration.
+  This is exposed as read only field in TYPO3 backend.
+  This adds some debugging info for editors and admins, and paves the way for future
+  features.
+
 Fixes
 -----
 
