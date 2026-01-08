@@ -23,6 +23,7 @@ use WerkraumMedia\Events\Domain\Repository\EventRepository;
 use WerkraumMedia\Events\Domain\Repository\OrganizerRepository;
 use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment;
 use WerkraumMedia\Events\Service\DestinationDataImportService\CategoriesAssignment\Import as CategoryImport;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Cleanup;
 use WerkraumMedia\Events\Service\DestinationDataImportService\DataFetcher;
 use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler;
 use WerkraumMedia\Events\Service\DestinationDataImportService\DataHandler\Assignment;
@@ -55,6 +56,7 @@ final class DestinationDataImportService
         private readonly Slugger $slugger,
         private readonly CacheManager $cacheManager,
         private readonly DataHandler $dataHandler,
+        private readonly Cleanup $cleanup,
         private readonly EventDispatcher $eventDispatcher,
         LogManager $logManager,
     ) {
@@ -100,9 +102,12 @@ final class DestinationDataImportService
         $selectedRegion = $this->import->getRegion();
         $statusCode = 0;
 
+        $importedIds = [];
+
         foreach ($events as $event) {
             try {
                 $this->importSingleEvent($event, $selectedRegion);
+                $importedIds[] = $this->tmpCurrentEvent->getGlobalId();
             } catch (Throwable $e) {
                 $statusCode = 1;
                 $this->logger->error(sprintf(
@@ -126,6 +131,9 @@ final class DestinationDataImportService
                 unset($eventObject);
             }
         }
+
+        $this->cleanup->removeNoLongerExistingEvents($this->import->getUid(), ... $importedIds);
+        unset($importedIds);
 
         $this->logger->info('Flushing cache');
         $this->cacheManager->clearAllCacheTags();
