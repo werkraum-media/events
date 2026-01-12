@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service;
 
 use Exception;
+use Throwable;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
@@ -97,111 +98,139 @@ final class DestinationDataImportService
 
         // Get selected region
         $selectedRegion = $this->import->getRegion();
+        $statusCode = 0;
 
         foreach ($data['items'] as $event) {
-            $this->logger->info('Processing event ' . substr((string)$event['title'], 0, 20));
+            try {
+                $this->importSingleEvent($event, $selectedRegion);
+            } catch (Throwable $e) {
+                $statusCode = 1;
+                $this->logger->error(sprintf(
+                    'Error happened while importing event "%s" with global id: %s, got error: %s',
+                    $event['title'],
+                    $event['global_id'],
+                    $e->getMessage(),
+                ), [
+                    'event' => $event,
+                    'exception' => $e,
+                ]);
 
-            // Event already exists? If not create one!
-            $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
-            $existingEvent = clone $this->tmpCurrentEvent;
-
-            // Set language UID
-            $this->tmpCurrentEvent->setLanguageUid(-1);
-
-            // Set selected Region
-            if ($selectedRegion instanceof Region) {
-                $this->tmpCurrentEvent->setRegion($selectedRegion);
+                // Ensure we do not keep broken data.
+                $event = $this->eventRepository->findOneBy(['globalId' => $event['global_id']]);
+                if ($event instanceof Event) {
+                    $this->eventRepository->remove($event);
+                    $this->persistenceManager->persistAll();
+                }
             }
-
-            // Set Title
-            $this->tmpCurrentEvent->setTitle(substr((string)$event['title'], 0, 254));
-
-            // Set Highlight (Is only set in rest if true)
-            if ($event['highlight'] ?? false) {
-                $this->tmpCurrentEvent->setHighlight($event['highlight']);
-            }
-
-            // Set Texts
-            if ($event['texts'] ?? false) {
-                $this->setTexts($event['texts']);
-            }
-
-            $this->tmpCurrentEvent->setLocation(
-                $this->locationAssignment->getLocation($event)
-            );
-
-            // Set Organizer
-            if ($event['addresses'] ?? false) {
-                $this->setOrganizer($event['addresses']);
-            }
-
-            // Set Social
-            if ($event['media_objects'] ?? false) {
-                $this->setSocial($event['media_objects']);
-            }
-
-            if ($event['web'] ?? false) {
-                $this->tmpCurrentEvent->setWeb($event['web']);
-            }
-
-            // Set Tickets
-            if ($event['media_objects'] ?? false) {
-                $this->setTickets($event['media_objects']);
-            }
-
-            // Set Dates
-            if ($event['timeIntervals'] ?? false) {
-                $this->setDates(
-                    $event['timeIntervals'],
-                    (bool)$this->getAttributeValue($event, 'DETAILS_ABGESAGT')
-                );
-            }
-
-            // Set Assets
-            if ($event['media_objects'] ?? false) {
-                $this->setAssets($event['media_objects']);
-            }
-
-            if ($event['source'] ?? false) {
-                $this->setSource($event['source']);
-            }
-
-            $this->eventDispatcher->dispatch(new EventImportEvent(
-                $existingEvent,
-                $this->tmpCurrentEvent
-            ));
-
-            // Update and persist
-            $this->logger->info('Persist database');
-            $this->eventRepository->update($this->tmpCurrentEvent);
-            $this->persistenceManager->persistAll();
-
-            // Apply changes via DataHandler (The new way)
-            $eventUid = $this->tmpCurrentEvent->getUid();
-            if (is_int($eventUid) === false) {
-                throw new Exception('Could not persist and fetch uid of event.', 1701244570);
-            }
-
-            $this->logger->info('Apply changes via DataHandler');
-            $this->dataHandler->updateEvent(
-                $eventUid,
-                [
-                    new Assignment('keywords', implode(', ', $event['keywords'] ?? [])),
-                    $this->getCategories($event['categories'] ?? []),
-                    $this->getFeatures($event['features'] ?? []),
-                ]
-            );
-
-            $this->logger->info('Update slugs');
-            $this->slugger->update('tx_events_domain_model_event');
-            $this->slugger->update('tx_events_domain_model_date');
         }
 
         $this->logger->info('Flushing cache');
         $this->cacheManager->clearAllCacheTags();
 
         $this->logger->info('Finished import');
-        return 0;
+        return $statusCode;
+    }
+
+    private function importSingleEvent(
+        array $event,
+        ?Region $selectedRegion,
+    ): void {
+        $this->logger->info('Processing event ' . substr((string)$event['title'], 0, 20));
+
+        // Event already exists? If not create one!
+        $this->tmpCurrentEvent = $this->getOrCreateEvent($event['global_id'], $event['title']);
+        $existingEvent = clone $this->tmpCurrentEvent;
+
+        // Set language UID
+        $this->tmpCurrentEvent->setLanguageUid(-1);
+
+        // Set selected Region
+        if ($selectedRegion instanceof Region) {
+            $this->tmpCurrentEvent->setRegion($selectedRegion);
+        }
+
+        // Set Title
+        $this->tmpCurrentEvent->setTitle(substr((string)$event['title'], 0, 254));
+
+        // Set Highlight (Is only set in rest if true)
+        if ($event['highlight'] ?? false) {
+            $this->tmpCurrentEvent->setHighlight($event['highlight']);
+        }
+
+        // Set Texts
+        if ($event['texts'] ?? false) {
+            $this->setTexts($event['texts']);
+        }
+
+        $this->tmpCurrentEvent->setLocation(
+            $this->locationAssignment->getLocation($event)
+        );
+
+        // Set Organizer
+        if ($event['addresses'] ?? false) {
+            $this->setOrganizer($event['addresses']);
+        }
+
+        // Set Social
+        if ($event['media_objects'] ?? false) {
+            $this->setSocial($event['media_objects']);
+        }
+
+        if ($event['web'] ?? false) {
+            $this->tmpCurrentEvent->setWeb($event['web']);
+        }
+
+        // Set Tickets
+        if ($event['media_objects'] ?? false) {
+            $this->setTickets($event['media_objects']);
+        }
+
+        // Set Dates
+        if ($event['timeIntervals'] ?? false) {
+            $this->setDates(
+                $event['timeIntervals'],
+                (bool)$this->getAttributeValue($event, 'DETAILS_ABGESAGT')
+            );
+        }
+
+        // Set Assets
+        if ($event['media_objects'] ?? false) {
+            $this->setAssets($event['media_objects']);
+        }
+
+        if ($event['source'] ?? false) {
+            $this->setSource($event['source']);
+        }
+
+        $this->eventDispatcher->dispatch(new EventImportEvent(
+            $existingEvent,
+            $this->tmpCurrentEvent
+        ));
+
+        // Update and persist
+        $this->logger->info('Persist database');
+        $this->eventRepository->update($this->tmpCurrentEvent);
+        $this->persistenceManager->persistAll();
+
+        // Apply changes via DataHandler (The new way)
+        $eventUid = $this->tmpCurrentEvent->getUid();
+        if (is_int($eventUid) === false) {
+            throw new Exception('Could not persist and fetch uid of event.', 1701244570);
+        }
+
+        $this->logger->info('Apply changes via DataHandler');
+        $this->dataHandler->updateEvent(
+            $eventUid,
+            [
+                new Assignment('keywords', implode(', ', $event['keywords'] ?? [])),
+                $this->getCategories($event['categories'] ?? []),
+                $this->getFeatures($event['features'] ?? []),
+            ]
+        );
+
+        $this->logger->info('Update slugs');
+        $this->slugger->update('tx_events_domain_model_event');
+        $this->slugger->update('tx_events_domain_model_date');
     }
 
     private function getCategories(array $categories): Assignment

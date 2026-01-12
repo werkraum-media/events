@@ -6,12 +6,14 @@ namespace WerkraumMedia\Events\Tests\Functional\Import\DestinationDataTest;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Exception;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestDox;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Command\ImportDestinationDataViaAllConfigruationsCommand;
+use WerkraumMedia\Events\Service\DestinationDataImportService\Events\EventImportEvent;
 
 #[TestDox('DestinationData import')]
 final class ImportTest extends AbstractTestCase
@@ -559,5 +561,38 @@ final class ImportTest extends AbstractTestCase
         );
 
         $this->assertEmptyLog();
+    }
+
+    #[Test]
+    public function handlesExceptionDuringEventImport(): void
+    {
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleImportConfigurationWithoutRegion.php');
+        $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/SingleCategory.php');
+
+        $this->addEventListener(EventImportEvent::class, function (EventImportEvent $event): void {
+            throw new Exception('Exception from event handler within event.', 1768210296);
+        });
+
+        $this->setUpResponses([
+            new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/Response.json') ?: ''),
+        ]);
+        $tester = $this->executeCommand();
+
+        self::assertSame(1, $tester->getStatusCode());
+
+        $this->assertDoesNotHaveRecordsInTable('tx_events_domain_model_partner');
+        $this->assertDoesNotHaveRecordsInTable('tx_events_domain_model_location');
+        $this->assertDoesNotHaveRecordsInTable('tx_events_domain_model_event');
+        $this->assertDoesNotHaveRecordsInTable('tx_events_domain_model_date');
+
+        $this->assertMessageInLog(
+            'Error happened while importing event "Allerlei Weihnachtliches (Heute mit Johannes Geißer)" with global id: e_100347853, got error: Exception from event handler within event.',
+        );
+        $this->assertMessageInLog(
+            'Error happened while importing event "Tüftlerzeit" with global id: e_100354481, got error: Exception from event handler within event.',
+        );
+        $this->assertMessageInLog(
+            'Error happened while importing event "Adventliche Orgelmusik (Orgel: KMD Frank Bettenhausen)" with global id: e_100350503, got error: Exception from event handler within event.',
+        );
     }
 }
