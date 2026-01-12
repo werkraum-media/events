@@ -25,7 +25,6 @@ namespace WerkraumMedia\Events\Tests\Functional;
 
 use Codappix\Typo3PhpDatasets\TestingFramework;
 use DateTimeImmutable;
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -123,8 +122,6 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         $container = $this->getContainer();
         if ($container instanceof Container) {
             $container->set(ClientInterface::class, $client);
-            // For TYPO3 10 support
-            $container->set(GuzzleClientInterface::class, $client);
         }
 
         return $requests;
