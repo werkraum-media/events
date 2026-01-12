@@ -115,12 +115,15 @@ final class DestinationDataImportService
                     'exception' => $e,
                 ]);
 
+                $this->persistenceManager->clearState();
+
                 // Ensure we do not keep broken data.
-                $event = $this->eventRepository->findOneBy(['globalId' => $event['global_id']]);
-                if ($event instanceof Event) {
-                    $this->eventRepository->remove($event);
+                $eventObject = $this->eventRepository->findOneBy(['globalId' => $event['global_id']]);
+                if ($eventObject instanceof Event) {
+                    $this->eventRepository->remove($eventObject);
                     $this->persistenceManager->persistAll();
                 }
+                unset($eventObject);
             }
         }
 
