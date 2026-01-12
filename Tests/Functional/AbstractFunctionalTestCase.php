@@ -33,6 +33,7 @@ use Symfony\Component\DependencyInjection\Container;
 use TypeError;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -179,5 +180,22 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
 
         $aspect = new DateTimeAspect($dateTime);
         $context->setAspect('date', $aspect);
+    }
+
+    protected function assertDoesNotHaveRecordsInTable(string $tableName): void
+    {
+        $queryBuilder = $this->getConnectionPool()
+            ->getQueryBuilderForTable($tableName)
+        ;
+        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        $result = $queryBuilder
+            ->count('*')
+            ->from($tableName)
+            ->executeQuery()
+            ->fetchOne()
+        ;
+
+        self::assertSame(0, $result, 'Did have unexpected records in table: ' . $tableName);
     }
 }

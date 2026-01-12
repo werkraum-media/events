@@ -11,6 +11,10 @@ Features
 
 * Add support for PHP 8.5.
 
+* Handle errors during import of single event.
+  Those will be logged, and no longer break the whole import.
+  The import will continue with next event.
+
 Fixes
 -----
 

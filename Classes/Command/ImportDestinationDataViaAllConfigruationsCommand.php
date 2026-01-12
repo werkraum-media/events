@@ -33,7 +33,7 @@ class ImportDestinationDataViaAllConfigruationsCommand extends Command
         $finalResult = 0;
         foreach ($this->importFactory->createAll() as $import) {
             $result = $this->destinationDataImportService->import($import);
-            if ($result !== 0) {
+            if ($result > $finalResult) {
                 $finalResult = $result;
             }
         }
