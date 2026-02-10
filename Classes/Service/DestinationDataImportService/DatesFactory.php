@@ -2,6 +2,8 @@
 
 namespace Wrm\Events\Service\DestinationDataImportService;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
@@ -132,7 +134,18 @@ class DatesFactory
 
     private function ensureRepeatUntil(array $date): array
     {
+        $start = new DateTimeImmutable($date['start']);
+        $timeZone = new DateTimeZone($date['tz']);
+
         if (empty($date['repeatUntil']) === false) {
+            $repeatUntilDate = new DateTimeImmutable($date['repeatUntil'], $timeZone);
+            $repeatUntilDate = $repeatUntilDate->setTime(
+                (int)$start->format('H'),
+                (int)$start->format('m'),
+                (int)$start->format('s'),
+            );
+            $date['repeatUntil'] = $repeatUntilDate->format('c');
+
             return $date;
         }
 
@@ -142,7 +155,16 @@ class DatesFactory
             'Import'
         );
         $configuredModification = $settings['repeatUntil'] ?? '+60 days';
-        $date['repeatUntil'] = $this->getToday()->modify($configuredModification)->format('c');
+
+        $repeatUntilDate = $this->getToday();
+        $repeatUntilDate = $repeatUntilDate->setTimezone($timeZone);
+        $repeatUntilDate = $repeatUntilDate->setTime(
+            (int)$start->format('H'),
+            (int)$start->format('m'),
+            (int)$start->format('s'),
+        );
+        $repeatUntilDate = $repeatUntilDate->modify($configuredModification);
+        $date['repeatUntil'] = $repeatUntilDate->format('c');
         $this->logger->info('Interval did not provide repeatUntil.', ['newRepeat' => $date['repeatUntil']]);
 
         return $date;

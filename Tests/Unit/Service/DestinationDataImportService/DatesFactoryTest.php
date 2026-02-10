@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
@@ -96,7 +97,7 @@ class DatesFactoryTest extends TestCase
 
         self::assertInstanceOf(Date::class, $firstEntry);
         self::assertSame('2022-04-01T16:00:00+02:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $firstEntry->getCanceled());
     }
 
@@ -147,7 +148,7 @@ class DatesFactoryTest extends TestCase
 
         self::assertInstanceOf(Date::class, $firstEntry);
         self::assertSame('2022-04-01T16:00:00+02:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $firstEntry->getCanceled());
     }
 
@@ -161,7 +162,7 @@ class DatesFactoryTest extends TestCase
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-02T17:00:00+01:00',
+            'repeatUntil' => '2022-11-02T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -174,11 +175,11 @@ class DatesFactoryTest extends TestCase
 
         self::assertInstanceOf(Date::class, $result[0]);
         self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[0]->getCanceled());
 
         self::assertSame('2022-11-02T16:00:00+01:00', $result[4]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[4]->getCanceled());
     }
 
@@ -192,7 +193,7 @@ class DatesFactoryTest extends TestCase
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-02T17:00:00+01:00',
+            'repeatUntil' => '2022-11-02T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -206,11 +207,11 @@ class DatesFactoryTest extends TestCase
         self::assertInstanceOf(Date::class, $result[0]);
 
         self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[0]->getCanceled());
 
         self::assertSame('2022-11-02T16:00:00+01:00', $result[4]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[4]->getCanceled());
     }
 
@@ -228,7 +229,7 @@ class DatesFactoryTest extends TestCase
             ],
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-06T17:00:00+01:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -241,19 +242,19 @@ class DatesFactoryTest extends TestCase
 
         self::assertInstanceOf(Date::class, $result[0]);
         self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[0]->getCanceled());
 
         self::assertSame('2022-11-05T16:00:00+01:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[1]->getCanceled());
 
         self::assertSame('2022-10-30T16:00:00+01:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[2]->getCanceled());
 
         self::assertSame('2022-11-06T16:00:00+01:00', $result[3]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[3]->getCanceled());
     }
 
@@ -271,7 +272,7 @@ class DatesFactoryTest extends TestCase
             ],
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-06T17:00:00+01:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -284,19 +285,19 @@ class DatesFactoryTest extends TestCase
 
         self::assertInstanceOf(Date::class, $result[0]);
         self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[0]->getCanceled());
 
         self::assertSame('2022-11-05T16:00:00+01:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[1]->getCanceled());
 
         self::assertSame('2022-10-30T16:00:00+01:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[2]->getCanceled());
 
         self::assertSame('2022-11-06T16:00:00+01:00', $result[3]->getStart()->format(DateTimeImmutable::ATOM));
-        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()?->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[3]->getCanceled());
     }
 
@@ -317,7 +318,7 @@ class DatesFactoryTest extends TestCase
             [
                 'start' => '2022-04-01T16:00:00+02:00',
                 'end' => '2022-04-01T17:00:00+02:00',
-                'repeatUntil' => '2022-04-03T18:00:00+02:00',
+                'repeatUntil' => '2022-04-03T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -329,7 +330,7 @@ class DatesFactoryTest extends TestCase
                 ],
                 'start' => '2022-03-02T11:00:00+01:00',
                 'end' => '2022-03-02T13:00:00+01:00',
-                'repeatUntil' => '2022-03-15T13:00:00+02:00',
+                'repeatUntil' => '2022-03-15T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
@@ -364,7 +365,7 @@ class DatesFactoryTest extends TestCase
             [
                 'start' => '2022-04-01T16:00:00+02:00',
                 'end' => '2022-04-01T17:00:00+02:00',
-                'repeatUntil' => '2022-04-03T18:00:00+02:00',
+                'repeatUntil' => '2022-04-03T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -376,7 +377,7 @@ class DatesFactoryTest extends TestCase
                 ],
                 'start' => '2022-03-02T11:00:00+01:00',
                 'end' => '2022-03-02T13:00:00+01:00',
-                'repeatUntil' => '2022-03-15T13:00:00+02:00',
+                'repeatUntil' => '2022-03-15T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
