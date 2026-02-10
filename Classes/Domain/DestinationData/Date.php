@@ -6,6 +6,7 @@ namespace WerkraumMedia\Events\Domain\DestinationData;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Exception;
 use RuntimeException;
 
 final class Date
@@ -111,25 +112,56 @@ final class Date
     public function getRepeatUntil(): DateTimeImmutable
     {
         if (array_key_exists('repeatUntil', $this->data)) {
-            return new DateTimeImmutable($this->data['repeatUntil'], $this->getTimezone());
+            return $this->getRepeatUntilByRepeatUntil();
         }
 
-        $repeatCountUnit = '';
-        if ($this->isDaily()) {
-            $repeatCountUnit = 'days';
-        } elseif ($this->isWeekly()) {
-            $repeatCountUnit = 'weeks';
-        } elseif ($this->isMonthly()) {
-            $repeatCountUnit = 'months';
+        if (array_key_exists('repeatCount', $this->data)) {
+            return $this->getRepeatUntilByCount();
         }
 
-        if ($repeatCountUnit === '') {
-            throw new RuntimeException('The current date can not repeat.', 1739279561);
-        }
+        throw new Exception('The event current date does not provide a supported repeat option.', 1770792700);
+    }
 
-        return $this->getStart()->modify(
-            '+' . ((int)$this->data['repeatCount']) . ' ' . $repeatCountUnit
+    private function getRepeatUntilByRepeatUntil(): DateTimeImmutable
+    {
+        $date = new DateTimeImmutable($this->data['repeatUntil'], $this->getTimezone());
+        $date = $date->setTime(
+            (int)$this->getStart()->format('H'),
+            (int)$this->getStart()->format('m'),
+            (int)$this->getStart()->format('s'),
         );
+
+        return $date;
+    }
+
+    private function getRepeatUntilByCount(): DateTimeImmutable
+    {
+        $repeatCount = $this->data['repeatCount'] ?? null;
+        if (is_numeric($repeatCount) === false) {
+            throw new RuntimeException('The given repeatCount was not numeric.', 1770792769);
+        }
+
+        $repeatCount = (int)$repeatCount;
+        $repeatCountUnit = $this->getRepeatCountUnit();
+
+        return $this->getStart()->modify('+' . $repeatCount . ' ' . $repeatCountUnit);
+    }
+
+    private function getRepeatCountUnit(): string
+    {
+        if ($this->isDaily()) {
+            return 'days';
+        }
+
+        if ($this->isWeekly()) {
+            return 'weeks';
+        }
+
+        if ($this->isMonthly()) {
+            return 'months';
+        }
+
+        throw new RuntimeException('The current date does not provide a supported repeat count unit.', 1739279561);
     }
 
     private function getFrequency(): string

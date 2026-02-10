@@ -146,7 +146,7 @@ return  [
             'images' => '1',
             'categories' => '1',
             'pages' => '',
-            'dates' => '4',
+            'dates' => '5',
             'organizer' => '2',
             'partner' => '',
             'region' => '1',
@@ -282,6 +282,25 @@ return  [
             't3ver_wsid' => '0',
             't3ver_state' => '0',
             'event' => '2',
+            'start' => (new DateTimeImmutable('Sunday 2022-04-03 11:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
+            'end' => (new DateTimeImmutable('Sunday 2022-04-03 13:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
+            'canceled' => 'no',
+            'postponed_date' => '0',
+            'canceled_link' => '',
+            'slug' => 'tueftlerzeit-2022-04-03t09-00-00',
+        ],
+        5 => [
+            'uid' => '6',
+            'pid' => '2',
+            'hidden' => '0',
+            'starttime' => '0',
+            'endtime' => '0',
+            'sys_language_uid' => '-1',
+            'l10n_parent' => '0',
+            't3ver_oid' => '0',
+            't3ver_wsid' => '0',
+            't3ver_state' => '0',
+            'event' => '2',
             'start' => (new DateTimeImmutable('Thursday 2022-02-17 15:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
             'end' => (new DateTimeImmutable('Thursday 2022-02-17 17:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
             'canceled' => 'no',
@@ -289,8 +308,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'tueftlerzeit-2022-02-17t14-00-00',
         ],
-        5 => [
-            'uid' => '6',
+        6 => [
+            'uid' => '7',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -308,8 +327,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-12-01t18-00-00',
         ],
-        6 => [
-            'uid' => '7',
+        7 => [
+            'uid' => '8',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -327,8 +346,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-05t10-00-00',
         ],
-        7 => [
-            'uid' => '8',
+        8 => [
+            'uid' => '9',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -346,8 +365,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-12t10-00-00',
         ],
-        8 => [
-            'uid' => '9',
+        9 => [
+            'uid' => '10',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -365,8 +384,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-19t10-00-00',
         ],
-        9 => [
-            'uid' => '10',
+        10 => [
+            'uid' => '11',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -384,8 +403,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-06t10-00-00',
         ],
-        10 => [
-            'uid' => '11',
+        11 => [
+            'uid' => '12',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -403,8 +422,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-13t10-00-00',
         ],
-        11 => [
-            'uid' => '12',
+        12 => [
+            'uid' => '13',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
@@ -422,8 +441,8 @@ return  [
             'canceled_link' => '',
             'slug' => 'adventliche-orgelmusik-orgel-kmd-frank-bettenhausen-2022-11-20t10-00-00',
         ],
-        12 => [
-            'uid' => '13',
+        13 => [
+            'uid' => '14',
             'pid' => '2',
             'hidden' => '0',
             'starttime' => '0',
