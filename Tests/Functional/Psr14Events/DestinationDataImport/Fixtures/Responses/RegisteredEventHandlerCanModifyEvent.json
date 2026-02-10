@@ -48,9 +48,9 @@
                         "Saturday",
                         "Sunday"
                     ],
-                    "start": "2099-11-02T11:00:00+01:00",
-                    "end": "2099-11-02T11:15:00+01:00",
-                    "repeatUntil": "2099-11-10T11:15:00+01:00",
+                    "start": "2025-11-01T11:00:00+01:00",
+                    "end": "2025-11-01T11:15:00+01:00",
+                    "repeatUntil": "2025-11-02T11:15:00+01:00",
                     "tz": "Europe/Berlin",
                     "freq": "Weekly",
                     "interval": 1
@@ -83,8 +83,8 @@
                     "rel": "organizer"
                 }
             ],
-            "created": "2099-11-08T22:15:00+00:00",
-            "changed": "2099-12-14T08:38:00+00:00",
+            "created": "2025-11-08T22:15:00+00:00",
+            "changed": "2025-12-14T08:38:00+00:00",
             "source": {
                 "url": "http://destination.one/",
                 "value": "destination.one"

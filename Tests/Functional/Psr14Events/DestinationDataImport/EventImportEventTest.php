@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Functional\Psr14Events\DestinationDataImport;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use GuzzleHttp\Psr7\Response;
 use Wrm\Events\Tests\Functional\Import\DestinationDataTest\AbstractTest;
 
@@ -49,6 +51,8 @@ final class EventImportEventTest extends AbstractTest
      */
     public function registeredEventHandlerCanModifyEvent(): void
     {
+        $this->setDateAspect(new DateTimeImmutable('2021-07-13', new DateTimeZone('Europe/Berlin')));
+
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/RegisteredEventHandlerCanModifyEvent.php');
         $this->setUpResponses([new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/Responses/RegisteredEventHandlerCanModifyEvent.json') ?: '')]);
 
