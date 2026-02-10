@@ -77,5 +77,8 @@ jobs:
       - name: 'Code Quality (by PHPStan)'
         run: './vendor/bin/phpstan analyse'
 
+      - name: 'Install imagemagick'
+        run: 'sudo apt update && sudo apt install imagemagick'
+
       - name: 'PHPUnit Tests'
         run: './vendor/bin/phpunit --testdox'

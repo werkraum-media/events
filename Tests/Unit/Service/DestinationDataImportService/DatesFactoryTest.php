@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Wrm\Events\Tests\Unit\Service\DestinationDataImportService;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\DateTimeAspect;
@@ -161,7 +162,7 @@ class DatesFactoryTest extends TestCase
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-02T17:00:00+01:00',
+            'repeatUntil' => '2022-11-02T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -192,7 +193,7 @@ class DatesFactoryTest extends TestCase
         $result = $subject->createDates([[
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-02T17:00:00+01:00',
+            'repeatUntil' => '2022-11-02T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Daily',
             'interval' => 1,
@@ -228,7 +229,7 @@ class DatesFactoryTest extends TestCase
             ],
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-06T17:00:00+01:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -271,7 +272,7 @@ class DatesFactoryTest extends TestCase
             ],
             'start' => '2022-10-29T16:00:00+02:00',
             'end' => '2022-10-29T17:00:00+02:00',
-            'repeatUntil' => '2022-11-06T17:00:00+01:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
@@ -317,7 +318,7 @@ class DatesFactoryTest extends TestCase
             [
                 'start' => '2022-04-01T16:00:00+02:00',
                 'end' => '2022-04-01T17:00:00+02:00',
-                'repeatUntil' => '2022-04-03T18:00:00+02:00',
+                'repeatUntil' => '2022-04-03T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -329,7 +330,7 @@ class DatesFactoryTest extends TestCase
                 ],
                 'start' => '2022-03-02T11:00:00+01:00',
                 'end' => '2022-03-02T13:00:00+01:00',
-                'repeatUntil' => '2022-03-15T13:00:00+02:00',
+                'repeatUntil' => '2022-03-15T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
@@ -364,7 +365,7 @@ class DatesFactoryTest extends TestCase
             [
                 'start' => '2022-04-01T16:00:00+02:00',
                 'end' => '2022-04-01T17:00:00+02:00',
-                'repeatUntil' => '2022-04-03T18:00:00+02:00',
+                'repeatUntil' => '2022-04-03T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Daily',
                 'interval' => 1,
@@ -376,7 +377,7 @@ class DatesFactoryTest extends TestCase
                 ],
                 'start' => '2022-03-02T11:00:00+01:00',
                 'end' => '2022-03-02T13:00:00+01:00',
-                'repeatUntil' => '2022-03-15T13:00:00+02:00',
+                'repeatUntil' => '2022-03-15T10:00:00+02:00',
                 'tz' => 'Europe/Berlin',
                 'freq' => 'Weekly',
                 'interval' => 1,
