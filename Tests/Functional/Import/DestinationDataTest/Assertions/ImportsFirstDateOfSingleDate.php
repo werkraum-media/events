@@ -17,8 +17,8 @@ return  [
             'uid' => '1',
             'pid' => '2',
             'event' => '1',
-            'start' => '1657717200',
-            'end' => '1657722600',
+            'start'  => (new DateTimeImmutable('Wednesday 2022-07-13 15:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
+            'end'  => (new DateTimeImmutable('Wednesday 2022-07-13 16:30:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
         ],
     ],
 ];
