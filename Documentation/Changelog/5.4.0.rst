@@ -31,7 +31,15 @@ Features
 Fixes
 -----
 
-Nothing
+* Wrong date creation based on destination.one `repeatUntil`.
+  Editors don't have access to a time, only the date.
+  We therefore no longer respect the time, but only the date.
+  Also the date is inclusive, so we need to repeat dates including the date mentioned in `repeatUntil`.
+
+  This now also affects the `import_repeat_until` in the same way, to streamline the behaviour.
+  This is now also inclusive. `+10 days` will not include the 10th day.
+
+  We could not use `DatePeriod::INCLUDE_END_DATE` as we still support PHP 8.1 which isn't aware of the constant.
 
 Tasks
 -----

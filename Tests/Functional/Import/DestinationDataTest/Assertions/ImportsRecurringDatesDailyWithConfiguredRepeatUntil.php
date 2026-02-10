@@ -9,7 +9,7 @@ return  [
             'pid' => '2',
             'title' => 'Kurzführung - Historische Altstadt',
             'global_id' => 'e_100354481',
-            'dates' => '10',
+            'dates' => '11',
         ],
     ],
     'tx_events_domain_model_date' => [
@@ -82,6 +82,13 @@ return  [
             'event' => '1',
             'start' => (new DateTimeImmutable('Friday 2022-07-22 16:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
             'end' => (new DateTimeImmutable('Friday 2022-07-22 17:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
+        ],
+        10 => [
+            'uid' => '11',
+            'pid' => '2',
+            'event' => '1',
+            'start' => (new DateTimeImmutable('Saturday 2022-07-23 16:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
+            'end' => (new DateTimeImmutable('Saturday 2022-07-23 17:00:00', new DateTimeZone('Europe/Berlin')))->getTimestamp(),
         ],
     ],
 ];
