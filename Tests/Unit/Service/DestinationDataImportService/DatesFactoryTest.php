@@ -90,8 +90,8 @@ class DatesFactoryTest extends TestCase
         self::assertCount(1, iterator_to_array($result));
 
         self::assertInstanceOf(Date::class, $firstEntry);
-        self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
-        self::assertSame(1648825200, $firstEntry->getEnd()->getTimestamp());
+        self::assertSame('2022-04-01T16:00:00+02:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $firstEntry->getCanceled());
     }
 
@@ -137,8 +137,8 @@ class DatesFactoryTest extends TestCase
         self::assertCount(1, iterator_to_array($result));
 
         self::assertInstanceOf(Date::class, $firstEntry);
-        self::assertSame(1648821600, $firstEntry->getStart()->getTimestamp());
-        self::assertSame(1648825200, $firstEntry->getEnd()->getTimestamp());
+        self::assertSame('2022-04-01T16:00:00+02:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-04-01T17:00:00+02:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $firstEntry->getCanceled());
     }
 
@@ -162,12 +162,12 @@ class DatesFactoryTest extends TestCase
         self::assertCount(5, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
-        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
+        self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[0]->getCanceled());
 
-        self::assertSame(1667401200, $result[4]->getStart()->getTimestamp());
-        self::assertSame(1667404800, $result[4]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-02T16:00:00+01:00', $result[4]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[4]->getCanceled());
     }
 
@@ -191,12 +191,13 @@ class DatesFactoryTest extends TestCase
         self::assertCount(5, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
-        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
+
+        self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[0]->getCanceled());
 
-        self::assertSame(1667401200, $result[4]->getStart()->getTimestamp());
-        self::assertSame(1667404800, $result[4]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-02T16:00:00+01:00', $result[4]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-02T17:00:00+01:00', $result[4]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[4]->getCanceled());
     }
 
@@ -224,20 +225,20 @@ class DatesFactoryTest extends TestCase
         self::assertCount(4, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
-        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
+        self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[0]->getCanceled());
 
-        self::assertSame(1667660400, $result[1]->getStart()->getTimestamp());
-        self::assertSame(1667664000, $result[1]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-05T16:00:00+01:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[1]->getCanceled());
 
-        self::assertSame(1667142000, $result[2]->getStart()->getTimestamp());
-        self::assertSame(1667145600, $result[2]->getEnd()->getTimestamp());
+        self::assertSame('2022-10-30T16:00:00+01:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[2]->getCanceled());
 
-        self::assertSame(1667746800, $result[3]->getStart()->getTimestamp());
-        self::assertSame(1667750400, $result[3]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-06T16:00:00+01:00', $result[3]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('canceled', $result[3]->getCanceled());
     }
 
@@ -265,20 +266,20 @@ class DatesFactoryTest extends TestCase
         self::assertCount(4, $result);
 
         self::assertInstanceOf(Date::class, $result[0]);
-        self::assertSame(1667052000, $result[0]->getStart()->getTimestamp());
-        self::assertSame(1667055600, $result[0]->getEnd()->getTimestamp());
+        self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[0]->getCanceled());
 
-        self::assertSame(1667660400, $result[1]->getStart()->getTimestamp());
-        self::assertSame(1667664000, $result[1]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-05T16:00:00+01:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-05T17:00:00+01:00', $result[1]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[1]->getCanceled());
 
-        self::assertSame(1667142000, $result[2]->getStart()->getTimestamp());
-        self::assertSame(1667145600, $result[2]->getEnd()->getTimestamp());
+        self::assertSame('2022-10-30T16:00:00+01:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-30T17:00:00+01:00', $result[2]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[2]->getCanceled());
 
-        self::assertSame(1667746800, $result[3]->getStart()->getTimestamp());
-        self::assertSame(1667750400, $result[3]->getEnd()->getTimestamp());
+        self::assertSame('2022-11-06T16:00:00+01:00', $result[3]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-06T17:00:00+01:00', $result[3]->getEnd()->format(DateTimeImmutable::ATOM));
         self::assertSame('no', $result[3]->getCanceled());
     }
 
