@@ -38,7 +38,7 @@ final class LocationAssignmentTest extends TestCase
      */
     public function canBeCreated(): void
     {
-        $repository = $this->createStub(LocationRepository::class);
+        $repository = self::createStub(LocationRepository::class);
         $subject = new LocationAssignment(
             $repository
         );
@@ -61,7 +61,7 @@ final class LocationAssignmentTest extends TestCase
         $latitude,
         $longitude
     ): void {
-        $repository = $this->createStub(LocationRepository::class);
+        $repository = self::createStub(LocationRepository::class);
         $repository->method('findOneByGlobalId')->willReturn(null);
 
         $subject = new LocationAssignment(

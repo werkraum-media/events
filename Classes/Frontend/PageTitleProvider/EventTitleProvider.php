@@ -28,9 +28,9 @@ use Wrm\Events\Domain\Model\Event;
 final class EventTitleProvider implements EventTitleProviderInterface
 {
     /**
-     * @var null|Event
+     * @var Event|null
      */
-    private $event = null;
+    private $event;
 
     public function setEvent(Event $event): void
     {
