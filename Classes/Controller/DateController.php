@@ -2,10 +2,10 @@
 
 namespace Wrm\Events\Controller;
 
+use Throwable;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Service\ExtensionService;
-use Throwable;
 use Wrm\Events\Domain\Model\Date;
 use Wrm\Events\Domain\Model\Dto\DateDemandFactory;
 use Wrm\Events\Domain\Repository\CategoryRepository;

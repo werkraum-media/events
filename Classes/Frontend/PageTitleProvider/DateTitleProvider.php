@@ -28,9 +28,9 @@ use Wrm\Events\Domain\Model\Date;
 final class DateTitleProvider implements DateTitleProviderInterface
 {
     /**
-     * @var null|Date
+     * @var Date|null
      */
-    private $date = null;
+    private $date;
 
     public function setDate(Date $date): void
     {

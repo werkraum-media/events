@@ -21,7 +21,6 @@ namespace Wrm\Events\Controller;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
