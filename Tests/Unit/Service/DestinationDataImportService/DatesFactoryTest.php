@@ -22,13 +22,13 @@ class DatesFactoryTest extends TestCase
     private function createTestSubject(
         string $contextDate
     ): DatesFactory {
-        $logger = $this->createStub(Logger::class);
-        $logManager = $this->createStub(LogManager::class);
+        $logger = self::createStub(Logger::class);
+        $logManager = self::createStub(LogManager::class);
         $logManager->method('getLogger')->willReturn($logger);
 
         return new DatesFactory(
             $this->createContext(new DateTimeImmutable($contextDate)),
-            $this->createStub(ConfigurationManager::class),
+            self::createStub(ConfigurationManager::class),
             $logManager
         );
     }

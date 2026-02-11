@@ -17,7 +17,7 @@ class UrlFactoryTest extends TestCase
     #[Test]
     public function canBeCreated(): void
     {
-        $configurationManager = $this->createStub(BackendConfigurationManager::class);
+        $configurationManager = self::createStub(BackendConfigurationManager::class);
         $configurationManager->method('getConfiguration')->willReturn([]);
 
         $subject = new UrlFactory(
@@ -37,7 +37,7 @@ class UrlFactoryTest extends TestCase
         array $settings,
         string $expectedResult
     ): void {
-        $configurationManager = $this->createStub(BackendConfigurationManager::class);
+        $configurationManager = self::createStub(BackendConfigurationManager::class);
         $configurationManager->method('getConfiguration')->willReturn(['settings' => ['destinationData' => $settings]]);
 
         $subject = new UrlFactory(

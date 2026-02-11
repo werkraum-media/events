@@ -21,7 +21,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [],
             []
         );
@@ -42,7 +42,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [],
             []
         );
@@ -65,7 +65,7 @@ class DateSearchVariablesTest extends TestCase
                 'executed' => '1',
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [],
             []
         );
@@ -88,7 +88,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             $demand,
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [],
             []
         );
@@ -102,7 +102,7 @@ class DateSearchVariablesTest extends TestCase
     #[Test]
     public function returnsInitialRegions(): void
     {
-        $regions = $this->createStub(QueryResult::class);
+        $regions = self::createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
             ],
@@ -129,7 +129,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [
                 ['example category'],
             ],
@@ -153,7 +153,7 @@ class DateSearchVariablesTest extends TestCase
             [
             ],
             new DateDemand(),
-            $this->createStub(QueryResult::class),
+            self::createStub(QueryResult::class),
             [
             ],
             [
@@ -173,7 +173,7 @@ class DateSearchVariablesTest extends TestCase
     public function returnsInitialVariablesForView(): void
     {
         $demand = new DateDemand();
-        $regions = $this->createStub(QueryResult::class);
+        $regions = self::createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
             ],
@@ -212,7 +212,7 @@ class DateSearchVariablesTest extends TestCase
     public function returnsVariablesForViewWithAddedVariables(): void
     {
         $demand = new DateDemand();
-        $regions = $this->createStub(QueryResult::class);
+        $regions = self::createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
             ],
@@ -256,7 +256,7 @@ class DateSearchVariablesTest extends TestCase
     public function returnsVariablesForViewWithOverwrittenVariables(): void
     {
         $demand = new DateDemand();
-        $regions = $this->createStub(QueryResult::class);
+        $regions = self::createStub(QueryResult::class);
         $subject = new DateSearchVariables(
             [
             ],
