@@ -38,7 +38,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function canBeCreated(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -55,7 +55,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function fromSettingsDoesNotThrowUndefinedArrayKeyWarnings(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -74,7 +74,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function searchWordIsSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -98,7 +98,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function synonymsAreSetBySettings(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -139,7 +139,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function categoriesAreSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -168,7 +168,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function featuresAreSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -197,7 +197,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function regionIsSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -227,7 +227,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function regionsAreSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -260,7 +260,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function startIsSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -292,7 +292,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function endIsSetByRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -328,7 +328,7 @@ class DateDemandFactoryTest extends TestCase
         string $start,
         string $end
     ): void {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -368,7 +368,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsEndsOnSameDayIfBothAreOnSameDay(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -392,7 +392,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsEndsOnSameDayIfBothAreOnDifferentDays(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -420,7 +420,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsHighlightIfSet($highlight): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -452,7 +452,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsNoHighlightIfNotSet($highlight): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -481,7 +481,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsOrganizersFromSettings(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService
@@ -498,7 +498,7 @@ class DateDemandFactoryTest extends TestCase
      */
     public function returnsOrganizersFromRequest(): void
     {
-        $typoScriptService = $this->createStub(TypoScriptService::class);
+        $typoScriptService = self::createStub(TypoScriptService::class);
 
         $subject = new DateDemandFactory(
             $typoScriptService

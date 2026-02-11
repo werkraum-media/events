@@ -74,7 +74,7 @@ return [
             'title' => 'Tueftlerzeit©SFZ-Rudolstadt.jpg',
             'description' => 'Description of Tueftlerzeit',
             'alternative' => 'Description of Tueftlerzeit',
-            'copyright' => 'Max Mustermann'
+            'copyright' => 'Max Mustermann',
         ],
     ],
     'tx_events_domain_model_event' => [
