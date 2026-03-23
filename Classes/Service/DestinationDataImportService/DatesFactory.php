@@ -27,6 +27,8 @@ final class DatesFactory
     }
 
     /**
+     * @param array[] $timeIntervals
+     *
      * @return Generator<Date>
      */
     public function createDates(

@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\PageTitleProvider;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WerkraumMedia\Events\Domain\Model\Event;
 
 final class EventTitleProvider implements EventTitleProviderInterface
@@ -41,5 +42,9 @@ final class EventTitleProvider implements EventTitleProviderInterface
         }
 
         return $this->event->getTitle();
+    }
+
+    public function setRequest(ServerRequestInterface $request): void
+    {
     }
 }

@@ -172,6 +172,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 50,
+                'searchable' => false,
             ],
         ],
         'rest_experience' => [
@@ -183,6 +184,7 @@ return [
                 'required' => true,
                 'size' => 50,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'rest_mode' => [
@@ -194,6 +196,7 @@ return [
                 'default' => 'next_months,12',
                 'size' => 50,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'rest_search_query' => [
@@ -203,6 +206,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 50,
+                'searchable' => false,
             ],
         ],
 
@@ -215,6 +219,7 @@ return [
                 'default' => '+60 days',
                 'size' => 50,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'import_features' => [

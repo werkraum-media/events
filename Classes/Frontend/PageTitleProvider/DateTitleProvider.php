@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\PageTitleProvider;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WerkraumMedia\Events\Domain\Model\Date;
 
 final class DateTitleProvider implements DateTitleProviderInterface
@@ -44,5 +45,9 @@ final class DateTitleProvider implements DateTitleProviderInterface
             $this->date->getEvent()->getTitle(),
             $this->date->getStart()->format('d.m.Y H:i'),
         ]);
+    }
+
+    public function setRequest(ServerRequestInterface $request): void
+    {
     }
 }

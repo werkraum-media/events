@@ -11,6 +11,9 @@ use WerkraumMedia\Events\Domain\Model\Region;
 
 final class DateSearchVariables
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $variables = [];
 
     /**
@@ -66,6 +69,9 @@ final class DateSearchVariables
         $this->variables[$key] = $value;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getVariablesForView(): array
     {
         return [

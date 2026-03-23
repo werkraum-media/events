@@ -24,50 +24,60 @@ declare(strict_types=1);
 namespace WerkraumMedia\EventsExample;
 
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionClass;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use TYPO3\CMS\Core\Attribute\AsAllowedCallable;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Cache\CacheLifetimeCalculator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
+#[Autoconfigure(public: true)]
 final class UserFunc
 {
     private ContentObjectRenderer $cObj;
+
+    public function __construct(
+        private readonly CacheLifetimeCalculator $cacheLifetimeCalculator,
+        private readonly Context $context,
+    ) {
+    }
 
     public function setContentObjectRenderer(ContentObjectRenderer $cObj): void
     {
         $this->cObj = $cObj;
     }
 
+    #[AsAllowedCallable]
     public function accessTsfeTimeout(string $content, array $configuration, ServerRequestInterface $request): string
     {
-        // TODO: typo3/cms-core:14.0 Remove this code block as this won't work since v13.x anymore
-        if (is_callable([$this->getTsfe(), 'get_cache_timeout'])) {
-            return 'get_cache_timeout: ' . $this->getTsfe()->get_cache_timeout();
-        }
-
         $pageInformation = $request->getAttribute('frontend.page.information');
         $typoScriptConfigArray = $request->getAttribute('frontend.typoscript')->getConfigArray();
-        return 'get_cache_timeout: ' . GeneralUtility::makeInstance(CacheLifetimeCalculator::class)
-            ->calculateLifetimeForPage(
+
+        // TODO: typo3/cms-core:15 Remove the conditional block from v13.
+        $numberOfArguments = (new ReflectionClass($this->cacheLifetimeCalculator::class))->getMethod('calculateLifetimeForPage')->getNumberOfParameters();
+        if ($numberOfArguments === 5) {
+            return 'get_cache_timeout: ' . $this->cacheLifetimeCalculator->calculateLifetimeForPage(
                 $pageInformation->getId(),
                 $pageInformation->getPageRecord(),
                 $typoScriptConfigArray,
                 0,
-                GeneralUtility::makeInstance(Context::class)
-            )
-        ;
+                $this->context
+            );
+        }
+
+        return 'get_cache_timeout: ' . $this->cacheLifetimeCalculator->calculateLifetimeForPage(
+            $pageInformation->getId(),
+            $pageInformation->getPageRecord(),
+            $typoScriptConfigArray,
+            $this->context
+        );
     }
 
+    #[AsAllowedCallable]
     public function sleep(string $content, array $configuration): string
     {
         $sleep = (int)$this->cObj->stdWrapValue('sleep', $configuration['userFunc.'], 0);
         sleep($sleep);
         return 'Sleep for ' . $sleep . ' seconds';
-    }
-
-    public function getTsfe(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
     }
 }

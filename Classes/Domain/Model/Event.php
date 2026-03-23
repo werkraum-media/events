@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Domain\Model;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -43,13 +42,11 @@ class Event extends AbstractEntity
     /**
      * @var ObjectStorage<FileReference>
      */
-    #[Cascade(['value' => 'remove'])]
     protected ObjectStorage $images;
 
     /**
      * @var ObjectStorage<Date>
      */
-    #[Cascade(['value' => 'remove'])]
     #[Lazy]
     protected ObjectStorage $dates;
 
@@ -381,17 +378,26 @@ class Event extends AbstractEntity
         return $this->keywords;
     }
 
+    /**
+     * @param int<-1, max> $languageUid
+     */
     public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    public function getLanguageUid(): int
+    /**
+     * @return int<-1, max>|null
+     */
+    public function getLanguageUid(): ?int
     {
         return $this->_languageUid;
     }
 
-    public function getLocalizedUid(): int
+    /**
+     * @return int<0, max>|null
+     */
+    public function getLocalizedUid(): ?int
     {
         return $this->_localizedUid;
     }
@@ -406,11 +412,17 @@ class Event extends AbstractEntity
         $this->sourceUrl = $url;
     }
 
+    /**
+     * @return array<Category>
+     */
     private function getSortedCategory(ObjectStorage $categories): array
     {
         $categories = $categories->toArray();
 
-        usort($categories, fn (Category $catA, Category $catB) => $catA->getSorting() <=> $catB->getSorting());
+        usort(
+            $categories,
+            fn (Category $catA, Category $catB) => $catA->getSorting() <=> $catB->getSorting()
+        );
 
         return $categories;
     }

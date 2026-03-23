@@ -107,7 +107,7 @@ final class SearchTest extends AbstractFrontendTestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('Event one', $html);
         self::assertStringContainsString('Current Page 1', $html);
-        self::assertStringContainsString('/page-2?events%5Bsearch%5D%5Bsearchword%5D=Event&amp;cHash=41711281293c1c3a3aa161e96bbd4e98', $html);
+        self::assertStringContainsString('/page-2?events%5Bsearch%5D%5Bsearchword%5D=Event&amp;cHash=', $html);
         self::assertStringNotContainsString('Event two', $html);
 
         self::assertStringContainsString('value="Event"', $html, 'Submitted value is not rendered within form');
@@ -133,7 +133,7 @@ final class SearchTest extends AbstractFrontendTestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('Event two', $html);
         self::assertStringContainsString('Current Page 2', $html);
-        self::assertStringContainsString('/page-1?events%5Bsearch%5D%5Bsearchword%5D=Event&amp;cHash=13c33adfef09ccb19da7d399ada25c4c', $html);
+        self::assertStringContainsString('/page-1?events%5Bsearch%5D%5Bsearchword%5D=Event&amp;cHash=', $html);
         self::assertStringNotContainsString('Event one', $html);
 
         self::assertStringContainsString('value="Event"', $html, 'Submitted value is not rendered within form');

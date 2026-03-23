@@ -23,11 +23,6 @@ final class ExtbaseConfigurationManagerService
      */
     public function configureForBackend(): void
     {
-        // TODO: typo3/cms-core:14.0 Remove condition as this method is provided since 13.
-        if (method_exists($this->configurationManager, 'setRequest') === false) {
-            return;
-        }
-
         $request = new ServerRequest();
         $request = $request->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE);
         $this->configurationManager->setRequest($request);

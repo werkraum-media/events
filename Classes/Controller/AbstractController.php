@@ -65,7 +65,7 @@ abstract class AbstractController extends ActionController
     {
         $view->assign('data', []);
         $cObject = $this->request->getAttribute('currentContentObject');
-        if ($cObject instanceof ContentObjectRenderer && is_array($cObject->data)) {
+        if ($cObject instanceof ContentObjectRenderer) {
             $view->assign('data', $cObject->data);
         }
     }

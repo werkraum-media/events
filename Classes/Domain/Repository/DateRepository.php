@@ -23,6 +23,7 @@ final class DateRepository extends Repository
     public function __construct(
         private readonly Context $context,
         private readonly ConnectionPool $connectionPool,
+        private readonly CategoryService $categoryService,
     ) {
         parent::__construct();
     }
@@ -52,40 +53,40 @@ final class DateRepository extends Repository
 
         $categoriesConstraint = $this->createCategoryConstraint($query, $demand);
         if ($categoriesConstraint instanceof ConstraintInterface) {
-            $constraints['categories'] = $categoriesConstraint;
+            $constraints[] = $categoriesConstraint;
         }
 
         if ($demand->getFeatures() !== []) {
-            $constraints['features'] = $this->createFeaturesConstraint($query, $demand);
+            $constraints[] = $this->createFeaturesConstraint($query, $demand);
         }
 
         if ($demand->getLocations() !== []) {
-            $constraints['locations'] = $this->createLocationConstraint($query, $demand);
+            $constraints[] = $this->createLocationConstraint($query, $demand);
         }
 
         if ($demand->getOrganizers() !== []) {
-            $constraints['organizer'] = $query->in('event.organizer', $demand->getOrganizers());
+            $constraints[] = $query->in('event.organizer', $demand->getOrganizers());
         }
 
         if ($demand->getRegion() !== '') {
-            $constraints['region'] = $query->equals('event.region', $demand->getRegion());
+            $constraints[] = $query->equals('event.region', $demand->getRegion());
         }
 
         if ($demand->getHighlight() !== false) {
-            $constraints['highlight'] = $query->equals('event.highlight', $demand->getHighlight());
+            $constraints[] = $query->equals('event.highlight', $demand->getHighlight());
         }
 
         if ($demand->getSearchword() !== '') {
-            $constraints['searchword'] = $this->getSearchwordConstraint($query, $demand);
+            $constraints[] = $this->getSearchwordConstraint($query, $demand);
         }
 
         if ($demand->getUserCategories() !== []) {
-            $constraints['userCategories'] = $query->in('event.categories.uid', $demand->getUserCategories());
+            $constraints[] = $query->in('event.categories.uid', $demand->getUserCategories());
         }
 
         $timingConstraint = $this->createTimingConstraint($query, $demand);
         if ($timingConstraint instanceof ConstraintInterface) {
-            $constraints['timing'] = $timingConstraint;
+            $constraints[] = $timingConstraint;
         }
 
         if ($demand->shouldShowFromNow() || $demand->shouldShowFromMidnight()) {
@@ -95,14 +96,14 @@ final class DateRepository extends Repository
                 $now = $now->modify('midnight');
             }
 
-            $constraints['nowAndFuture'] = $query->logicalOr(
+            $constraints[] = $query->logicalOr(
                 $query->greaterThanOrEqual('start', $now),
                 $query->greaterThanOrEqual('end', $now),
             );
         } elseif ($demand->shouldShowUpcoming()) {
             $now = $this->getNow();
 
-            $constraints['future'] = $query->logicalAnd(
+            $constraints[] = $query->logicalAnd(
                 $query->greaterThan('start', $now),
                 $query->logicalOr(
                     $query->equals('end', 0),
@@ -168,9 +169,7 @@ final class DateRepository extends Repository
         $constraints = [];
 
         if ($demand->getIncludeSubCategories()) {
-            $categories = GeneralUtility::makeInstance(CategoryService::class)
-                ->getChildrenCategories($categories)
-            ;
+            $categories = $this->categoryService->getChildrenCategories($categories);
         }
 
         $categories = GeneralUtility::intExplode(',', $categories, true);

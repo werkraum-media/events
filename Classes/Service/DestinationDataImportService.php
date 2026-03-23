@@ -94,6 +94,9 @@ final class DestinationDataImportService
         return $this->processData($events);
     }
 
+    /**
+     * @param array[] $events
+     */
     public function processData(iterable $events): int
     {
         $this->logger->info('Processing events.');
@@ -179,12 +182,12 @@ final class DestinationDataImportService
 
         // Set Organizer
         if ($event['addresses'] ?? false) {
-            $this->setOrganizer($event['addresses']);
+            $this->setOrganizer(... $event['addresses']);
         }
 
         // Set Social
         if ($event['media_objects'] ?? false) {
-            $this->setSocial($event['media_objects']);
+            $this->setSocial(... $event['media_objects']);
         }
 
         if ($event['web'] ?? false) {
@@ -193,7 +196,7 @@ final class DestinationDataImportService
 
         // Set Tickets
         if ($event['media_objects'] ?? false) {
-            $this->setTickets($event['media_objects']);
+            $this->setTickets(... $event['media_objects']);
         }
 
         // Set Dates
@@ -206,7 +209,7 @@ final class DestinationDataImportService
 
         // Set Assets
         if ($event['media_objects'] ?? false) {
-            $this->setAssets($event['media_objects']);
+            $this->setAssets(... $event['media_objects']);
         }
 
         if ($event['source'] ?? false) {
@@ -235,8 +238,8 @@ final class DestinationDataImportService
             [
                 new Assignment('import_configuration', (string)$this->import->getUid()),
                 new Assignment('keywords', implode(', ', $event['keywords'] ?? [])),
-                $this->getCategories($event['categories'] ?? []),
-                $this->getFeatures($event['features'] ?? []),
+                $this->getCategories(... ($event['categories'] ?? [])),
+                $this->getFeatures(... ($event['features'] ?? [])),
             ]
         );
 
@@ -245,7 +248,7 @@ final class DestinationDataImportService
         $this->slugger->update('tx_events_domain_model_date');
     }
 
-    private function getCategories(array $categories): Assignment
+    private function getCategories(string ... $categories): Assignment
     {
         $categories = $this->categoriesAssignment->getCategories(new CategoryImport(
             $this->import->getCategoryParent(),
@@ -265,7 +268,7 @@ final class DestinationDataImportService
         );
     }
 
-    private function getFeatures(array $features): Assignment
+    private function getFeatures(string ... $features): Assignment
     {
         $features = $this->categoriesAssignment->getCategories(new CategoryImport(
             $this->import->getFeaturesParent(),
@@ -280,6 +283,9 @@ final class DestinationDataImportService
         );
     }
 
+    /**
+     * @param array[] $timeIntervals
+     */
     private function setDates(
         array $timeIntervals,
         bool $canceled
@@ -303,7 +309,7 @@ final class DestinationDataImportService
         $this->logger->info('Finished setup dates');
     }
 
-    private function setOrganizer(array $addresses): void
+    private function setOrganizer(array ... $addresses): void
     {
         foreach ($addresses as $address) {
             if ($address['rel'] == 'organizer') {
@@ -328,7 +334,7 @@ final class DestinationDataImportService
         }
     }
 
-    private function setSocial(array $media): void
+    private function setSocial(array ... $media): void
     {
         foreach ($media as $link) {
             if ($link['rel'] == 'socialmedia' && $link['value'] == 'Facebook') {
@@ -343,7 +349,7 @@ final class DestinationDataImportService
         }
     }
 
-    private function setTickets(array $media): void
+    private function setTickets(array ... $media): void
     {
         foreach ($media as $link) {
             if (isset($link['rel']) === false) {
@@ -471,7 +477,7 @@ final class DestinationDataImportService
         return $event;
     }
 
-    private function setAssets(array $assets): void
+    private function setAssets(array ... $assets): void
     {
         $this->logger->info('Set assets');
         $images = $this->filesAssignment->getImages(

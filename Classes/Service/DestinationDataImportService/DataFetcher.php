@@ -33,6 +33,9 @@ final class DataFetcher
         $this->logger = $logManager->getLogger(self::class);
     }
 
+    /**
+     * @return array[]
+     */
     public function fetchSearchResult(ImportInterface $import): iterable
     {
         return $this->paginate(

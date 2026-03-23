@@ -23,6 +23,9 @@ class Category extends AbstractEntity
     #[Lazy]
     protected $parent;
 
+    /**
+     * @param int<0, max> $pid
+     */
     public function __construct(
         ?Category $parent,
         int $pid,

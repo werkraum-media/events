@@ -16,10 +16,20 @@ use WerkraumMedia\Events\Domain\Model\Import\Features;
  */
 class Import extends AbstractDomainObject implements ImportInterface
 {
+    /**
+     * @var int<0, max>|null
+     */
     protected ?int $categoriesPid;
 
+    /**
+     * @var int<0, max>|null
+     */
     protected ?int $featuresPid;
 
+    /**
+     * @param int<0, max> $categoriesPid
+     * @param int<0, max> $featuresPid
+     */
     public function __construct(
         protected Folder $filesFolder,
         protected int $storagePid,
@@ -67,6 +77,9 @@ class Import extends AbstractDomainObject implements ImportInterface
         return $this->filesFolder;
     }
 
+    /**
+     * @return int<0, max>|null
+     */
     public function getCategoriesPid(): ?int
     {
         return $this->categoriesPid;
@@ -77,6 +90,9 @@ class Import extends AbstractDomainObject implements ImportInterface
         return $this->categoryParent;
     }
 
+    /**
+     * @return int<0, max>|null
+     */
     public function getFeaturesPid(): ?int
     {
         return $this->featuresPid;

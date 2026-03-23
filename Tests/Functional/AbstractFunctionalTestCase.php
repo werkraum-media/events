@@ -58,7 +58,9 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
         $this->coreExtensionsToLoad = [
             ...$this->coreExtensionsToLoad,
             'filelist',
+            'filemetadata',
             'fluid_styled_content',
+            'install',
         ];
 
         $this->testExtensionsToLoad = [

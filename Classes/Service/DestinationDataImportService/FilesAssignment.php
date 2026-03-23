@@ -28,7 +28,6 @@ use Psr\Log\LoggerInterface;
 use SplFileInfo;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Resource\DuplicationBehavior as OldDuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -57,6 +56,8 @@ final class FilesAssignment
     }
 
     /**
+     * @param array[] $assets
+     *
      * @return ObjectStorage<FileReference>
      */
     public function getImages(
@@ -94,12 +95,6 @@ final class FilesAssignment
         } elseif ($filename = $this->loadFile($fileUrl)) {
             $this->logger->info('Adding file to FAL.', [$filename]);
 
-            // TODO: typo3/cms-core:14.0 Remove the fallback to old behaviour, only use new one.
-            $behaviour = OldDuplicationBehavior::REPLACE;
-            if (class_exists(DuplicationBehavior::class)) {
-                $behaviour = DuplicationBehavior::REPLACE;
-            }
-
             $orgFileNameSanitized = $this->ensureFileNameOfImageMatchesMimeType($filename, $orgFileNameSanitized);
             if ($orgFileNameSanitized === '') {
                 $this->logger->warning('Could not fix filename based on mime type.', [$orgFileNameSanitized]);
@@ -107,7 +102,7 @@ final class FilesAssignment
             }
 
             try {
-                $importFolder->addFile($filename, $orgFileNameSanitized, $behaviour);
+                $importFolder->addFile($filename, $orgFileNameSanitized, DuplicationBehavior::REPLACE);
             } catch (ResultException $e) {
                 $this->logger->warning('File for import had errors.', [$e]);
                 return null;

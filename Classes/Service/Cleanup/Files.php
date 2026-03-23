@@ -142,8 +142,11 @@ final class Files
         if ($storage === null || $storage->hasFile($filePath) === false) {
             return;
         }
+        $file = $storage->getFile($filePath);
 
-        $storage->deleteFile($storage->getFile($filePath));
+        if ($file !== null) {
+            $storage->deleteFile($file);
+        }
     }
 
     private function deleteFromDb(int ...$uids): void

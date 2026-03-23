@@ -82,12 +82,18 @@ class Date extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param int<-1, max> $languageUid
+     */
     public function setLanguageUid(int $languageUid): void
     {
         $this->_languageUid = $languageUid;
     }
 
-    public function getLanguageUid(): int
+    /**
+     * @return int<-1, max>|null
+     */
+    public function getLanguageUid(): ?int
     {
         return $this->_languageUid;
     }

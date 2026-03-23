@@ -14,14 +14,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 final class CategoryService
 {
-    private readonly TimeTracker $timeTracker;
-
     private readonly FrontendInterface $cache;
 
-    public function __construct()
-    {
-        $this->timeTracker = GeneralUtility::makeInstance(TimeTracker::class);
-        $this->cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('events_category');
+    public function __construct(
+        private readonly TimeTracker $timeTracker,
+        CacheManager $cacheManager,
+    ) {
+        $this->cache = $cacheManager->getCache('events_category');
     }
 
     /**
