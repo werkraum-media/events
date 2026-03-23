@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Resource\File;
-
 return [
     'sys_file' => [
         [
@@ -11,7 +9,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => File::FILETYPE_IMAGE,
+            'type' => 2,
             'identifier' => '/staedte/beispielstadt/events/bf126089c94f95031fa07bf9d7d9b10c3e58aafebdef31f0b60604da13019b8d.jpg',
             'extension' => 'jpg',
             'name' => 'bf126089c94f95031fa07bf9d7d9b10c3e58aafebdef31f0b60604da13019b8d.jpg',

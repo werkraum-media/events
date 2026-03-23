@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Resource\File;
-
 return [
     'sys_file' => [
         [
@@ -11,7 +9,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => File::FILETYPE_IMAGE,
+            'type' => 2,
             'identifier' => '/staedte/beispielstadt/events/theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg',
             'extension' => 'jpg',
             'name' => 'theater-rudolstadt_johannes-gei-er_photo-by-lisa-stern_web_-jpg.jpg',
@@ -21,7 +19,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => File::FILETYPE_IMAGE,
+            'type' => 2,
             'identifier' => '/staedte/beispielstadt/events/tueftlerzeit-sfz-rudolstadt-jpg.jpg',
             'extension' => 'jpg',
             'name' => 'tueftlerzeit-sfz-rudolstadt-jpg.jpg',

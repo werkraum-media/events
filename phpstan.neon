@@ -5,7 +5,7 @@ parameters:
   paths:
     - Classes
     - Configuration
-  reportUnmatchedIgnoredErrors: true
+  reportUnmatchedIgnoredErrors: false
 
   ignoreErrors:
     -

@@ -27,6 +27,7 @@ use Generator;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\CMS\Core\Schema\TcaSchemaFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\Registry;
 use WerkraumMedia\Events\Service\DestinationDataImportService\Slugger\SluggerType;
@@ -35,7 +36,8 @@ final class Slugger
 {
     public function __construct(
         private readonly Registry $registry,
-        private readonly ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool,
+        private readonly TcaSchemaFactory $tcaSchemaFactory,
     ) {
     }
 
@@ -48,7 +50,7 @@ final class Slugger
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<string[]>
      */
     private function getRecords(SluggerType $sluggerType): Generator
     {
@@ -72,6 +74,9 @@ final class Slugger
         }
     }
 
+    /**
+     * @param string[] $record
+     */
     private function updateRecord(SluggerType $sluggerType, array $record): void
     {
         $tableName = $sluggerType->getSupportedTableName();
@@ -101,7 +106,7 @@ final class Slugger
             SlugHelper::class,
             $tableName,
             $column,
-            $GLOBALS['TCA'][$tableName]['columns'][$column]['config']
+            $this->tcaSchemaFactory->get($tableName)->getField($column)->getConfiguration()
         );
     }
 

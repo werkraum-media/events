@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-use TYPO3\CMS\Core\Resource\File;
 
 return [
     'tx_events_domain_model_event' => [
@@ -33,7 +32,7 @@ return [
             'pid' => 0,
             'missing' => 0,
             'storage' => 1,
-            'type' => File::FILETYPE_IMAGE,
+            'type' => 2,
             'identifier' => '/staedte/beispielstadt/events/for-removal.jpg',
             'extension' => 'jpg',
             'name' => 'for-removal.jpg',

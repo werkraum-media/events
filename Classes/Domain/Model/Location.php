@@ -10,6 +10,9 @@ class Location extends AbstractEntity
 {
     protected string $globalId = '';
 
+    /**
+     * @param int<-1, max> $languageUid
+     */
     public function __construct(
         protected string $name,
         protected string $street,

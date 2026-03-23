@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Resource\File;
-
 $l10nPathGeneral = 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf';
 $l10nPathLang = 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf';
 $l10nPathFE = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
@@ -109,6 +107,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'hidden' => [
@@ -134,6 +133,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
         'endtime' => [
@@ -145,6 +145,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
 
@@ -183,6 +184,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'source_url' => [
@@ -191,6 +193,7 @@ return [
             'config' => [
                 'type' => 'link',
                 'readOnly' => true,
+                'searchable' => false,
             ],
         ],
         'import_configuration' => [
@@ -223,6 +226,7 @@ return [
                 'fallbackCharacter' => '-',
                 'eval' => 'uniqueInSite',
                 'default' => '',
+                'searchable' => false,
             ],
         ],
         'highlight' => [
@@ -264,6 +268,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
 
         ],
@@ -275,6 +280,7 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'web' => [
@@ -284,6 +290,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'ticket' => [
@@ -292,6 +299,7 @@ return [
             'config' => [
                 'type' => 'link',
                 'size' => 50,
+                'searchable' => false,
             ],
         ],
         'facebook' => [
@@ -301,6 +309,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'youtube' => [
@@ -310,6 +319,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'instagram' => [
@@ -319,6 +329,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'images' => [
@@ -337,7 +348,7 @@ return [
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
                         ],
-                        File::FILETYPE_IMAGE => [
+                        '2' => [
                             'showitem' => '
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
@@ -379,6 +390,7 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 3,
+                'searchable' => false,
             ],
         ],
 

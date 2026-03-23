@@ -1,106 +1,727 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot call method typoLink_URL\\(\\) on TYPO3\\\\CMS\\\\Frontend\\\\ContentObject\\\\ContentObjectRenderer\\|null\\.$#"
+			message: '#^Binary operation "\." between ''cacheLifeTimeForPag…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Classes/Caching/PageCacheTimeout.php
+
+		-
+			message: '#^Cannot call method getAttribute\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: Classes/Caching/PageCacheTimeout.php
+
+		-
+			message: '#^Cannot call method getPageId\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: Classes/Caching/PageCacheTimeout.php
+
+		-
+			message: '#^Cannot access offset ''categoriesParent'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: Classes/Controller/DateController.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#"
+			message: '#^Cannot access offset ''featuresParent'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Classes/Controller/DateController.php
+
+		-
+			message: '#^Cannot call method typoLink_URL\(\) on TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: Classes/Controller/DateController.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 4
+			path: Classes/Controller/DateController.php
+
+		-
+			message: '#^Parameter \#1 \$uids of method WerkraumMedia\\Events\\Domain\\Repository\\DateRepository\:\:findByUids\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Controller/DateController.php
+
+		-
+			message: '#^Parameter \#4 \$regions of class WerkraumMedia\\Events\\Events\\Controller\\DateSearchVariables constructor expects iterable\<WerkraumMedia\\Events\\Domain\\Model\\Region\>&TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface, TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Controller/DateController.php
+
+		-
+			message: '#^Parameter \#1 \$uids of method WerkraumMedia\\Events\\Domain\\Repository\\EventRepository\:\:findByUids\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Controller/EventController.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\DestinationData\\Date\:\:getDayOrdinal\(\) should return int but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\DestinationData\\Date\:\:getFrequency\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\DestinationData\\Date\:\:getWeekday\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\DestinationData\\Date\:\:getWeekdays\(\) should return array\<string\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Parameter \#1 \$datetime of class DateTimeImmutable constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Parameter \#1 \$timezone of class DateTimeZone constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Classes/Domain/DestinationData/Date.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: WerkraumMedia\\Events\\Domain\\Model\\Import given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(bool\|float\|GMP\|int\|resource\|string\|null\)\: string given\.$#'
+			identifier: argument.type
 			count: 2
 			path: Classes/Domain/DestinationData/ImportFactory.php
 
 		-
-			message: "#^Instanceof between WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\|null and TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\LazyLoadingProxy will always evaluate to false\\.$#"
+			message: '#^Parameter \#1 \$identifier of method TYPO3\\CMS\\Core\\Resource\\ResourceFactory\:\:getFolderObjectFromCombinedIdentifier\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
+			message: '#^Parameter \#1 \$identifier of method TYPO3\\CMS\\Core\\Resource\\ResourceFactory\:\:getFolderObjectFromCombinedIdentifier\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
+			message: '#^Parameter \#2 \$identifier of method TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session\:\:registerObject\(\) expects non\-empty\-string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
+			message: '#^Instanceof between WerkraumMedia\\Events\\Domain\\Model\\Category\|null and TYPO3\\CMS\\Extbase\\Persistence\\Generic\\LazyLoadingProxy will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
 			count: 1
 			path: Classes/Domain/Model/Category.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$pid \\(int\\<0, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Cannot access offset ''synonyms'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: Classes/Domain/Model/Category.php
+			path: Classes/Domain/Model/Dto/DateDemand.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Date\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			message: '#^Cannot access offset ''word'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: Classes/Domain/Model/Date.php
+			path: Classes/Domain/Model/Dto/DateDemand.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:getSynonymsForSearchword\(\) should return array but returns mixed\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Date.php
+			path: Classes/Domain/Model/Dto/DateDemand.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			message: '#^Parameter \#1 \$array of function array_unique expects an array of values castable to string, array\<int, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemand.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\|bool\|float\|GMP\|int\|resource\|SimpleXMLElement\|string\|null, int\=\)\: int given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Classes/Domain/Model/Dto/DateDemand.php
+
+		-
+			message: '#^Parameter \#2 \$string of static method TYPO3\\CMS\\Core\\Utility\\GeneralUtility\:\:trimExplode\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemand.php
+
+		-
+			message: '#^Binary operation "\." between mixed and '' 00\:00'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Binary operation "\." between mixed and '' 23\:59'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 3
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 6
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$categories of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setFeatures\(\) expects array\<int\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$categories of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setUserCategories\(\) expects array\<int\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$limit of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setLimit\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$queryCallback of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setQueryCallback\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$searchword of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setSearchword\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$sortBy of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setSortBy\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$sortOrder of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setSortOrder\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$synonyms of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\DateDemand\:\:setSynonyms\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Parameter \#2 \$string of static method TYPO3\\CMS\\Core\\Utility\\GeneralUtility\:\:intExplode\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/DateDemandFactory.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: Classes/Domain/Model/Dto/EventDemandFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 4
+			path: Classes/Domain/Model/Dto/EventDemandFactory.php
+
+		-
+			message: '#^Parameter \#1 \$limit of method WerkraumMedia\\Events\\Domain\\Model\\Dto\\EventDemand\:\:setLimit\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/EventDemandFactory.php
+
+		-
+			message: '#^Parameter \#2 \$string of static method TYPO3\\CMS\\Core\\Utility\\GeneralUtility\:\:intExplode\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Model/Dto/EventDemandFactory.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:getSortedCategory\(\) should return array\<WerkraumMedia\\Events\\Domain\\Model\\Category\> but returns list\<object\>\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Event\\:\\:getLocalizedUid\\(\\) should return int but returns int\\<0, max\\>\\|null\\.$#"
+			message: '#^Parameter \#2 \$callback of function usort expects callable\(object, object\)\: int, Closure\(WerkraumMedia\\Events\\Domain\\Model\\Category, WerkraumMedia\\Events\\Domain\\Model\\Category\)\: int\<\-1, 1\> given\.$#'
+			identifier: argument.type
 			count: 1
 			path: Classes/Domain/Model/Event.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(mixed, mixed\\)\\: int, Closure\\(WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category, WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\CategoryRepository\:\:findOneForImport\(\) should return WerkraumMedia\\Events\\Domain\\Model\\Category\|null but returns TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\|null\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Event.php
+			path: Classes/Domain/Repository/CategoryRepository.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\DateRepository\:\:findByDemand\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult but returns TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, object\>\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Event.php
+			path: Classes/Domain/Repository/DateRepository.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\DateRepository\:\:findByUids\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult but returns TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\>\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Location.php
+			path: Classes/Domain/Repository/DateRepository.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Organizer\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			message: '#^Parameter \#1 \$value of method TYPO3\\CMS\\Core\\Database\\Query\\QueryBuilder\:\:escapeLikeWildcards\(\) expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
-			path: Classes/Domain/Model/Organizer.php
+			path: Classes/Domain/Repository/DateRepository.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\EventRepository\:\:findByDemand\(\) should return array\|TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult but returns TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, object\>\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Organizer.php
+			path: Classes/Domain/Repository/EventRepository.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Region\\:\\:getLanguageUid\\(\\) should return int but returns int\\<\\-1, max\\>\\|null\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\EventRepository\:\:findByUids\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult but returns TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\>\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Region.php
+			path: Classes/Domain/Repository/EventRepository.php
 
 		-
-			message: "#^Property TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\AbstractDomainObject\\:\\:\\$_languageUid \\(int\\<\\-1, max\\>\\|null\\) does not accept int\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\EventRepository\:\:findSearchWord\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QueryResult but returns TYPO3\\CMS\\Extbase\\Persistence\\QueryResultInterface\<int, TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\>\.$#'
+			identifier: return.type
 			count: 1
-			path: Classes/Domain/Model/Region.php
+			path: Classes/Domain/Repository/EventRepository.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Domain\\\\Repository\\\\LocationRepository\\:\\:findOneByGlobalId\\(\\) should return WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Location\\|null but returns \\(T of object\\)\\|null\\.$#"
+			message: '#^Parameter \#2 \$callback of function usort expects callable\(object, object\)\: int, Closure\(WerkraumMedia\\Events\\Domain\\Model\\Event, WerkraumMedia\\Events\\Domain\\Model\\Event\)\: int\<\-1, 1\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Repository/EventRepository.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Domain\\Repository\\LocationRepository\:\:findOneByGlobalId\(\) should return WerkraumMedia\\Events\\Domain\\Model\\Location\|null but returns TYPO3\\CMS\\Extbase\\DomainObject\\DomainObjectInterface\|null\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Domain/Repository/LocationRepository.php
 
 		-
-			message: "#^Cannot cast mixed to int\\.$#"
+			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Classes/Service/CategoryService.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/CategoryService.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Cannot cast mixed to string\\.$#"
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\Cleanup\\\\Files\\:\\:getPotentialFilesToDelete\\(\\) should return array\\<int, array\\{storage\\: int, identifier\\: string\\}\\> but returns array\\<int\\|string, array\\<string, mixed\\>\\>\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Service\\Cleanup\\Files\:\:getPotentialFilesToDelete\(\) should return array\<int, array\{storage\: int, identifier\: string\}\> but returns array\<array\<string, mixed\>\>\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Service/Cleanup/Files.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\CategoriesAssignment\\:\\:getCategories\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<WerkraumMedia\\\\Events\\\\Domain\\\\Model\\\\Category\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
+			message: '#^Parameter \#1 \$array of function array_diff expects an array of values castable to string, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: '#^Parameter \#2 \$arrays of function array_diff expects an array of values castable to string, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between TYPO3\\CMS\\Core\\Resource\\FileInterface and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Classes/Service/Cleanup/Files.php
+
+		-
+			message: '#^Cannot access offset ''rel'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 5
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 5
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Cannot access offset ''value'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given in argument \#1\.$#'
+			identifier: argument.unpackNonIterable
+			count: 6
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_filter expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$city of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setCity\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$district of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setDistrict\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$email of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setEmail\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$facebook of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setFacebook\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$globalId of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:getOrCreateEvent\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$highlight of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setHighlight\(\) expects bool, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$instagram of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setInstagram\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$name of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setSourceName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$name of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$name of method WerkraumMedia\\Events\\Domain\\Repository\\OrganizerRepository\:\:findOneByName\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$phone of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setPhone\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$source of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setSource\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$street of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setStreet\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$texts of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setTexts\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$ticket of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setTicket\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$timeIntervals of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setDates\(\) expects array\<array\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$url of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setSourceUrl\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$web of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setWeb\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$web of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setWeb\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$youtube of method WerkraumMedia\\Events\\Domain\\Model\\Event\:\:setYoutube\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \$zip of method WerkraumMedia\\Events\\Domain\\Model\\Organizer\:\:setZip\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$addresses of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setOrganizer\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$assets of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setAssets\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$categories of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:getCategories\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$features of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:getFeatures\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$media of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setSocial\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$media of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:setTickets\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\)\: bool\)\|null, Closure\(array\)\: bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#2 \$title of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\:\:getOrCreateEvent\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Service\\DestinationDataImportService\\CategoriesAssignment\:\:getCategories\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage\<WerkraumMedia\\Events\\Domain\\Model\\Category\> but returns TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage\<object\>\.$#'
+			identifier: return.type
 			count: 2
 			path: Classes/Service/DestinationDataImportService/CategoriesAssignment.php
 
 		-
-			message: "#^Method WerkraumMedia\\\\Events\\\\Service\\\\DestinationDataImportService\\\\FilesAssignment\\:\\:getImages\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\FileReference\\> but returns TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\ObjectStorage\\<mixed\\>\\.$#"
+			message: '#^Method WerkraumMedia\\Events\\Service\\DestinationDataImportService\\DataFetcher\:\:fetchSearchResult\(\) should return iterable\<array\> but returns iterable\.$#'
+			identifier: return.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/DataFetcher.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/DataFetcher.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
+
+		-
+			message: '#^Method WerkraumMedia\\Events\\Service\\DestinationDataImportService\\FilesAssignment\:\:getImages\(\) should return TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage\<TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference\> but returns TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage\<object\>\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
+
+		-
+			message: '#^Parameter \#1 \$string of method WerkraumMedia\\Events\\Service\\DestinationDataImportService\\FilesAssignment\:\:getShortenedString\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/FilesAssignment.php
+
+		-
+			message: '#^Cannot access offset ''latitude'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Cannot access offset ''longitude'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Cannot access offset ''main'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#1 \$name of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#2 \$street of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#3 \$zip of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#4 \$city of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#5 \$district of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#6 \$country of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Parameter \#7 \$phone of class WerkraumMedia\\Events\\Domain\\Model\\Location constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Service/DestinationDataImportService/LocationAssignment.php
+
+		-
+			message: '#^Generator expects value type array\<string\>, array\<string, mixed\> given\.$#'
+			identifier: generator.valueType
+			count: 1
+			path: Classes/Service/DestinationDataImportService/Slugger.php

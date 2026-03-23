@@ -172,7 +172,7 @@ class DateDemand
 
     public function setRegions(array $regions): void
     {
-        $this->regions = array_map('intval', $regions);
+        $this->regions = array_map(intval(...), $regions);
     }
 
     /**
@@ -185,7 +185,7 @@ class DateDemand
 
     public function setLocations(array $locations): void
     {
-        $this->locations = array_map('intval', $locations);
+        $this->locations = array_map(intval(...), $locations);
     }
 
     /**
@@ -198,7 +198,7 @@ class DateDemand
 
     public function setOrganizers(array $organizers): void
     {
-        $this->organizers = array_values(array_map('intval', $organizers));
+        $this->organizers = array_values(array_map(intval(...), $organizers));
     }
 
     public function getHighlight(): bool

@@ -24,13 +24,25 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Domain\TimeZone;
 
 use DateTimeZone;
+use Exception;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 final class Typo3ConfiguredTimeZoneProvider implements TimeZoneProviderInterface
 {
     public function getTimeZone(): DateTimeZone
     {
-        $timeZone = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? null;
+        $pathToTimeZone = 'TYPO3_CONF_VARS/SYS/phpTimeZone';
+
+        $timeZone = null;
+        if (ArrayUtility::isValidPath($GLOBALS, $pathToTimeZone)) {
+            $timeZone = ArrayUtility::getValueByPath($GLOBALS, $pathToTimeZone);
+        }
+
         $timeZone = $timeZone ?: date_default_timezone_get();
+
+        if (is_string($timeZone) === false) {
+            throw new Exception('Could not determine time zone.', 1774253418);
+        }
 
         return new DateTimeZone($timeZone);
     }

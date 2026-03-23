@@ -71,7 +71,7 @@ return  [
             'pid' => '2',
             'event' => '2',
             'start' => '1676419200',
-            'end' => '\\NULL',
+            'end' => null,
         ],
         2 => [
             'uid' => '3',
@@ -85,7 +85,7 @@ return  [
             'pid' => '2',
             'event' => '4',
             'start' => '1676678400',
-            'end' => '\\NULL',
+            'end' => null,
         ],
         4 => [
             'uid' => '5',
@@ -113,7 +113,7 @@ return  [
             'pid' => '2',
             'event' => '8',
             'start' => '1676559600',
-            'end' => '\\NULL',
+            'end' => null,
         ],
         8 => [
             'uid' => '9',

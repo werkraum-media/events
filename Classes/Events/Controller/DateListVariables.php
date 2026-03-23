@@ -11,6 +11,9 @@ use WerkraumMedia\Events\Domain\Model\Dto\DateDemand;
 
 final class DateListVariables
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $variables = [];
 
     public function __construct(
@@ -47,6 +50,9 @@ final class DateListVariables
         $this->variables[$key] = $value;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getVariablesForView(): array
     {
         return [

@@ -55,6 +55,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'hidden' => [
@@ -80,6 +81,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
         'endtime' => [
@@ -91,6 +93,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
 

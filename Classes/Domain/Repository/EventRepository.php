@@ -28,6 +28,12 @@ use WerkraumMedia\Events\Service\CategoryService;
 
 final class EventRepository extends Repository
 {
+    public function __construct(
+        private readonly CategoryService $categoryService,
+    ) {
+        parent::__construct();
+    }
+
     public function findByUids(string $uids): QueryResult
     {
         $query = $this->createQuery();
@@ -140,8 +146,7 @@ final class EventRepository extends Repository
 
         $categories = $demand->getCategories();
         if ($demand->getIncludeSubCategories()) {
-            $categoryService = GeneralUtility::makeInstance(CategoryService::class);
-            $categories = $categoryService->getChildrenCategories($categories);
+            $categories = $this->categoryService->getChildrenCategories($categories);
         }
 
         $categories = GeneralUtility::intExplode(',', $categories, true);

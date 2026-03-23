@@ -8,6 +8,10 @@ use WerkraumMedia\Events\Domain\Model\Category;
 
 final class Import
 {
+    /**
+     * @param int<0, max>|null $pid
+     * @param string[] $categoryTitles
+     */
     public function __construct(
         private readonly ?Category $parentCategory,
         private readonly ?int $pid,
@@ -21,11 +25,17 @@ final class Import
         return $this->parentCategory;
     }
 
+    /**
+     * @return int<0, max>|null
+     */
     public function getPid(): ?int
     {
         return $this->pid;
     }
 
+    /**
+     * @return string[]
+     */
     public function getCategoryTitles(): array
     {
         return $this->categoryTitles;

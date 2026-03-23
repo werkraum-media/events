@@ -57,6 +57,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'hidden' => [
@@ -82,6 +83,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
         'endtime' => [
@@ -93,6 +95,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
 
@@ -104,6 +107,8 @@ return [
                 'format' => 'datetime',
                 'size' => 12,
                 'default' => null,
+                'nullable' => true,
+                'searchable' => false,
             ],
         ],
         'end' => [
@@ -114,6 +119,8 @@ return [
                 'format' => 'datetime',
                 'size' => 12,
                 'default' => null,
+                'nullable' => true,
+                'searchable' => false,
             ],
         ],
         'canceled' => [
@@ -163,6 +170,7 @@ return [
             'displayCond' => 'FIELD:canceled:=:canceled',
             'config' => [
                 'type' => 'link',
+                'searchable' => false,
             ],
         ],
         'slug' => [
@@ -179,6 +187,7 @@ return [
                 'fallbackCharacter' => '-',
                 'eval' => 'uniqueInSite',
                 'default' => '',
+                'searchable' => false,
             ],
         ],
         'event' => [

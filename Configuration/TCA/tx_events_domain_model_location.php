@@ -82,6 +82,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'hidden' => [
@@ -107,6 +108,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
         'endtime' => [
@@ -118,6 +120,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
+                'searchable' => false,
             ],
         ],
 
@@ -129,6 +132,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'children' => [
@@ -161,6 +165,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'district' => [
@@ -170,6 +175,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'city' => [
@@ -179,6 +185,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'zip' => [
@@ -188,6 +195,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'country' => [
@@ -197,6 +205,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'phone' => [
@@ -206,6 +215,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'latitude' => [
@@ -215,6 +225,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
         'longitude' => [
@@ -224,6 +235,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'searchable' => false,
             ],
         ],
     ],

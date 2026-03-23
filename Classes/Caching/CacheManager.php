@@ -28,6 +28,9 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class CacheManager
 {
+    /**
+     * @var string[]
+     */
     private array $tags = [
         'tx_events_domain_model_date',
         'tx_events_domain_model_event',

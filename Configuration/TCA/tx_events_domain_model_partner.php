@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Resource\File;
-
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner',
@@ -55,6 +53,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
+                'searchable' => false,
             ],
         ],
         'hidden' => [
@@ -86,6 +85,7 @@ return [
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_partner.xlf:tx_events_domain_model_partner.link',
             'config' => [
                 'type' => 'link',
+                'searchable' => false,
             ],
         ],
         'images' => [
@@ -103,7 +103,7 @@ return [
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
                         ],
-                        File::FILETYPE_IMAGE => [
+                        '2' => [
                             'showitem' => '
                                 --palette--;;imageoverlayPalette,
                                 --palette--;;filePalette',
