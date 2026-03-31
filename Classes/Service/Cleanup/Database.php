@@ -68,10 +68,10 @@ final class Database
 
         $queryBuilder->getRestrictions()->removeAll();
 
-        $midnightToday = new DateTimeImmutable('midnight today');
+        $sixWeeksAgo = (new DateTimeImmutable())->modify('-6 weeks')->setTime(0, 0, 0);
         $queryBuilder->delete(self::DATE_TABLE)->where($queryBuilder->expr()->lte(
             'end',
-            $queryBuilder->createNamedParameter($midnightToday->format('U'))
+            $queryBuilder->createNamedParameter($sixWeeksAgo->format('U'))
         ))->executeStatement();
     }
 
