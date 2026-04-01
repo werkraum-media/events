@@ -132,7 +132,13 @@ final class Date
         );
 
         // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
-        $date = $date->modify('+1second');
+        // If start + 1day (which is not included) is last until, we need to increase until to include that day.
+        // Otherwise another day would lead to issues, so we use only one second.
+        if ($date->format('d.m.Y') === $this->getStart()->modify('+1day')->format('d.m.Y')) {
+            $date = $date->modify('+1day');
+        } else {
+            $date = $date->modify('+1second');
+        }
 
         return $date;
     }
