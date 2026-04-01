@@ -243,6 +243,33 @@ class DatesFactoryTest extends TestCase
     /**
      * @test
      */
+    public function returnsDatesOnDailyBasisIncludingLastDay(): void
+    {
+        $subject = $this->createTestSubject('2026-03-31T03:30:00 Europe/Berlin');
+
+        $result = $subject->createDates([[
+            'weekdays' => [],
+            'start' => '2026-03-30T14:00:00+01:00',
+            'end' => '2026-03-30T15:00:00+01:00',
+            'repeatUntil' => '2026-03-31T15:00:00+02:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Daily',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(\Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(1, $result);
+
+        self::assertInstanceOf(Date::class, $result[0]);
+        self::assertSame('2026-03-31T14:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2026-03-31T15:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+    }
+
+    /**
+     * @test
+     */
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');

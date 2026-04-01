@@ -184,7 +184,13 @@ class DatesFactory
         $until = new \DateTimeImmutable($date['repeatUntil'], $timeZone);
 
         // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
-        $until = $until->modify('+1second');
+        // If start + 1day (which is not included) is last until, we need to increase until to include that day.
+        // Otherwise another day would lead to issues, so we use only one second.
+        if ($until->format('d.m.Y') === $start->modify('+1day')->format('d.m.Y')) {
+            $until = $until->modify('+1day');
+        } else {
+            $until = $until->modify('+1second');
+        }
 
         $period = new \DatePeriod($start, new \DateInterval('P1D'), $until);
         foreach ($period as $day) {
