@@ -14,6 +14,12 @@ Nothing
 Fixes
 -----
 
+* Wrong date creation based on destination.one `repeatUntil`.
+  Respect the last day, if we import on that day.
+
+  A new test is added to reflect that situation.
+  The workaround for missing `DatePeriod::INCLUDE_END_DATE` is extended to cover that situation.
+
 * Fix wrong determination of repeat minutes
 
   The used value was for month instead of minutes.
