@@ -104,6 +104,31 @@ class DatesFactoryTest extends TestCase
     /**
      * @test
      */
+    public function returnsSingleDateForToday(): void
+    {
+        $subject = $this->createTestSubject('2026-03-31T15:31:00 Europe/Berlin');
+
+        $result = $subject->createDates([[
+            'start' => '2026-03-31T14:00:00+01:00',
+            'end' => '2026-03-31T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(\Generator::class, $result);
+
+        $firstEntry = $result->current();
+
+        self::assertCount(1, iterator_to_array($result));
+
+        self::assertInstanceOf(Date::class, $firstEntry);
+        self::assertSame('2026-03-31T14:00:00+01:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2026-03-31T15:00:00+01:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
+    }
+
+    /**
+     * @test
+     */
     public function returnsWeeklyWithConfiguredRepeat(): void
     {
         $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
@@ -315,7 +340,7 @@ class DatesFactoryTest extends TestCase
             ],
             'start' => '2026-03-21T16:00:00+02:00',
             'end' => '2022-03-21T17:00:00+02:00',
-            'repeatUntil' => '2026-03-29T10:00:00+01:00',
+            'repeatUntil' => '2026-03-29T16:00:00+02:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
