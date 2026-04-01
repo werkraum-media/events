@@ -1,0 +1,33 @@
+4.2.3
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* Fix wrong determination of repeat minutes
+
+  The used value was for month instead of minutes.
+  We now use the correct identifier for minutes.
+
+  This revealed that tests only passed because of the issue.
+  We therefore fix the code to still pass correct tests by working around PHP < 8.2 limitation.
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing

@@ -131,7 +131,7 @@ final class DatesFactory
             $repeatUntilDate = new DateTimeImmutable($date['repeatUntil'], $timeZone);
             $repeatUntilDate = $repeatUntilDate->setTime(
                 (int)$start->format('H'),
-                (int)$start->format('m'),
+                (int)$start->format('i'),
                 (int)$start->format('s'),
             );
             $date['repeatUntil'] = $repeatUntilDate->format('c');
@@ -151,7 +151,7 @@ final class DatesFactory
         $repeatUntilDate = $repeatUntilDate->setTime(
             (int)$start->format('H'),
             (int)$start->format('m'),
-            (int)$start->format('s'),
+            (int)$start->format('i'),
         );
         $repeatUntilDate = $repeatUntilDate->modify($configuredModification);
         $date['repeatUntil'] = $repeatUntilDate->format('c');
@@ -172,6 +172,9 @@ final class DatesFactory
         $start = new DateTimeImmutable($date['start'], $timeZone);
         $end = new DateTimeImmutable($date['end'], $timeZone);
         $until = new DateTimeImmutable($date['repeatUntil'], $timeZone);
+
+        // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
+        $until = $until->modify('+1second');
 
         $period = new DatePeriod($start, new DateInterval('P1D'), $until);
         foreach ($period as $day) {
@@ -202,6 +205,9 @@ final class DatesFactory
         $start = new DateTimeImmutable($date['start'], $timeZone);
         $end = new DateTimeImmutable($date['end'], $timeZone);
         $until = new DateTimeImmutable($date['repeatUntil'], $timeZone);
+
+        // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
+        $until = $until->modify('+1second');
 
         foreach ($date['weekdays'] as $day) {
             $dateToUse = $start->modify($day);
