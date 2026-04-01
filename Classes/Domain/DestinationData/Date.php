@@ -127,9 +127,12 @@ final class Date
         $date = new DateTimeImmutable($this->data['repeatUntil'], $this->getTimezone());
         $date = $date->setTime(
             (int)$this->getStart()->format('H'),
-            (int)$this->getStart()->format('m'),
+            (int)$this->getStart()->format('i'),
             (int)$this->getStart()->format('s'),
         );
+
+        // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
+        $date = $date->modify('+1second');
 
         return $date;
     }

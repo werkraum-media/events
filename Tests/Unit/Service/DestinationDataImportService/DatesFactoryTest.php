@@ -192,6 +192,30 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
+    public function returnsSingleDateForToday(): void
+    {
+        $import = self::createStub(Import::class);
+        $subject = $this->createTestSubject('2026-03-31T15:31:00 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'start' => '2026-03-31T14:00:00+01:00',
+            'end' => '2026-03-31T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+
+        $firstEntry = $result->current();
+
+        self::assertCount(1, iterator_to_array($result));
+
+        self::assertInstanceOf(Date::class, $firstEntry);
+        self::assertSame('2026-03-31T14:00:00+01:00', $firstEntry->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2026-03-31T15:00:00+01:00', $firstEntry->getEnd()->format(DateTimeImmutable::ATOM));
+    }
+
+    #[Test]
     public function returnsMonthlyWithConfiguredRepeatCount(): void
     {
         $import = self::createStub(Import::class);
@@ -384,15 +408,16 @@ class DatesFactoryTest extends TestCase
     public function returnsDatesOnWeeklyBasisIncludingLastDay(): void
     {
         $subject = $this->createTestSubject('2026-03-29T16:00:00 Europe/Berlin');
+        $import = self::createStub(Import::class);
 
-        $result = $subject->createDates([[
+        $result = $subject->createDates($import, [[
             'weekdays' => [
                 'Saturday',
                 'Sunday',
             ],
             'start' => '2026-03-21T16:00:00+02:00',
             'end' => '2022-03-21T17:00:00+02:00',
-            'repeatUntil' => '2026-03-29T10:00:00+01:00',
+            'repeatUntil' => '2026-03-29T16:00:00+02:00',
             'tz' => 'Europe/Berlin',
             'freq' => 'Weekly',
             'interval' => 1,
