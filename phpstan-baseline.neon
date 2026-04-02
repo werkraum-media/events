@@ -97,6 +97,18 @@ parameters:
 			path: Classes/Domain/DestinationData/Date.php
 
 		-
+			message: '#^Call to function method_exists\(\) with TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session and ''buildIdentifier'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
+			message: '#^Parameter \#1 \$baseIdentifier of method TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session\:\:buildIdentifier\(\) expects array\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/DestinationData/ImportFactory.php
+
+		-
 			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: WerkraumMedia\\Events\\Domain\\Model\\Import given\.$#'
 			identifier: argument.type
 			count: 1
