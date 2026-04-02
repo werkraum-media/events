@@ -94,7 +94,14 @@ final class ImportFactory
     private function createWorkarounds(array $data): void
     {
         $this->folderInstance = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($data['files_folder']);
-        $this->extbasePersistenceSession->registerObject($this->folderInstance, $data['files_folder']);
+
+        // TODO: typo3/cms-core:15 Remove v13 support, always call the method to build the identifier.
+        $identifier = $data['files_folder'];
+        if (method_exists($this->extbasePersistenceSession, 'buildIdentifier')) {
+            $identifier = $this->extbasePersistenceSession->buildIdentifier($identifier);
+        }
+
+        $this->extbasePersistenceSession->registerObject($this->folderInstance, $identifier);
         $this->extbaseConfigurationManagerService->configureForBackend();
     }
 
