@@ -1,0 +1,75 @@
+name: 'CI'
+
+'on':
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  base-qa:
+    runs-on: 'self-hosted'
+    container:
+      image: 'forgejo.werkraum-media.de/global/typo3-ci:php83-node24'
+    steps:
+      - uses: 'actions/checkout@v6'
+
+      - uses: 'actions/local/qa-forgejo-folder@v1'
+
+      - uses: 'actions/local/setup-composer-cache@v1'
+
+      - name: 'Validate composer.json'
+        run: 'composer validate'
+
+      - name: 'Validate TYPO3 language files'
+        run: "xmllint --schema xliff-core-1.2-strict.xsd --noout $(find Resources -name '*.xlf')"
+
+      - name: 'Install dependencies'
+        run: 'composer install --no-progress --no-interaction --no-ansi'
+
+      - name: 'Validate PHPUnit configuration file'
+        run: 'xmllint --schema vendor/phpunit/phpunit/phpunit.xsd --noout phpunit.xml.dist'
+
+      - name: 'Coding Guideline'
+        run: './vendor/bin/php-cs-fixer fix --dry-run --diff'
+
+  advanced-qa:
+    runs-on: 'self-hosted'
+    container:
+      image: 'forgejo.werkraum-media.de/global/typo3-ci:php${{ matrix.php-version }}-node24'
+    needs:
+      - 'base-qa'
+    strategy:
+      matrix:
+        php-version:
+          - '82'
+          - '83'
+          - '84'
+          - '85'
+        typo3-version:
+          - '^13.4'
+          - '~14.2.0'
+    steps:
+      - uses: 'actions/checkout@v6'
+
+      - name: 'PHP lint'
+        run: "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l"
+
+      - name: 'Get Composer Cache Directory'
+        id: 'composer-cache-dir'
+        run: 'echo "dir=$(composer config cache-files-dir)" >> $FORGEJO_OUTPUT'
+      - name: 'Configure composer cache'
+        uses: 'actions/cache@v5'
+        with:
+          path: '${{ steps.composer-cache-dir.outputs.dir }}'
+          key: "composer-${{ hashFiles('${{ env.FORGEJO_WORKSPACE }}/composer.*') }}-${{ matrix.php-version }}-${{ matrix.typo3-version }}"
+          restore-keys: 'composer'
+
+      - name: 'Install dependencies with expected TYPO3 version'
+        run: 'composer require --no-interaction --prefer-dist --no-progress "typo3/cms-core:${{ matrix.typo3-version }}" "typo3/cms-extbase:${{ matrix.typo3-version }}" "typo3/cms-filelist:${{ matrix.typo3-version }}" "typo3/cms-filemetadata:${{ matrix.typo3-version }}" "typo3/cms-fluid:${{ matrix.typo3-version }}" "typo3/cms-frontend:${{ matrix.typo3-version }}" "typo3/cms-install:${{ matrix.typo3-version }}"'
+
+      - name: 'Code Quality (by PHPStan)'
+        run: './vendor/bin/phpstan analyse'
+
+      - name: 'PHPUnit Tests'
+        run: './vendor/bin/phpunit --display-all-issues'
