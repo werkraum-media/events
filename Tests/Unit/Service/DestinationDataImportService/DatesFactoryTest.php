@@ -107,7 +107,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
 
         $firstEntry = $result->current();
 
@@ -239,7 +239,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(1, $result);
@@ -349,7 +349,7 @@ class DatesFactoryTest extends TestCase
             'interval' => 1,
         ]], false);
 
-        self::assertInstanceOf(\Generator::class, $result);
+        self::assertInstanceOf(Generator::class, $result);
         $result = iterator_to_array($result);
 
         self::assertCount(1, $result);
