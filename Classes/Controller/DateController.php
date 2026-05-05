@@ -152,6 +152,7 @@ final class DateController extends AbstractController
 
         throw new PropagateResponseException(
             $this->redirectToUri($this->request->getAttribute('currentContentObject')->typoLink_URL([
+                'forceAbsoluteUrl' => true,
                 'parameter' => 't3://page?uid=current',
                 'additionalParams' => '&' . http_build_query([$namespace => $parameter]),
             ])),

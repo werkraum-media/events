@@ -46,7 +46,7 @@ final class SearchTest extends AbstractFrontendTestCase
         $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(303, $response->getStatusCode());
-        self::assertSame('http://example.com/', $response->getHeaderLine('location'));
+        self::assertSame('https://example.com/', $response->getHeaderLine('location'));
     }
 
     #[Test]
@@ -66,7 +66,7 @@ final class SearchTest extends AbstractFrontendTestCase
         $response = $this->executeFrontendSubRequest($request);
 
         self::assertSame(303, $response->getStatusCode());
-        self::assertSame('http://example.com/?events%5Bsearch%5D%5Bsearchword%5D=Event', $response->getHeaderLine('location'));
+        self::assertSame('https://example.com/?events%5Bsearch%5D%5Bsearchword%5D=Event', $response->getHeaderLine('location'));
     }
 
     #[Test]
