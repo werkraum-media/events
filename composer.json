@@ -10,11 +10,14 @@
     "authors": [
         {
             "name": "Dirk Koritnik",
-            "role": "Developer"
+            "email": "koritnik@werkraum-media.de",
+            "homepage": "https://werkraum-media.de/",
+            "role": "Owner"
         },
         {
             "name": "Daniel Siepmann",
             "email": "coding@daniel-siepmann.de",
+            "homepage": "https://daniel-siepmann.de/",
             "role": "Developer"
         }
     ],
