@@ -6,50 +6,23 @@ namespace WerkraumMedia\Events\Domain\Model\Dto;
 
 class EventDemand
 {
-    /**
-     * @var string
-     */
-    protected $sortBy = '';
+    protected string $sortBy = '';
 
     /**
-     * @var string
+     * @var int[]
      */
-    protected $sortOrder = '';
+    protected array $categories = [];
+
+    protected bool $highlight = false;
+
+    protected string $limit = '';
 
     /**
-     * @var string
+     * @var int[]
      */
-    protected $categories = '';
+    protected array $recordUids = [];
 
-    /**
-     * @var bool
-     */
-    protected $includeSubCategories = false;
-
-    /**
-     * @var string
-     */
-    protected $categoryCombination = '';
-
-    /**
-     * @var string
-     */
-    protected $region = '';
-
-    /**
-     * @var bool
-     */
-    protected $highlight = false;
-
-    /**
-     * @var string
-     */
-    protected $limit = '';
-
-    /**
-     * @var array
-     */
-    protected $recordUids = [];
+    protected string $searchword = '';
 
     public function getSortBy(): string
     {
@@ -61,54 +34,20 @@ class EventDemand
         $this->sortBy = $sortBy;
     }
 
-    public function getSortOrder(): string
-    {
-        return $this->sortOrder;
-    }
-
-    public function setSortOrder(string $sortOrder): void
-    {
-        $this->sortOrder = $sortOrder;
-    }
-
-    public function getCategories(): string
+    /**
+     * @return int[]
+     */
+    public function getCategories(): array
     {
         return $this->categories;
     }
 
-    public function setCategories(string $categories): void
+    /**
+     * @param int[] $categories
+     */
+    public function setCategories(array $categories): void
     {
-        $this->categories = $categories;
-    }
-
-    public function getIncludeSubCategories(): bool
-    {
-        return $this->includeSubCategories;
-    }
-
-    public function setIncludeSubCategories(bool $includeSubCategories): void
-    {
-        $this->includeSubCategories = $includeSubCategories;
-    }
-
-    public function getCategoryCombination(): string
-    {
-        return $this->categoryCombination;
-    }
-
-    public function setCategoryCombination(string $categoryCombination): void
-    {
-        $this->categoryCombination = $categoryCombination;
-    }
-
-    public function getRegion(): string
-    {
-        return $this->region;
-    }
-
-    public function setRegion(string $region): void
-    {
-        $this->region = $region;
+        $this->categories = array_values(array_map(intval(...), $categories));
     }
 
     public function getHighlight(): bool
@@ -131,13 +70,48 @@ class EventDemand
         $this->limit = $limit;
     }
 
+    /**
+     * @return int[]
+     */
     public function getRecordUids(): array
     {
         return $this->recordUids;
     }
 
+    /**
+     * @param int[] $recordUids
+     */
     public function setRecordUids(array $recordUids): void
     {
         $this->recordUids = $recordUids;
+    }
+
+    public function getSearchword(): string
+    {
+        return $this->searchword;
+    }
+
+    public function setSearchword(string $searchword): void
+    {
+        $this->searchword = $searchword;
+    }
+
+    /**
+     * Flat shape for GET URLs (f:link.action / POST redirect); only the
+     * visitor-facing fields travel, empties dropped.
+     *
+     * @return array<string, string|int[]>
+     */
+    public function getQueryParameters(): array
+    {
+        $parameters = [];
+        if ($this->searchword !== '') {
+            $parameters['searchword'] = $this->searchword;
+        }
+        if ($this->categories !== []) {
+            $parameters['categories'] = $this->categories;
+        }
+
+        return $parameters;
     }
 }

@@ -32,32 +32,12 @@ class EventDemandFactory
         /** @var EventDemand $demand */
         $demand = GeneralUtility::makeInstance(EventDemand::class);
 
-        if (!empty($settings['region'])) {
-            $demand->setRegion((string)$settings['region']);
-        }
-
         if (!empty($settings['categories'])) {
-            $demand->setCategories((string)$settings['categories']);
-        }
-
-        $categoryCombination = 'and';
-        if (
-            isset($settings['categoryCombination'])
-            && (int)$settings['categoryCombination'] === 1
-        ) {
-            $categoryCombination = 'or';
-        }
-        $demand->setCategoryCombination($categoryCombination);
-
-        if (isset($settings['includeSubcategories'])) {
-            $demand->setIncludeSubCategories((bool)$settings['includeSubcategories']);
+            $demand->setCategories(GeneralUtility::intExplode(',', (string)$settings['categories'], true));
         }
 
         if (!empty($settings['sortByEvent'])) {
             $demand->setSortBy((string)$settings['sortByEvent']);
-        }
-        if (!empty($settings['sortOrder'])) {
-            $demand->setSortOrder((string)$settings['sortOrder']);
         }
 
         if (isset($settings['highlight'])) {

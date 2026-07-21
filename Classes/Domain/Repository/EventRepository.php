@@ -24,16 +24,9 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use WerkraumMedia\Events\Domain\Model\Dto\EventDemand;
 use WerkraumMedia\Events\Domain\Model\Event;
-use WerkraumMedia\Events\Service\CategoryService;
 
 final class EventRepository extends Repository
 {
-    public function __construct(
-        private readonly CategoryService $categoryService,
-    ) {
-        parent::__construct();
-    }
-
     public function findByUids(string $uids): QueryResult
     {
         $query = $this->createQuery();
@@ -59,6 +52,12 @@ final class EventRepository extends Repository
     protected function createDemandQuery(EventDemand $demand): QueryInterface
     {
         $query = $this->createQuery();
+
+        $settings = $query->getQuerySettings();
+        if (array_filter($settings->getStoragePageIds()) === []) {
+            $settings->setRespectStoragePage(false);
+        }
+
         $query = $this->setOrderings($query, $demand);
 
         $constraints = $this->getConstraints($query, $demand);
@@ -82,12 +81,7 @@ final class EventRepository extends Repository
             return $query;
         }
 
-        $order = QueryInterface::ORDER_ASCENDING;
-        if (strtolower($demand->getSortOrder()) === 'desc') {
-            $order = QueryInterface::ORDER_DESCENDING;
-        }
-
-        $query->setOrderings([$sortBy => $order]);
+        $query->setOrderings([$sortBy => QueryInterface::ORDER_ASCENDING]);
 
         return $query;
     }
@@ -121,16 +115,16 @@ final class EventRepository extends Repository
     {
         $constraints = [];
 
-        if ($demand->getCategories()) {
+        if ($demand->getSearchword() !== '') {
+            $constraints['searchword'] = $this->createSearchwordConstraint($query, $demand);
+        }
+
+        if ($demand->getCategories() !== []) {
             $constraints['categories'] = $this->createCategoryConstraint($query, $demand);
         }
 
         if ($demand->getRecordUids() !== []) {
             $constraints['recordUids'] = $query->in('uid', $demand->getRecordUids());
-        }
-
-        if ($demand->getRegion() !== '') {
-            $constraints['region'] = $query->equals('region', $demand->getRegion());
         }
 
         if ($demand->getHighlight()) {
@@ -140,24 +134,32 @@ final class EventRepository extends Repository
         return $constraints;
     }
 
+    /**
+     * Free-text over the event's text fields; a match in any one qualifies.
+     */
+    protected function createSearchwordConstraint(QueryInterface $query, EventDemand $demand): ConstraintInterface
+    {
+        $searchword = '%' . $demand->getSearchword() . '%';
+
+        return $query->logicalOr(
+            $query->like('title', $searchword),
+            $query->like('subtitle', $searchword),
+            $query->like('teaser', $searchword),
+            $query->like('details', $searchword),
+        );
+    }
+
+    /**
+     * OR-combined: the event matches if it carries ANY of the selected categories.
+     */
     protected function createCategoryConstraint(QueryInterface $query, EventDemand $demand): ConstraintInterface
     {
         $constraints = [];
-
-        $categories = $demand->getCategories();
-        if ($demand->getIncludeSubCategories()) {
-            $categories = $this->categoryService->getChildrenCategories($categories);
-        }
-
-        $categories = GeneralUtility::intExplode(',', $categories, true);
-        foreach ($categories as $category) {
+        foreach ($demand->getCategories() as $category) {
             $constraints[] = $query->contains('categories', $category);
         }
 
-        if ($demand->getCategoryCombination() === 'or') {
-            return $query->logicalOr(... $constraints);
-        }
-        return $query->logicalAnd(... $constraints);
+        return $query->logicalOr(... $constraints);
     }
 
     public function findSearchWord(string $search): QueryResult
