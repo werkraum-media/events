@@ -33,6 +33,8 @@ plugin.tx_events {
     }
 
     view {
+        pluginNamespace =
+
         templateRootPaths {
             0 = EXT:example/Resources/Private/Templates/
         }

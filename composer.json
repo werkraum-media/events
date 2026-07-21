@@ -15,6 +15,11 @@
             "role": "Owner"
         },
         {
+            "name": "Anja Leichsenring",
+            "email": "aleichsenring@ab-softlab.de",
+            "role": "Developer"
+        },
+        {
             "name": "Daniel Siepmann",
             "email": "coding@daniel-siepmann.de",
             "homepage": "https://daniel-siepmann.de/",

@@ -1,7 +1,12 @@
 plugin.tx_events {
-    persistence {
-        storagePid = {$plugin.tx_events.persistence.storagePid}
-        recursive = 1
+    view {
+        # Fallback templates; the CE extension (EXT:events_ces) overrides at .20.
+        templateRootPaths.10 = EXT:events/Resources/Private/Templates/
+        partialRootPaths.10 = EXT:events/Resources/Private/Partials/
+        layoutRootPaths.10 = EXT:events/Resources/Private/Layouts/
+
+        # All plugins share one namespace; the controller is picked via events[controller].
+        pluginNamespace = events
     }
 
     settings {
