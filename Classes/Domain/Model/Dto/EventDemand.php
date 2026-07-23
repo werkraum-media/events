@@ -13,6 +13,13 @@ class EventDemand
      */
     protected array $categories = [];
 
+    /**
+     * Visitor's search-form picks; refine WITHIN {@see $categories} (editor scope).
+     *
+     * @var int[]
+     */
+    protected array $userCategories = [];
+
     protected bool $highlight = false;
 
     protected string $limit = '';
@@ -48,6 +55,22 @@ class EventDemand
     public function setCategories(array $categories): void
     {
         $this->categories = array_values(array_map(intval(...), $categories));
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getUserCategories(): array
+    {
+        return $this->userCategories;
+    }
+
+    /**
+     * @param int[] $userCategories
+     */
+    public function setUserCategories(array $userCategories): void
+    {
+        $this->userCategories = array_values(array_map('intval', $userCategories));
     }
 
     public function getHighlight(): bool
@@ -108,8 +131,8 @@ class EventDemand
         if ($this->searchword !== '') {
             $parameters['searchword'] = $this->searchword;
         }
-        if ($this->categories !== []) {
-            $parameters['categories'] = $this->categories;
+        if ($this->userCategories !== []) {
+            $parameters['userCategories'] = $this->userCategories;
         }
 
         return $parameters;

@@ -31,12 +31,6 @@ parameters:
 			path: Classes/Controller/DateController.php
 
 		-
-			message: '#^Cannot call method typoLink_URL\(\) on TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer\|null\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: Classes/Controller/DateController.php
-
-		-
 			message: '#^Cannot cast mixed to int\.$#'
 			identifier: cast.int
 			count: 4
@@ -57,6 +51,18 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$uids of method WerkraumMedia\\Events\\Domain\\Repository\\EventRepository\:\:findByUids\(\) expects string, mixed given\.$#'
 			identifier: argument.type
+			count: 1
+			path: Classes/Controller/EventController.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 2
+			path: Classes/Controller/EventController.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
 			count: 1
 			path: Classes/Controller/EventController.php
 

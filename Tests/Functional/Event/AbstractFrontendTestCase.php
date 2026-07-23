@@ -17,40 +17,33 @@ abstract class AbstractFrontendTestCase extends FunctionalTestCase
 {
     use TestingFramework;
 
+    protected array $coreExtensionsToLoad = [
+        'filelist',
+        'filemetadata',
+        'install',
+        'fluid',
+        'extbase',
+    ];
+
+    protected array $testExtensionsToLoad = [
+        'werkraummedia/events',
+    ];
+
+    protected array $pathsToLinkInTestInstance = [
+        'typo3conf/ext/events/Tests/Functional/Event/Fixtures/Sites/' => 'typo3conf/sites',
+    ];
+
     protected function setUp(): void
     {
-        $this->coreExtensionsToLoad = [
-            'core',
-            'backend',
-            'extbase',
-            'fluid',
-            'frontend',
-            'install',
-        ];
-
-        $this->testExtensionsToLoad = [
-            'werkraummedia/events',
-        ];
-
-        $this->pathsToLinkInTestInstance = [
-            'typo3conf/ext/events/Tests/Functional/Event/Fixtures/Sites/' => 'typo3conf/sites',
-        ];
-
         parent::setUp();
 
         $this->importPHPDataSet(__DIR__ . '/Fixtures/' . $this->getDataSetFileName());
         $this->setUpFrontendRootPage(1, [
             'EXT:events/Configuration/TypoScript/setup.typoscript',
-            'EXT:events/Tests/Functional/Event/Fixtures/' . $this->getRenderingTypoScript(),
+            'EXT:events/Tests/Functional/Event/Fixtures/Rendering.typoscript',
         ]);
     }
 
     /** PHP data-set filename under Fixtures/. */
     abstract protected function getDataSetFileName(): string;
-
-    /** Rendering TypoScript filename under Fixtures/. */
-    protected function getRenderingTypoScript(): string
-    {
-        return 'ListRendering.typoscript';
-    }
 }

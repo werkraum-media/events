@@ -18,7 +18,7 @@ use WerkraumMedia\Events\Domain\Repository\EventRepository;
  *
  * Self-contained: loads only the real extension, no `example` fixture extension.
  */
-final class EventSearchDemandTest extends FunctionalTestCase
+class EventSearchDemandTest extends FunctionalTestCase
 {
     use TestingFramework;
 
@@ -44,7 +44,7 @@ final class EventSearchDemandTest extends FunctionalTestCase
     /**
      * @return string[]
      */
-    private function findTitlesByDemand(EventDemand $demand): array
+    protected function findTitlesByDemand(EventDemand $demand): array
     {
         $repository = $this->get(EventRepository::class);
 
@@ -115,5 +115,26 @@ final class EventSearchDemandTest extends FunctionalTestCase
         $demand->setCategories([10]);
 
         self::assertSame(['Goethehaus Weimar'], $this->findTitlesByDemand($demand));
+    }
+
+    #[Test]
+    public function userCategoriesRefineWithinEditorCategories(): void
+    {
+        $demand = new EventDemand();
+        // Editor scope: Museum (10) + Kirche (11) → Goethehaus + Domberg.
+        $demand->setCategories([10, 11]);
+        // Visitor narrows to Museum (10) → only Goethehaus survives.
+        $demand->setUserCategories([10]);
+
+        self::assertSame(['Goethehaus Weimar'], $this->findTitlesByDemand($demand));
+    }
+
+    #[Test]
+    public function userCategoriesAloneApplyWithoutEditorScope(): void
+    {
+        $demand = new EventDemand();
+        $demand->setUserCategories([11]);
+
+        self::assertSame(['Domberg Erfurt'], $this->findTitlesByDemand($demand));
     }
 }

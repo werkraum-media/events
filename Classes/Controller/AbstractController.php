@@ -27,6 +27,7 @@ use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Service\ExtensionService;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3Fluid\Fluid\View\ViewInterface as FluidStandaloneViewInterface;
@@ -39,9 +40,58 @@ abstract class AbstractController extends ActionController
      */
     protected $cacheManager;
 
+    protected ExtensionService $extensionService;
+
     public function injectCacheManager(CacheManager $cacheManager): void
     {
         $this->cacheManager = $cacheManager;
+    }
+
+    public function injectExtensionService(ExtensionService $extensionService): void
+    {
+        $this->extensionService = $extensionService;
+    }
+
+    /**
+     * Convert POST to proper GET.
+     *
+     * @see https://en.wikipedia.org/wiki/Post/Redirect/Get
+     */
+    protected function handlePostRequests(): void
+    {
+        if ($this->request->getMethod() !== 'POST') {
+            return;
+        }
+
+        $searchArguments = [];
+        if ($this->request->hasArgument('search')) {
+            $searchArguments = $this->request->getArgument('search');
+        }
+        if (is_array($searchArguments) === false) {
+            $searchArguments = [];
+        }
+        $searchArguments = array_filter($searchArguments);
+
+        $parameter = [];
+        if ($searchArguments !== []) {
+            $parameter['search'] = $searchArguments;
+        }
+
+        $contentObject = $this->request->getAttribute('currentContentObject');
+        if ($contentObject instanceof ContentObjectRenderer === false) {
+            return;
+        }
+
+        $namespace = $this->extensionService->getPluginNamespace(null, null);
+
+        throw new PropagateResponseException(
+            $this->redirectToUri($contentObject->typoLink_URL([
+                'forceAbsoluteUrl' => true,
+                'parameter' => 't3://page?uid=current',
+                'additionalParams' => '&' . http_build_query([$namespace => $parameter]),
+            ])),
+            303
+        );
     }
 
     /**

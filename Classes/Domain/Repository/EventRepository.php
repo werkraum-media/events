@@ -120,7 +120,11 @@ final class EventRepository extends Repository
         }
 
         if ($demand->getCategories() !== []) {
-            $constraints['categories'] = $this->createCategoryConstraint($query, $demand);
+            $constraints['categories'] = $this->createCategoryConstraint($query, $demand->getCategories());
+        }
+
+        if ($demand->getUserCategories() !== []) {
+            $constraints['userCategories'] = $this->createCategoryConstraint($query, $demand->getUserCategories());
         }
 
         if ($demand->getRecordUids() !== []) {
@@ -150,12 +154,16 @@ final class EventRepository extends Repository
     }
 
     /**
-     * OR-combined: the event matches if it carries ANY of the selected categories.
+     * OR-combined: the event matches if it carries ANY of the given categories.
+     * Editor scope and visitor picks each build one such group; the two groups
+     * are AND-combined by {@see getConstraints()} (refine-within semantics).
+     *
+     * @param int[] $categories
      */
-    protected function createCategoryConstraint(QueryInterface $query, EventDemand $demand): ConstraintInterface
+    protected function createCategoryConstraint(QueryInterface $query, array $categories): ConstraintInterface
     {
         $constraints = [];
-        foreach ($demand->getCategories() as $category) {
+        foreach ($categories as $category) {
             $constraints[] = $query->contains('categories', $category);
         }
 

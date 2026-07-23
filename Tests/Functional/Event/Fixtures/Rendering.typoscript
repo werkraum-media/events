@@ -1,0 +1,20 @@
+page = PAGE
+page.10 < styles.content.get
+
+plugin.tx_events {
+    view {
+        templateRootPaths.20 = EXT:events_ces/Resources/Private/Templates/
+        partialRootPaths.20 = EXT:events_ces/Resources/Private/Partials/
+        layoutRootPaths.20 = EXT:events_ces/Resources/Private/Layouts/
+    }
+    settings {
+        itemsPerPage = 2
+        pids.eventDetail = 10
+    }
+}
+
+tt_content.werkraummedia_eventlistfiltered = EXTBASEPLUGIN
+tt_content.werkraummedia_eventlistfiltered {
+    extensionName = Events
+    pluginName = EventListFiltered
+}

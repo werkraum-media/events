@@ -1,0 +1,58 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<f:if condition="{showSearch}">
+    <f:form fieldNamePrefix="events[search]" method="post">
+        <f:form.textfield name="searchword" value="{demand.searchword}" />
+        <f:for each="{categoryOptions}" as="option">
+            <label>
+                <f:form.checkbox name="userCategories" value="{option.parent.uid}" checked="{userCategoryMap.{option.parent.uid}}" multiple="1" />
+                {option.parent.title}
+            </label>
+            <f:for each="{option.children}" as="child">
+                <label>
+                    <f:form.checkbox name="userCategories" value="{child.uid}" checked="{userCategoryMap.{child.uid}}" multiple="1" />
+                    {child.title}
+                </label>
+            </f:for>
+        </f:for>
+        <button type="submit">Submit</button>
+    </f:form>
+</f:if>
+
+<f:variable name="items" value="{f:if(condition: pagination, then: pagination.paginator.paginatedItems, else: events)}" />
+
+<f:if condition="{items}">
+    <f:then>
+        <f:if condition="{pagination.lastPageNumber} > 1">
+            <nav aria-label="Pagination">
+                <span>Displaying {pagination.paginator.keyOfFirstPaginatedItem + 1}&#8211;{pagination.paginator.keyOfLastPaginatedItem + 1} of {total}</span>
+                <ul>
+                    <f:for each="{pagination.allPageNumbers}" as="page">
+                        <li>
+                            <f:if condition="{page} == {pagination.paginator.currentPageNumber}">
+                                <f:then><span aria-current="true">{page}</span></f:then>
+                                <f:else>
+                                    <a href="{f:uri.action(action: 'list', pluginName: 'EventListFiltered', addQueryString: 'untrusted', arguments: {currentPage: page})}">{page}</a>
+                                </f:else>
+                            </f:if>
+                        </li>
+                    </f:for>
+                </ul>
+            </nav>
+        </f:if>
+
+        <ol>
+            <f:for each="{items}" as="event">
+                <li>
+                    <f:link.action pageUid="{settings.pids.eventDetail}" extensionName="Events" pluginName="EventShow" arguments="{event: event}">{event.title}</f:link.action>
+                </li>
+            </f:for>
+        </ol>
+    </f:then>
+    <f:else>
+        <p>No events found.</p>
+    </f:else>
+</f:if>
+</html>

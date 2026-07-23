@@ -70,6 +70,6 @@ call_user_func(function () {
         [],
     );
 
-    // Search arguments are non-cacheable (POST->GET), shared `events` plugin namespace.
+    // Date search arguments are non-cacheable (POST->GET), shared `events` plugin namespace.
     $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^events[search]';
 });

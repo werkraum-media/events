@@ -7,9 +7,7 @@ namespace WerkraumMedia\Events\Controller;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Service\ExtensionService;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory;
 use WerkraumMedia\Events\Domain\Repository\CategoryRepository;
@@ -30,7 +28,6 @@ final class DateController extends AbstractController
         private readonly CategoryRepository $categoryRepository,
         private readonly Factory $paginationFactory,
         private readonly DataProcessingForModels $dataProcessing,
-        private readonly ExtensionService $extensionService,
         private readonly DateMetaInformationInterface $metaInformationService
     ) {
     }
@@ -121,42 +118,5 @@ final class DateController extends AbstractController
         $this->metaInformationService->setDate($date);
         $this->view->assign('date', $date);
         return $this->htmlResponse();
-    }
-
-    /**
-     * Convert POST to proper GET.
-     *
-     * @see: https://en.wikipedia.org/wiki/Post/Redirect/Get
-     */
-    private function handlePostRequests(): void
-    {
-        if ($this->request->getMethod() !== 'POST') {
-            return;
-        }
-
-        $searchArguments = [];
-        if ($this->request->hasArgument('search')) {
-            $searchArguments = $this->request->getArgument('search');
-        }
-        if (is_array($searchArguments) === false) {
-            $searchArguments = [];
-        }
-        $searchArguments = array_filter($searchArguments);
-
-        $parameter = [];
-        if ($searchArguments !== []) {
-            $parameter['search'] = $searchArguments;
-        }
-
-        $namespace = $this->extensionService->getPluginNamespace(null, null);
-
-        throw new PropagateResponseException(
-            $this->redirectToUri($this->request->getAttribute('currentContentObject')->typoLink_URL([
-                'forceAbsoluteUrl' => true,
-                'parameter' => 't3://page?uid=current',
-                'additionalParams' => '&' . http_build_query([$namespace => $parameter]),
-            ])),
-            303
-        );
     }
 }

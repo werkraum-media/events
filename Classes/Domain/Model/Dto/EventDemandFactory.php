@@ -54,4 +54,23 @@ class EventDemandFactory
 
         return $demand;
     }
+
+    public function createFromRequestValues(array $search, array $settings): EventDemand
+    {
+        $demand = $this->fromSettings($settings);
+
+        if (!empty($search['searchword']) && is_string($search['searchword'])) {
+            $demand->setSearchword($search['searchword']);
+        }
+
+        if (isset($search['userCategories']) && is_array($search['userCategories'])) {
+            $userCategories = [];
+            foreach ($search['userCategories'] as $userCategory) {
+                $userCategories[] = (int)$userCategory;
+            }
+            $demand->setUserCategories($userCategories);
+        }
+
+        return $demand;
+    }
 }
