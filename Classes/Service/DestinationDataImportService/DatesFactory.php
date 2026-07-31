@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WerkraumMedia\Events\Service\DestinationDataImportService;
 
 use DateInterval;
+use DateMalformedStringException;
 use DatePeriod;
 use DateTimeImmutable;
 use Generator;
@@ -165,7 +166,10 @@ final class DatesFactory
         $until = $date->getRepeatUntil();
 
         foreach ($date->getWeekdays() as $day) {
-            $dateToUse = $start->modify($day);
+            $dateToUse = $this->modify($start, $day);
+            if ($dateToUse === null) {
+                continue;
+            }
             $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
 
             $period = new DatePeriod($dateToUse, new DateInterval('P1W'), $until);
@@ -199,15 +203,23 @@ final class DatesFactory
         $end = $date->getEnd();
         $until = $date->getRepeatUntil();
 
-        $dateToUse = $start->modify($date->getWeekday());
+        $dateToUse = $this->modify($start, $date->getWeekday());
+        if ($dateToUse === null) {
+            return;
+        }
         $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
 
         $period = new DatePeriod($dateToUse, new DateInterval('P1M'), $until);
         foreach ($period as $day) {
             $day = $day->setTimezone($timeZone);
-            $day = $day->modify('first day of');
-            $day = $day->modify($date->getDayOrdinal() . ' ' . $date->getWeekday());
-            $formatted = $day->format('l');
+            $day = $this->modify($day, 'first day of');
+            if ($day === null) {
+                continue;
+            }
+            $day = $this->modify($day, $date->getDayOrdinal() . ' ' . $date->getWeekday());
+            if ($day === null) {
+                continue;
+            }
             if ($day < $today) {
                 $this->logger->debug('Date was in the past.', ['day' => $day]);
                 continue;
@@ -233,6 +245,37 @@ final class DatesFactory
             $dateToUse->setTime((int)$end->format('H'), (int)$end->format('i')),
             $canceled
         );
+    }
+
+    /**
+     * modify() reports an unparseable expression differently per supported PHP
+     * version — a warning plus false up to 8.2, an exception from 8.3 — so the
+     * expression is parsed first: date_parse() reports the failure quietly and
+     * alike. Returns null for anything that names no date.
+     */
+    private function modify(DateTimeImmutable $date, string $modification): ?DateTimeImmutable
+    {
+        $parsed = date_parse($modification);
+        if ($parsed['error_count'] > 0) {
+            $this->logger->warning('Modification could not be resolved to a date.', [
+                'modification' => $modification,
+                'errors' => $parsed['errors'],
+            ]);
+            return null;
+        }
+
+        try {
+            $modified = $date->modify($modification);
+        } catch (DateMalformedStringException) {
+            $modified = false;
+        }
+
+        if ($modified === false) {
+            $this->logger->warning('Modification could not be applied to a date.', ['modification' => $modification]);
+            return null;
+        }
+
+        return $modified;
     }
 
     private function getToday(): DateTimeImmutable

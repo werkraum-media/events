@@ -460,6 +460,78 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
+    public function skipsWeeklyWeekdayThatCannotBeResolved(): void
+    {
+        $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates(self::createStub(Import::class), [[
+            'weekdays' => [
+                'PublicHolidays',
+            ],
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        self::assertCount(0, iterator_to_array($result));
+    }
+
+    #[Test]
+    public function keepsResolvableWeekdaysAlongsideAnUnresolvableOne(): void
+    {
+        $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates(self::createStub(Import::class), [[
+            'weekdays' => [
+                'Saturday',
+                'PublicHolidays',
+                'Sunday',
+            ],
+            'start' => '2022-10-29T16:00:00+02:00',
+            'end' => '2022-10-29T17:00:00+02:00',
+            'repeatUntil' => '2022-11-06T10:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(4, $result);
+        self::assertSame('2022-10-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-05T16:00:00+01:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-10-30T16:00:00+01:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2022-11-06T16:00:00+01:00', $result[3]->getStart()->format(DateTimeImmutable::ATOM));
+    }
+
+    #[Test]
+    public function skipsMonthlyWeekdayThatCannotBeResolved(): void
+    {
+        $import = self::createStub(Import::class);
+        $import->method('getRepeatUntil')->willReturn('+60 days');
+        $subject = $this->createTestSubject('2023-01-01T13:17:24 Europe/Berlin');
+
+        $result = $subject->createDates($import, [[
+            'start' => '2023-01-06T14:00:00+01:00',
+            'end' => '2023-01-06T15:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Monthly',
+            'weekday' => 'PublicHolidays',
+            'dayOrdinal' => 1,
+            'interval' => 1,
+            'repeatCount' => 52,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        self::assertCount(0, iterator_to_array($result));
+    }
+
+    #[Test]
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
