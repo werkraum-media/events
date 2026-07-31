@@ -28,6 +28,26 @@ Fixes
   This revealed that tests only passed because of the issue.
   We therefore fix the code to still pass correct tests by working around PHP < 8.2 limitation.
 
+* A day name that cannot be resolved to a date no longer aborts date creation.
+
+  :php:`Service\DestinationDataImportService\DatesFactory` fed every configured day straight to
+  :php:`DateTimeImmutable::modify()` and used the result unchecked. A value that names no date — schema.org allows
+  entries such as ``PublicHolidays`` alongside the weekdays — made :php:`modify()` fail, and the following
+  :php:`setTime()` call raised, so the whole import of that event was lost.
+
+  Such a day is now skipped and logged at ``warning``. The remaining days of the same schedule still expand, so one
+  unusable value no longer costs an event its other dates. Schedules built from weekday names behave exactly as
+  before.
+
+  The expression is validated with :php:`date_parse()` before it reaches :php:`modify()`, because
+  :php:`modify()` reports failure differently across the supported PHP versions — a warning plus :php:`false` up to
+  8.2, a :php:`DateMalformedStringException` from 8.3.
+
+* :sql:`tx_events_domain_model_date` supports soft delete.
+
+  The table's TCA had no ``delete`` column configured, so records were removed outright. Importers that reconcile
+  existing dates against a changed schedule could not mark an obsolete date as deleted.
+
 Tasks
 -----
 
