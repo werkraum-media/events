@@ -127,6 +127,10 @@
                 <source>Dates</source>
                 <target>Termine</target>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.keywords_relation">
+                <source>Keywords as relation</source>
+                <target>Schlagworte als Relation</target>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.location">
                 <source>Location</source>
                 <target>Veranstaltungsort</target>

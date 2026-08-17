@@ -73,6 +73,11 @@ class Event extends AbstractEntity
     protected string $keywords = '';
 
     /**
+     * @var ObjectStorage<Category>
+     */
+    protected ObjectStorage $keywordsRelation;
+
+    /**
      * @var ObjectStorage<Partner>
      */
     protected ObjectStorage $partner;
@@ -111,6 +116,7 @@ class Event extends AbstractEntity
         $this->dates = new ObjectStorage();
         $this->categories = new ObjectStorage();
         $this->features = new ObjectStorage();
+        $this->keywordsRelation = new ObjectStorage();
         $this->partner = new ObjectStorage();
         $this->referencesEvents = new ObjectStorage();
     }
@@ -376,6 +382,14 @@ class Event extends AbstractEntity
     public function getKeywords(): string
     {
         return $this->keywords;
+    }
+
+    /**
+     * @return array<Category>
+     */
+    public function getKeywordsRelation(): array
+    {
+        return $this->getSortedCategory($this->keywordsRelation);
     }
 
     /**

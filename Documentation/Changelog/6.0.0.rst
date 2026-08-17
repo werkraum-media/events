@@ -11,6 +11,11 @@ Features
 
 * Add support for TYPO3 v14.
 
+* Events carry keywords as a category relation in ``keywords_relation``, alongside the existing
+  ``keywords`` text field. Importers that resolve keywords to a vocabulary fill the relation;
+  sources supplying a plain string keep using the text field. Read the related categories via
+  :php:`Event::getKeywordsRelation()`.
+
 Fixes
 -----
 

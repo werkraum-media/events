@@ -56,6 +56,7 @@ return [
                     categories,
                     features,
                     keywords,
+                    keywords_relation,
                     references_events,
                     pages,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.media,
@@ -391,6 +392,16 @@ return [
                 'cols' => 40,
                 'rows' => 3,
                 'searchable' => false,
+            ],
+        ],
+        // Filled by importers that resolve keywords to a vocabulary; the text
+        // field above stays for sources supplying a plain string.
+        'keywords_relation' => [
+            'exclude' => true,
+            'label' => $l10nPath . ':tx_events_domain_model_event.keywords_relation',
+            'config' => [
+                'type' => 'category',
+                'minitems' => 0,
             ],
         ],
 

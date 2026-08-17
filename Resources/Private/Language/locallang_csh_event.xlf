@@ -96,6 +96,9 @@
             <trans-unit id="tx_events_domain_model_event.dates">
                 <source>Dates</source>
             </trans-unit>
+            <trans-unit id="tx_events_domain_model_event.keywords_relation">
+                <source>Keywords as relation</source>
+            </trans-unit>
             <trans-unit id="tx_events_domain_model_event.location">
                 <source>Location</source>
             </trans-unit>
