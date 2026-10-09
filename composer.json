@@ -52,12 +52,6 @@
             "WerkraumMedia\\CustomEvent\\": "Tests/Functional/Psr14Events/DestinationDataImport/Fixtures/Extensions/custom_event/Classes/"
         }
     },
-    "scripts": {
-        "post-autoload-dump": [
-            "mkdir -p .Build/web/typo3conf/ext/",
-            "[ -L .Build/web/typo3conf/ext/events ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/events"
-        ]
-    },
     "extra": {
         "composer-exit-on-patch-failure": true,
         "patches": {
