@@ -53,6 +53,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "7.x-dev"
+        },
         "composer-exit-on-patch-failure": true,
         "patches": {
             "typo3/testing-framework": {
