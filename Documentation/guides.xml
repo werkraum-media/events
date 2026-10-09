@@ -7,15 +7,12 @@
 >
     <extension
         class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
-        project-home="https://github.com/werkraum-media/events/"
-        project-repository="https://github.com/werkraum-media/events/"
-        project-issues="https://github.com/werkraum-media/events/issues"
-        edit-on-github-branch="main"
-        edit-on-github="werkraum-media/events"
+        project-home="https://forgejo.werkraum-media.de/typo3/events/"
+        project-repository="https://forgejo.werkraum-media.de/typo3/events/"
         typo3-core-preferred="stable"
     />
     <project
         title="Events Extension"
-        copyright="since 2019 by Dirk Koritnik and Daniel Siepmann"
+        copyright="since 2019 by Dirk Koritnik, Daniel Siepmann and Anja Leichsenring"
     />
 </guides>
