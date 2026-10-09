@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace WerkraumMedia\EventsExample;
 
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionClass;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Attribute\AsAllowedCallable;
 use TYPO3\CMS\Core\Context\Context;
@@ -52,18 +51,6 @@ final class UserFunc
     {
         $pageInformation = $request->getAttribute('frontend.page.information');
         $typoScriptConfigArray = $request->getAttribute('frontend.typoscript')->getConfigArray();
-
-        // TODO: typo3/cms-core:15 Remove the conditional block from v13.
-        $numberOfArguments = (new ReflectionClass($this->cacheLifetimeCalculator::class))->getMethod('calculateLifetimeForPage')->getNumberOfParameters();
-        if ($numberOfArguments === 5) {
-            return 'get_cache_timeout: ' . $this->cacheLifetimeCalculator->calculateLifetimeForPage(
-                $pageInformation->getId(),
-                $pageInformation->getPageRecord(),
-                $typoScriptConfigArray,
-                0,
-                $this->context
-            );
-        }
 
         return 'get_cache_timeout: ' . $this->cacheLifetimeCalculator->calculateLifetimeForPage(
             $pageInformation->getId(),
