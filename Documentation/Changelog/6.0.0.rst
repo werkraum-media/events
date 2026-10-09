@@ -16,6 +16,12 @@ Features
   sources supplying a plain string keep using the text field. Read the related categories via
   :php:`Event::getKeywordsRelation()`.
 
+* The event list plugin offers an optional search form.
+
+  Enable it with ``settings.showSearch``. Visitors can filter by a search word, matched against title, subtitle,
+  teaser and details, and by the categories configured in the plugin, including their child categories.
+  The form is off by default, so existing lists render as before.
+
 Fixes
 -----
 
