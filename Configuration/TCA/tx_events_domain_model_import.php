@@ -14,7 +14,6 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-        'searchFields' => 'title',
         'iconfile' => 'EXT:events/Resources/Public/Icons/tx_events_domain_model_import.svg',
     ],
     'types' => [
@@ -57,21 +56,6 @@ return [
         ],
     ],
     'columns' => [
-        'hidden' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',
-            'config' => [
-                'type' => 'check',
-                'renderType' => 'checkboxToggle',
-                'items' => [
-                    [
-                        'label' => '',
-                        'invertStateDisplay' => true,
-                    ],
-                ],
-            ],
-        ],
-
         'title' => [
             'exclude' => true,
             'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_csh_import.xlf:tx_events_domain_model_import.title',
