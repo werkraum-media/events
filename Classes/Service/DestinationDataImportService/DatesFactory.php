@@ -203,13 +203,15 @@ final class DatesFactory
         $end = $date->getEnd();
         $until = $date->getRepeatUntil();
 
-        $dateToUse = $this->modify($start, $date->getWeekday());
-        if ($dateToUse === null) {
+        if ($this->modify($start, $date->getWeekday()) === null) {
             return;
         }
-        $dateToUse = $dateToUse->setTime((int)$start->format('H'), (int)$start->format('i'));
 
-        $period = new DatePeriod($dateToUse, new DateInterval('P1M'), $until);
+        // Iterating from the start's day would skip a month whose iteration date lies after
+        // $until, although the configured weekday of that month lies before it.
+        $firstOfMonth = $start->modify('first day of')->setTime((int)$start->format('H'), (int)$start->format('i'));
+
+        $period = new DatePeriod($firstOfMonth, new DateInterval('P1M'), $until);
         foreach ($period as $day) {
             $day = $day->setTimezone($timeZone);
             $day = $this->modify($day, 'first day of');
@@ -218,6 +220,10 @@ final class DatesFactory
             }
             $day = $this->modify($day, $date->getDayOrdinal() . ' ' . $date->getWeekday());
             if ($day === null) {
+                continue;
+            }
+            if ($day < $start) {
+                $this->logger->debug('Date was before the start of the series.', ['day' => $day]);
                 continue;
             }
             if ($day >= $until) {
