@@ -1,0 +1,26 @@
+6.0.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+* **[BUGFIX] Include the last day of a series spanning a DST change** (``f582ae5``)
+
+* **[BUGFIX] Create no monthly date after repeatUntil** (``e1821f2``)
+
+* **[BUGFIX] Calculate monthly series within their start and end** (``1447a8d``)
+
+Deprecation
+-----------
+
+Nothing
