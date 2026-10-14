@@ -349,6 +349,30 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
+    public function returnsDatesOnDailyBasisIncludingLastDayAcrossDaylightSavingTime(): void
+    {
+        $subject = $this->createTestSubject('2026-04-03T03:30:00 Europe/Berlin');
+
+        $result = $subject->createDates(self::createStub(Import::class), [[
+            'weekdays' => [],
+            'start' => '2026-03-20T14:00:00+01:00',
+            'end' => '2026-03-20T15:00:00+01:00',
+            'repeatUntil' => '2026-04-05T14:00:00+02:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Daily',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(3, $result);
+        self::assertSame('2026-04-03T14:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2026-04-04T14:00:00+02:00', $result[1]->getStart()->format(DateTimeImmutable::ATOM));
+        self::assertSame('2026-04-05T14:00:00+02:00', $result[2]->getStart()->format(DateTimeImmutable::ATOM));
+    }
+
+    #[Test]
     public function returnsCanceledDatesOnWeeklyBasis(): void
     {
         $subject = $this->createTestSubject('2022-08-29T13:17:24 Europe/Berlin');
@@ -457,6 +481,31 @@ class DatesFactoryTest extends TestCase
         self::assertInstanceOf(Date::class, $result[0]);
         self::assertSame('2026-03-29T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
         self::assertSame('2026-03-29T17:00:00+02:00', $result[0]->getEnd()->format(DateTimeImmutable::ATOM));
+    }
+
+    #[Test]
+    public function returnsNoWeeklyDateAfterRepeatUntil(): void
+    {
+        $subject = $this->createTestSubject('2026-10-24T03:00:00 Europe/Berlin');
+
+        $result = $subject->createDates(self::createStub(Import::class), [[
+            'weekdays' => [
+                'Saturday',
+                'Monday',
+            ],
+            'start' => '2026-10-24T16:00:00+02:00',
+            'end' => '2026-10-24T17:00:00+02:00',
+            'repeatUntil' => '2026-10-25T16:00:00+01:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Weekly',
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(1, $result);
+        self::assertSame('2026-10-24T16:00:00+02:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
     }
 
     #[Test]

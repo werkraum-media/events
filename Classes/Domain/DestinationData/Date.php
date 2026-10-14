@@ -122,25 +122,17 @@ final class Date
         throw new Exception('The event current date does not provide a supported repeat option.', 1770792700);
     }
 
+    /**
+     * repeatUntil names a day, inclusive. Dates keep the UTC offset of the start,
+     * so comparing against a time on that day misses dates across a DST change.
+     * DatePeriod excludes its end, so the series ends at the following midnight.
+     */
     private function getRepeatUntilByRepeatUntil(): DateTimeImmutable
     {
-        $date = new DateTimeImmutable($this->data['repeatUntil'], $this->getTimezone());
-        $date = $date->setTime(
-            (int)$this->getStart()->format('H'),
-            (int)$this->getStart()->format('i'),
-            (int)$this->getStart()->format('s'),
-        );
-
-        // Workaround for PHP <8.2 where DatePeriod does not yet have DatePeriod::INCLUDE_END_DATE
-        // If start + 1day (which is not included) is last until, we need to increase until to include that day.
-        // Otherwise another day would lead to issues, so we use only one second.
-        if ($date->format('d.m.Y') === $this->getStart()->modify('+1day')->format('d.m.Y')) {
-            $date = $date->modify('+1day');
-        } else {
-            $date = $date->modify('+1second');
-        }
-
-        return $date;
+        return (new DateTimeImmutable($this->data['repeatUntil'], $this->getTimeZone()))
+            ->setTimezone($this->getTimeZone())
+            ->modify('tomorrow')
+        ;
     }
 
     private function getRepeatUntilByCount(): DateTimeImmutable
