@@ -581,6 +581,29 @@ class DatesFactoryTest extends TestCase
     }
 
     #[Test]
+    public function returnsNoMonthlyDateAfterRepeatUntil(): void
+    {
+        $subject = $this->createTestSubject('2026-03-01T10:00:00 Europe/Berlin');
+
+        $result = $subject->createDates(self::createStub(Import::class), [[
+            'start' => '2026-03-17T14:00:00+01:00',
+            'end' => '2026-03-17T15:00:00+01:00',
+            'repeatUntil' => '2026-04-19T14:00:00+02:00',
+            'tz' => 'Europe/Berlin',
+            'freq' => 'Monthly',
+            'weekday' => 'Tuesday',
+            'dayOrdinal' => 3,
+            'interval' => 1,
+        ]], false);
+
+        self::assertInstanceOf(Generator::class, $result);
+        $result = iterator_to_array($result);
+
+        self::assertCount(1, $result);
+        self::assertSame('2026-03-17T14:00:00+01:00', $result[0]->getStart()->format(DateTimeImmutable::ATOM));
+    }
+
+    #[Test]
     public function returnsCanceledDatesOnMixedIntervals(): void
     {
         $subject = $this->createTestSubject('2022-01-01T13:17:24 Europe/Berlin');
