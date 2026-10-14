@@ -68,6 +68,7 @@
         }
     },
     "require-dev": {
+        "brianium/paratest": "^7.8",
         "codappix/typo3-php-datasets": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "friendsofphp/php-cs-fixer": "^3.38",

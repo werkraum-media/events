@@ -248,10 +248,9 @@ final class DatesFactory
     }
 
     /**
-     * modify() reports an unparseable expression differently per supported PHP
-     * version — a warning plus false up to 8.2, an exception from 8.3 — so the
-     * expression is parsed first: date_parse() reports the failure quietly and
-     * alike. Returns null for anything that names no date.
+     * modify() throws on an unparseable expression, so the expression is parsed
+     * first: date_parse() reports the failure quietly. Returns null for anything
+     * that names no date.
      */
     private function modify(DateTimeImmutable $date, string $modification): ?DateTimeImmutable
     {

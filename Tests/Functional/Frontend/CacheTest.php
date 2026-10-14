@@ -31,7 +31,6 @@ use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 final class CacheTest extends AbstractFrontendTestCase
@@ -299,10 +298,6 @@ final class CacheTest extends AbstractFrontendTestCase
 
     private function assertResponseIsNotCached(ResponseInterface $response): void
     {
-        if ((new Typo3Version())->getMajorVersion() < 11) {
-            self::assertStringNotContainsString('Cached page', $response->getBody()->__toString());
-            return;
-        }
         self::assertStringStartsNotWith('Cached page', $response->getHeaderLine('X-TYPO3-Debug-Cache'));
     }
 
