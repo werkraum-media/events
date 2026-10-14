@@ -4,11 +4,21 @@
 Breaking
 --------
 
+* **[!!!][TASK] Formally drop support for TYPO3 v13 and PHP 8.2 and 8.3** (``dabd08e``)
+
+* **[!!!][TASK] Provide request without relying on GLOBALS** (``db0c806``)
+
 Important
 ---------
 
+* **[TASK] Remove TCA deprecations** (``e84ed79``)
+
+* **[TASK] Use .fluid.html file extension for template files** (``2ca1045``)
+
 Features
 --------
+
+Nothing
 
 Deprecation
 -----------
