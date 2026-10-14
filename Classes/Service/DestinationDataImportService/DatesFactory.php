@@ -220,6 +220,10 @@ final class DatesFactory
             if ($day === null) {
                 continue;
             }
+            if ($day >= $until) {
+                $this->logger->debug('Date was after the end of the series.', ['day' => $day]);
+                continue;
+            }
             if ($day < $today) {
                 $this->logger->debug('Date was in the past.', ['day' => $day]);
                 continue;
