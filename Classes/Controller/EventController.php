@@ -6,7 +6,7 @@ namespace WerkraumMedia\Events\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute\IgnoreValidation;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use WerkraumMedia\Events\Domain\Model\Category;
 use WerkraumMedia\Events\Domain\Model\Dto\EventDemandFactory;
@@ -92,8 +92,7 @@ final class EventController extends AbstractController
         return $options;
     }
 
-    #[Extbase\IgnoreValidation(['value' => 'event'])]
-    public function showAction(Event $event): ResponseInterface
+    public function showAction(#[IgnoreValidation] Event $event): ResponseInterface
     {
         $this->metaInformationService->setEvent($event);
         $this->view->assign('event', $event);

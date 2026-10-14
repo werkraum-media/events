@@ -7,7 +7,7 @@ namespace WerkraumMedia\Events\Controller;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute\IgnoreValidation;
 use WerkraumMedia\Events\Domain\Model\Date;
 use WerkraumMedia\Events\Domain\Model\Dto\DateDemandFactory;
 use WerkraumMedia\Events\Domain\Repository\CategoryRepository;
@@ -102,8 +102,7 @@ final class DateController extends AbstractController
         return $this->htmlResponse();
     }
 
-    #[Extbase\IgnoreValidation(['value' => 'date'])]
-    public function showAction(?Date $date = null): ResponseInterface
+    public function showAction(#[IgnoreValidation] ?Date $date = null): ResponseInterface
     {
         if ($date === null) {
             $this->trigger404('No date given.');
