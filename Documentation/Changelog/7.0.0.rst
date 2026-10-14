@@ -4,24 +4,11 @@
 Breaking
 --------
 
-* Remove support for TYPO3 v13.
-
-* Remove support for PHP 8.2 and 8.3.
+Important
+---------
 
 Features
 --------
-
-Nothing
-
-Fixes
------
-
-Nothing
-
-Tasks
------
-
-Nothing
 
 Deprecation
 -----------
