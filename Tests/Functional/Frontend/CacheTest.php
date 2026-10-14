@@ -31,6 +31,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
 final class CacheTest extends AbstractFrontendTestCase
@@ -131,7 +132,7 @@ final class CacheTest extends AbstractFrontendTestCase
         $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
-        self::assertCacheHeaders($end, $response);
+        $this->assertCacheHeaders($end, $response);
     }
 
     #[Test]
@@ -168,7 +169,7 @@ final class CacheTest extends AbstractFrontendTestCase
         ]));
 
         self::assertSame(200, $response->getStatusCode());
-        self::assertCacheHeaders($end, $response);
+        $this->assertCacheHeaders($end, $response);
     }
 
     #[Test]
@@ -216,7 +217,7 @@ final class CacheTest extends AbstractFrontendTestCase
         ]));
 
         self::assertSame(200, $response->getStatusCode());
-        self::assertCacheHeaders($end, $response);
+        $this->assertCacheHeaders($end, $response);
     }
 
     #[Test]
@@ -251,7 +252,7 @@ final class CacheTest extends AbstractFrontendTestCase
         $response = $this->executeFrontendSubRequest($this->getRequestWithSleep());
 
         self::assertSame(200, $response->getStatusCode());
-        self::assertCacheHeaders($midnight, $response);
+        $this->assertCacheHeaders($midnight, $response);
         self::assertSame('public', $response->getHeaderLine('Pragma'));
     }
 
@@ -276,7 +277,7 @@ final class CacheTest extends AbstractFrontendTestCase
         $this->assertResponseIsCached($this->executeFrontendSubRequest($this->getRequestWithSleep()));
     }
 
-    private static function assertCacheHeaders(DateTimeImmutable $end, ResponseInterface $response): void
+    private function assertCacheHeaders(DateTimeImmutable $end, ResponseInterface $response): void
     {
         self::assertSame('public', $response->getHeaderLine('Pragma'));
 
@@ -286,14 +287,13 @@ final class CacheTest extends AbstractFrontendTestCase
         ;
         self::assertSame($expectedExpires, $response->getHeaderLine('Expires'));
 
-        [$prefix, $value] = explode('=', $response->getHeaderLine('Cache-Control'));
-        self::assertSame('max-age', $prefix);
-
-        // We might be seconds off due to our created offset within the rendering.
-        $value = (int)$value;
-        $age = ((int)$end->format('U')) - time();
-        self::assertLessThanOrEqual($age + 4, $value, 'Max age of cached response is higher than expected.');
-        self::assertGreaterThanOrEqual($age - 3, $value, 'Max age of cached response is less than expected.');
+        // The timeout is calculated against the context's "now", not the wall clock, which
+        // moves on while the page renders.
+        $now = (int)$this->getContainer()->get(Context::class)->getPropertyFromAspect('date', 'timestamp');
+        self::assertSame(
+            'max-age=' . ((int)$end->format('U') - $now),
+            $response->getHeaderLine('Cache-Control')
+        );
     }
 
     private function assertResponseIsNotCached(ResponseInterface $response): void
