@@ -2,6 +2,7 @@
     "name": "werkraummedia/events-example",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
+    "version": "1.0.0",
     "require": {
         "werkraummedia/events": "*"
     },
@@ -12,7 +13,10 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "example"
+            "extension-key": "example",
+            "Package": {
+                "providesPackages": {}
+            }
         }
     }
 }
