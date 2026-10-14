@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\MetaTag\GenericMetaTagManager;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -42,14 +43,14 @@ final class EventMetaInformationService implements EventMetaInformationInterface
     ) {
     }
 
-    public function setEvent(Event $event): void
+    public function setEvent(Event $event, ServerRequestInterface $request): void
     {
         $this->titleProvider->setEvent($event);
 
         $this->setDescription($event);
         $this->setKeywords($event);
-        $this->setOpenGraphTags($event);
-        $this->setSocialMediaTags($event);
+        $this->setOpenGraphTags($event, $request);
+        $this->setSocialMediaTags($event, $request);
     }
 
     private function setDescription(Event $event): void
@@ -78,12 +79,12 @@ final class EventMetaInformationService implements EventMetaInformationInterface
         ;
     }
 
-    private function setOpenGraphTags(Event $event): void
+    private function setOpenGraphTags(Event $event, ServerRequestInterface $request): void
     {
         $tags = array_filter([
             'title' => $this->titleProvider->getTitle(),
             'type' => 'website',
-            'image' => $this->getImageUrl($event),
+            'image' => $this->getImageUrl($event, $request),
         ]);
 
         foreach ($tags as $property => $value) {
@@ -96,7 +97,7 @@ final class EventMetaInformationService implements EventMetaInformationInterface
         }
     }
 
-    private function setSocialMediaTags(Event $event): void
+    private function setSocialMediaTags(Event $event, ServerRequestInterface $request): void
     {
         $title = $this->titleProvider->getTitle();
 
@@ -104,7 +105,7 @@ final class EventMetaInformationService implements EventMetaInformationInterface
             'twitter:card' => 'summary',
             'twitter:title' => $title,
             'twitter:description' => $event->getTeaser(),
-            'twitter:image' => $this->getImageUrl($event),
+            'twitter:image' => $this->getImageUrl($event, $request),
         ]);
 
         foreach ($tags as $property => $value) {
@@ -115,11 +116,11 @@ final class EventMetaInformationService implements EventMetaInformationInterface
         }
     }
 
-    private function getImageUrl(Event $event): string
+    private function getImageUrl(Event $event, ServerRequestInterface $request): string
     {
         $imageUrl = $event->getImages()[0]?->getOriginalResource()->getPublicUrl() ?? '';
         if ($imageUrl) {
-            $imageUrl = GeneralUtility::locationHeaderUrl($imageUrl);
+            $imageUrl = GeneralUtility::locationHeaderUrl($imageUrl, $request);
         }
 
         return $imageUrl;

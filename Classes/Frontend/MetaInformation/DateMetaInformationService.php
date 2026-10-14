@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\MetaTag\GenericMetaTagManager;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use WerkraumMedia\Events\Domain\Model\Date;
@@ -42,7 +43,7 @@ final class DateMetaInformationService implements DateMetaInformationInterface
     ) {
     }
 
-    public function setDate(Date $date): void
+    public function setDate(Date $date, ServerRequestInterface $request): void
     {
         $event = $date->getEvent();
         if ($event === null) {
@@ -50,7 +51,7 @@ final class DateMetaInformationService implements DateMetaInformationInterface
         }
 
         // A date mostly sets info based on event, re use existing features.
-        $this->eventService->setEvent($event);
+        $this->eventService->setEvent($event, $request);
 
         // Now set date specifics.
         $this->titleProvider->setDate($date);

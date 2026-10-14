@@ -53,7 +53,7 @@ final class EventsTest extends AbstractFrontendTestCase
 
         self::assertStringContainsString('<meta property="og:title" content="Title of Event">', $html);
         self::assertStringContainsString('<meta property="og:type" content="website">', $html);
-        self::assertStringContainsString('<meta property="og:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
+        self::assertStringContainsString('<meta property="og:image" content="https://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
     }
 
     #[Test]
@@ -68,7 +68,7 @@ final class EventsTest extends AbstractFrontendTestCase
         self::assertStringContainsString('<meta name="twitter:card" content="summary">', $html);
         self::assertStringContainsString('<meta name="twitter:title" content="Title of Event">', $html);
         self::assertStringContainsString('<meta name="twitter:description" content="Teaser of Event">', $html);
-        self::assertStringContainsString('<meta name="twitter:image" content="http://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
+        self::assertStringContainsString('<meta name="twitter:image" content="https://example.com/fileadmin/user_uploads/example-for-event.gif">', $html);
     }
 
     #[Test]

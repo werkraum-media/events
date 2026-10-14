@@ -23,6 +23,7 @@ namespace WerkraumMedia\Events\Service;
  * 02110-1301, USA.
  */
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -93,9 +94,12 @@ final class DataProcessingForModels implements SingletonInterface
      * Inject and call this method, e.g. within initializeAction.
      * Necessary to get plugin configuration containing dataProcessing configuration.
      */
-    public function setConfigurationManager(ConfigurationManagerInterface $configurationManager): void
-    {
+    public function setConfigurationManager(
+        ConfigurationManagerInterface $configurationManager,
+        ServerRequestInterface $request
+    ): void {
         $this->configurationManager = $configurationManager;
+        $this->cObject->setRequest($request);
     }
 
     public function process(

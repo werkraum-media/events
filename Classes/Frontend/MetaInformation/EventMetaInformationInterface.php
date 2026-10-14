@@ -23,9 +23,10 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WerkraumMedia\Events\Domain\Model\Event;
 
 interface EventMetaInformationInterface
 {
-    public function setEvent(Event $event): void;
+    public function setEvent(Event $event, ServerRequestInterface $request): void;
 }

@@ -34,7 +34,7 @@ final class EventController extends AbstractController
         parent::initializeAction();
 
         $this->handlePostRequests();
-        $this->dataProcessing->setConfigurationManager($this->configurationManager);
+        $this->dataProcessing->setConfigurationManager($this->configurationManager, $this->request);
     }
 
     /**
@@ -94,7 +94,7 @@ final class EventController extends AbstractController
 
     public function showAction(#[IgnoreValidation] Event $event): ResponseInterface
     {
-        $this->metaInformationService->setEvent($event);
+        $this->metaInformationService->setEvent($event, $this->request);
         $this->view->assign('event', $event);
         return $this->htmlResponse();
     }

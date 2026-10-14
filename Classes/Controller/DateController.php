@@ -42,7 +42,7 @@ final class DateController extends AbstractController
         if ($contentObject !== null) {
             $this->demandFactory->setContentObjectRenderer($contentObject);
         }
-        $this->dataProcessing->setConfigurationManager($this->configurationManager);
+        $this->dataProcessing->setConfigurationManager($this->configurationManager, $this->request);
     }
 
     public function listAction(
@@ -114,7 +114,7 @@ final class DateController extends AbstractController
             $this->trigger404('No event found for requested date.');
         }
 
-        $this->metaInformationService->setDate($date);
+        $this->metaInformationService->setDate($date, $this->request);
         $this->view->assign('date', $date);
         return $this->htmlResponse();
     }

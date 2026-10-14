@@ -23,9 +23,10 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Events\Frontend\MetaInformation;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WerkraumMedia\Events\Domain\Model\Date;
 
 interface DateMetaInformationInterface
 {
-    public function setDate(Date $date): void;
+    public function setDate(Date $date, ServerRequestInterface $request): void;
 }
