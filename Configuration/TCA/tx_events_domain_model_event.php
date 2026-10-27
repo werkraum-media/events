@@ -355,7 +355,14 @@ return [
                     'showSynchronizationLink' => false,
                     'showAllLocalizationLink' => false,
                 ],
-
+                // DataHandler sets a child's language from its event; an editable one would not be aligned back.
+                'overrideChildTca' => [
+                    'types' => [
+                        '1' => [
+                            'showitem' => 'hidden, start, end, canceled, postponed_date, canceled_link, slug, event, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime',
+                        ],
+                    ],
+                ],
             ],
 
         ],
