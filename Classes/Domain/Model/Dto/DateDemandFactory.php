@@ -116,6 +116,11 @@ class DateDemandFactory
         $instance->setSearchword($submittedValues['searchword'] ?? '');
         $instance->setSynonyms($settings['synonyms'] ?? []);
 
+        // The editor's choice, never the visitor's: a search stays within the list's origins.
+        if (is_string($settings['origins'] ?? null)) {
+            $instance->setOrigins(GeneralUtility::trimExplode(',', $settings['origins'], true));
+        }
+
         if (isset($submittedValues['locations']) && is_array($submittedValues['locations'])) {
             $instance->setLocations($submittedValues['locations']);
         }

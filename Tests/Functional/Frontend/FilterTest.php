@@ -110,13 +110,30 @@ final class FilterTest extends AbstractFrontendTestCase
         }
     }
 
+    /**
+     * @return iterable<string, array{array<string, string>}>
+     */
+    public static function dateListRequests(): iterable
+    {
+        yield 'without a search' => [[]];
+        yield 'with a search' => [[
+            'tx_events_datelisttest[search][searchword]' => 'Event',
+            'tx_events_datelisttest[search][start]' => '2022-08-27',
+        ]];
+    }
+
+    /**
+     * @param array<string, string> $queryParameters
+     */
     #[Test]
-    public function canFilterDatesByOriginOfTheirEvent(): void
+    #[DataProvider('dateListRequests')]
+    public function canFilterDatesByOriginOfTheirEvent(array $queryParameters): void
     {
         $this->importPHPDataSet(__DIR__ . '/Fixtures/Database/FilterDatesByOrigin.php');
 
         $request = new InternalRequest('https://example.com/');
         $request = $request->withPageId(1);
+        $request = $request->withQueryParameters($queryParameters);
         $request = $request->withInstructions([
             $this->getTypoScriptInstruction()->withTypoScript([
                 'plugin.' => ['tx_events.' => ['settings.' => ['origins' => 'Weimar Sync Channel']]],
