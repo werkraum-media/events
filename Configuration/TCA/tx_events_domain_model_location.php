@@ -44,12 +44,48 @@ return [
                     children,
                 --div--;' . $l10nPath . ':tabs.tech,
                     global_id,
+                    --palette--;;origin,
                 --div--;' . $l10nPath . ':tabs.access,
                     starttime,
                     endtime',
         ],
     ],
+    'palettes' => [
+        'origin' => [
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.palette',
+            'showitem' => 'origin_configuration_uid, origin_configuration_title, --linebreak--, origin_sync_id',
+        ],
+    ],
     'columns' => [
+        'origin_configuration_uid' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_configuration_uid',
+            'config' => [
+                'type' => 'number',
+                'readOnly' => true,
+            ],
+        ],
+        'origin_configuration_title' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_configuration_title',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+                'searchable' => false,
+            ],
+        ],
+        'origin_sync_id' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_sync_id',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+                'searchable' => false,
+            ],
+        ],
         'global_id' => [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_location.global_id',

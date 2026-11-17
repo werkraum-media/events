@@ -93,6 +93,8 @@ class Event extends AbstractEntity
 
     protected string $sourceUrl = '';
 
+    protected string $originConfigurationTitle = '';
+
     public function __construct()
     {
         $this->initStorageObjects();
@@ -124,6 +126,11 @@ class Event extends AbstractEntity
     public function getGlobalId(): string
     {
         return $this->globalId;
+    }
+
+    public function getOriginConfigurationTitle(): string
+    {
+        return $this->originConfigurationTitle;
     }
 
     public function setGlobalId(string $globalId): void

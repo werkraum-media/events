@@ -20,6 +20,26 @@
                 <source>Events</source>
                 <target>Veranstaltungen</target>
             </trans-unit>
+
+            <trans-unit id="origin.palette">
+                <source>Origin</source>
+                <target>Herkunft</target>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_configuration_uid">
+                <source>Created by import configuration (UID)</source>
+                <target>Erstellt von Importkonfiguration (UID)</target>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_configuration_title">
+                <source>Created by import configuration (title)</source>
+                <target>Erstellt von Importkonfiguration (Titel)</target>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_sync_id">
+                <source>Created by sync scope or sync channel (ID)</source>
+                <target>Erstellt von Sync-Scope oder Sync-Channel (ID)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

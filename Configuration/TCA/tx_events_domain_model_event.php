@@ -38,6 +38,7 @@ return [
                     ticket,
                     global_id,
                     --palette--;;source,
+                    --palette--;;origin,
                 --div--;' . $l10nPath . ':tx_events_domain_model_event.tabs.text,
                     details,
                     price_info,
@@ -72,8 +73,41 @@ return [
             'label' => $l10nPath . ':tx_events_domain_model_event.palette.source',
             'showitem' => 'source_name, source_url, import_configuration',
         ],
+        'origin' => [
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.palette',
+            'showitem' => 'origin_configuration_uid, origin_configuration_title, --linebreak--, origin_sync_id',
+        ],
     ],
     'columns' => [
+        'origin_configuration_uid' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_configuration_uid',
+            'config' => [
+                'type' => 'number',
+                'readOnly' => true,
+            ],
+        ],
+        'origin_configuration_title' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_configuration_title',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+                'searchable' => false,
+            ],
+        ],
+        'origin_sync_id' => [
+            'exclude' => true,
+            'l10n_mode' => 'exclude',
+            'label' => 'LLL:EXT:events/Resources/Private/Language/locallang_db.xlf:origin.origin_sync_id',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+                'searchable' => false,
+            ],
+        ],
         'title' => [
             'exclude' => true,
             'label' => $l10nPath . ':tx_events_domain_model_event.title',

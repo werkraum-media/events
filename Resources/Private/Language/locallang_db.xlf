@@ -16,6 +16,22 @@
             <trans-unit id="pages.module.events">
                 <source>Events</source>
             </trans-unit>
+
+            <trans-unit id="origin.palette">
+                <source>Origin</source>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_configuration_uid">
+                <source>Created by import configuration (UID)</source>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_configuration_title">
+                <source>Created by import configuration (title)</source>
+            </trans-unit>
+
+            <trans-unit id="origin.origin_sync_id">
+                <source>Created by sync scope or sync channel (ID)</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
