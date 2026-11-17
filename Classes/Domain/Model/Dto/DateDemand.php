@@ -40,6 +40,11 @@ class DateDemand
     protected array $locations = [];
 
     /**
+     * @var string[]
+     */
+    protected array $origins = [];
+
+    /**
      * @var int[]
      */
     protected array $organizers = [];
@@ -186,6 +191,22 @@ class DateDemand
     public function setLocations(array $locations): void
     {
         $this->locations = array_map(intval(...), $locations);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getOrigins(): array
+    {
+        return $this->origins;
+    }
+
+    /**
+     * @param string[] $origins
+     */
+    public function setOrigins(array $origins): void
+    {
+        $this->origins = $origins;
     }
 
     /**

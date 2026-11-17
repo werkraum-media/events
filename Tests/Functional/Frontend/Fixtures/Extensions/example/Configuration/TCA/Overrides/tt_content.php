@@ -22,6 +22,9 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
             'events_dateshowtest' => [
                 'showitem' => 'header, subheader',
             ],
+            'events_eventlisttest' => [
+                'showitem' => 'header, subheader',
+            ],
             'events_eventshowtest' => [
                 'showitem' => 'header, subheader',
             ],

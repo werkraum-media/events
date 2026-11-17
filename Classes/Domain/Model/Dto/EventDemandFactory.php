@@ -52,6 +52,10 @@ class EventDemandFactory
             $demand->setLimit($settings['limit']);
         }
 
+        if (is_string($settings['origins'] ?? null)) {
+            $demand->setOrigins(GeneralUtility::trimExplode(',', $settings['origins'], true));
+        }
+
         return $demand;
     }
 

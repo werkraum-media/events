@@ -135,6 +135,10 @@ final class EventRepository extends Repository
             $constraints['highlight'] = $query->equals('highlight', $demand->getHighlight());
         }
 
+        if ($demand->getOrigins() !== []) {
+            $constraints['origins'] = $query->in('originConfigurationTitle', $demand->getOrigins());
+        }
+
         return $constraints;
     }
 

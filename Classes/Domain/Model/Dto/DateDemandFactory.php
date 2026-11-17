@@ -62,6 +62,9 @@ class DateDemandFactory
         if (!empty($settings['organizers'])) {
             $demand->setOrganizers(GeneralUtility::intExplode(',', (string)$settings['organizers'], true));
         }
+        if (is_string($settings['origins'] ?? null)) {
+            $demand->setOrigins(GeneralUtility::trimExplode(',', $settings['origins'], true));
+        }
         if (!empty($settings['categories'])) {
             $demand->setCategories((string)$settings['categories']);
         }

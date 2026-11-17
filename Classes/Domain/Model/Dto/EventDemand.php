@@ -29,6 +29,11 @@ class EventDemand
      */
     protected array $recordUids = [];
 
+    /**
+     * @var string[]
+     */
+    protected array $origins = [];
+
     protected string $searchword = '';
 
     public function getSortBy(): string
@@ -107,6 +112,22 @@ class EventDemand
     public function setRecordUids(array $recordUids): void
     {
         $this->recordUids = $recordUids;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getOrigins(): array
+    {
+        return $this->origins;
+    }
+
+    /**
+     * @param string[] $origins
+     */
+    public function setOrigins(array $origins): void
+    {
+        $this->origins = $origins;
     }
 
     public function getSearchword(): string
