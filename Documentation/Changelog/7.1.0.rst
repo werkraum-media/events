@@ -1,0 +1,43 @@
+.. _changelog-7-1-0:
+
+=====
+7.1.0
+=====
+
+.. contents:: On this page
+   :local:
+   :depth: 1
+
+Breaking
+--------
+
+Nothing
+
+Important
+---------
+
+* **[TASK] Hide language fields of dates inside events**
+
+Features
+--------
+
+* **[FEATURE] Add import origin fields to events, organizers and locations**
+
+* **[FEATURE] Limit event and date lists to import origins**
+
+Fixes
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
+
+Upgrade
+-------
+
+#. Run the database analyser and add :sql:`origin_configuration_uid`, :sql:`origin_configuration_title` and
+   :sql:`origin_sync_id` to :sql:`tx_events_domain_model_event`, :sql:`tx_events_domain_model_organizer` and
+   :sql:`tx_events_domain_model_location`.
